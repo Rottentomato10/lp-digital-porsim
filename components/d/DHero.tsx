@@ -21,8 +21,8 @@ export default function DHero() {
         {/* Logo */}
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="mb-8">
-          <Image src="/logo.png" alt="פורשים כנף" width={80} height={80}
-            className="w-16 h-16 object-contain drop-shadow-[0_0_24px_rgba(245,166,36,0.35)]" priority />
+          <Image src="/logo.png" alt="פורשים כנף" width={140} height={140}
+            className="w-28 h-28 md:w-36 md:h-36 object-contain drop-shadow-[0_0_40px_rgba(245,166,36,0.45)]" priority />
         </motion.div>
 
         {/* Badge */}

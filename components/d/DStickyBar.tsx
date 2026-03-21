@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck } from 'lucide-react'
+import Image from 'next/image'
 import { contentD, CHECKOUT_URL } from '@/lib/content-d'
 
 export default function DStickyBar() {
@@ -26,6 +27,10 @@ export default function DStickyBar() {
           style={{ background: 'rgba(8,8,8,0.96)', backdropFilter: 'blur(20px)' }}
         >
           <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+
+            {/* Logo */}
+            <Image src="/logo.png" alt="פורשים כנף" width={32} height={32}
+              className="w-8 h-8 object-contain flex-shrink-0 hidden sm:block" />
 
             {/* Price */}
             <div className="flex items-baseline gap-2 flex-shrink-0">

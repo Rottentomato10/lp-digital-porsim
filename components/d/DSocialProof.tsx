@@ -103,17 +103,20 @@ export default function DSocialProof() {
           className="grid grid-cols-2 gap-4"
         >
           {slots.map((reviewIdx, pos) => (
-            <AnimatePresence mode="wait" key={pos}>
-              <motion.div
-                key={reviewIdx}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.97 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <ReviewCard review={ALL_REVIEWS[reviewIdx]} />
-              </motion.div>
-            </AnimatePresence>
+            <div key={pos} className="relative" style={{ minHeight: '160px' }}>
+              <AnimatePresence>
+                <motion.div
+                  key={reviewIdx}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: 'easeInOut' }}
+                  style={{ position: 'absolute', inset: 0 }}
+                >
+                  <ReviewCard review={ALL_REVIEWS[reviewIdx]} />
+                </motion.div>
+              </AnimatePresence>
+            </div>
           ))}
         </motion.div>
 

@@ -9,7 +9,7 @@ import DSocialProof     from '@/components/d/DSocialProof'
 import DTeam            from '@/components/d/DTeam'
 import DDecision        from '@/components/d/DDecision'
 import DFooter          from '@/components/d/DFooter'
-import DAccessibility   from '@/components/d/DAccessibility'
+import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 import DCookieConsent   from '@/components/d/DCookieConsent'
 
 export const metadata = {
@@ -31,7 +31,7 @@ export default function VariantD() {
       <DTeam />
       <DDecision />
       <DFooter />
-      <DAccessibility />
+      <AccessibilityWidget />
       <DCookieConsent />
     </main>
   )
