@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-heebo: 'Heebo', sans-serif;
+  --orange: #F5A624;
+  --cream: #E5D4B0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #080808;
+  color: #ffffff;
+  direction: rtl;
+  font-family: var(--font-heebo);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grain overlay */
+.grain-overlay {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200vh;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%,100% { transform: translate(0,0) }
+  10%     { transform: translate(-3%,-8%) }
+  20%     { transform: translate(-10%,5%) }
+  30%     { transform: translate(5%,-18%) }
+  40%     { transform: translate(-5%,20%) }
+  50%     { transform: translate(-12%,8%) }
+  60%     { transform: translate(12%,0%) }
+  70%     { transform: translate(0%,12%) }
+  80%     { transform: translate(3%,30%) }
+  90%     { transform: translate(-8%,8%) }
+}
+
+/* Orange glow CTA */
+.cta-glow {
+  animation: ctaPulse 3s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(245,166,36,0); }
+  50%     { box-shadow: 0 0 40px 8px rgba(245,166,36,0.3); }
+}
+
+/* Testimonials marquee */
+.marquee-wrapper {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 50s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: #F5A624; border-radius: 3px; }
+
+/* Section divider */
+.divider-glow {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(245,166,36,0.3), transparent);
+}
