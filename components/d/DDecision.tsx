@@ -32,15 +32,27 @@ function CountUp({ target, suffix = '', duration = 1400 }: { target: number; suf
 
 // ← עדכן תאריך זה כשמעלים מחיר
 const PRICE_DEADLINE = new Date('2026-03-29T23:59:59+03:00').getTime()
+const dl = new Date(PRICE_DEADLINE)
+const DEADLINE_DISPLAY = `${dl.getDate()}.${dl.getMonth() + 1}`
 
-function Countdown() {
+function useExpired() {
+  const [expired, setExpired] = useState(Date.now() >= PRICE_DEADLINE)
+  useEffect(() => {
+    if (expired) return
+    const id = setInterval(() => { if (Date.now() >= PRICE_DEADLINE) setExpired(true) }, 1000)
+    return () => clearInterval(id)
+  }, [expired])
+  return expired
+}
+
+function Countdown({ expired }: { expired: boolean }) {
   const [parts, setParts] = useState({ d: 0, h: 0, m: 0, s: 0 })
-  const [expired, setExpired] = useState(false)
 
   useEffect(() => {
+    if (expired) return
     const tick = () => {
       const diff = PRICE_DEADLINE - Date.now()
-      if (diff <= 0) { setExpired(true); return }
+      if (diff <= 0) return
       setParts({
         d: Math.floor(diff / 86_400_000),
         h: Math.floor((diff % 86_400_000) / 3_600_000),
@@ -51,12 +63,12 @@ function Countdown() {
     tick()
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
-  }, [])
+  }, [expired])
 
   const pad = (n: number) => String(n).padStart(2, '0')
 
   if (expired) return (
-    <span className="text-[#F5A624] font-black text-sm">המחיר עלה</span>
+    <span className="text-[#F5A624] font-black text-sm">המחיר עלה ל-₪{contentD.pricing.price_original}</span>
   )
 
   return (
@@ -98,7 +110,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 export default function DDecision() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
+  const expired = useExpired()
 
+  const currentPrice = expired ? contentD.pricing.price_original : contentD.pricing.price
   const totalValue = contentD.pricing.value_stack.reduce((s, i) => s + i.value, 0)
 
   return (
@@ -137,21 +151,27 @@ export default function DDecision() {
             {/* Countdown banner */}
             <div className="bg-[#F5A624]/10 border-b border-[#F5A624]/15 px-5 py-3 flex items-center justify-between gap-3">
               <div>
-                <p className="text-[#F5A624] font-black text-xs tracking-wide uppercase leading-none mb-0.5">מחיר השקה</p>
-                <p className="text-white/35 text-xs">המחיר עולה ב-29.3 — נשאר עוד</p>
+                <p className="text-[#F5A624] font-black text-xs tracking-wide uppercase leading-none mb-0.5">
+                  {expired ? 'מחיר מעודכן' : 'מחיר השקה'}
+                </p>
+                <p className="text-white/35 text-xs">
+                  {expired ? `המחיר עלה ב-${DEADLINE_DISPLAY}` : `המחיר עולה ב-${DEADLINE_DISPLAY} — נשאר עוד`}
+                </p>
               </div>
-              <Countdown />
+              <Countdown expired={expired} />
             </div>
 
             <div className="p-7 md:p-8">
 
               {/* Promo badge */}
-              <div className="flex items-center gap-2 mb-5">
-                <span className="bg-[#F5A624] text-black font-black text-xs px-3 py-1 rounded-full">
-                  חסכת ₪{contentD.pricing.price_original - contentD.pricing.price}
-                </span>
-                <span className="text-white/25 text-xs">מהמחיר המלא</span>
-              </div>
+              {!expired && (
+                <div className="flex items-center gap-2 mb-5">
+                  <span className="bg-[#F5A624] text-black font-black text-xs px-3 py-1 rounded-full">
+                    חסכת ₪{contentD.pricing.price_original - contentD.pricing.price}
+                  </span>
+                  <span className="text-white/25 text-xs">מהמחיר המלא</span>
+                </div>
+              )}
 
               {/* Value stack */}
               <div className="mb-6">
@@ -177,14 +197,14 @@ export default function DDecision() {
               <div className="text-center mb-5">
                 <p className="text-white/25 text-xs mb-1">{contentD.pricing.price_note}</p>
                 <div className="flex items-baseline justify-center gap-3">
-                  <span className="text-white/30 line-through text-2xl font-bold">₪{contentD.pricing.price_original}</span>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-black" style={{
-                      fontSize: 'clamp(3rem, 9vw, 4.5rem)',
-                      background: 'linear-gradient(135deg, #F5A624, #FFCD6B)',
-                      WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
-                    }}>₪{contentD.pricing.price}</span>
-                  </div>
+                  {!expired && (
+                    <span className="text-white/30 line-through text-2xl font-bold">₪{contentD.pricing.price_original}</span>
+                  )}
+                  <span className="font-black" style={{
+                    fontSize: 'clamp(3rem, 9vw, 4.5rem)',
+                    background: 'linear-gradient(135deg, #F5A624, #FFCD6B)',
+                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
+                  }}>₪{currentPrice}</span>
                 </div>
               </div>
 
