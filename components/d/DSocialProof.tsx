@@ -65,7 +65,7 @@ export default function DSocialProof() {
         {/* Eyebrow */}
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
           className="text-center mb-10">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">
+          <span className="t-eyebrow">
             {contentD.socialProof.eyebrow}
           </span>
         </motion.div>

@@ -46,7 +46,7 @@ export default function DWhatYouGet() {
           <motion.span
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase"
+            className="t-eyebrow"
           >
             תוכן הקורס
           </motion.span>
@@ -141,10 +141,7 @@ export default function DWhatYouGet() {
                 </div>
 
                 {/* About */}
-                <p className="text-white/50 leading-relaxed max-w-xl mx-auto"
-                  style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)' }}>
-                  {stage.about}
-                </p>
+                <p className="t-body max-w-xl mx-auto">{stage.about}</p>
 
               </div>
             </motion.div>

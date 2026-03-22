@@ -14,7 +14,7 @@ export default function DProblem() {
 
         <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="mb-12 text-center">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">
+          <span className="t-eyebrow">
             {contentD.problem.eyebrow}
           </span>
           <h2 className="mt-4 text-white font-black leading-tight"

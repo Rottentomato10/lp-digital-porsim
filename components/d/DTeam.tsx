@@ -36,12 +36,12 @@ export default function DTeam() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="text-center mb-10">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">
+          <span className="t-eyebrow">
             מי אנחנו
           </span>
           <Image src="/logo.png" alt="פורשים כנף" width={200} height={200}
             className="w-44 h-44 md:w-52 md:h-52 object-contain mx-auto my-6 drop-shadow-[0_0_40px_rgba(245,166,36,0.4)]" />
-          <p className="text-white/45 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
+          <p className="t-body-lg max-w-xl mx-auto mt-4">
             כבר 5 שנים אנחנו מעבירים חינוך פיננסי בבתי ספר ובמסגרות נוער ברחבי הארץ.
             עכשיו, לראשונה — הגענו לדיגיטל. כדי שהידע הזה יגיע לכולם, לא רק למי שזכה ללמוד איתנו בכיתה.
           </p>
@@ -84,7 +84,7 @@ export default function DTeam() {
               <div>
                 <p className="text-white font-bold text-lg">{person.name}</p>
                 <p className="text-[#F5A624]/70 text-sm font-medium mt-0.5">{person.role}</p>
-                <p className="text-white/40 text-sm mt-2 leading-relaxed max-w-xs mx-auto">{person.bio}</p>
+                <p className="t-muted mt-2 max-w-xs mx-auto">{person.bio}</p>
               </div>
             </motion.div>
           ))}

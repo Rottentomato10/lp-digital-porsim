@@ -2,6 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  /* ── Typography System ── */
+
+  /* Section eyebrow labels */
+  .t-eyebrow {
+    @apply font-semibold uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: #F5A624;
+  }
+
+  /* Section h2 — large */
+  .t-h2 {
+    @apply font-black text-white leading-tight;
+    font-size: clamp(1.9rem, 4.2vw, 3rem);
+  }
+
+  /* Section h2 — medium */
+  .t-h2-md {
+    @apply font-black text-white leading-tight;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  }
+
+  /* Primary body text */
+  .t-body {
+    @apply text-base leading-relaxed;
+    color: rgba(255,255,255,0.62);
+  }
+
+  /* Body large */
+  .t-body-lg {
+    @apply leading-relaxed;
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    color: rgba(255,255,255,0.62);
+  }
+
+  /* Muted / secondary */
+  .t-muted {
+    @apply text-sm leading-relaxed;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* Caption / fine print */
+  .t-caption {
+    @apply text-xs;
+    color: rgba(255,255,255,0.30);
+  }
+}
+
 :root {
   --font-heebo: 'Heebo', sans-serif;
   --orange: #F5A624;

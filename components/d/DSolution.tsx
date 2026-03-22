@@ -18,7 +18,7 @@ export default function DSolution() {
           <motion.span
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
-            className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase"
+            className="t-eyebrow"
           >
             {contentD.solution.eyebrow}
           </motion.span>
@@ -73,7 +73,7 @@ export default function DSolution() {
               </div>
 
               <h3 className="font-black text-white text-xl mb-3">{step.title}</h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-4">{step.desc}</p>
+              <p className="t-muted mb-4">{step.desc}</p>
               <span className="text-[#F5A624]/40 text-xs group-hover:text-[#F5A624]/70 transition-colors">לסילבוס ↓</span>
             </motion.div>
           ))}

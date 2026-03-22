@@ -145,7 +145,7 @@ export default function DDecision() {
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="text-center mb-12">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">הגיע הזמן להחליט</span>
+          <span className="t-eyebrow">הגיע הזמן להחליט</span>
           <h2 className="mt-4 font-black text-white" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
             כל מה שצריך לדעת — במקום אחד.
           </h2>
