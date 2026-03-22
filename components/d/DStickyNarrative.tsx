@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const SLIDES = [
-  { eyebrow: null,              main: '18 שנה.',                        sub: 'כל כך הרבה זמן בבית הספר.',                                   accent: false },
+  { eyebrow: null,              main: '12 שנה.',                        sub: 'כל כך הרבה זמן בבית הספר.',                                   accent: false },
   { eyebrow: 'מה לימדו אותך?', main: 'אלגברה. היסטוריה. ספרות.',      sub: null,                                                            accent: false },
   { eyebrow: 'ומה לא לימדו?',  main: 'אפס שעות של פיננסים.',           sub: 'איך כסף עובד, לאן הוא הולך, איך לגרום לו לצמוח.',            accent: false },
   { eyebrow: null,              main: 'זה לא אשמתך.',                   sub: 'זו המערכת. היא פשוט לא בנתה את זה לתוכנית הלימודים.',          accent: false },
@@ -68,8 +68,8 @@ export default function DStickyNarrative() {
   const active  = useTransform(scrollYProgress, (v: number) => Math.min(Math.floor(v * SLIDES.length), SLIDES.length - 1))
 
   return (
-    <div ref={containerRef} style={{ height: '600vh' }} className="relative">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#080808] flex items-center justify-center">
+    <div ref={containerRef} style={{ height: '440vh' }} className="relative">
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#080808] flex items-center justify-center" style={{ willChange: 'transform' }}>
 
         {/* Glow builds on last slide */}
         <motion.div className="pointer-events-none absolute inset-0" style={{

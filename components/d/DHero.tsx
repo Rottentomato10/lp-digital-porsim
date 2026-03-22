@@ -1,10 +1,20 @@
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { contentD, CHECKOUT_URL } from '@/lib/content-d'
 
 export default function DHero() {
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (window.scrollY < 50) {
+        window.scrollBy({ top: 130, behavior: 'smooth' })
+      }
+    }, 3500)
+    return () => clearTimeout(t)
+  }, [])
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#080808]">
 

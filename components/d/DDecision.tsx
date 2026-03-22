@@ -30,34 +30,20 @@ function CountUp({ target, suffix = '', duration = 1400 }: { target: number; suf
   )
 }
 
-const DEADLINE_KEY = 'pk_price_deadline'
-const DURATION_MS  = 23 * 60 * 60 * 1000 + 47 * 60 * 1000 // ~23h 47m for realism
-
-function useDeadline() {
-  const [deadline, setDeadline] = useState<number | null>(null)
-  useEffect(() => {
-    const stored = localStorage.getItem(DEADLINE_KEY)
-    if (stored) {
-      const d = parseInt(stored)
-      if (d > Date.now()) { setDeadline(d); return }
-    }
-    const d = Date.now() + DURATION_MS
-    localStorage.setItem(DEADLINE_KEY, String(d))
-    setDeadline(d)
-  }, [])
-  return deadline
-}
+// ← עדכן תאריך זה כשמעלים מחיר
+const PRICE_DEADLINE = new Date('2026-03-29T23:59:59+03:00').getTime()
 
 function Countdown() {
-  const deadline = useDeadline()
-  const [parts, setParts] = useState({ h: 23, m: 47, s: 0 })
+  const [parts, setParts] = useState({ d: 0, h: 0, m: 0, s: 0 })
+  const [expired, setExpired] = useState(false)
 
   useEffect(() => {
-    if (!deadline) return
     const tick = () => {
-      const diff = Math.max(0, deadline - Date.now())
+      const diff = PRICE_DEADLINE - Date.now()
+      if (diff <= 0) { setExpired(true); return }
       setParts({
-        h: Math.floor(diff / 3_600_000),
+        d: Math.floor(diff / 86_400_000),
+        h: Math.floor((diff % 86_400_000) / 3_600_000),
         m: Math.floor((diff % 3_600_000) / 60_000),
         s: Math.floor((diff % 60_000) / 1_000),
       })
@@ -65,12 +51,17 @@ function Countdown() {
     tick()
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
-  }, [deadline])
+  }, [])
 
   const pad = (n: number) => String(n).padStart(2, '0')
 
+  if (expired) return (
+    <span className="text-[#F5A624] font-black text-sm">המחיר עלה</span>
+  )
+
   return (
     <div dir="ltr" className="flex items-center gap-1 font-mono font-black text-[#F5A624]" style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)' }}>
+      {parts.d > 0 && <><span>{parts.d}d</span><span className="text-[#F5A624]/40 text-sm"> </span></>}
       <span>{pad(parts.h)}</span>
       <span className="text-[#F5A624]/40 text-sm">:</span>
       <span>{pad(parts.m)}</span>
@@ -147,7 +138,7 @@ export default function DDecision() {
             <div className="bg-[#F5A624]/10 border-b border-[#F5A624]/15 px-5 py-3 flex items-center justify-between gap-3">
               <div>
                 <p className="text-[#F5A624] font-black text-xs tracking-wide uppercase leading-none mb-0.5">מחיר השקה</p>
-                <p className="text-white/35 text-xs">המחיר זמין רק לעוד</p>
+                <p className="text-white/35 text-xs">המחיר עולה ב-29.3 — נשאר עוד</p>
               </div>
               <Countdown />
             </div>
