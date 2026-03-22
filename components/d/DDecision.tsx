@@ -30,28 +30,47 @@ function CountUp({ target, suffix = '', duration = 1400 }: { target: number; suf
   )
 }
 
-// ← עדכן תאריך זה כשמעלים מחיר
-const PRICE_DEADLINE = new Date('2026-03-29T23:59:59+03:00').getTime()
-const dl = new Date(PRICE_DEADLINE)
-const DEADLINE_DISPLAY = `${dl.getDate()}.${dl.getMonth() + 1}`
+const WINDOW_MS = 72 * 60 * 60 * 1000 // 72 שעות מהביקור הראשון
+const DEADLINE_KEY = 'pk_offer_deadline'
 
-function useExpired() {
-  const [expired, setExpired] = useState(Date.now() >= PRICE_DEADLINE)
-  useEffect(() => {
-    if (expired) return
-    const id = setInterval(() => { if (Date.now() >= PRICE_DEADLINE) setExpired(true) }, 1000)
-    return () => clearInterval(id)
-  }, [expired])
-  return expired
+function getOrCreateDeadline(): number {
+  const stored = localStorage.getItem(DEADLINE_KEY)
+  if (stored) {
+    const d = parseInt(stored)
+    if (d > Date.now()) return d
+  }
+  const d = Date.now() + WINDOW_MS
+  localStorage.setItem(DEADLINE_KEY, String(d))
+  return d
 }
 
-function Countdown({ expired }: { expired: boolean }) {
+function formatDeadlineDate(ts: number): string {
+  const d = new Date(ts)
+  return `${d.getDate()}.${d.getMonth() + 1}`
+}
+
+function useOfferDeadline() {
+  const [deadline, setDeadline] = useState<number | null>(null)
+  const [expired, setExpired] = useState(false)
+
+  useEffect(() => {
+    const dl = getOrCreateDeadline()
+    setDeadline(dl)
+    if (Date.now() >= dl) { setExpired(true); return }
+    const id = setInterval(() => { if (Date.now() >= dl) { setExpired(true); clearInterval(id) } }, 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  return { deadline, expired }
+}
+
+function Countdown({ deadline, expired }: { deadline: number | null; expired: boolean }) {
   const [parts, setParts] = useState({ d: 0, h: 0, m: 0, s: 0 })
 
   useEffect(() => {
-    if (expired) return
+    if (!deadline || expired) return
     const tick = () => {
-      const diff = PRICE_DEADLINE - Date.now()
+      const diff = deadline - Date.now()
       if (diff <= 0) return
       setParts({
         d: Math.floor(diff / 86_400_000),
@@ -63,17 +82,18 @@ function Countdown({ expired }: { expired: boolean }) {
     tick()
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
-  }, [expired])
+  }, [deadline, expired])
 
   const pad = (n: number) => String(n).padStart(2, '0')
 
   if (expired) return (
     <span className="text-[#F5A624] font-black text-sm">המחיר עלה ל-₪{contentD.pricing.price_original}</span>
   )
+  if (!deadline) return null
 
   return (
     <div dir="ltr" className="flex items-center gap-1 font-mono font-black text-[#F5A624]" style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)' }}>
-      {parts.d > 0 && <><span>{parts.d}d</span><span className="text-[#F5A624]/40 text-sm"> </span></>}
+      {parts.d > 0 && <><span>{parts.d}</span><span className="text-[#F5A624]/40 text-xs mx-0.5">d</span></>}
       <span>{pad(parts.h)}</span>
       <span className="text-[#F5A624]/40 text-sm">:</span>
       <span>{pad(parts.m)}</span>
@@ -110,8 +130,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 export default function DDecision() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
-  const expired = useExpired()
-
+  const { deadline, expired } = useOfferDeadline()
+  const deadlineDisplay = deadline ? formatDeadlineDate(deadline) : ''
   const currentPrice = expired ? contentD.pricing.price_original : contentD.pricing.price
   const totalValue = contentD.pricing.value_stack.reduce((s, i) => s + i.value, 0)
 
@@ -155,10 +175,12 @@ export default function DDecision() {
                   {expired ? 'מחיר מעודכן' : 'מחיר השקה'}
                 </p>
                 <p className="text-white/35 text-xs">
-                  {expired ? `המחיר עלה ב-${DEADLINE_DISPLAY}` : `המחיר עולה ב-${DEADLINE_DISPLAY} — נשאר עוד`}
+                  {expired
+                    ? `המחיר עלה ב-${deadlineDisplay}`
+                    : `המבצע נגמר ב-${deadlineDisplay} — נשאר עוד`}
                 </p>
               </div>
-              <Countdown expired={expired} />
+              <Countdown deadline={deadline} expired={expired} />
             </div>
 
             <div className="p-7 md:p-8">
