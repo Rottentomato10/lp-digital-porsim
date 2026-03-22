@@ -170,18 +170,13 @@ export default function DDecision() {
 
             {/* Banner */}
             <div className="bg-[#F5A624]/10 border-b border-[#F5A624]/15 px-5 py-4 flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[#F5A624] font-black tracking-wide uppercase leading-none mb-1"
-                  style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
-                  {expired ? 'מחיר מעודכן' : 'מחיר מיוחד'}
-                </p>
-                <p className="text-white/45 text-sm">
-                  {expired ? `המחיר עלה ב-${deadlineDisplay}` : 'מבצע מיוחד'}
-                </p>
-              </div>
+              <p className="text-[#F5A624] font-black tracking-wide uppercase leading-none"
+                style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
+                {expired ? 'מחיר מעודכן' : 'מחיר מיוחד'}
+              </p>
               <div dir="ltr" className="font-mono font-black text-[#F5A624]"
                 style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)' }}>
-                מחיר ל-72 שעות
+                {expired ? `עלה ב-${deadlineDisplay}` : 'ל-72 שעות'}
               </div>
             </div>
 
