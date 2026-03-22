@@ -15,15 +15,15 @@ export default function DFooter() {
 
   return (
     <>
-      <footer className="bg-[#060606] border-t border-white/8">
+      <footer className="bg-[#060606] border-t border-white/8 text-center">
         {/* Legal links row */}
-        <div className="max-w-4xl mx-auto px-5 py-5 flex items-center justify-center gap-2 flex-wrap">
+        <div className="py-5 flex items-center justify-center gap-4 flex-wrap px-5">
           {LINKS.map(({ key, label }, i) => (
-            <span key={key} className="flex items-center gap-2">
-              {i > 0 && <span className="text-white/15 text-sm">·</span>}
+            <span key={key} className="flex items-center gap-4">
+              {i > 0 && <span className="text-white/15">·</span>}
               <button
                 onClick={() => setModal(key as ModalType)}
-                className="text-white/55 text-sm font-medium hover:text-[#F5A624] transition-colors underline underline-offset-4 decoration-white/25 hover:decoration-[#F5A624]/50"
+                className="t-caption hover:text-[#F5A624] transition-colors"
               >
                 {label}
               </button>
@@ -34,8 +34,8 @@ export default function DFooter() {
         {/* Copyright row */}
         <div className="border-t border-white/5 py-4 flex flex-col items-center gap-2">
           <Image src="/logo.png" alt="פורשים כנף" width={28} height={28}
-            className="w-7 h-7 object-contain opacity-30" />
-          <p className="text-white/20 text-xs">© 2025 פורשים כנף · כל הזכויות שמורות</p>
+            className="w-7 h-7 object-contain opacity-25" />
+          <p className="t-caption">© 2025 פורשים כנף · כל הזכויות שמורות</p>
         </div>
       </footer>
 
