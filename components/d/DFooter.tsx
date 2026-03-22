@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { LegalModal, ModalType } from './DLegalModal'
 
 const LINKS = [
@@ -32,9 +31,7 @@ export default function DFooter() {
         </div>
 
         {/* Copyright row */}
-        <div className="border-t border-white/5 py-4 flex flex-col items-center gap-2">
-          <Image src="/logo.png" alt="פורשים כנף" width={28} height={28}
-            className="w-7 h-7 object-contain opacity-25" />
+        <div className="border-t border-white/5 py-4 flex justify-center">
           <p className="t-caption">© 2025 פורשים כנף · כל הזכויות שמורות</p>
         </div>
       </footer>
