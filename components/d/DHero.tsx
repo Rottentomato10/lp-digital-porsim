@@ -61,7 +61,7 @@ export default function DHero() {
               className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg px-10 py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
               {contentD.hero.cta}
             </a>
-            <span className="text-white/25 text-xs">🔒 מועבר לדף תשלום מאובטח</span>
+            <span className="text-white/25 text-xs">🔒 מועבר לדף תשלום מאובטח · 7 ימי החזר מלא</span>
           </div>
         </motion.div>
 

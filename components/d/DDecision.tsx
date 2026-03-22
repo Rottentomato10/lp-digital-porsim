@@ -205,9 +205,12 @@ export default function DDecision() {
               <p className="text-center text-white/25 text-xs mb-5">{contentD.pricing.cta_sub}</p>
 
               {/* Guarantee */}
-              <div className="flex items-start gap-2 p-3 rounded-xl bg-white/3 border border-white/5">
-                <ShieldCheck size={15} className="text-[#F5A624]/50 flex-shrink-0 mt-0.5" />
-                <p className="text-white/35 text-xs leading-relaxed">{contentD.pricing.guarantee}</p>
+              <div className="flex items-start gap-3 p-4 rounded-2xl border border-[#F5A624]/25 bg-[#F5A624]/5">
+                <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-[#F5A624] text-xs font-black uppercase tracking-widest mb-1">אחריות מלאה 7 ימים</p>
+                  <p className="text-white/60 text-sm leading-relaxed">{contentD.pricing.guarantee}</p>
+                </div>
               </div>
 
             </div>

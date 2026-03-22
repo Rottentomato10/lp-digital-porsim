@@ -12,12 +12,16 @@ const SLIDES = [
 ]
 
 const TIMING = [
-  { in: [0, 0],       hold: [0, 0.17],     out: [0.17, 0.25] },
-  { in: [0.17, 0.25], hold: [0.25, 0.37],  out: [0.37, 0.45] },
-  { in: [0.37, 0.45], hold: [0.45, 0.57],  out: [0.57, 0.65] },
-  { in: [0.57, 0.65], hold: [0.65, 0.77],  out: [0.77, 0.85] },
-  { in: [0.77, 0.85], hold: [0.85, 1],     out: [1, 1]        },
+  { in: [0, 0],       hold: [0, 0.16],     out: [0.16, 0.26] },
+  { in: [0.16, 0.26], hold: [0.26, 0.38],  out: [0.38, 0.48] },
+  { in: [0.38, 0.48], hold: [0.48, 0.60],  out: [0.60, 0.70] },
+  { in: [0.60, 0.70], hold: [0.70, 0.82],  out: [0.82, 0.90] },
+  { in: [0.82, 0.90], hold: [0.90, 1],     out: [1, 1]        },
 ]
+
+// Cubic ease-in-out
+const easeInOut = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 
 function buildOpacity(t: typeof TIMING[0], isLast: boolean) {
   if (t.in[0] === t.in[1]) {
@@ -42,20 +46,21 @@ export default function DStickyNarrative() {
   const opacities = TIMING.map((t, i) => {
     const isLast = i === TIMING.length - 1
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useTransform(scrollYProgress, buildKeypoints(t, isLast), buildOpacity(t, isLast))
+    return useTransform(scrollYProgress, buildKeypoints(t, isLast), buildOpacity(t, isLast), { ease: easeInOut })
   })
 
   const ys = TIMING.map((t, i) => {
     const isLast = i === TIMING.length - 1
     if (t.in[0] === t.in[1]) {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return useTransform(scrollYProgress, isLast ? [0, 1] : [t.out[0], t.out[1]], isLast ? [0, 0] : [0, -24])
+      return useTransform(scrollYProgress, isLast ? [0, 1] : [t.out[0], t.out[1]], isLast ? [0, 0] : [0, -52], { ease: easeInOut })
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return useTransform(
       scrollYProgress,
       isLast ? [t.in[0], t.in[1], 1] : [t.in[0], t.in[1], t.out[0], t.out[1]],
-      isLast ? [24, 0, 0]            : [24, 0, 0, -24]
+      isLast ? [52, 0, 0]             : [52, 0, 0, -52],
+      { ease: easeInOut }
     )
   })
 
@@ -63,7 +68,7 @@ export default function DStickyNarrative() {
   const active  = useTransform(scrollYProgress, (v: number) => Math.min(Math.floor(v * SLIDES.length), SLIDES.length - 1))
 
   return (
-    <div ref={containerRef} style={{ height: '500vh' }} className="relative">
+    <div ref={containerRef} style={{ height: '600vh' }} className="relative">
       <div className="sticky top-0 h-screen overflow-hidden bg-[#080808] flex items-center justify-center">
 
         {/* Glow builds on last slide */}

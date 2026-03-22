@@ -9,14 +9,20 @@ const TEAM = [
     name: 'שם שותף א׳',
     role: 'מייסד שותף · פורשים כנף',
     bio: 'משפט קצר על הרקע ומה מביא לכאן.',
-    image: null as string | null, // ← '/team/partner-a.jpg'
+    image: null as string | null,
   },
   {
     name: 'שם שותף ב׳',
     role: 'מייסד שותף · פורשים כנף',
     bio: 'משפט קצר על הרקע ומה מביא לכאן.',
-    image: null as string | null, // ← '/team/partner-b.jpg'
+    image: null as string | null,
   },
+]
+
+const CREDS = [
+  { value: '15,234+', label: 'צעירים למדו' },
+  { value: '4+', label: 'שנות פעילות' },
+  { value: '97%', label: 'שביעות רצון' },
 ]
 
 export default function DTeam() {
@@ -24,11 +30,11 @@ export default function DTeam() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="py-12 md:py-16 bg-[#080808]">
+    <section ref={ref} className="py-12 md:py-20 bg-[#080808]">
       <div className="max-w-3xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }} className="text-center mb-14">
+          transition={{ duration: 0.6 }} className="text-center mb-10">
           <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">
             מי מאחורי הקורס
           </span>
@@ -38,12 +44,27 @@ export default function DTeam() {
           </h2>
         </motion.div>
 
+        {/* Credibility stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="grid grid-cols-3 gap-3 mb-14"
+        >
+          {CREDS.map((c, i) => (
+            <div key={i} className="text-center py-4 rounded-2xl border border-white/6 bg-[#101010]">
+              <p className="font-black text-[#F5A624] text-xl">{c.value}</p>
+              <p className="text-white/30 text-xs mt-0.5">{c.label}</p>
+            </div>
+          ))}
+        </motion.div>
+
         <div className="grid grid-cols-2 gap-10 md:gap-20 justify-items-center">
           {TEAM.map((person, i) => (
             <motion.div key={i}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.65, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.65, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col items-center text-center gap-4">
 
               <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-[#F5A624]/30"
@@ -67,6 +88,7 @@ export default function DTeam() {
         </div>
 
       </div>
+      <div className="divider-glow mt-14" />
     </section>
   )
 }

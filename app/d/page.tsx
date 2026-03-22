@@ -3,6 +3,8 @@ import DStickyBar       from '@/components/d/DStickyBar'
 import SocialToast      from '@/components/d/SocialToast'
 import DVideo           from '@/components/d/DVideo'
 import DStickyNarrative from '@/components/d/DStickyNarrative'
+import DProblem         from '@/components/d/DProblem'
+import DMindShift       from '@/components/d/DMindShift'
 import DSolution        from '@/components/d/DSolution'
 import DWhatYouGet      from '@/components/d/DWhatYouGet'
 import DSocialProof     from '@/components/d/DSocialProof'
@@ -25,6 +27,8 @@ export default function VariantD() {
       <DHero />
       <DVideo />
       <DStickyNarrative />
+      <DProblem />
+      <DMindShift />
       <DSolution />
       <DWhatYouGet />
       <DSocialProof />
