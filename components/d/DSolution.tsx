@@ -14,13 +14,15 @@ export default function DSolution() {
     <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
       <div className="max-w-4xl mx-auto px-5 text-center">
 
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase"
-        >
-          {contentD.solution.eyebrow}
-        </motion.span>
+        {contentD.solution.eyebrow && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase"
+          >
+            {contentD.solution.eyebrow}
+          </motion.span>
+        )}
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

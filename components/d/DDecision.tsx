@@ -103,15 +103,15 @@ function Countdown({ deadline, expired }: { deadline: number | null; expired: bo
   )
 }
 
-function FaqItem({ q, a }: { q: string; a: string }) {
+function FaqItem({ q, a, highlight = false }: { q: string; a: string; highlight?: boolean }) {
   const [open, setOpen] = useState(true)
   return (
-    <div className="border-b border-white/6 last:border-0">
+    <div className={`border-b last:border-0 ${highlight ? 'border-[#F5A624]/20' : 'border-white/6'}`}>
       <button onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-4 text-right gap-3 group">
-        <span className="text-white/65 font-medium text-sm group-hover:text-white transition-colors leading-snug">{q}</span>
+        <span className={`font-bold text-sm transition-colors leading-snug ${highlight ? 'text-[#F5A624] group-hover:text-[#FFCD6B]' : 'text-white group-hover:text-[#F5A624]'}`}>{q}</span>
         <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.22 }}
-          className="flex-shrink-0 text-[#F5A624]/50"><ChevronDown size={16} /></motion.span>
+          className={`flex-shrink-0 ${highlight ? 'text-[#F5A624]/70' : 'text-[#F5A624]/50'}`}><ChevronDown size={16} /></motion.span>
       </button>
       <AnimatePresence initial={false}>
         {open && (
@@ -119,7 +119,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
             initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
             className="overflow-hidden">
-            <p className="text-white/40 text-sm leading-relaxed pb-4">{a}</p>
+            <p className="text-white/60 text-sm leading-relaxed pb-4">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -159,7 +159,7 @@ export default function DDecision() {
           <div className="p-6 md:p-8 rounded-2xl bg-[#101010] border border-white/7">
             <p className="text-white/30 text-xs font-semibold tracking-widest uppercase mb-5">שאלות שאולי עולות</p>
             {[...contentD.objections.items, ...(contentD.pricing.faq ?? [])].map((item, i) => (
-              <FaqItem key={i} q={item.q} a={item.a} />
+              <FaqItem key={i} q={item.q} a={item.a} highlight={!!(item as any).highlight} />
             ))}
           </div>
 
@@ -168,32 +168,49 @@ export default function DDecision() {
             style={{ boxShadow: '0 0 60px rgba(245,166,36,0.1)' }}>
             <div className="h-0.5 bg-gradient-to-r from-transparent via-[#F5A624] to-transparent" />
 
-            {/* Countdown banner */}
-            <div className="bg-[#F5A624]/10 border-b border-[#F5A624]/15 px-5 py-3 flex items-center justify-between gap-3">
+            {/* Banner */}
+            <div className="bg-[#F5A624]/10 border-b border-[#F5A624]/15 px-5 py-4 flex items-center justify-between gap-3">
               <div>
-                <p className="text-[#F5A624] font-black text-xs tracking-wide uppercase leading-none mb-0.5">
-                  {expired ? 'מחיר מעודכן' : 'מחיר השקה'}
+                <p className="text-[#F5A624] font-black tracking-wide uppercase leading-none mb-1"
+                  style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
+                  {expired ? 'מחיר מעודכן' : 'מחיר מיוחד'}
                 </p>
-                <p className="text-white/35 text-xs">
-                  {expired
-                    ? `המחיר עלה ב-${deadlineDisplay}`
-                    : `המבצע נגמר ב-${deadlineDisplay} — נשאר עוד`}
+                <p className="text-white/45 text-sm">
+                  {expired ? `המחיר עלה ב-${deadlineDisplay}` : 'מבצע מיוחד'}
                 </p>
               </div>
-              <Countdown deadline={deadline} expired={expired} />
+              <div dir="ltr" className="font-mono font-black text-[#F5A624]"
+                style={{ fontSize: 'clamp(1.1rem, 3vw, 1.4rem)' }}>
+                מחיר ל-72 שעות
+              </div>
             </div>
 
             <div className="p-7 md:p-8">
 
-              {/* Promo badge */}
-              {!expired && (
-                <div className="flex items-center gap-2 mb-5">
-                  <span className="bg-[#F5A624] text-black font-black text-xs px-3 py-1 rounded-full">
-                    חסכת ₪{contentD.pricing.price_original - contentD.pricing.price}
-                  </span>
-                  <span className="text-white/25 text-xs">מהמחיר המלא</span>
+              {/* Price — moved up */}
+              <div className="text-center mb-5">
+                <div className="flex items-baseline justify-center gap-3 mb-1">
+                  {!expired && (
+                    <span className="text-white/30 line-through text-2xl font-bold">₪{contentD.pricing.price_original}</span>
+                  )}
+                  <span className="font-black" style={{
+                    fontSize: 'clamp(3rem, 9vw, 4.5rem)',
+                    background: 'linear-gradient(135deg, #F5A624, #FFCD6B)',
+                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
+                  }}>₪{currentPrice}</span>
                 </div>
-              )}
+                <p className="text-white/30 text-xs">{contentD.pricing.price_note}</p>
+                {!expired && (
+                  <p className="text-white/20 text-xs mt-0.5">חסכת ₪{contentD.pricing.price_original - contentD.pricing.price} ממחיר המלא</p>
+                )}
+              </div>
+
+              {/* CTA */}
+              <a href={CHECKOUT_URL}
+                className="cta-glow block w-full text-center bg-[#F5A624] text-black font-black text-lg py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
+                {contentD.pricing.cta}
+              </a>
+              <p className="text-center text-white/25 text-xs mb-6">{contentD.pricing.cta_sub}</p>
 
               {/* Value stack */}
               <div className="mb-6">
@@ -215,57 +232,17 @@ export default function DDecision() {
                 </div>
               </div>
 
-              {/* Price */}
-              <div className="text-center mb-5">
-                <p className="text-white/25 text-xs mb-1">{contentD.pricing.price_note}</p>
-                <div className="flex items-baseline justify-center gap-3">
-                  {!expired && (
-                    <span className="text-white/30 line-through text-2xl font-bold">₪{contentD.pricing.price_original}</span>
-                  )}
-                  <span className="font-black" style={{
-                    fontSize: 'clamp(3rem, 9vw, 4.5rem)',
-                    background: 'linear-gradient(135deg, #F5A624, #FFCD6B)',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
-                  }}>₪{currentPrice}</span>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <a href={CHECKOUT_URL}
-                className="cta-glow block w-full text-center bg-[#F5A624] text-black font-black text-lg py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
-                {contentD.pricing.cta}
-              </a>
-              <p className="text-center text-white/25 text-xs mb-5">{contentD.pricing.cta_sub}</p>
-
               {/* Guarantee */}
               <div className="flex items-start gap-3 p-4 rounded-2xl border border-[#F5A624]/25 bg-[#F5A624]/5">
                 <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-[#F5A624] text-xs font-black uppercase tracking-widest mb-1">אחריות מלאה 7 ימים</p>
+                  <p className="text-[#F5A624] text-xs font-black uppercase tracking-widest mb-1">אחריות מלאה</p>
                   <p className="text-white/60 text-sm leading-relaxed">{contentD.pricing.guarantee}</p>
                 </div>
               </div>
 
             </div>
           </div>
-        </motion.div>
-
-        {/* Stats */}
-        <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="grid grid-cols-3 gap-4 mt-6">
-          {[
-            { target: 15000, suffix: '+', label: 'צעירים למדו' },
-            { target: 3,     suffix: '+', label: 'שעות תוכן'   },
-            { target: 7,     suffix: '',  label: 'ימי אחריות'  },
-          ].map((s, i) => (
-            <div key={i} className="text-center py-4 rounded-xl bg-[#101010] border border-white/6">
-              <p className="font-black text-[#F5A624] text-lg">
-                <CountUp target={s.target} suffix={s.suffix} />
-              </p>
-              <p className="text-white/30 text-xs mt-0.5">{s.label}</p>
-            </div>
-          ))}
         </motion.div>
 
         {/* Final close */}
@@ -282,6 +259,7 @@ export default function DDecision() {
             {contentD.finalCta.cta}
           </a>
           <p className="mt-3 text-white/20 text-xs">{contentD.finalCta.sub}</p>
+          <p className="mt-2 text-white/15 text-xs">{contentD.pricing.guarantee}</p>
         </motion.div>
 
       </div>

@@ -6,13 +6,13 @@ import Image from 'next/image'
 
 const TEAM = [
   {
-    name: 'שם שותף א׳',
+    name: 'דקל קאפח',
     role: 'מייסד שותף · פורשים כנף',
     bio: 'משפט קצר על הרקע ומה מביא לכאן.',
     image: null as string | null,
   },
   {
-    name: 'שם שותף ב׳',
+    name: 'אביתר דנגור',
     role: 'מייסד שותף · פורשים כנף',
     bio: 'משפט קצר על הרקע ומה מביא לכאן.',
     image: null as string | null,
@@ -20,9 +20,10 @@ const TEAM = [
 ]
 
 const CREDS = [
-  { value: '15,234+', label: 'צעירים למדו' },
-  { value: '4+', label: 'שנות פעילות' },
-  { value: '97%', label: 'שביעות רצון' },
+  { value: '15,000+', label: 'תלמידים למדו' },
+  { value: '7,000+', label: 'שעות לימוד' },
+  { value: '94%', label: 'שביעות רצון' },
+  { value: '5+', label: 'שנות פעילות' },
 ]
 
 export default function DTeam() {
@@ -36,12 +37,14 @@ export default function DTeam() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="text-center mb-10">
           <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">
-            מי מאחורי הקורס
+            מי אנחנו
           </span>
-          <h2 className="mt-4 font-black text-white leading-tight"
-            style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.4rem)' }}>
-            שני אנשים שהחליטו לעשות את מה שבית הספר לא עשה.
-          </h2>
+          <Image src="/logo.png" alt="פורשים כנף" width={200} height={200}
+            className="w-44 h-44 md:w-52 md:h-52 object-contain mx-auto my-6 drop-shadow-[0_0_40px_rgba(245,166,36,0.4)]" />
+          <p className="text-white/45 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
+            כבר 5 שנים אנחנו מעבירים חינוך פיננסי בבתי ספר ובמסגרות נוער ברחבי הארץ.
+            עכשיו, לראשונה — הגענו לדיגיטל. כדי שהידע הזה יגיע לכולם, לא רק למי שזכה ללמוד איתנו בכיתה.
+          </p>
         </motion.div>
 
         {/* Credibility stats */}
@@ -49,7 +52,7 @@ export default function DTeam() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="grid grid-cols-3 gap-3 mb-14"
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-14"
         >
           {CREDS.map((c, i) => (
             <div key={i} className="text-center py-4 rounded-2xl border border-white/6 bg-[#101010]">

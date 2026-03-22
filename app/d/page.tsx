@@ -27,12 +27,12 @@ export default function VariantD() {
       <DHero />
       <DVideo />
       <DStickyNarrative />
+      <DTeam />
       <DProblem />
       <DMindShift />
       <DSolution />
       <DWhatYouGet />
       <DSocialProof />
-      <DTeam />
       <DDecision />
       <DFooter />
       <AccessibilityWidget />

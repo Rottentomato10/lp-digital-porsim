@@ -13,7 +13,7 @@ export default function DProblem() {
       <div className="max-w-2xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }} className="mb-12">
+          transition={{ duration: 0.6 }} className="mb-12 text-center">
           <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">
             {contentD.problem.eyebrow}
           </span>
