@@ -258,8 +258,6 @@ export default function DDecision() {
             className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg px-10 py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             {contentD.finalCta.cta}
           </a>
-          <p className="mt-3 text-white/20 text-xs">{contentD.finalCta.sub}</p>
-          <p className="mt-2 text-white/15 text-xs">{contentD.pricing.guarantee}</p>
         </motion.div>
 
       </div>
