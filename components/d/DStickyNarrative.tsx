@@ -89,14 +89,6 @@ export default function DStickyNarrative() {
           })}
         </div>
 
-        {/* Slide counter */}
-        <div className="absolute top-8 left-6 md:left-10 z-20 hidden md:flex items-center gap-1 text-white/20 text-xs font-mono">
-          {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
-          <motion.span>{useTransform(scrollYProgress, (v: number) => String(Math.min(Math.floor(v * SLIDES.length) + 1, SLIDES.length)).padStart(2, '0'))}</motion.span>
-          <span>/</span>
-          <span>{String(SLIDES.length).padStart(2, '0')}</span>
-        </div>
-
         {/* Mobile progress bar */}
         <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-24 h-0.5 bg-white/10 rounded-full overflow-hidden z-20 md:hidden">
           <motion.div className="h-full bg-[#F5A624] rounded-full origin-left" style={{ scaleX: scrollYProgress }} />
