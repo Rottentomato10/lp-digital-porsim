@@ -1,5 +1,42 @@
-import { redirect } from 'next/navigation'
+import DHero            from '@/components/d/DHero'
+import DStickyBar       from '@/components/d/DStickyBar'
+import SocialToast      from '@/components/d/SocialToast'
+import DVideo           from '@/components/d/DVideo'
+import DStickyNarrative from '@/components/d/DStickyNarrative'
+import DProblem         from '@/components/d/DProblem'
+import DMindShift       from '@/components/d/DMindShift'
+import DSolution        from '@/components/d/DSolution'
+import DWhatYouGet      from '@/components/d/DWhatYouGet'
+import DSocialProof     from '@/components/d/DSocialProof'
+import DTeam            from '@/components/d/DTeam'
+import DDecision        from '@/components/d/DDecision'
+import DFooter          from '@/components/d/DFooter'
+import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
+import DCookieConsent   from '@/components/d/DCookieConsent'
+
+export const metadata = {
+  title: 'פורשים כנף — קורס פיננסים לצעירים',
+  description: 'הכסף שתרוויח מחר תלוי במה שתדע היום.',
+}
 
 export default function Home() {
-  redirect('/d')
+  return (
+    <main className="bg-[#080808]">
+      <DStickyBar />
+      <SocialToast />
+      <DHero />
+      <DVideo />
+      <DStickyNarrative />
+      <DTeam />
+      <DProblem />
+      <DMindShift />
+      <DSolution />
+      <DWhatYouGet />
+      <DSocialProof />
+      <DDecision />
+      <DFooter />
+      <AccessibilityWidget />
+      <DCookieConsent />
+    </main>
+  )
 }
