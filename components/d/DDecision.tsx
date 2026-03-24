@@ -119,7 +119,7 @@ function FaqItem({ q, a, highlight = false }: { q: string; a: string; highlight?
             initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
             className="overflow-hidden">
-            <p className="text-white/60 text-sm leading-relaxed pb-4">{a}</p>
+            <p className="text-white/60 text-sm leading-relaxed pb-4 whitespace-pre-line">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -147,7 +147,7 @@ export default function DDecision() {
           transition={{ duration: 0.6 }} className="text-center mb-12">
           <span className="t-eyebrow">הגיע הזמן להחליט</span>
           <h2 className="mt-4 font-black text-white" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
-            כל מה שצריך לדעת — במקום אחד.
+            כל מה שאתה צריך לדעת — במקום אחד.
           </h2>
         </motion.div>
 
@@ -157,7 +157,7 @@ export default function DDecision() {
 
           {/* LEFT — FAQ */}
           <div className="p-6 md:p-8 rounded-2xl bg-[#101010] border border-white/7">
-            <p className="text-white/30 text-xs font-semibold tracking-widest uppercase mb-5">שאלות שאולי עולות</p>
+            <p className="text-white/30 text-xs font-semibold tracking-widest uppercase mb-5">אם אתה מתלבט — כנראה שאלת את עצמך את זה</p>
             {[...contentD.objections.items, ...(contentD.pricing.faq ?? [])].map((item, i) => (
               <FaqItem key={i} q={item.q} a={item.a} highlight={!!(item as any).highlight} />
             ))}
@@ -224,6 +224,10 @@ export default function DDecision() {
                 <div className="mt-3 pt-3 border-t border-white/8 flex items-center justify-between">
                   <span className="text-white/40 text-xs">שווי כולל</span>
                   <span className="text-white/40 text-sm font-semibold line-through">₪{totalValue}</span>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-[#F5A624]/80 text-xs font-bold">אתה משלם עכשיו</span>
+                  <span className="text-[#F5A624] text-sm font-black">₪{currentPrice}</span>
                 </div>
               </div>
 

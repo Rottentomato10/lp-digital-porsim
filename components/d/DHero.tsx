@@ -59,7 +59,7 @@ export default function DHero() {
         {/* Sub */}
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="t-body-lg mb-10 max-w-xl text-center">
+          className="t-body-lg mb-10 max-w-xl text-center whitespace-pre-line">
           {contentD.hero.sub}
         </motion.p>
 

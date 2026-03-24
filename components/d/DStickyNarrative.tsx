@@ -6,8 +6,8 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 const SLIDES = [
   { eyebrow: null,              main: '12 שנה.',                        sub: 'כל כך הרבה זמן בבית הספר.',                                   accent: false },
   { eyebrow: 'מה לימדו אותך?', main: 'אלגברה. היסטוריה. ספרות.',      sub: null,                                                            accent: false },
-  { eyebrow: 'ומה לא לימדו?',  main: 'אפס שעות של פיננסים.',           sub: 'איך כסף עובד, לאן הוא הולך, איך לגרום לו לצמוח.',            accent: false },
-  { eyebrow: null,              main: 'זה לא אשמתך.',                   sub: 'זו המערכת. היא פשוט לא בנתה את זה לתוכנית הלימודים.',          accent: false },
+  { eyebrow: 'ומה לא לימדו?',  main: 'אפס שעות על כסף.',              sub: 'איך הוא עובד. לאן הוא הולך. איך לגרום לו לצמוח.',             accent: false },
+  { eyebrow: null,              main: 'זה לא אשמתך.',                   sub: 'זו המערכת.\nפשוט לא בנו את זה לתוכנית הלימודים.',               accent: false },
   { eyebrow: null,              main: 'עד עכשיו.',                      sub: null,                                                            accent: true  },
 ]
 
@@ -123,7 +123,7 @@ export default function DStickyNarrative() {
                 {slide.main}
               </h2>
               {slide.sub && (
-                <p className="mt-6 text-white/45 text-lg md:text-xl leading-relaxed max-w-lg mx-auto">
+                <p className="mt-6 text-white/45 text-lg md:text-xl leading-relaxed max-w-lg mx-auto whitespace-pre-line">
                   {slide.sub}
                 </p>
               )}

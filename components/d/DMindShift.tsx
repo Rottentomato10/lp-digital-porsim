@@ -41,7 +41,7 @@ export default function DMindShift() {
         <motion.p initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.45 }}
           className="t-body-lg max-w-xl mx-auto">
-          ידע פיננסי הוא לא מותרות. הוא <span className="text-[#F5A624] font-bold">הבסיס</span> שעליו כל שאר ההחלטות נבנות.<br />כל שנה שעוברת בלי הידע הזה — עולה לך בכסף אמיתי.
+          ידע פיננסי הוא לא מותרות.<br />הוא <span className="text-[#F5A624] font-bold">הבסיס</span> שעליו כל ההחלטות שלך נבנות.<br />וכל שנה שעוברת בלי הידע הזה —<br />עולה לך בכסף אמיתי.
         </motion.p>
 
       </div>

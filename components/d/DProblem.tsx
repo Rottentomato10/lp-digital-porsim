@@ -31,7 +31,7 @@ export default function DProblem() {
               transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="group flex items-start gap-4 py-5 border-b border-white/6 last:border-0">
               <span className="flex-shrink-0 mt-1 w-2 h-2 rounded-full bg-[#F5A624]/60 group-hover:bg-[#F5A624] transition-colors duration-300" />
-              <p className="text-white/75 text-lg md:text-xl leading-snug font-medium group-hover:text-white transition-colors duration-300">
+              <p className="text-white/75 text-lg md:text-xl leading-snug font-medium group-hover:text-white transition-colors duration-300 whitespace-pre-line">
                 {item}
               </p>
             </motion.div>

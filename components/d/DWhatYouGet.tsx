@@ -11,7 +11,7 @@ const STAGES = [
     sub: 'להבין את שפת המשחק',
     stats: { chapters: 5, lessons: 25, minutes: 82 },
     color: '#F5A624',
-    about: 'שכר, זכויות עובד, תלוש השכר מסעיף לסעיף, מה הבנקים לא אומרים לכם על אשראי — ואיך ריבית קשורה לאינפלציה?',
+    about: 'שכר, זכויות עובד ותלוש השכר — מסעיף לסעיף.\nמה הבנקים לא מספרים על אשראי,\nואיך ריבית באמת קשורה לאינפלציה.',
   },
   {
     num: '02',
@@ -20,16 +20,16 @@ const STAGES = [
     sub: 'עוברים להתקפה',
     stats: { chapters: 2, lessons: 17, minutes: 57 },
     color: '#5EEAD4',
-    about: 'השקעות - שוק ההון, מניות, אג"ח ומדדים — בשפה שמבינים. קרנות סל, DCA ועוד. וגם: נדל״ן, מינוף, משכנתא ובעיקר - ראש מעל המים.',
+    about: 'השקעות בשוק ההון — מניות, אג"ח ומדדים בשפה פשוטה.\nקרנות סל, DCA ועוד.\nוגם: נדל״ן, מינוף, משכנתא — ואיך לא לטבוע בדרך.',
   },
   {
     num: '03',
     badge: 'חלק 3',
-    title: 'המנכ"לים',
+    title: 'שליטה',
     sub: 'בונים מערכת מנצחת',
     stats: { chapters: 3, lessons: 15, minutes: 53 },
     color: '#A78BFA',
-    about: 'התנהלות חכמה, שיטות לניהול כסף, הטבות שלא כולם מכירים, שכיר מול עצמאי, וצ׳ק ליסט לביצוע מיידי + שיעור בונוס מתנה: פסיכולוגיית הכסף.',
+    about: 'התנהלות חכמה עם כסף, שיטות ניהול שעובדות באמת,\nהטבות שלא כולם מכירים, שכיר מול עצמאי —\nוצ׳ק ליסט ברור לפעולה מיידית.\n🎁 שיעור בונוס: פסיכולוגיית כסף',
   },
 ]
 
@@ -57,7 +57,7 @@ export default function DWhatYouGet() {
             className="mt-4 font-black text-white text-center"
             style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.2rem)' }}
           >
-            3 חלקים. 57 שיעורים. 3 שעות.
+            3 חלקים · 57 שיעורים · כ־3 שעות
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -65,7 +65,7 @@ export default function DWhatYouGet() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mt-3 text-white/30 text-sm"
           >
-            גישה לצמיתות · עדכונים ללא תוספת עלות
+            גישה לכל החיים · עדכונים ללא עלות נוספת
           </motion.p>
         </div>
 
@@ -141,7 +141,7 @@ export default function DWhatYouGet() {
                 </div>
 
                 {/* About */}
-                <p className="t-body max-w-xl mx-auto">{stage.about}</p>
+                <p className="t-body max-w-xl mx-auto whitespace-pre-line">{stage.about}</p>
 
               </div>
             </motion.div>

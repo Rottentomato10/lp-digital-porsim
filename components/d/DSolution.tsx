@@ -27,7 +27,7 @@ export default function DSolution() {
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-4 font-black text-white mx-auto"
+          className="mt-4 font-black text-white mx-auto whitespace-pre-line"
           style={{ fontSize: 'clamp(1.7rem, 4vw, 3rem)', maxWidth: '32rem' }}
         >
           {contentD.solution.headline}
@@ -73,7 +73,7 @@ export default function DSolution() {
               </div>
 
               <h3 className="font-black text-white text-xl mb-3">{step.title}</h3>
-              <p className="t-muted mb-4">{step.desc}</p>
+              <p className="t-muted mb-4 whitespace-pre-line">{step.desc}</p>
               <span className="text-[#F5A624]/40 text-xs group-hover:text-[#F5A624]/70 transition-colors">לסילבוס ↓</span>
             </motion.div>
           ))}
