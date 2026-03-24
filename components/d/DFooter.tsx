@@ -32,7 +32,7 @@ export default function DFooter() {
 
         {/* Copyright row */}
         <div className="border-t border-white/5 py-4 flex justify-center">
-          <p className="t-caption">© 2025 פורשים כנף · כל הזכויות שמורות</p>
+          <p className="t-caption">© 2026 פורשים כנף · כל הזכויות שמורות</p>
         </div>
       </footer>
 
