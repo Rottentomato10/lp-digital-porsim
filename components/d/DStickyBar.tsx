@@ -26,7 +26,7 @@ export default function DStickyBar() {
           className="fixed bottom-0 inset-x-0 z-50 border-t border-white/8"
           style={{ background: 'rgba(8,8,8,0.96)', backdropFilter: 'blur(20px)' }}
         >
-          <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <div className="max-w-4xl mx-auto px-4 pr-20 py-3 flex items-center justify-between gap-4">
 
             {/* Price */}
             <div className="flex items-baseline gap-2 flex-shrink-0">
