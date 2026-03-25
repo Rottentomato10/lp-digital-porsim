@@ -10,10 +10,10 @@ const heebo = Heebo({
 })
 
 export const metadata: Metadata = {
-  title: 'פורשים כנף — קורס פיננסים לצעירים',
+  title: 'פורשים כנף — דיגיטלי',
   description: 'הידע הפיננסי שלא לימדו אותך בבית הספר. 3 שעות שישנו את הדרך שאתה מתנהל עם כסף.',
   openGraph: {
-    title: 'פורשים כנף — קורס פיננסים לצעירים',
+    title: 'פורשים כנף — דיגיטלי',
     description: 'הידע הפיננסי שלא לימדו אותך בבית הספר.',
     locale: 'he_IL',
     type: 'website',

@@ -2,7 +2,7 @@ import DPageShell from '@/components/d/DPageShell'
 import { contentST4 } from '@/lib/content-st4'
 
 export const metadata = {
-  title: 'פורשים כנף — קורס פיננסים לסטודנטים',
+  title: 'פורשים כנף — דיגיטלי',
   description: 'הכסף שאתה מרוויח עכשיו צריך לעבוד גם בשביל העתיד שלך.',
 }
 
