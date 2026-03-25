@@ -26,12 +26,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl">
       <head>
         {/* Google Analytics 4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y3XRLT7BGV" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QFNH2ML23S" />
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-Y3XRLT7BGV');
+          gtag('config', 'G-QFNH2ML23S');
         `}} />
         {/* Microsoft Clarity */}
         <script dangerouslySetInnerHTML={{ __html: `
