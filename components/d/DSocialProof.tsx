@@ -2,10 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { contentD } from '@/lib/content-d'
-
-// All reviews pooled together
-const ALL_REVIEWS = [contentD.socialProof.featured, ...contentD.socialProof.others]
+import { useContent } from '@/lib/content-context'
 
 function Stars() {
   return (
@@ -15,7 +12,7 @@ function Stars() {
   )
 }
 
-function ReviewCard({ review }: { review: typeof ALL_REVIEWS[0] }) {
+function ReviewCard({ review }: { review: { name: string; age: number; quote: string } }) {
   return (
     <div className="p-5 rounded-2xl bg-[#111111] border border-white/7 text-center h-full">
       <Stars />
@@ -31,6 +28,9 @@ function ReviewCard({ review }: { review: typeof ALL_REVIEWS[0] }) {
 }
 
 export default function DSocialProof() {
+  const contentD = useContent()
+  const ALL_REVIEWS = [contentD.socialProof.featured, ...contentD.socialProof.others]
+
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 

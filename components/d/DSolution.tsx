@@ -2,11 +2,12 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { contentD } from '@/lib/content-d'
+import { useContent } from '@/lib/content-context'
 
 const ICONS = ['🧠', '🔧', '📈']
 
 export default function DSolution() {
+  const contentD = useContent()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 

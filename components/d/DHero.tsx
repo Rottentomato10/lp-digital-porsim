@@ -3,9 +3,11 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { contentD, CHECKOUT_URL } from '@/lib/content-d'
+import { useContent, useCheckoutUrl } from '@/lib/content-context'
 
 export default function DHero() {
+  const contentD = useContent()
+  const CHECKOUT_URL = useCheckoutUrl()
   useEffect(() => {
     const t = setTimeout(() => {
       if (window.scrollY < 50) {

@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Check, ChevronDown, ShieldCheck } from 'lucide-react'
-import { contentD, CHECKOUT_URL } from '@/lib/content-d'
+import { useContent, useCheckoutUrl } from '@/lib/content-context'
 
 // Animated counter: counts from 0 to `target` over `duration` ms when in view
 function CountUp({ target, suffix = '', duration = 1400 }: { target: number; suffix?: string; duration?: number }) {
@@ -64,7 +64,7 @@ function useOfferDeadline() {
   return { deadline, expired }
 }
 
-function Countdown({ deadline, expired }: { deadline: number | null; expired: boolean }) {
+function Countdown({ deadline, expired, priceOriginal }: { deadline: number | null; expired: boolean; priceOriginal: number }) {
   const [parts, setParts] = useState({ d: 0, h: 0, m: 0, s: 0 })
 
   useEffect(() => {
@@ -87,7 +87,7 @@ function Countdown({ deadline, expired }: { deadline: number | null; expired: bo
   const pad = (n: number) => String(n).padStart(2, '0')
 
   if (expired) return (
-    <span className="text-[#F5A624] font-black text-sm">המחיר עלה ל-₪{contentD.pricing.price_original}</span>
+    <span className="text-[#F5A624] font-black text-sm">המחיר עלה ל-₪{priceOriginal}</span>
   )
   if (!deadline) return null
 
@@ -128,6 +128,8 @@ function FaqItem({ q, a, highlight = false }: { q: string; a: string; highlight?
 }
 
 export default function DDecision() {
+  const contentD = useContent()
+  const CHECKOUT_URL = useCheckoutUrl()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const { deadline, expired } = useOfferDeadline()

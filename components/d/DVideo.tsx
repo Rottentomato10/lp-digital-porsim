@@ -3,9 +3,10 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { VolumeX, Volume2, Maximize2 } from 'lucide-react'
-import { contentD } from '@/lib/content-d'
+import { useContent } from '@/lib/content-context'
 
 export default function DVideo() {
+  const contentD = useContent()
   const wrapperRef = useRef<HTMLDivElement>(null)
   const videoRef   = useRef<HTMLVideoElement>(null)
   const inView     = useInView(wrapperRef, { once: true, margin: '-120px' })

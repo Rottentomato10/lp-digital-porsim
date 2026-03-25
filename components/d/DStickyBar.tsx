@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck } from 'lucide-react'
 import Image from 'next/image'
-import { contentD, CHECKOUT_URL } from '@/lib/content-d'
+import { useContent, useCheckoutUrl } from '@/lib/content-context'
 
 export default function DStickyBar() {
+  const contentD = useContent()
+  const CHECKOUT_URL = useCheckoutUrl()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
