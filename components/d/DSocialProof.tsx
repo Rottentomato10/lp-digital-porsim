@@ -12,7 +12,7 @@ function Stars() {
   )
 }
 
-function ReviewCard({ review }: { review: { name: string; age: number; quote: string } }) {
+function ReviewCard({ review }: { review: { name: string; quote: string } }) {
   return (
     <div className="p-5 rounded-2xl bg-[#111111] border border-white/7 text-center h-full">
       <Stars />
@@ -21,7 +21,7 @@ function ReviewCard({ review }: { review: { name: string; age: number; quote: st
         <div className="w-6 h-6 rounded-full bg-white/8 flex items-center justify-center text-white/40 text-xs font-bold flex-shrink-0">
           {review.name[0]}
         </div>
-        <p className="text-white/50 text-xs">{review.name} · גיל {review.age}</p>
+        <p className="text-white/50 text-xs">{review.name}</p>
       </div>
     </div>
   )
@@ -90,7 +90,7 @@ export default function DSocialProof() {
               <div className="w-8 h-8 rounded-full bg-[#F5A624]/15 border border-[#F5A624]/25 flex items-center justify-center text-[#F5A624] text-xs font-black">
                 {contentD.socialProof.featured.name[0]}
               </div>
-              <p className="text-white/50 text-sm">{contentD.socialProof.featured.name} · גיל {contentD.socialProof.featured.age}</p>
+              <p className="text-white/50 text-sm">{contentD.socialProof.featured.name}</p>
             </div>
           </div>
         </motion.div>
