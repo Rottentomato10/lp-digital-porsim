@@ -27,6 +27,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="he" dir="rtl">
       <head>
+        {/* Microsoft Clarity */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "w1gn6mbhva");
+        `}} />
         {/* Google Tag Manager — replace GTM_ID before launch */}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
