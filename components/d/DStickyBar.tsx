@@ -28,10 +28,6 @@ export default function DStickyBar() {
         >
           <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
 
-            {/* Logo */}
-            <Image src="/logo.png" alt="פורשים כנף" width={32} height={32}
-              className="w-8 h-8 object-contain flex-shrink-0 hidden sm:block" />
-
             {/* Price */}
             <div className="flex items-baseline gap-2 flex-shrink-0">
               <span className="text-white/30 line-through text-sm">
