@@ -17,12 +17,7 @@ function ReviewCard({ review }: { review: { name: string; quote: string } }) {
     <div className="p-5 rounded-2xl bg-[#111111] border border-white/7 text-center h-full">
       <Stars />
       <p className="text-white/65 text-sm leading-relaxed mb-4">״{review.quote}״</p>
-      <div className="flex items-center justify-center gap-2">
-        <div className="w-6 h-6 rounded-full bg-white/8 flex items-center justify-center text-white/40 text-xs font-bold flex-shrink-0">
-          {review.name[0]}
-        </div>
-        <p className="text-white/50 text-xs">{review.name}</p>
-      </div>
+      <p className="text-white/50 text-xs">{review.name}</p>
     </div>
   )
 }
@@ -86,12 +81,7 @@ export default function DSocialProof() {
             <p className="text-white text-lg md:text-xl font-medium leading-relaxed mb-5 max-w-lg mx-auto">
               ״{contentD.socialProof.featured.quote}״
             </p>
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#F5A624]/15 border border-[#F5A624]/25 flex items-center justify-center text-[#F5A624] text-xs font-black">
-                {contentD.socialProof.featured.name[0]}
-              </div>
-              <p className="text-white/50 text-sm">{contentD.socialProof.featured.name}</p>
-            </div>
+            <p className="text-white/50 text-sm">{contentD.socialProof.featured.name}</p>
           </div>
         </motion.div>
 
