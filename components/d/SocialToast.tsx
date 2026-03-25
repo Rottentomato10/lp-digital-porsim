@@ -3,52 +3,107 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const TOASTS = [
-  { name: 'אמיר', city: 'תל אביב',      ago: 'לפני 2 דקות' },
-  { name: 'נועה',  city: 'חיפה',         ago: 'לפני 5 דקות' },
-  { name: 'יואב',  city: 'ירושלים',      ago: 'לפני 7 דקות' },
-  { name: 'שירה', city: 'באר שבע',      ago: 'לפני 11 דקות' },
-  { name: 'רון',   city: 'רמת גן',       ago: 'לפני 14 דקות' },
-  { name: 'דניאל', city: 'נתניה',        ago: 'לפני 18 דקות' },
-  { name: 'מיכל', city: 'פתח תקווה',    ago: 'לפני 23 דקות' },
-  { name: 'עומר',  city: 'אשדוד',        ago: 'לפני 26 דקות' },
-  { name: 'ליאת',  city: 'הרצליה',       ago: 'לפני 31 דקות' },
-  { name: 'גל',    city: 'ראשון לציון',  ago: 'לפני 35 דקות' },
+const NAMES = [
+  'א׳', 'ד׳', 'נ׳', 'י׳', 'ש׳', 'ר׳', 'מ׳', 'ע׳', 'ל׳', 'ג׳',
+  'ת׳', 'ה׳', 'ב׳', 'ח׳', 'כ׳', 'א׳', 'ו׳', 'צ׳', 'פ׳', 'ס׳',
 ]
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
 
 function randMs(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 export default function SocialToast() {
-  const [current, setCurrent] = useState<number | null>(null)
+  const [current, setCurrent] = useState<string | null>(null)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const poolRef = useRef<string[]>(shuffle(NAMES))
+  const idxRef = useRef(0)
+  const countRef = useRef(0)
+  const inZoneRef = useRef(false)
 
-  const showToast = useCallback((idx: number) => {
-    setCurrent(idx)
-    // Hide after 3–4s
+  const getNextName = useCallback(() => {
+    const name = poolRef.current[idxRef.current % poolRef.current.length]
+    idxRef.current++
+    // Reshuffle after going through all names
+    if (idxRef.current >= poolRef.current.length) {
+      poolRef.current = shuffle(NAMES)
+      idxRef.current = 0
+    }
+    return name
+  }, [])
+
+  const showToast = useCallback(() => {
+    if (!inZoneRef.current) return
+    const name = getNextName()
+    setCurrent(name)
+    countRef.current++
+
+    // Hide after 3-4s
     timerRef.current = setTimeout(() => {
       setCurrent(null)
-      // Wait random 12–25s before next
-      timerRef.current = setTimeout(() => {
-        showToast((idx + 1) % TOASTS.length)
-      }, randMs(12_000, 25_000))
-    }, randMs(3_000, 4_000))
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    }, randMs(3000, 4000))
+  }, [getNextName])
 
   useEffect(() => {
-    // First appearance after 12s
-    timerRef.current = setTimeout(() => showToast(0), 12_000)
-    return () => { if (timerRef.current) clearTimeout(timerRef.current) }
-  }, [showToast])
+    // Observe when user scrolls into the zone (between syllabus and FAQ)
+    const syllabusEl = document.getElementById('stage-1')
+    const pricingEl = document.getElementById('pricing')
 
-  const toast = current !== null ? TOASTS[current] : null
+    if (!syllabusEl || !pricingEl) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.target === syllabusEl && entry.isIntersecting) {
+            inZoneRef.current = true
+          }
+          if (entry.target === pricingEl && entry.isIntersecting) {
+            inZoneRef.current = false
+          }
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(syllabusEl)
+    observer.observe(pricingEl)
+
+    // First toast: random 8-15s after entering zone
+    const checkZone = setInterval(() => {
+      if (inZoneRef.current && countRef.current === 0) {
+        clearInterval(checkZone)
+        timerRef.current = setTimeout(() => showToast(), randMs(8000, 15000))
+      }
+    }, 1000)
+
+    // Second toast: after 4-5 minutes on page
+    const longTimer = setTimeout(() => {
+      if (countRef.current < 2) {
+        showToast()
+      }
+    }, randMs(240000, 300000))
+
+    return () => {
+      observer.disconnect()
+      clearInterval(checkZone)
+      clearTimeout(longTimer)
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
+  }, [showToast])
 
   return (
     <AnimatePresence>
-      {toast && (
+      {current && (
         <motion.div
-          key={current}
+          key={current + countRef.current}
           initial={{ opacity: 0, y: 20, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -59,14 +114,10 @@ export default function SocialToast() {
             className="flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3"
             style={{ background: 'rgba(12,12,12,0.95)', backdropFilter: 'blur(16px)' }}
           >
-            <div className="w-8 h-8 rounded-full bg-[#F5A624]/15 border border-[#F5A624]/25 flex items-center justify-center flex-shrink-0">
-              <span className="text-[#F5A624] text-xs font-black">{toast.name[0]}</span>
-            </div>
             <div className="leading-tight">
               <p className="text-white text-sm font-semibold">
-                {toast.name} <span className="text-white/40 font-normal">מ{toast.city}</span>
+                {current} הרגע הצטרף/ה לקורס
               </p>
-              <p className="text-white/35 text-xs mt-0.5">הצטרף לקורס · {toast.ago}</p>
             </div>
           </div>
         </motion.div>
