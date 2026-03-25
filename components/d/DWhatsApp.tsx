@@ -19,7 +19,7 @@ export default function DWhatsApp() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       aria-label="דברו איתנו בווטסאפ"
-      className="fixed bottom-20 left-5 z-50 flex items-center gap-2 group"
+      className="fixed bottom-5 right-5 z-50 flex items-center gap-2 group"
     >
       {/* Label */}
       <span
