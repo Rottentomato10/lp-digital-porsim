@@ -13,6 +13,7 @@ import DDecision        from '@/components/d/DDecision'
 import DFooter          from '@/components/d/DFooter'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 import DCookieConsent   from '@/components/d/DCookieConsent'
+import DWhatsApp        from '@/components/d/DWhatsApp'
 
 export const metadata = {
   title: 'פורשים כנף — קורס פיננסים לצעירים',
@@ -37,6 +38,7 @@ export default function Home() {
       <DFooter />
       <AccessibilityWidget />
       <DCookieConsent />
+      <DWhatsApp />
     </main>
   )
 }
