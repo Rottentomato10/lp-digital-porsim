@@ -17,7 +17,7 @@ export default function N2Decision() {
           className="grid md:grid-cols-2 gap-6"
         >
           {/* For you */}
-          <div className="p-6 md:p-8 rounded-2xl bg-[#101010] border border-[#F5A624]/20">
+          <div className="p-5 xs:p-6 md:p-8 rounded-2xl bg-[#101010] border border-[#F5A624]/20">
             <h3 className="text-[#F5A624] font-bold text-xl md:text-2xl mb-5">זה בשבילך אם:</h3>
             <div className="space-y-3">
               {[
@@ -34,7 +34,7 @@ export default function N2Decision() {
           </div>
 
           {/* Not for you */}
-          <div className="p-6 md:p-8 rounded-2xl bg-[#101010] border border-white/7">
+          <div className="p-5 xs:p-6 md:p-8 rounded-2xl bg-[#101010] border border-white/7">
             <h3 className="text-white/40 font-bold text-xl md:text-2xl mb-5">זה לא בשבילך אם:</h3>
             <div className="space-y-3">
               {[

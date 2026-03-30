@@ -111,7 +111,7 @@ export default function N2FAQ() {
         <div className="text-center my-10">
           <p className="text-white/40 text-lg mb-4">אם זה ענה לך — פשוט תתחיל</p>
           <a href={CHECKOUT_URL}
-            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg px-10 py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
+            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-base xs:text-lg px-7 xs:px-10 py-3.5 xs:py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             אני מתחיל עכשיו
           </a>
         </div>

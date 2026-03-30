@@ -12,9 +12,9 @@ export default function N4Vision() {
       <div className="max-w-3xl mx-auto px-5">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="p-8 md:p-12 rounded-3xl border border-[#F5A624]/20 bg-[#0D0B00]">
+          className="p-5 xs:p-8 md:p-12 rounded-3xl border border-[#F5A624]/20 bg-[#0D0B00]">
 
-          <h3 className="text-[#F5A624] font-black text-3xl md:text-4xl mb-8">
+          <h3 className="text-[#F5A624] font-black text-2xl xs:text-3xl md:text-4xl mb-6 xs:mb-8">
             עכשיו תדמיין מצב אחר לגמרי:
           </h3>
           <div className="space-y-6 text-white/70 text-xl md:text-2xl leading-relaxed">

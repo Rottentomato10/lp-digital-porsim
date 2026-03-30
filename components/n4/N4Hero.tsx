@@ -51,7 +51,7 @@ export default function N4Hero() {
           </h1>
         </div>
 
-        <p className="text-center text-white/60 text-xl md:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto">
+        <p className="text-center text-white/60 text-lg xs:text-xl md:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto">
           אתה מרוויח כסף.
           <br />אבל עמוק בפנים אתה יודע — אתה לא באמת שולט בו.
           <br />אף אחד לא לימד אותך איך כסף עובד.
@@ -89,7 +89,7 @@ export default function N4Hero() {
 
         <div className="text-center">
           <a href={CHECKOUT_URL}
-            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-xl px-12 py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
+            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             אני מתחיל עכשיו
           </a>
         </div>

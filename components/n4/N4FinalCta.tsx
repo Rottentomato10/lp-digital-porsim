@@ -18,14 +18,14 @@ export default function N4FinalCta() {
             אם הגעת עד כאן —
             <br />זה כבר לא עניין של הבנה.
           </p>
-          <p className="text-white font-black text-3xl md:text-4xl mb-3">
+          <p className="text-white font-black text-2xl xs:text-3xl md:text-4xl mb-3">
             זה עניין של החלטה.
           </p>
           <p className="text-white/40 text-lg mb-8">
             ₪390 · גישה לכל החיים
           </p>
           <a href={CHECKOUT_URL}
-            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-xl px-12 py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
+            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             אני מתחיל עכשיו
           </a>
         </motion.div>

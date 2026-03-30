@@ -82,7 +82,7 @@ export default function N4Pricing() {
             </div>
           )}
 
-          <div className="p-8 md:p-12">
+          <div className="p-5 xs:p-8 md:p-12">
 
             {/* Price */}
             <div className="text-center mb-6">
@@ -104,7 +104,7 @@ export default function N4Pricing() {
 
             {/* CTA */}
             <a href={CHECKOUT_URL}
-              className="cta-glow block w-full text-center bg-[#F5A624] text-black font-black text-xl py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
+              className="cta-glow block w-full text-center bg-[#F5A624] text-black font-black text-lg xs:text-xl py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
               אני מתחיל עכשיו
             </a>
             <p className="text-center text-white/25 text-sm mb-10">🔒 תשלום מאובטח</p>
@@ -115,10 +115,10 @@ export default function N4Pricing() {
               <div className="space-y-4">
                 {VALUE_ITEMS.map((item, i) => (
                   <div key={i}>
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2">
-                        <Check size={14} className="text-[#F5A624] flex-shrink-0" />
-                        <span className="text-white/70 text-base">{item.label}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start gap-2 min-w-0">
+                        <Check size={14} className="text-[#F5A624] flex-shrink-0 mt-1" />
+                        <span className="text-white/70 text-sm xs:text-base">{item.label}</span>
                       </div>
                       <span className="text-white/30 text-sm flex-shrink-0">₪{item.value}</span>
                     </div>
@@ -139,7 +139,7 @@ export default function N4Pricing() {
             </div>
 
             {/* Guarantee */}
-            <div className="p-6 md:p-8 rounded-2xl border border-[#F5A624]/25 bg-[#F5A624]/5">
+            <div className="p-5 xs:p-6 md:p-8 rounded-2xl border border-[#F5A624]/25 bg-[#F5A624]/5">
               <div className="flex items-center gap-3 mb-4">
                 <ShieldCheck size={24} className="text-[#F5A624] flex-shrink-0" />
                 <p className="text-[#F5A624] text-lg font-black">אחריות מלאה — 7 ימים</p>

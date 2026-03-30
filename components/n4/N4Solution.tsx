@@ -67,7 +67,7 @@ export default function N4Solution() {
         {/* Outcomes */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="p-8 md:p-10 rounded-2xl bg-[#101010] border border-white/7 mb-14">
+          className="p-5 xs:p-8 md:p-10 rounded-2xl bg-[#101010] border border-white/7 mb-14">
           <h3 className="text-white font-bold text-2xl md:text-3xl mb-6">מה אתה יוצא עם זה בפועל</h3>
           <div className="space-y-4">
             {OUTCOMES.map((item, i) => (
@@ -90,7 +90,7 @@ export default function N4Solution() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.35 }} className="space-y-4">
           {STAGES.map((stage, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden border p-6 md:p-8"
+            <div key={i} className="rounded-2xl overflow-hidden border p-4 xs:p-6 md:p-8"
               style={{ borderColor: `${stage.color}25`, background: `linear-gradient(135deg, ${stage.color}08 0%, #141414 100%)` }}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-xs font-bold px-3 py-1 rounded-full" style={{ background: `${stage.color}18`, color: stage.color }}>

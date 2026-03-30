@@ -72,6 +72,10 @@ export function AccessibilityWidget() {
         // Invalid JSON, use defaults
       }
     }
+    // Listen for open event from sticky bar
+    const handler = () => setIsOpen(true)
+    window.addEventListener('open-accessibility', handler)
+    return () => window.removeEventListener('open-accessibility', handler)
   }, [])
 
   useEffect(() => {
@@ -138,25 +142,12 @@ export function AccessibilityWidget() {
 
   return (
     <>
-      {/* Accessibility Button */}
+      {/* Accessibility Button — hidden, triggered via sticky bar */}
       <button
         onClick={() => setIsOpen(true)}
         aria-label="פתח תפריט נגישות"
         style={{
-          position: 'fixed',
-          bottom: '76px',
-          right: '24px',
-          width: '44px',
-          height: '44px',
-          background: 'var(--card-bg)',
-          border: '1px solid rgba(255, 255, 255, 0.15)',
-          borderRadius: '50%',
-          color: '#b586ff',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
+          display: 'none',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
           transition: 'all 0.2s',
         }}

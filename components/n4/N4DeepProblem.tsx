@@ -21,7 +21,7 @@ export default function N4DeepProblem() {
           transition={{ duration: 0.6 }} className="space-y-16">
 
           <div>
-            <h3 className="text-white font-bold text-3xl md:text-4xl mb-5">הכסף נעלם</h3>
+            <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">הכסף נעלם</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
               אתה מרוויח. אתה מוציא. בסוף החודש אתה מסתכל על החשבון ולא מבין לאן הכל הלך.
             </p>
@@ -36,7 +36,7 @@ export default function N4DeepProblem() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold text-3xl md:text-4xl mb-5">את המשכורת שלך אתה לא באמת מבין</h3>
+            <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">את המשכורת שלך אתה לא באמת מבין</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
               ברוטו, נטו, מס הכנסה, ביטוח לאומי, קרן פנסיה, קרן השתלמות —
               מישהו פעם הסביר לך מה כל אלה?
@@ -52,7 +52,7 @@ export default function N4DeepProblem() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold text-3xl md:text-4xl mb-5">ההשקעות מרגישות כמו שפה אחרת</h3>
+            <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">ההשקעות מרגישות כמו שפה אחרת</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
               מניות, אג"ח, S&P500, קרנות סל, ריבית דריבית —
               שמעת את כל המילים האלה. ראית את הפוסטים באינסטגרם.
@@ -68,7 +68,7 @@ export default function N4DeepProblem() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold text-3xl md:text-4xl mb-5">התחושה שאתה מפספס</h3>
+            <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">התחושה שאתה מפספס</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
               אתה רואה אנשים סביבך שמדברים על השקעות, על חיסכון, על &quot;לעשות את הכסף עובד&quot;.
               ואתה מרגיש שאתה מאחור.
@@ -80,7 +80,7 @@ export default function N4DeepProblem() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold text-3xl md:text-4xl mb-5">וכל חודש שעובר — זה עולה לך</h3>
+            <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">וכל חודש שעובר — זה עולה לך</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
               זה לא דרמה. זו מתמטיקה.
               ריבית דריבית עובדת גם נגדך.
@@ -99,7 +99,7 @@ export default function N4DeepProblem() {
           className="mt-16 text-center">
           <p className="text-white/40 text-xl md:text-2xl mb-6">אם זה מרגיש לך מוכר — זה בדיוק בשבילך</p>
           <a href={CHECKOUT_URL}
-            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-xl px-12 py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
+            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             תן לי להבין כסף עכשיו
           </a>
         </motion.div>
