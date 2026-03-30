@@ -43,7 +43,7 @@ export default function N4Hero() {
         <div className="text-center mb-8">
           <h1 className="font-black text-white leading-[1.1] tracking-tight"
             style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)' }}>
-            תלמד לנהל כסף נכון תוך 3 שעות —
+            תתחיל לשלוט בכסף שלך באמת —
             <br /><span style={{
               background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
