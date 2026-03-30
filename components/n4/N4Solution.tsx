@@ -48,18 +48,16 @@ export default function N4Solution() {
           ))}
         </motion.div>
 
-        {/* 3 Steps */}
+        {/* 3 Steps — horizontal on desktop, RTL: right to left */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }} className="space-y-10 mb-14">
+          transition={{ duration: 0.6, delay: 0.1 }} className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
           {STEPS.map((step) => (
-            <div key={step.num} className="flex gap-5">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#F5A624]/15 border border-[#F5A624]/25 flex items-center justify-center">
+            <div key={step.num} className="text-center p-6 rounded-2xl border border-white/8 bg-[#111111]">
+              <div className="w-12 h-12 rounded-full bg-[#F5A624]/15 border border-[#F5A624]/25 flex items-center justify-center mx-auto mb-4">
                 <span className="text-[#F5A624] font-black">{step.num}</span>
               </div>
-              <div>
-                <h3 className="text-white font-bold text-2xl md:text-3xl mb-3">{step.title}</h3>
-                <p className="text-white/60 text-xl md:text-2xl leading-relaxed whitespace-pre-line">{step.desc}</p>
-              </div>
+              <h3 className="text-white font-bold text-xl md:text-2xl mb-3">{step.title}</h3>
+              <p className="text-white/60 text-base md:text-lg leading-relaxed whitespace-pre-line">{step.desc}</p>
             </div>
           ))}
         </motion.div>

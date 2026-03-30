@@ -14,7 +14,6 @@ export default function N4Team() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="text-center mb-10">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">מי אנחנו</span>
           <Image src="/logo.png" alt="פורשים כנף" width={200} height={200}
             className="w-36 h-36 md:w-44 md:h-44 object-contain mx-auto my-6 drop-shadow-[0_0_40px_rgba(245,166,36,0.4)]" />
         </motion.div>
