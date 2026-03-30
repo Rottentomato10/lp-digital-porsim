@@ -142,12 +142,25 @@ export function AccessibilityWidget() {
 
   return (
     <>
-      {/* Accessibility Button — hidden, triggered via sticky bar */}
+      {/* Accessibility Button — pinned right, above sticky bar */}
       <button
         onClick={() => setIsOpen(true)}
         aria-label="פתח תפריט נגישות"
         style={{
-          display: 'none',
+          position: 'fixed',
+          bottom: '56px',
+          right: '12px',
+          zIndex: 998,
+          width: '36px',
+          height: '36px',
+          background: 'rgba(20,15,35,0.9)',
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '50%',
+          color: '#b586ff',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
           transition: 'all 0.2s',
         }}
