@@ -144,8 +144,8 @@ export function AccessibilityWidget() {
         aria-label="פתח תפריט נגישות"
         style={{
           position: 'fixed',
-          bottom: '20px',
-          left: '20px',
+          bottom: '76px',
+          right: '24px',
           width: '44px',
           height: '44px',
           background: 'var(--card-bg)',
@@ -176,15 +176,15 @@ export function AccessibilityWidget() {
           style={{
             position: 'fixed',
             top: 0,
-            left: 0,
+            right: 0,
             width: '280px',
             maxWidth: '85vw',
             height: '100vh',
             background: 'rgba(14,10,28,0.97)',
-            borderRight: '1px solid rgba(255,255,255,0.1)',
+            borderLeft: '1px solid rgba(255,255,255,0.1)',
             zIndex: 9999,
             overflowY: 'auto',
-            boxShadow: '4px 0 24px rgba(0,0,0,0.6)',
+            boxShadow: '-4px 0 24px rgba(0,0,0,0.6)',
             backdropFilter: 'blur(12px)',
             animation: 'a11ySlideIn 0.25s ease-out',
           }}
