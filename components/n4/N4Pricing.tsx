@@ -98,9 +98,15 @@ export default function N4Pricing() {
             </div>
 
             {/* ROI line */}
-            <p className="text-center text-white/40 text-base md:text-lg mb-8">
+            <p className="text-center text-white/40 text-base md:text-lg mb-4">
               תכלס? זה פחות ממה שטעות אחת בכסף יכולה לעלות לך.
             </p>
+
+            {/* For/not for — inside pricing */}
+            <div className="flex flex-col xs:flex-row items-center justify-center gap-2 xs:gap-4 mb-8 text-sm md:text-base">
+              <span className="text-white/30">✘ לא בשבילך אם אתה מחפש להתעשר מהר</span>
+              <span className="text-[#F5A624]/60">✔ כן בשבילך אם אתה רוצה להבין כסף באמת</span>
+            </div>
 
             {/* CTA */}
             <a href={CHECKOUT_URL}

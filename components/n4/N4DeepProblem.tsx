@@ -89,6 +89,9 @@ export default function N4DeepProblem() {
               מישהו שמתחיל להשקיע בגיל 20 עם סכום קטן כל חודש — מגיע למקום אחר לגמרי ממישהו שמתחיל בגיל 30.
               לא קצת אחר. <span className="text-[#F5A624] font-bold">אחר לגמרי.</span>
             </p>
+            <p className="text-white/60 text-xl md:text-2xl leading-relaxed mt-4">
+              ההבדל בין להתחיל להשקיע 500 ₪ בחודש בגיל 22 לבין להתחיל בגיל 32 הוא לא כמה אלפי שקלים — זה יכול להיות ההבדל בין דירה לבין חלום על דירה.
+            </p>
             <p className="text-white/50 text-xl md:text-2xl leading-relaxed mt-6">
               השאלה היא לא אם תטפל בזה — אלא מתי.
             </p>
