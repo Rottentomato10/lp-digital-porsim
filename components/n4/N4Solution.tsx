@@ -5,8 +5,8 @@ import { motion, useInView } from 'framer-motion'
 
 const STEPS = [
   { num: 1, title: 'להבין', desc: 'איך כסף עובד באמת\n(משכורת, מסים, בנקים)\nבלי מילים גבוהות. בלי סיבוכים.' },
-  { num: 2, title: 'לשלוט', desc: 'שיטה פשוטה לניהול כסף\nשאתה באמת יכול ליישם.\nלדעת לאן כל שקל הולך.' },
-  { num: 3, title: 'לגרום לכסף לעבוד', desc: 'השקעות. שוק ההון. מדדים.\nבלי פחד. בלי בלבול.' },
+  { num: 2, title: 'לגרום לכסף לעבוד', desc: 'השקעות. שוק ההון. מדדים.\nבלי פחד. בלי בלבול.' },
+  { num: 3, title: 'לשלוט', desc: 'שיטה פשוטה לניהול כסף\nשאתה באמת יכול ליישם.\nלדעת לאן כל שקל הולך.' },
 ]
 
 const OUTCOMES = [
@@ -66,7 +66,7 @@ export default function N4Solution() {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="p-5 xs:p-8 md:p-10 rounded-2xl bg-[#101010] border border-white/7 mb-14">
-          <h3 className="text-white font-bold text-2xl md:text-3xl mb-6">מה אתה יוצא עם זה בפועל</h3>
+          <h3 className="text-white font-bold text-2xl md:text-3xl mb-6">עם מה אתה יוצא בפועל?</h3>
           <div className="space-y-4">
             {OUTCOMES.map((item, i) => (
               <div key={i} className="flex items-start gap-3">

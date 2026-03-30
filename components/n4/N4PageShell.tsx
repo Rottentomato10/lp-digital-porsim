@@ -7,7 +7,7 @@ import N4Hero from './N4Hero'
 import N4SalesPitch from './N4SalesPitch'
 import N4DeepProblem from './N4DeepProblem'
 import N4Vision from './N4Vision'
-import N1Mindshift from '@/components/n1/N1Mindshift'
+import N4Mindshift from './N4Mindshift'
 import N4Solution from './N4Solution'
 import N2Decision from '@/components/n2/N2Decision'
 import N4MiniClose from './N4MiniClose'
@@ -37,7 +37,7 @@ export default function N4PageShell({ content, checkoutUrl }: { content: Content
         {/* Vision: with mockups, ends with insight */}
         <N4Vision />
         {/* Mindshift */}
-        <N1Mindshift />
+        <N4Mindshift />
         {/* Solution: steps + outcomes + syllabus + "what's different" badges */}
         <N4Solution />
         {/* Decision helper */}
