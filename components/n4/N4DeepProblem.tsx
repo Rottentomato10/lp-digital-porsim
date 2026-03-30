@@ -70,7 +70,7 @@ export default function N4DeepProblem() {
           <div>
             <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">התחושה שאתה מפספס</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
-              אתה רואה אנשים סביבך שמדברים על השקעות, על חיסכון, על &quot;לעשות את הכסף עובד&quot;.
+              אתה רואה אנשים סביבך שמדברים על השקעות, על חיסכון, על &quot;שהכסף יעבוד בשבילך&quot;.
               ואתה מרגיש שאתה מאחור.
             </p>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed mt-4">
