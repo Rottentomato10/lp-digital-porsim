@@ -148,7 +148,7 @@ export function AccessibilityWidget() {
         aria-label="פתח תפריט נגישות"
         style={{
           position: 'fixed',
-          bottom: '56px',
+          bottom: '10px',
           right: '12px',
           zIndex: 998,
           width: '36px',
