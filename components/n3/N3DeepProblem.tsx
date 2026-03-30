@@ -10,7 +10,7 @@ export default function N3DeepProblem() {
   const CHECKOUT_URL = useCheckoutUrl()
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
+    <section ref={ref} className="pb-16 md:pb-24 pt-8 md:pt-10 bg-[#080808]">
       <div className="max-w-3xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-12">

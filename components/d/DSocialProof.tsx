@@ -58,12 +58,14 @@ export default function DSocialProof() {
       <div className="max-w-3xl mx-auto px-5">
 
         {/* Eyebrow */}
-        <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-          className="text-center mb-10">
-          <span className="t-eyebrow">
-            {contentD.socialProof.eyebrow}
-          </span>
-        </motion.div>
+        {contentD.socialProof.eyebrow && (
+          <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+            className="text-center mb-10">
+            <span className="t-eyebrow">
+              {contentD.socialProof.eyebrow}
+            </span>
+          </motion.div>
+        )}
 
         {/* Featured */}
         <motion.div
@@ -93,7 +95,7 @@ export default function DSocialProof() {
           className="grid grid-cols-2 gap-4"
         >
           {slots.map((reviewIdx, pos) => (
-            <div key={pos} className="relative" style={{ minHeight: '160px' }}>
+            <div key={pos} className="relative" style={{ minHeight: '200px' }}>
               <AnimatePresence>
                 <motion.div
                   key={reviewIdx}

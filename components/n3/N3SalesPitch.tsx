@@ -8,7 +8,7 @@ export default function N3SalesPitch() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
+    <section ref={ref} className="pb-8 md:pb-10 pt-16 md:pt-24 bg-[#080808]">
       <div className="max-w-3xl mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
