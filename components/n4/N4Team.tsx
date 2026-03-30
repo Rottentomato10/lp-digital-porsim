@@ -46,8 +46,8 @@ export default function N4Team() {
         {/* Founders */}
         <div className="grid grid-cols-2 gap-10 md:gap-20 justify-items-center mt-14">
           {[
-            { name: 'דקל קאפח', role: 'מייסד שותף · פורשים כנף', bio: 'משפט קצר על הרקע ומה מביא לכאן.', image: null as string | null },
-            { name: 'אביתר דנגור', role: 'מייסד שותף · פורשים כנף', bio: 'משפט קצר על הרקע ומה מביא לכאן.', image: null as string | null },
+            { name: 'דקל קאפח', role: 'מייסד שותף · פורשים כנף', bio: 'כאן צריך לכתוב כמה שורות על הרקע האישי,\nמה הדרך שהובילה לכאן,\nלמה חינוך פיננסי חשוב לו,\nומה הוא מביא לפורשים כנף.', image: null as string | null },
+            { name: 'אביתר דנגור', role: 'מייסד שותף · פורשים כנף', bio: 'כאן צריך לכתוב כמה שורות על הרקע האישי,\nמה הדרך שהובילה לכאן,\nלמה חינוך פיננסי חשוב לו,\nומה הוא מביא לפורשים כנף.', image: null as string | null },
           ].map((person, i) => (
             <motion.div key={i}
               initial={{ opacity: 0, y: 28 }}
@@ -67,7 +67,7 @@ export default function N4Team() {
               <div>
                 <p className="text-white font-bold text-lg">{person.name}</p>
                 <p className="text-[#F5A624]/70 text-sm font-medium mt-0.5">{person.role}</p>
-                <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto">{person.bio}</p>
+                <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto whitespace-pre-line">{person.bio}</p>
               </div>
             </motion.div>
           ))}
