@@ -17,7 +17,6 @@ import DDecision        from './DDecision'
 import DFooter          from './DFooter'
 import { AccessibilityWidget } from './AccessibilityWidget'
 import DCookieConsent   from './DCookieConsent'
-import DWhatsApp        from './DWhatsApp'
 
 export default function DPageShell({ content, checkoutUrl }: { content: ContentType; checkoutUrl?: string }) {
   return (
@@ -38,7 +37,6 @@ export default function DPageShell({ content, checkoutUrl }: { content: ContentT
         <DFooter />
         <AccessibilityWidget />
         <DCookieConsent />
-        <DWhatsApp />
       </main>
     </VariantProvider>
   )

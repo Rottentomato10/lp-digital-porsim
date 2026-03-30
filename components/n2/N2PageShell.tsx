@@ -20,7 +20,6 @@ import DStickyBar from '@/components/d/DStickyBar'
 import SocialToast from '@/components/d/SocialToast'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 import DCookieConsent from '@/components/d/DCookieConsent'
-import DWhatsApp from '@/components/d/DWhatsApp'
 
 export default function N2PageShell({ content, checkoutUrl }: { content: ContentType; checkoutUrl?: string }) {
   return (
@@ -43,7 +42,6 @@ export default function N2PageShell({ content, checkoutUrl }: { content: Content
         <DFooter />
         <AccessibilityWidget />
         <DCookieConsent />
-        <DWhatsApp />
       </main>
     </VariantProvider>
   )
