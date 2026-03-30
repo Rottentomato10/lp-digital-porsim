@@ -37,24 +37,26 @@ export default function N1Hero() {
     <section className="relative bg-[#080808] overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 pt-8 pb-12">
 
-        {/* Logo + headline row */}
-        <div className="flex items-center gap-4 mb-6">
-          <Image src="/logo.png" alt="פורשים כנף" width={56} height={56}
-            className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0" priority />
-          <div>
-            <h1 className="font-black text-white leading-tight"
-              style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)' }}>
-              {contentD.hero.headline_1}
-            </h1>
-            <h1 className="font-black leading-tight"
-              style={{
-                fontSize: 'clamp(1.8rem, 5vw, 3.2rem)',
-                background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              }}>
-              {contentD.hero.headline_2}
-            </h1>
-          </div>
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <Image src="/logo.png" alt="פורשים כנף" width={120} height={120}
+            className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-[0_0_40px_rgba(245,166,36,0.4)]" priority />
+        </div>
+
+        {/* Headline — centered, big */}
+        <div className="text-center mb-8">
+          <h1 className="font-black text-white leading-[1.08] tracking-tight"
+            style={{ fontSize: 'clamp(2.6rem, 6.5vw, 5.2rem)' }}>
+            {contentD.hero.headline_1}
+          </h1>
+          <h1 className="font-black leading-[1.08] tracking-tight"
+            style={{
+              fontSize: 'clamp(2.6rem, 6.5vw, 5.2rem)',
+              background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            }}>
+            {contentD.hero.headline_2}
+          </h1>
         </div>
 
         {/* Video — prominent, first screen */}
@@ -106,7 +108,7 @@ export default function N1Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-white/60 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl whitespace-pre-line">
+          className="text-white/60 text-xl md:text-2xl leading-relaxed mb-8 max-w-2xl whitespace-pre-line">
           {contentD.hero.sub}
         </motion.p>
 
