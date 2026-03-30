@@ -30,8 +30,7 @@ export default function N4SalesPitch() {
             <br />ומצפים ממך לדעת מה לעשות איתה.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            לא כי אתה לא מסוגל —
-            <br />כי אף אחד לא טרח להסביר לך.
+            אבל איך תדע, אם אף אחד מעולם לא טרח להסביר לך?
           </p>
 
           <div className="h-px bg-gradient-to-r from-transparent via-[#F5A624]/30 to-transparent my-4" />
