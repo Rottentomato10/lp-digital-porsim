@@ -14,7 +14,7 @@ export default function N4DeepProblem() {
       <div className="max-w-3xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-12">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">אולי זה מוכר לך</span>
+          <span className="text-[#F5A624] font-semibold text-base md:text-lg tracking-widest uppercase">אולי זה מוכר לך</span>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -28,7 +28,7 @@ export default function N4DeepProblem() {
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed mt-4">
               זה לא בגלל שאתה מבזבז — זה בגלל שאין לך שיטה.
               אף אחד לא לימד אותך לבנות תקציב שבאמת עובד.
-              לא כזה שגורם לך להרגיש רע — כזה שנותן לך שליטה.
+              לא כזה שגורם לך להרגיש חנוק — כזה שנותן לך שליטה.
             </p>
             <p className="text-white font-medium text-xl md:text-2xl leading-relaxed mt-4">
               בלי שיטה, אתה תמיד תרגיש שהכסף שולט בך — ולא ההפך.
@@ -44,7 +44,7 @@ export default function N4DeepProblem() {
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed mt-4">
               רוב האנשים לא יודעים לקרוא את תלוש השכר שלהם.
               הם לא יודעים אם הם מקבלים את מה שמגיע להם.
-              הם לא יודעים אם המעסיק מפריש מה שצריך.
+              הם לא יודעים אם המעסיק מפריש להם מה שצריך.
             </p>
             <p className="text-white font-medium text-xl md:text-2xl leading-relaxed mt-4">
               וזה לא סתם בורות — זה כסף אמיתי שאתה מפסיד כל חודש.
@@ -82,7 +82,7 @@ export default function N4DeepProblem() {
           <div>
             <h3 className="text-white font-bold text-2xl xs:text-3xl md:text-4xl mb-5">וכל חודש שעובר — זה עולה לך</h3>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed">
-              זה לא דרמה. זו מתמטיקה.
+              זו לא דרמה. זו מתמטיקה.
               ריבית דריבית עובדת גם נגדך.
             </p>
             <p className="text-white/60 text-xl md:text-2xl leading-relaxed mt-4">

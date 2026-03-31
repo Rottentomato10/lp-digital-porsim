@@ -37,16 +37,16 @@ export default function N4Team() {
           <p className="text-white/60 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto">
             ״פורשים כנף״ נולדה מתוך תשוקה אמיתית לשינוי ומתוך הבנה שכל צעיר וצעירה בישראל הם בעצם ״מנכ״לים״ של העסק החשוב ביותר בחייהם: משק הבית שלהם.
           </p>
-          <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
             ב-5 השנים האחרונות אנחנו פועלים יום-יום בשטח, מעבירים סדנאות חינוך פיננסי בבתי ספר ובמסגרות חינוכיות בכל רחבי הארץ. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
           </p>
-          <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
             אנחנו עושים את זה כי אנחנו מאמינים שחינוך פיננסי הוא הבסיס להכל: הבסיס לחוסן האישי שלכם, הבסיס לעוצמה הכלכלית שלנו כעם, והמפתח לעתיד טוב וציוני יותר כאן בישראל.
           </p>
-          <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
             החזון שלנו הוא פשוט: שכל צעיר וצעירה בישראל יחזיקו בידע ובכלים שיאפשרו להם לפרוש כנף בביטחון, לקבל החלטות חכמות ולבנות לעצמם חיים של חופש ובחירה.
           </p>
-          <p className="text-white/40 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
             הקורס הזה הוא לא רק ידע – הוא השליחות שלנו, מונגשת אליכם לכל מקום ובכל זמן.
           </p>
         </motion.div>

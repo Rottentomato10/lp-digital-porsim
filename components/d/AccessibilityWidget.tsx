@@ -149,7 +149,7 @@ export function AccessibilityWidget() {
         style={{
           position: 'fixed',
           bottom: '10px',
-          right: '12px',
+          left: '12px',
           zIndex: 998,
           width: '36px',
           height: '36px',

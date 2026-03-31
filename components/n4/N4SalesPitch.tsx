@@ -14,7 +14,7 @@ export default function N4SalesPitch() {
           transition={{ duration: 0.6 }} className="space-y-8">
 
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            בוא נהיה כנים לרגע.
+            בוא נהיה כנים רגע.
           </p>
           <p className="text-white text-2xl md:text-3xl leading-relaxed font-medium">
             אתה לא טיפש.
@@ -22,7 +22,7 @@ export default function N4SalesPitch() {
             <br />ואתה לא &quot;גרוע עם כסף&quot;.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            פשוט אף אחד לא לימד אותך איך לנהל אותו.
+            פשוט אף אחד לא לימד אותך את חוקי המשחק.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
             12 שנים של לימודים — ואפס שעות על כסף.
@@ -30,7 +30,7 @@ export default function N4SalesPitch() {
             <br />ומצפים ממך לדעת מה לעשות איתה.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            אבל איך תדע, אם אף אחד מעולם לא טרח להסביר לך?
+            אבל איך תדע? אף אחד לא טרח להסביר לך!
           </p>
 
           <div className="h-px bg-gradient-to-r from-transparent via-[#F5A624]/30 to-transparent my-4" />
