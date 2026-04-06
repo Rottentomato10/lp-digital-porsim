@@ -35,9 +35,20 @@ export default function N5Hero() {
   return (
     <section className="relative bg-[#080808] overflow-hidden">
       <div className="max-w-4xl mx-auto px-5 pt-8 pb-12">
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-4">
           <Image src="/logo.png" alt="פורשים כנף" width={120} height={120}
             className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-[0_0_40px_rgba(245,166,36,0.4)]" priority />
+        </div>
+
+        {/* Social proof badge — under logo, above eyebrow */}
+        <div className="flex items-center justify-center mb-5 px-4">
+          <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
+            <span className="text-white/50 text-sm font-semibold">15,000+ תלמידים</span>
+            <span className="text-white/15">·</span>
+            <span className="text-white/50 text-sm font-semibold">94% שביעות רצון</span>
+            <span className="text-white/15">·</span>
+            <span className="text-white/50 text-sm font-semibold">5+ שנות פעילות</span>
+          </div>
         </div>
 
         <div className="text-center mb-8">
@@ -52,15 +63,6 @@ export default function N5Hero() {
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>גם אם אין לך מושג מאיפה להתחיל</span>
           </h1>
-          <div className="flex items-center justify-center gap-3 xs:gap-5 mt-6 px-4">
-            <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
-              <span className="text-white/50 text-sm font-semibold">15,000+ תלמידים</span>
-              <span className="text-white/15">·</span>
-              <span className="text-white/50 text-sm font-semibold">94% שביעות רצון</span>
-              <span className="text-white/15">·</span>
-              <span className="text-white/50 text-sm font-semibold">5+ שנות פעילות</span>
-            </div>
-          </div>
         </div>
 
         <p className="text-center text-white/60 text-lg xs:text-xl md:text-2xl leading-relaxed mb-8 max-w-2xl mx-auto">
