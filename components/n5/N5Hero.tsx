@@ -52,10 +52,14 @@ export default function N5Hero() {
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>גם אם אין לך מושג מאיפה להתחיל</span>
           </h1>
-          <div className="flex items-center justify-center gap-4 mt-4">
-            <span className="text-white/30 text-sm font-medium">15,000+ תלמידים</span>
-            <span className="text-white/15">·</span>
-            <span className="text-white/30 text-sm font-medium">94% שביעות רצון</span>
+          <div className="flex items-center justify-center gap-3 xs:gap-5 mt-6 px-4">
+            <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
+              <span className="text-white/50 text-sm font-semibold">15,000+ תלמידים</span>
+              <span className="text-white/15">·</span>
+              <span className="text-white/50 text-sm font-semibold">94% שביעות רצון</span>
+              <span className="text-white/15">·</span>
+              <span className="text-white/50 text-sm font-semibold">5+ שנות פעילות</span>
+            </div>
           </div>
         </div>
 
