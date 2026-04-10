@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-const WHATSAPP_NUMBER = '' // ← הוסף מספר כאן
+const WHATSAPP_NUMBER = '9720537282727'
 
 export default function DWhatsApp() {
   const [hovered, setHovered] = useState(false)

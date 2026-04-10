@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useContent, useCheckoutUrl } from '@/lib/content-context'
 
-const WHATSAPP_NUMBER = '' // ← הוסף מספר כאן
+const WHATSAPP_NUMBER = '9720537282727'
 
 export default function DStickyBar() {
   const contentD = useContent()
