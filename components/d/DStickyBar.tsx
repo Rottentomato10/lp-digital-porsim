@@ -18,7 +18,7 @@ export default function DStickyBar() {
   }, [])
 
   const waHref = WHATSAPP_NUMBER
-    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('היי, אשמח לשמוע עוד על הקורס 🙂')}`
+    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('היי, יש לי כמה שאלות בנוגע לקורס הדיגיטלי')}`
     : '#'
 
   return (
