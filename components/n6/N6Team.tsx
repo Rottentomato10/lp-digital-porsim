@@ -19,16 +19,35 @@ export default function N6Team() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }} className="space-y-5 text-center">
+          transition={{ duration: 0.6, delay: 0.1 }} className="space-y-6 text-center">
 
-          <p className="text-white/55 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto">
-            ״פורשים כנף״ נולדה מתוך אמונה שכל צעיר וצעירה בישראל ראויים לכלים פיננסיים מעשיים — לא רק תיאוריה, אלא ידע שמשנה את החיים ביום-יום.
+          <div className="flex items-center justify-center gap-8 flex-wrap mb-8">
+            {[
+              { val: '5+', label: 'שנות פעילות' },
+              { val: '15,000+', label: 'תלמידים' },
+              { val: '94%', label: 'שביעות רצון' },
+            ].map((s, i) => (
+              <div key={i} className="text-center">
+                <p className="font-black text-[#F5A624] text-2xl">{s.val}</p>
+                <p className="text-white/30 text-sm">{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-white/60 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto">
+            ״פורשים כנף״ נולדה מתוך תשוקה אמיתית לשינוי ומתוך הבנה שכל צעיר וצעירה בישראל הם בעצם ״מנכ״לים״ של העסק החשוב ביותר בחייהם: משק הבית שלהם.
           </p>
-          <p className="text-white/55 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            אנחנו פועלים בשטח, בבתי ספר ובמסגרות חינוכיות, ומביאים את אותו ידע בדיוק — מונגש אליכם בכל מקום ובכל זמן.
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+            ב-5 השנים האחרונות אנחנו פועלים יום-יום בשטח, מעבירים סדנאות חינוך פיננסי בבתי ספר ובמסגרות חינוכיות בכל רחבי הארץ. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
           </p>
-          <p className="text-white/55 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-            החזון שלנו: שכל צעיר בישראל יחזיק בידע ובכלים לפרוש כנף בביטחון.
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+            אנחנו עושים את זה כי אנחנו מאמינים שחינוך פיננסי הוא הבסיס להכל: הבסיס לחוסן האישי שלכם, הבסיס לעוצמה הכלכלית שלנו כעם, והמפתח לעתיד טוב וציוני יותר כאן בישראל.
+          </p>
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+            החזון שלנו הוא פשוט: שכל צעיר וצעירה בישראל יחזיקו בידע ובכלים שיאפשרו להם לפרוש כנף בביטחון, לקבל החלטות חכמות ולבנות לעצמם חיים של חופש ובחירה.
+          </p>
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
+            הקורס הזה הוא לא רק ידע – הוא השליחות שלנו, מונגשת אליכם לכל מקום ובכל זמן.
           </p>
         </motion.div>
 
@@ -43,8 +62,8 @@ export default function N6Team() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col items-center text-center gap-4">
-              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-[#F5A624]/25"
-                style={{ boxShadow: '0 0 32px rgba(245,166,36,0.08)' }}>
+              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-[#F5A624]/30"
+                style={{ boxShadow: '0 0 32px rgba(245,166,36,0.12)' }}>
                 {person.image ? (
                   <Image src={person.image} alt={person.name} fill className="object-cover" />
                 ) : (
@@ -55,8 +74,8 @@ export default function N6Team() {
               </div>
               <div>
                 <p className="text-white font-bold text-lg">{person.name}</p>
-                <p className="text-[#F5A624]/60 text-sm font-medium mt-0.5">{person.role}</p>
-                <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto">{person.bio}</p>
+                <p className="text-[#F5A624]/70 text-sm font-medium mt-0.5">{person.role}</p>
+                <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto whitespace-pre-line">{person.bio}</p>
               </div>
             </motion.div>
           ))}
