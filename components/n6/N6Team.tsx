@@ -73,9 +73,9 @@ export default function N6Team() {
                 )}
               </div>
               <div>
-                <p className="text-white font-bold text-lg">{person.name}</p>
-                <p className="text-[#F5A624]/70 text-sm font-medium mt-0.5">{person.role}</p>
-                <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto whitespace-pre-line">{person.bio}</p>
+                <p className="text-white font-bold text-xl md:text-2xl">{person.name}</p>
+                <p className="text-[#F5A624]/70 text-base font-medium mt-1">{person.role}</p>
+                <p className="text-white/40 text-base md:text-lg leading-relaxed mt-3 max-w-sm mx-auto whitespace-pre-line">{person.bio}</p>
               </div>
             </motion.div>
           ))}
