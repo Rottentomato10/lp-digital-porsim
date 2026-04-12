@@ -42,7 +42,7 @@ const CONTENT: Record<NonNullable<ModalType>, { title: string; body: ReactNode }
 
         <div>
           <h3 className="text-white font-bold mb-2">זכויות המשתמש</h3>
-          <p>המשתמש זכאי לעיין במידע האישי שנשמר אודותיו, לבקש את תיקונו או מחיקתו, וכן להתנגד לשימוש בו לצורכי דיוור ישיר. פניות בנושא זה ניתן לשלוח ל: <span className="text-white">spread.a.wing@gmail.com</span></p>
+          <p>המשתמש זכאי לעיין במידע האישי שנשמר אודותיו, לבקש את תיקונו או מחיקתו, וכן להתנגד לשימוש בו לצורכי דיוור ישיר. פניות בנושא זה ניתן לשלוח ל: <span className="text-white">porsim.info@gmail.com</span></p>
         </div>
 
         <div>
@@ -155,7 +155,7 @@ const CONTENT: Record<NonNullable<ModalType>, { title: string; body: ReactNode }
           <p className="mt-2">
             <span className="text-white font-medium">רכז נגישות:</span> אביתר דנגור<br />
             <span className="text-white font-medium">טלפון:</span> 053-728-2727<br />
-            <span className="text-white font-medium">דוא״ל:</span> info@porsimkanaf.com
+            <span className="text-white font-medium">דוא״ל:</span> porsim.info@gmail.com
           </p>
         </div>
 
