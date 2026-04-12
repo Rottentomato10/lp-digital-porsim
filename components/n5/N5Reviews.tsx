@@ -2,7 +2,6 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { BadgeCheck } from 'lucide-react'
 
 const AVATAR_COLORS = ['#F5A624', '#5EEAD4', '#A78BFA', '#F472B6', '#60A5FA', '#34D399', '#FB923C', '#E879F9']
 
@@ -41,14 +40,7 @@ function Avatar({ name, color }: { name: string; color: string }) {
   )
 }
 
-function VerifiedBadge() {
-  return (
-    <span className="inline-flex items-center gap-1 text-[#5EEAD4]/70 text-xs">
-      <BadgeCheck size={12} />
-      <span>רכישה מאומתת</span>
-    </span>
-  )
-}
+
 
 export default function N5Reviews() {
   const ref = useRef(null)
@@ -76,10 +68,7 @@ export default function N5Reviews() {
                 <Avatar name={FEATURED.name} color={AVATAR_COLORS[0]} />
                 <div className="text-right">
                   <p className="text-white/50 text-sm">{FEATURED.name} · {FEATURED.city}</p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-white/30 text-xs">{FEATURED.year}</span>
-                    <VerifiedBadge />
-                  </div>
+                  <span className="text-white/30 text-xs">{FEATURED.year}</span>
                 </div>
               </div>
             </div>
@@ -98,10 +87,7 @@ export default function N5Reviews() {
                 <Avatar name={review.name} color={AVATAR_COLORS[i % AVATAR_COLORS.length]} />
                 <div>
                   <p className="text-white/50 text-sm">{review.name} · {review.city}</p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-white/30 text-xs">{review.year}</span>
-                    <VerifiedBadge />
-                  </div>
+                  <span className="text-white/30 text-xs">{review.year}</span>
                 </div>
               </div>
             </div>
