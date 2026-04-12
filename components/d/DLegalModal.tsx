@@ -154,7 +154,7 @@ const CONTENT: Record<NonNullable<ModalType>, { title: string; body: ReactNode }
           <p>נתקלתם בבעיית נגישות? נשמח לסייע.</p>
           <p className="mt-2">
             <span className="text-white font-medium">רכז נגישות:</span> אביתר דנגור<br />
-            <span className="text-white font-medium">טלפון:</span> 054-828-9390<br />
+            <span className="text-white font-medium">טלפון:</span> 053-728-2727<br />
             <span className="text-white font-medium">דוא״ל:</span> info@porsimkanaf.com
           </p>
         </div>
