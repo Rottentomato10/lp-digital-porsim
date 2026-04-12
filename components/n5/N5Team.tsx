@@ -25,7 +25,7 @@ export default function N5Team() {
             {[
               { val: '5+', label: 'שנות פעילות' },
               { val: '15,000+', label: 'תלמידים' },
-              { val: '94%', label: 'שביעות רצון' },
+              { val: '300+', label: 'כיתות' },
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <p className="font-black text-[#F5A624] text-2xl">{s.val}</p>

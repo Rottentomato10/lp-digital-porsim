@@ -45,7 +45,7 @@ export default function N5Hero() {
           <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
             <span className="text-white/50 text-sm font-semibold">15,000+ תלמידים</span>
             <span className="text-white/15">·</span>
-            <span className="text-white/50 text-sm font-semibold">94% שביעות רצון</span>
+            <span className="text-white/50 text-sm font-semibold">300+ כיתות</span>
             <span className="text-white/15">·</span>
             <span className="text-white/50 text-sm font-semibold">5+ שנות פעילות</span>
           </div>
