@@ -93,7 +93,7 @@ export default function N9Hero() {
             <br /><span style={{
               background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>במקום להמשיך לנחש מאיפה להתחיל</span>
+            }}>במקום להמשיך לנחש מאיפה להתחיל.</span>
           </h1>
         </div>
 
