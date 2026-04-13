@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { VolumeX, Volume2, Maximize2 } from 'lucide-react'
 import Image from 'next/image'
 import { useCheckoutUrl } from '@/lib/content-context'
@@ -9,7 +9,16 @@ import { useCheckoutUrl } from '@/lib/content-context'
 export default function N9Hero() {
   const CHECKOUT_URL = useCheckoutUrl()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const heroRef = useRef<HTMLElement>(null)
   const [isMuted, setIsMuted] = useState(true)
+  const mouseX = useMotionValue(0.5)
+  const mouseY = useMotionValue(0.5)
+
+  // Parallax floating elements
+  const floatX = useTransform(mouseX, [0, 1], [-12, 12])
+  const floatY = useTransform(mouseY, [0, 1], [-8, 8])
+  const floatX2 = useTransform(mouseX, [0, 1], [10, -10])
+  const floatY2 = useTransform(mouseY, [0, 1], [6, -6])
 
   useEffect(() => {
     if (videoRef.current) {
@@ -17,6 +26,13 @@ export default function N9Hero() {
       videoRef.current.play().catch(() => {})
     }
   }, [])
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!heroRef.current) return
+    const rect = heroRef.current.getBoundingClientRect()
+    mouseX.set((e.clientX - rect.left) / rect.width)
+    mouseY.set((e.clientY - rect.top) / rect.height)
+  }
 
   const handleClick = () => {
     if (!videoRef.current) return
@@ -33,20 +49,37 @@ export default function N9Hero() {
   }
 
   return (
-    <section className="relative bg-[#080808] overflow-hidden">
-      <div className="max-w-4xl mx-auto px-5 pt-8 pb-12">
+    <section ref={heroRef} onMouseMove={handleMouseMove} className="relative bg-[#080808] overflow-hidden">
+      {/* Parallax floating elements */}
+      <motion.div style={{ x: floatX, y: floatY }}
+        className="pointer-events-none absolute top-[15%] right-[8%] w-20 h-20 md:w-28 md:h-28 rounded-full opacity-[0.04]"
+        >
+        <svg viewBox="0 0 100 100" className="w-full h-full text-[#F5A624]">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          <text x="50" y="56" textAnchor="middle" fill="currentColor" fontSize="28" fontWeight="bold">₪</text>
+        </svg>
+      </motion.div>
+      <motion.div style={{ x: floatX2, y: floatY2 }}
+        className="pointer-events-none absolute bottom-[25%] left-[5%] w-16 h-16 md:w-24 md:h-24 opacity-[0.04]">
+        <svg viewBox="0 0 100 60" className="w-full h-full text-[#5EEAD4]">
+          <polyline points="5,55 25,35 45,42 65,18 95,5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </motion.div>
+
+      <div className="max-w-4xl mx-auto px-5 pt-8 pb-12 relative z-10">
         <div className="flex justify-center mb-4">
           <Image src="/logo.png" alt="פורשים כנף" width={120} height={120}
             className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-[0_0_40px_rgba(245,166,36,0.4)]" priority />
         </div>
 
+        {/* Stats with success green for numbers */}
         <div className="flex items-center justify-center mb-5 px-4">
           <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
-            <span className="text-white/50 text-sm font-semibold">15,000+ תלמידים</span>
+            <span className="text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידים</span></span>
             <span className="text-white/15">·</span>
-            <span className="text-white/50 text-sm font-semibold">300+ כיתות</span>
+            <span className="text-sm font-semibold"><span className="text-[#34D399]">300+</span> <span className="text-white/50">כיתות</span></span>
             <span className="text-white/15">·</span>
-            <span className="text-white/50 text-sm font-semibold">5+ שנות פעילות</span>
+            <span className="text-sm font-semibold"><span className="text-[#34D399]">5+</span> <span className="text-white/50">שנות פעילות</span></span>
           </div>
         </div>
 
@@ -71,12 +104,17 @@ export default function N9Hero() {
           <br />וזה עולה לך המון. כל חודש.
         </p>
 
+        {/* Video with glassmorphism container */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           onClick={handleClick}
-          className="relative rounded-2xl overflow-hidden border border-white/10 cursor-pointer group mb-10"
-          style={{ boxShadow: '0 0 80px rgba(245,166,36,0.08)' }}>
+          className="relative rounded-2xl overflow-hidden cursor-pointer group mb-10"
+          style={{
+            boxShadow: '0 0 80px rgba(245,166,36,0.08), inset 0 0 0 0.5px rgba(245,166,36,0.15)',
+            background: 'rgba(255,255,255,0.02)',
+            backdropFilter: 'blur(20px)',
+          }}>
           <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
             <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover"
               playsInline loop muted preload="metadata" src="/video.mov" />
@@ -102,11 +140,14 @@ export default function N9Hero() {
 
         <div className="text-center">
           <a href={CHECKOUT_URL}
-            className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
+            className="cta-shine inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             אני מתחיל עכשיו
           </a>
         </div>
       </div>
+
+      {/* Divider between Hero and SalesPitch */}
+      <div className="h-px bg-gradient-to-r from-transparent via-[#F5A624]/20 to-transparent" />
     </section>
   )
 }

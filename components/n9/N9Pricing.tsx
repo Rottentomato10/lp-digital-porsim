@@ -28,7 +28,7 @@ export default function N9Pricing() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="text-center mb-12">
-          <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">ההשקעה בעתיד שלך</span>
+          <span className="text-[#34D399] font-semibold text-sm tracking-widest uppercase">ההשקעה בעתיד שלך</span>
           <h2 className="mt-4 font-black text-white leading-tight" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)' }}>
             הכלים שיחסכו לך<br />עשור של טעויות.
           </h2>
@@ -71,7 +71,7 @@ export default function N9Pricing() {
             </div>
 
             <a href={CHECKOUT_URL}
-              className="cta-glow block w-full text-center bg-[#F5A624] text-black font-black text-lg xs:text-xl py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
+              className="cta-shine block w-full text-center bg-[#F5A624] text-black font-black text-lg xs:text-xl py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
               אני מתחיל עכשיו
             </a>
             <p className="text-center text-white/25 text-sm mb-4">🔒 תשלום מאובטח</p>

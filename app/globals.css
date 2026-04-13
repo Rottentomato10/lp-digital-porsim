@@ -109,6 +109,28 @@ body {
   50%     { box-shadow: 0 0 40px 8px rgba(245,166,36,0.3); }
 }
 
+/* CTA Shine effect — sweeping highlight every 5s */
+.cta-shine {
+  position: relative;
+  overflow: hidden;
+  animation: ctaPulse 3s ease-in-out infinite;
+}
+.cta-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+  animation: ctaShine 5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes ctaShine {
+  0%,85%,100% { transform: translateX(-100%); }
+  90%         { transform: translateX(350%); }
+}
+
 /* Testimonials marquee */
 .marquee-wrapper {
   overflow: hidden;
