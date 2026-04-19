@@ -9,8 +9,8 @@ export default function NotFound() {
         <Image src="/logo.png" alt="פורשים כנף" width={80} height={80}
           className="w-20 h-20 object-contain mx-auto mb-8 opacity-60" />
 
-        <h1 className="text-white font-black text-6xl mb-1">404</h1>
-        <p className="text-white/40 font-black text-3xl mb-8">או ₪476 בתוספת מע״מ.</p>
+        <h1 className="text-white font-black text-6xl mb-1">שגיאה 404</h1>
+        <p className="text-white/40 font-black text-3xl mb-8">או שגיאה 476 בתוספת מע״מ.</p>
 
         <p className="text-white/50 text-xl leading-relaxed mb-3">
           אופס, כנראה שיש כאן איזשהי שגיאה.
