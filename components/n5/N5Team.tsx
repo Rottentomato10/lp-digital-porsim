@@ -61,21 +61,21 @@ export default function N5Team() {
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center text-center gap-4">
-              <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-[#F5A624]/30"
-                style={{ boxShadow: '0 0 32px rgba(245,166,36,0.12)' }}>
+              className="flex flex-col items-center text-center gap-5">
+              <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-[#F5A624]/30"
+                style={{ boxShadow: '0 0 40px rgba(245,166,36,0.15)' }}>
                 {person.image ? (
                   <Image src={person.image} alt={person.name} fill className="object-cover" />
                 ) : (
                   <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center">
-                    <span className="text-4xl text-white/10 font-black select-none">{person.name[0]}</span>
+                    <span className="text-5xl text-white/10 font-black select-none">{person.name[0]}</span>
                   </div>
                 )}
               </div>
               <div>
-                <p className="text-white font-bold text-lg">{person.name}</p>
-                <p className="text-[#F5A624]/70 text-sm font-medium mt-0.5">{person.role}</p>
-                <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto whitespace-pre-line">{person.bio}</p>
+                <p className="text-white font-bold text-xl md:text-2xl">{person.name}</p>
+                <p className="text-[#F5A624]/70 text-base font-medium mt-1">{person.role}</p>
+                <p className="text-white/40 text-base leading-relaxed mt-3 max-w-sm mx-auto whitespace-pre-line">{person.bio}</p>
               </div>
             </motion.div>
           ))}
