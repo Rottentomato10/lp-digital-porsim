@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateCoupon, BASE_PRICE } from '@/lib/pricing'
 import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
+import { createOrder } from '@/lib/orders'
 
 export async function POST(req: NextRequest) {
   const terminal = process.env.CARDCOM_TERMINAL
@@ -31,21 +32,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'נא למלא שם, אימייל וטלפון' }, { status: 400 })
   }
 
-  // Calculate price — check affiliate coupon first, then static coupons
+  // Calculate price
   let finalPrice = BASE_PRICE
   let couponLabel = ''
+  let affiliateId = ''
 
   if (couponCode) {
-    // Check affiliate coupon
     const affiliate = await getAffiliateByCoupon(couponCode)
     if (affiliate && affiliate.active) {
       const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
       finalPrice = BASE_PRICE - savings
       couponLabel = `הנחת ${affiliate.discountPercent}%`
-      // Track purchase event
+      affiliateId = affiliate.id
       await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
     } else {
-      // Check static coupon
       const couponResult = validateCoupon(couponCode)
       if (couponResult.valid) {
         finalPrice = couponResult.finalPrice
@@ -53,6 +53,16 @@ export async function POST(req: NextRequest) {
       }
     }
   }
+
+  // Create order
+  const order = await createOrder({
+    name: customerName,
+    email: customerEmail,
+    phone: customerPhone,
+    coupon: couponCode,
+    affiliateId,
+    amount: finalPrice,
+  })
 
   try {
     const res = await fetch('https://secure.cardcom.solutions/api/v11/LowProfile/Create', {
@@ -64,9 +74,9 @@ export async function POST(req: NextRequest) {
         Amount: finalPrice,
         Language: 'he',
         ISOCoinId: 1,
-        ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}|${couponCode || 'none'}`,
-        SuccessRedirectUrl: `${baseUrl}/checkout/success`,
-        FailedRedirectUrl: `${baseUrl}/checkout/failed`,
+        ReturnValue: order.id,
+        SuccessRedirectUrl: `${baseUrl}/checkout/success?order=${order.id}`,
+        FailedRedirectUrl: `${baseUrl}/checkout/failed?order=${order.id}`,
         WebHookUrl: `${baseUrl}/api/cardcom/webhook`,
         Operation: 'ChargeOnly',
         UIDefinition: {
@@ -76,7 +86,7 @@ export async function POST(req: NextRequest) {
           IsHideCardOwnerName: true,
           IsHideCardOwnerPhone: true,
           IsHideCardOwnerEmail: true,
-          // CSSUrl: `${baseUrl}/cardcom-custom-good.css`, // waiting for CardCom terminal approval (error 6322)
+          // CSSUrl: `${baseUrl}/cardcom-custom-good.css`, // waiting for CardCom terminal approval
         },
         Document: {
           TypeToCreate: 'Auto',
@@ -105,7 +115,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    return NextResponse.json({ url: data.Url, price: finalPrice })
+    return NextResponse.json({ url: data.Url, price: finalPrice, orderId: order.id })
   } catch {
     return NextResponse.json({ error: 'Failed to create payment' }, { status: 500 })
   }

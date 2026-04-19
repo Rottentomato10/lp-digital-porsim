@@ -303,8 +303,10 @@ export default function DashboardShell() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [copied, setCopied] = useState('')
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
-  const [tab, setTab] = useState<'affiliates' | 'stats'>('affiliates')
+  const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders'>('affiliates')
   const [seeding, setSeeding] = useState(false)
+  const [orders, setOrders] = useState<any[]>([])
+  const [orderSearch, setOrderSearch] = useState('')
 
   const handleLogin = () => {
     if (password === 'Freedom1992@') {
@@ -323,8 +325,16 @@ export default function DashboardShell() {
     } catch {}
   }, [])
 
+  const fetchOrders = useCallback(async (q?: string) => {
+    try {
+      const url = q ? `/api/orders?q=${encodeURIComponent(q)}` : '/api/orders'
+      const res = await fetch(url)
+      if (res.ok) { const data = await res.json(); setOrders(data.orders || []) }
+    } catch {}
+  }, [])
+
   useEffect(() => { if (document.cookie.includes('dash_auth=Freedom1992@')) setAuthed(true) }, [])
-  useEffect(() => { if (authed) fetchData() }, [authed, fetchData])
+  useEffect(() => { if (authed) { fetchData(); fetchOrders() } }, [authed, fetchData, fetchOrders])
 
   const handleCreate = async (data: any) => {
     const res = await fetch('/api/affiliate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
@@ -383,6 +393,7 @@ export default function DashboardShell() {
         <div className="max-w-6xl mx-auto px-4 flex gap-0">
           {[
             { key: 'affiliates' as const, label: 'אפיליאייטים', icon: Users },
+            { key: 'orders' as const, label: 'הזמנות', icon: ShoppingCart },
             { key: 'stats' as const, label: 'סטטיסטיקות', icon: ArrowUpDown },
           ].map(t => (
             <button key={t.key} onClick={() => setTab(t.key)}
@@ -397,6 +408,90 @@ export default function DashboardShell() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
+
+        {/* ── Orders Tab ── */}
+        {tab === 'orders' && (
+          <>
+            <div className="flex items-center justify-between mb-6 gap-4">
+              <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
+              <div className="relative flex-1 max-w-sm">
+                <input
+                  type="text"
+                  value={orderSearch}
+                  onChange={e => { setOrderSearch(e.target.value); fetchOrders(e.target.value || undefined) }}
+                  placeholder="חיפוש לפי מס׳ הזמנה, שם, אימייל או טלפון..."
+                  className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/15 focus:outline-none focus:border-[#F5A624]/50"
+                />
+              </div>
+            </div>
+
+            {orders.length === 0 ? (
+              <div className="text-center py-16 text-white/20">
+                <ShoppingCart size={48} className="mx-auto mb-4 opacity-30" />
+                <p className="text-lg">{orderSearch ? 'לא נמצאו תוצאות' : 'אין הזמנות עדיין'}</p>
+              </div>
+            ) : (
+              <div className="rounded-xl border border-white/6 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-white/[0.03] text-white/40 text-xs">
+                        <th className="px-3 py-3 text-right">מס׳ הזמנה</th>
+                        <th className="px-3 py-3 text-right">שם</th>
+                        <th className="px-3 py-3 text-right">אימייל</th>
+                        <th className="px-3 py-3 text-right">טלפון</th>
+                        <th className="px-3 py-3 text-right">סכום</th>
+                        <th className="px-3 py-3 text-right">קופון</th>
+                        <th className="px-3 py-3 text-right">סטטוס</th>
+                        <th className="px-3 py-3 text-right">תאריך</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((o: any) => {
+                        const statusColors: Record<string, string> = {
+                          pending: 'bg-yellow-500/15 text-yellow-400',
+                          paid: 'bg-[#10B981]/15 text-[#10B981]',
+                          email_sent: 'bg-blue-500/15 text-blue-400',
+                          accessed: 'bg-purple-500/15 text-purple-400',
+                          refunded: 'bg-red-500/15 text-red-400',
+                        }
+                        const statusLabels: Record<string, string> = {
+                          pending: 'ממתין לתשלום',
+                          paid: 'שולם',
+                          email_sent: 'נשלח מייל',
+                          accessed: 'נכנס לקורס',
+                          refunded: 'הוחזר',
+                        }
+                        return (
+                          <tr key={o.id} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
+                            <td className="px-3 py-3">
+                              <span className="text-[#F5A624] font-mono font-bold">{o.id}</span>
+                            </td>
+                            <td className="px-3 py-3 text-white font-medium">{o.name}</td>
+                            <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.email}</td>
+                            <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.phone}</td>
+                            <td className="px-3 py-3 text-[#10B981] font-bold">₪{o.amount}</td>
+                            <td className="px-3 py-3 text-white/30 text-xs">{o.coupon || '—'}</td>
+                            <td className="px-3 py-3">
+                              <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[o.status] || 'bg-white/5 text-white/30'}`}>
+                                {statusLabels[o.status] || o.status}
+                              </span>
+                            </td>
+                            <td className="px-3 py-3 text-white/30 text-xs">
+                              {new Date(o.createdAt).toLocaleDateString('he-IL')}
+                              <br />
+                              <span className="text-white/15">{new Date(o.createdAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}</span>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
         {/* ── Stats Tab ── */}
         {tab === 'stats' && (
