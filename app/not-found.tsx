@@ -10,10 +10,10 @@ export default function NotFound() {
           className="w-20 h-20 object-contain mx-auto mb-8 opacity-60" />
 
         <h1 className="text-white font-black text-6xl mb-1">404</h1>
-        <p className="text-white/15 text-sm mb-6">או ₪476 בתוספת מע״מ.</p>
+        <p className="text-white/40 font-black text-3xl mb-8">או ₪476 בתוספת מע״מ.</p>
 
         <p className="text-white/50 text-xl leading-relaxed mb-3">
-          כנראה שיש כאן איזשהי שגיאה...
+          אופס, כנראה שיש כאן איזשהי שגיאה.
         </p>
         <p className="text-white/30 text-base leading-relaxed mb-10">
           העמוד שחיפשת לא נמצא — אבל אל דאגה, אנחנו כאן.
