@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         TerminalNumber: Number(terminal),
         ApiName: apiName,
-        Amount: 1, // TEST MODE — change back to 390 for production
+        Amount: 390,
         ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}`,
         SuccessRedirectUrl: `${baseUrl}/checkout/success`,
         FailedRedirectUrl: `${baseUrl}/checkout/failed`,
