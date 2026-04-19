@@ -61,6 +61,7 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
   const [bankBranch, setBankBranch] = useState(initial?.bankBranch || '')
   const [bankAccount, setBankAccount] = useState(initial?.bankAccount || '')
   const [notes, setNotes] = useState(initial?.notes || '')
+  const [status, setStatus] = useState<string>(initial?.active === false ? 'inactive' : 'active')
   const [error, setError] = useState('')
 
   const handle = () => {
@@ -69,7 +70,7 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
     onSubmit({
       id: initial?.id, name, email, phone, code: code.toLowerCase(), coupon: coupon.toUpperCase(),
       discountPercent: Number(discount) || 0, commissionPercent: Number(commission) || 0,
-      bankName, bankBranch, bankAccount, notes,
+      bankName, bankBranch, bankAccount, notes, active: status === 'active',
     })
   }
 
@@ -77,11 +78,18 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
 
   return (
     <div className="rounded-xl bg-white/[0.03] border border-[#F5A624]/20 p-5 mb-6">
-      <h3 className="text-white font-bold mb-4">{initial?.id ? 'עריכת אפיליאייט' : 'יצירת אפיליאייט חדש'}</h3>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-white font-bold">{initial?.id ? 'עריכת אפיליאייט' : 'יצירת אפיליאייט חדש'}</h3>
+        {initial?.affNumber && (
+          <span className="text-[#F5A624] text-sm font-mono font-bold bg-[#F5A624]/10 border border-[#F5A624]/20 px-3 py-1 rounded-lg">
+            מס׳ אפיליאייט: #{initial.affNumber}
+          </span>
+        )}
+      </div>
 
-      {/* Basic info */}
+      {/* Basic info + Status */}
       <p className="text-white/30 text-xs font-bold uppercase tracking-wider mb-3">פרטים בסיסיים</p>
-      <div className="grid md:grid-cols-3 gap-3 mb-5">
+      <div className="grid md:grid-cols-4 gap-3 mb-5">
         <div>
           <label className="block text-white/40 text-xs mb-1">שם *</label>
           <input value={name} onChange={e => setName(e.target.value)} placeholder="שם מלא" className={inp} />
@@ -93,6 +101,14 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
         <div>
           <label className="block text-white/40 text-xs mb-1">טלפון</label>
           <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="050-0000000" dir="ltr" className={inp + ' text-left'} />
+        </div>
+        <div>
+          <label className="block text-white/40 text-xs mb-1">סטטוס</label>
+          <select value={status} onChange={e => setStatus(e.target.value)}
+            className={inp + ' [appearance:auto]'}>
+            <option value="active">פעיל ✓</option>
+            <option value="inactive">מושבת ✗</option>
+          </select>
         </div>
       </div>
 
