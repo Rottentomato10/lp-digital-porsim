@@ -3,10 +3,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
-const COLORS = ['#F59E0B', '#10B981', '#8B5CF6', '#EC4899', '#3B82F6', '#14B8A6']
+const C = ['#F5A624', '#10B981', '#8B5CF6', '#EC4899', '#3B82F6', '#14B8A6']
 
 const REVIEWS = [
-  { name: 'אור כ.', city: 'תל אביב', year: '2025', quote: 'בלי להגזים — הקורס הזה שינה לי את הראש לגמרי. דברים שאף אחד לא טרח להסביר לי פתאום הפכו ברורים. הלוואי שהייתי רואה את זה שנים קודם.', featured: true },
+  { name: 'אור כ.', city: 'תל אביב', year: '2025', quote: 'בלי להגזים — הקורס הזה שינה לי את הראש לגמרי. דברים שאף אחד לא טרח להסביר לי פתאום הפכו ברורים. הלוואי שהייתי רואה את זה שנים קודם.' },
   { name: 'עמית ר.', city: 'הרצליה', year: '2025', quote: 'הבנתי שאני מפסיד מאות שקלים בחודש בלי לשים לב. הקורס פקח לי את העיניים.' },
   { name: 'דניאל כ.', city: 'ירושלים', year: '2024', quote: 'פתחתי תיק השקעות שבוע אחרי הקורס. לא האמנתי שזה כל כך פשוט כשמבינים.' },
   { name: 'נועה ש.', city: 'חיפה', year: '2025', quote: 'הלוואי שהייתי לומדת את זה לפני שנים. הייתי חוסכת לעצמי כל כך הרבה טעויות.' },
@@ -19,40 +19,35 @@ export default function N12Social() {
   const inView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
-
-        <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-12">
-          <p className="text-[#10B981] text-sm font-bold tracking-widest uppercase mb-3">15,000+ כבר למדו</p>
-          <h2 className="font-black text-[#1a1a1a] text-3xl md:text-4xl">מה אומרים אחרי הקורס</h2>
+    <section ref={ref} className="py-14 md:py-20 bg-[#0A0F1A]">
+      <div className="max-w-lg mx-auto px-5">
+        <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-8">
+          <p className="text-[#10B981] text-xs font-bold tracking-widest uppercase mb-2">15,000+ כבר שם</p>
+          <h2 className="font-black text-white text-2xl">מה אומרים אחרי הקורס</h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="space-y-3">
           {REVIEWS.map((r, i) => (
             <motion.div key={i}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              className={`p-6 rounded-2xl border border-gray-100 ${r.featured ? 'md:col-span-2 lg:col-span-1 bg-[#FFFBEB]' : 'bg-[#FAFAF9]'}`}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className={`p-4 rounded-xl border border-white/5 ${i === 0 ? 'bg-[#F5A624]/[0.04] border-[#F5A624]/10' : 'bg-white/[0.02]'}`}
             >
-              <div className="flex gap-0.5 mb-3">
-                {Array(5).fill(0).map((_, j) => <span key={j} className="text-[#F59E0B] text-sm">★</span>)}
+              <div className="flex gap-0.5 mb-2">
+                {Array(5).fill(0).map((_, j) => <span key={j} className="text-[#F5A624] text-[10px]">★</span>)}
               </div>
-              <p className="text-gray-600 text-[15px] leading-relaxed mb-5">״{r.quote}״</p>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: `${COLORS[i % COLORS.length]}15`, border: `1.5px solid ${COLORS[i % COLORS.length]}30` }}>
-                  <span className="font-bold text-xs" style={{ color: COLORS[i % COLORS.length] }}>{r.name[0]}</span>
+              <p className="text-white/50 text-sm leading-relaxed mb-3">״{r.quote}״</p>
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center"
+                  style={{ background: `${C[i % C.length]}15`, border: `1.5px solid ${C[i % C.length]}25` }}>
+                  <span className="font-bold text-[10px]" style={{ color: C[i % C.length] }}>{r.name[0]}</span>
                 </div>
-                <div>
-                  <p className="text-gray-700 text-sm font-medium">{r.name} · {r.city}</p>
-                  <p className="text-gray-400 text-xs">{r.year}</p>
-                </div>
+                <span className="text-white/30 text-xs">{r.name} · {r.city} · {r.year}</span>
               </div>
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   )

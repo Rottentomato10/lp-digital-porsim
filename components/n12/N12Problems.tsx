@@ -6,31 +6,11 @@ import { Wallet, FileText, TrendingUp, Users, Clock } from 'lucide-react'
 import { useCheckoutUrl } from '@/lib/content-context'
 
 const PROBLEMS = [
-  {
-    icon: Wallet, color: '#F59E0B',
-    title: 'הכסף פשוט "עובר דרכך"',
-    text: 'אתה עובד קשה בשביל המשכורת, אבל היא לא באמת נשארת אצלך. בלי שיטה, הכסף תמיד יהיה רק "תייר" בחשבון הבנק שלך.',
-  },
-  {
-    icon: FileText, color: '#EF4444',
-    title: 'עיוורון פיננסי מול תלוש השכר',
-    text: 'אתה מפסיד כסף ששייך לך, רק כי אתה לא קורא את האותיות הקטנות. וזה לא סתם בורות — זה כסף אמיתי שנעלם לך כל חודש.',
-  },
-  {
-    icon: TrendingUp, color: '#3B82F6',
-    title: 'ההשקעות מרגישות כמו שפה אחרת',
-    text: 'מניות, S&P500, קרנות סל — שמעת הכל, מבין אפס. אז אתה עושה את הדבר הכי טבעי — כלום. והאינפלציה לא מחכה.',
-  },
-  {
-    icon: Users, color: '#8B5CF6',
-    title: 'התחושה שאתה מפספס',
-    text: 'אתה רואה אנשים סביבך שמדברים על השקעות, חיסכון, "שהכסף יעבוד בשבילך". פשוט אף אחד לא נתן לך את הכלים.',
-  },
-  {
-    icon: Clock, color: '#10B981',
-    title: 'וכל חודש שעובר — זה עולה לך',
-    text: 'ההבדל בין להתחיל להשקיע בגיל 22 לבין 32 — זה לא כמה אלפי שקלים. זה יכול להיות ההבדל בין דירה לבין חלום על דירה.',
-  },
+  { icon: Wallet, title: 'הכסף פשוט "עובר דרכך"', text: 'עובד קשה, אבל בסוף החודש לא נשאר כלום. בלי שיטה, הכסף רק "תייר" בחשבון.' },
+  { icon: FileText, title: 'עיוורון מול תלוש השכר', text: 'מפסיד כסף ששייך לך, רק כי אתה לא קורא את האותיות הקטנות.' },
+  { icon: TrendingUp, title: 'השקעות = שפה אחרת', text: 'מניות, S&P500, קרנות — שמעת הכל, מבין אפס. והאינפלציה לא מחכה.' },
+  { icon: Users, title: 'מרגיש שמפספס', text: 'כולם סביבך מדברים על כסף. אתה לא עצלן — פשוט אף אחד לא נתן לך את הכלים.' },
+  { icon: Clock, title: 'כל חודש שעובר עולה לך', text: 'ההבדל בין להתחיל בגיל 22 לבין 32 — זה ההבדל בין דירה לחלום על דירה.' },
 ]
 
 export default function N12Problems() {
@@ -39,41 +19,41 @@ export default function N12Problems() {
   const CHECKOUT_URL = useCheckoutUrl()
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
+    <section ref={ref} className="py-14 md:py-20 bg-[#0A0F1A]">
+      <div className="max-w-lg mx-auto px-5">
 
-        <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-14">
-          <p className="text-[#F5A624] text-sm font-bold tracking-widest uppercase mb-3">אולי זה מוכר לך</p>
-          <h2 className="font-black text-[#1a1a1a] text-3xl md:text-4xl">חמישה דברים שאף אחד לא לימד אותך.</h2>
-        </motion.div>
+        <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+          className="text-[#F5A624]/60 text-xs font-bold tracking-widest uppercase mb-6">אולי זה מוכר לך</motion.p>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+        {/* Compact stacked cards — mobile-first */}
+        <div className="space-y-3 mb-10">
           {PROBLEMS.map((p, i) => {
             const Icon = p.icon
             return (
               <motion.div key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-                className="p-6 rounded-2xl border border-gray-100 bg-[#FAFAF9] hover:shadow-lg hover:shadow-black/5 transition-shadow duration-300"
+                initial={{ opacity: 0, x: 20 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="flex gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/10 transition-colors"
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: `${p.color}12` }}>
-                  <Icon size={20} style={{ color: p.color }} />
+                <div className="w-9 h-9 rounded-lg bg-[#F5A624]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Icon size={16} className="text-[#F5A624]" />
                 </div>
-                <h3 className="font-bold text-[#1a1a1a] text-lg mb-3">{p.title}</h3>
-                <p className="text-gray-500 text-[15px] leading-relaxed">{p.text}</p>
+                <div>
+                  <h3 className="text-white font-bold text-[15px] mb-1">{p.title}</h3>
+                  <p className="text-white/40 text-sm leading-relaxed">{p.text}</p>
+                </div>
               </motion.div>
             )
           })}
         </div>
 
+        {/* Bridge */}
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.4 }}
-          className="text-center">
-          <a href={CHECKOUT_URL}
-            className="inline-flex items-center bg-[#1a1a1a] text-white font-bold text-base px-8 py-3.5 rounded-full hover:bg-black transition-colors">
-            תן לי להבין כסף עכשיו
-          </a>
+          className="text-center p-5 rounded-xl border border-[#F5A624]/15 bg-[#F5A624]/[0.04]">
+          <p className="text-white/50 text-base">
+            מה אם תוך <span className="text-[#F5A624] font-bold">3 שעות</span> כל זה ישתנה?
+          </p>
         </motion.div>
 
       </div>

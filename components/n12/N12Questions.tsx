@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { Plus, Minus } from 'lucide-react'
 
 const FAQ = [
   { q: 'אני צעיר — זה לא מוקדם מדי?', a: 'דווקא עכשיו זה הכי קריטי. מי שמתחיל להבין כסף לפני שיש לו הרבה — נמנע מהטעויות הגדולות. הפער בין מי שמתחיל ב-20 לבין 30 הוא משנה חיים.' },
@@ -15,28 +14,23 @@ const FAQ = [
   { q: 'לכמה זמן הגישה?', a: 'לתמיד. תשלום אחד — גישה מלאה לכל החיים, כולל עדכונים. בלי מנוי חודשי.' },
 ]
 
-function FaqItem({ q, a }: { q: string; a: string }) {
+function Item({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="border-b border-gray-100 last:border-0">
-      <button onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-right gap-4 group">
-        <span className="font-semibold text-base md:text-lg text-gray-700 group-hover:text-[#1a1a1a] transition-colors leading-snug">{q}</span>
-        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
-          {open ? <Minus size={14} /> : <Plus size={14} />}
-        </span>
-      </button>
+    <button onClick={() => setOpen(!open)} className="w-full text-right border-b border-white/5 last:border-0 py-4">
+      <div className="flex items-center justify-between gap-3">
+        <span className="font-semibold text-sm text-white/70">{q}</span>
+        <span className="text-white/20 text-xs flex-shrink-0">{open ? '−' : '+'}</span>
+      </div>
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div key="a"
-            initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
-            className="overflow-hidden">
-            <p className="text-gray-500 text-base leading-relaxed pb-5">{a}</p>
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
+            <p className="text-white/35 text-sm leading-relaxed pt-3">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </button>
   )
 }
 
@@ -45,16 +39,12 @@ export default function N12Questions() {
   const inView = useInView(ref, { once: true, margin: '-40px' })
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-white">
-      <div className="max-w-2xl mx-auto px-6">
-        <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-10">
-          <h2 className="font-black text-[#1a1a1a] text-3xl md:text-4xl">שאלות נפוצות</h2>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}>
-          {FAQ.map((item, i) => (
-            <FaqItem key={i} q={item.q} a={item.a} />
-          ))}
+    <section ref={ref} className="py-14 md:py-20 bg-[#0A0F1A]">
+      <div className="max-w-lg mx-auto px-5">
+        <motion.h2 initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+          className="font-black text-white text-xl mb-6">שאלות נפוצות</motion.h2>
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}}>
+          {FAQ.map((item, i) => <Item key={i} q={item.q} a={item.a} />)}
         </motion.div>
       </div>
     </section>

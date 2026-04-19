@@ -8,27 +8,25 @@ export default function N12Shift() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="py-20 md:py-28 bg-[#1a1a1a]">
-      <div className="max-w-3xl mx-auto px-6 text-center">
+    <section ref={ref} className="relative py-16 md:py-24 overflow-hidden bg-[#060A13]">
+      <div className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(circle at 50% 50%, rgba(245,166,36,0.06) 0%, transparent 60%)' }} />
+      <div className="relative z-10 max-w-lg mx-auto px-5 text-center">
         <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-          className="text-white/30 text-2xl md:text-3xl font-medium line-through decoration-white/15 mb-5">
+          className="text-white/25 text-xl font-medium line-through decoration-white/10 mb-3">
           הון הוא תוצאה של מזל.
         </motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+        <motion.h2 initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.15 }}
-          className="font-black text-white text-4xl md:text-5xl leading-tight mb-8">
+          className="font-black text-white leading-tight mb-6"
+          style={{ fontSize: 'clamp(1.8rem, 7vw, 3rem)' }}>
           הון הוא תוצאה של <span className="text-[#F5A624]">ניהול</span>.
         </motion.h2>
-        <motion.div initial={{ scaleX: 0 }} animate={inView ? { scaleX: 1 } : {}}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="h-px bg-gradient-to-r from-transparent via-[#F5A624]/40 to-transparent mb-8 origin-center" />
-        <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.4 }}
-          className="text-white/50 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto">
+        <motion.p initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}
+          className="text-white/40 text-base leading-[1.8] max-w-sm mx-auto">
           הבעיה היא שמעולם לא לימדו אותך איך לחשוב על כסף.
-          <br />אנחנו כאן כדי <span className="text-[#F5A624] font-bold">להשלים לך את הפער הזה</span>.
-          <br />וכל רגע שעובר בלי הידע הזה —
-          <br />עולה לך בכסף אמיתי.
+          אנחנו כאן כדי <span className="text-[#F5A624] font-bold">להשלים לך את הפער הזה</span>.
+          וכל רגע שעובר בלי הידע הזה — עולה לך בכסף אמיתי.
         </motion.p>
       </div>
     </section>
