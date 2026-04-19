@@ -19,6 +19,14 @@ export default function CheckoutPage() {
 
     setLoading(true)
     setError(null)
+
+    // Save lead to CSV (fire and forget)
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim() }),
+    }).catch(() => {})
+
     try {
       const res = await fetch('/api/cardcom', {
         method: 'POST',
