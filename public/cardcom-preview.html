@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CardCom Preview — פורשים כנף</title>
+  <!-- Original CardCom base styles (simplified) -->
+  <style>
+    body { background-color: #fff; padding: 0; margin: 0; }
+    img { border: 0; }
+    body * { font-family: Tahoma,Helvetica,sans-serif; }
+    .directionLTR { direction: ltr; }
+    h1 { text-align: center; }
+    body { text-align: right; direction: rtl; }
+    .header { width: 100%; display: block; background-color: #0464a0; padding: 34px 0 23px; }
+    .header .headerIn { width: 92%; max-width: 600px; margin: 0 auto; display: block; }
+    .header .headerIn .logoDiv { float: right; vertical-align: top; max-width: 700px; }
+    .header .headerIn .logoDiv img { display: block; max-width: 200px; height: auto; }
+    .header .headerIn .detailsDiv { display: inline-block; vertical-align: top; margin: 10px 0 0; color: #eee; font-size: 16px; line-height: 1.4em; min-width: 250px; border-right: 1px dashed #7caecd; padding: 0 10px 0 0; float: left; }
+    .header .headerIn .detailsDiv div.company { font-weight: bold; }
+    .clear { clear: both; }
+    .blockDetails { display: block; width: 100%; padding: 23px 0 26px; }
+    .blockDetailsIn { width: 92%; max-width: 600px; margin: 0 auto; font-size: 15px; color: #444; }
+    .blockDetailsIn .title { display: block; font-size: 19px; padding-bottom: 10px; color: #0464a0; margin-right: 3px; }
+    .blockDetailsIn .formRow { display: block; margin: 0 0 4px; }
+    .blockDetailsIn .formRow .fieldName { width: 183px; display: inline-block; vertical-align: top; padding: 7px 0 0; }
+    .blockDetailsIn .formRow .fieldInput { display: inline-block; vertical-align: top; border: none; }
+    .blockDetailsIn .formRow .fieldInput input { margin: 0 10px; color: #444; font-size: 15px; border-radius: 3px; border: 1px solid #c5c5c5; padding: 8px 5px; width: 313px; }
+    .blockDetailsIn .formRow .fieldInput select { margin: 0 10px; color: #444; font-size: 15px; border-radius: 3px; border: 1px solid #c5c5c5; padding: 8px 3px; width: 100px; }
+    .blockDetailsIn .formRow .fieldInput select.tiny { width: 60px; }
+    .validityDate { width: 345px; }
+    .blockDetailsIn .formRow.errorRow .fieldInput input { border: 1px solid #e80505; color: #e80505; }
+    .blockDetailsIn .formRow.errorRow .fieldName:before { content: "*"; color: #e80505; font-weight: bold; font-size: 25px; display: inline-block; margin: -2px -28px 0px 8px; vertical-align: top; }
+    .paymentDetails .blockDetailsIn { background-image: none; background-repeat: no-repeat; }
+    .totalProducts { display: block; width: 100%; text-align: right; color: #444; font-size: 16px; margin: 10px 0 0; }
+    .totalProducts .num { color: #0464a0; font-size: 19px; font-weight: bold; display: inline-block; padding: 0 4px 0 0; }
+    .submitDiv { max-width: 566px; padding: 3px 3px 15px 3px; min-height: 35px; display: flex; align-items: center; justify-content: flex-end; }
+    .submitDiv .buttonDiv input { color: #fff; width: 174px; background-color: #286090; border-color: #204d74; padding: 10px 16px; font-size: 18px; line-height: 1.333; border-radius: 6px; cursor: pointer; border: 1px solid #204d74; }
+    .submitDiv .homeLink { float: right; }
+    .submitDiv .homeLink a { font-size: 14px; color: #0464a0; cursor: pointer; text-decoration: none; }
+    .submitDiv .buttonDiv { float: left; margin-left: 48px; }
+    .footer { background-color: #cdcdcd; width: 100%; padding: 18px 0 10px; }
+    .footer .footerIn { width: 92%; max-width: 600px; margin: 0 auto; display: flex; align-items: center; }
+    .footer .footerIn .footer-text span { font-size: 14px; }
+    .footer .footerIn .footer-logo { margin-left: 10px; }
+    .productsDetails { width: 100%; display: block; padding: 12px 0; }
+    .productsDetails .productsDetailsIn { display: block; margin: 0 auto; width: 92%; max-width: 600px; }
+    .apple-pay-button { height: 44px; width: 328px; border-radius: 5px; cursor: pointer; background: black; color: white; border: none; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .GooglePayDiv button { height: 44px; width: 328px; border-radius: 5px; cursor: pointer; border: 1px solid #ccc; background: white; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    @media screen and (max-width: 480px) {
+      .blockDetailsIn .formRow .fieldName { width: 100%; padding: 7px 0; }
+      .blockDetailsIn .formRow .fieldInput input { width: 94%; margin: 0; }
+      .blockDetailsIn .formRow .fieldInput { width: 100%; }
+      .submitDiv { width: 100%; }
+      .submitDiv .buttonDiv { margin-left: 15px; }
+    }
+  </style>
+  <!-- Our custom CSS override -->
+  <link rel="stylesheet" href="/cardcom-style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header user-header">
+    <div class="headerIn">
+      <div class="logoDiv">
+        <img src="/logo.png" alt="פורשים כנף" />
+      </div>
+      <div class="detailsDiv user-detailsDiv">
+        <div class="adress company"><span class="title">פורשים כנף בע״מ</span></div>
+        <div class="Line1"><span class="title">חינוך פיננסי לצעירים</span></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <h1>תשלום מאובטח</h1>
+
+  <!-- Products -->
+  <div class="productsDetails showProductsTabs">
+    <div class="productsDetailsIn">
+      <div class="totalProducts">
+        <span class="text">סה"כ לתשלום:</span>
+        <span class="num">₪390.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Details -->
+  <div class="blockDetails paymentDetails">
+    <div class="blockDetailsIn">
+      <div class="title"><span>אמצעי תשלום</span></div>
+
+      <!-- Apple Pay -->
+      <div style="margin-bottom: 12px;">
+        <div class="apple-pay-button">
+          <span style="font-size: 20px;">🍎</span> Apple Pay
+        </div>
+      </div>
+
+      <!-- Google Pay -->
+      <div class="GooglePayDiv" style="margin-bottom: 16px;">
+        <button>
+          <span style="font-weight: bold;">G</span> Google Pay
+        </button>
+      </div>
+
+      <div class="title"><span>תשלום בכרטיס אשראי</span></div>
+
+      <!-- Card Number -->
+      <div class="formRow cardRow">
+        <label class="fieldName">מספר כרטיס</label>
+        <span class="fieldInput"><input type="text" placeholder="0000 0000 0000 0000" dir="ltr" /></span>
+      </div>
+
+      <!-- Expiration -->
+      <div class="formRow">
+        <label class="fieldName">תוקף</label>
+        <span class="fieldInput validityDate">
+          <select class="mini">
+            <option>2026</option><option>2027</option><option>2028</option>
+          </select>
+          <select class="tiny">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+          </select>
+        </span>
+      </div>
+
+      <!-- CVV -->
+      <div class="formRow cvvRow">
+        <span class="fieldName"><label>CVV</label></span>
+        <span class="fieldInput"><input maxlength="4" placeholder="123" dir="ltr" /></span>
+      </div>
+
+      <!-- ID -->
+      <div class="formRow cardRow">
+        <label class="fieldName">תעודת זהות</label>
+        <span class="fieldInput"><input type="text" placeholder="000000000" dir="ltr" /></span>
+      </div>
+
+      <!-- Number of payments -->
+      <div class="formRow cardRow">
+        <label class="fieldName">מספר תשלומים</label>
+        <span class="fieldInput">
+          <select class="tiny">
+            <option>1</option><option>2</option><option>3</option>
+          </select>
+        </span>
+      </div>
+
+      <!-- Submit -->
+      <div class="submitDiv">
+        <div class="homeLink"><a href="#">חזרה לאתר</a></div>
+        <div class="buttonDiv">
+          <input type="button" value="שלם ₪390" />
+        </div>
+      </div>
+
+      <!-- Error example (hidden by default) -->
+      <!--
+      <div class="errorDiv">
+        <div class="errorDivIn">
+          <ul><li><span class="message">דוגמה לשגיאה</span></li></ul>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footerIn">
+      <div class="footer-text">
+        <span>מאובטח על ידי קארדקום — סליקת אשראי</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
