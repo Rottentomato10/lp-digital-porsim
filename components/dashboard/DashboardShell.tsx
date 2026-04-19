@@ -394,7 +394,6 @@ export default function DashboardShell() {
   const [copied, setCopied] = useState('')
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
   const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders'>('affiliates')
-  const [seeding, setSeeding] = useState(false)
   const [orders, setOrders] = useState<any[]>([])
   const [orderSearch, setOrderSearch] = useState('')
 
@@ -441,12 +440,6 @@ export default function DashboardShell() {
   const handleToggle = async (aff: Aff) => {
     await fetch('/api/affiliate', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: aff.id, active: !aff.active }) })
     fetchData()
-  }
-  const handleSeed = async () => {
-    setSeeding(true)
-    await fetch('/api/affiliate/seed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ force: true }) })
-    await fetchData()
-    setSeeding(false)
   }
 
   const copy = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopied(id); setTimeout(() => setCopied(''), 2000) }
@@ -503,15 +496,7 @@ export default function DashboardShell() {
         {tab === 'orders' && (
           <>
             <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-              <div className="flex items-center gap-3">
-                <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
-                {orders.length === 0 && (
-                  <button onClick={async () => { await fetch('/api/orders/seed', { method: 'POST' }); fetchOrders() }}
-                    className="text-white/30 text-xs border border-white/10 px-3 py-1 rounded-lg hover:text-white/50">
-                    נתוני דוגמה
-                  </button>
-                )}
-              </div>
+              <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
               <div className="relative flex-1 max-w-sm">
                 <input
                   type="text"
@@ -596,11 +581,8 @@ export default function DashboardShell() {
           <>
             {affiliates.length === 0 ? (
               <div className="text-center py-16">
-                <p className="text-white/20 text-lg mb-4">אין נתונים עדיין</p>
-                <button onClick={handleSeed} disabled={seeding}
-                  className="bg-[#F5A624] text-black font-bold text-sm px-6 py-2 rounded-lg hover:brightness-110 disabled:opacity-50">
-                  {seeding ? 'טוען נתוני דוגמה...' : 'טען נתוני דוגמה לבדיקה'}
-                </button>
+                <p className="text-white/20 text-lg">אין נתונים עדיין</p>
+                <p className="text-white/10 text-sm mt-2">צור אפיליאייטים בטאב ״אפיליאייטים״</p>
               </div>
             ) : (
               <>
@@ -642,12 +624,6 @@ export default function DashboardShell() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-white font-bold text-lg">רשימת אפיליאייטים</h2>
               <div className="flex gap-2">
-                {affiliates.length === 0 && (
-                  <button onClick={handleSeed} disabled={seeding}
-                    className="text-white/30 text-sm border border-white/10 px-3 py-1.5 rounded-lg hover:text-white/50 disabled:opacity-50">
-                    {seeding ? 'טוען...' : 'נתוני דוגמה'}
-                  </button>
-                )}
                 <button onClick={() => { setShowCreate(true); setEditingId(null) }}
                   className="flex items-center gap-2 bg-[#F5A624] text-black font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110">
                   <Plus size={16} /> אפיליאייט חדש
