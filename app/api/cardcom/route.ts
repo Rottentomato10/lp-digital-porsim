@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
           IsHideCardOwnerName: true,
           IsHideCardOwnerPhone: true,
           IsHideCardOwnerEmail: true,
-          CSSUrl: `${baseUrl}/cardcom-style.css`,
+          // CSSUrl: `${baseUrl}/cardcom-style.css`, // error 6322 — waiting for terminal approval
         },
         Document: {
           TypeToCreate: 'Auto',
