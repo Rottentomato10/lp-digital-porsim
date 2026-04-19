@@ -250,6 +250,7 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                 <SortHeader label="הנחה %" k="discountPercent" />
                 <SortHeader label="עמלה %" k="commissionPercent" />
                 <SortHeader label="עמלה ₪" k="commission" />
+                <th className="px-3 py-3 text-right">% עמלה/הכנסה</th>
                 <SortHeader label="יעילות" k="efficiency" />
               </tr>
             </thead>
@@ -282,6 +283,9 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                     <td className="px-3 py-3 text-white/40">{aff.discountPercent}%</td>
                     <td className="px-3 py-3 text-white/40">{aff.commissionPercent}%</td>
                     <td className="px-3 py-3 text-[#F59E0B] font-bold">₪{aff.stats.commission.toLocaleString()}</td>
+                    <td className="px-3 py-3 text-white/40">
+                      {aff.stats.revenue > 0 ? `${((aff.stats.commission / aff.stats.revenue) * 100).toFixed(1)}%` : '—'}
+                    </td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-2">
                         <div className="w-16 h-2 rounded-full bg-white/5 overflow-hidden">
@@ -307,6 +311,7 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                 <td className="px-3 py-3"></td>
                 <td className="px-3 py-3"></td>
                 <td className="px-3 py-3 text-[#F59E0B] font-black">₪{totalCommission.toLocaleString()}</td>
+                <td className="px-3 py-3 text-white/40">{totalRevenue > 0 ? `${((totalCommission / totalRevenue) * 100).toFixed(1)}%` : '—'}</td>
                 <td className="px-3 py-3"></td>
               </tr>
             </tfoot>
