@@ -1,11 +1,11 @@
-import DPageShell from '@/components/d/DPageShell'
-import { contentD } from '@/lib/content-d'
+import N9PageShell from '@/components/n9/N9PageShell'
+import { contentN5 } from '@/lib/content-n5'
 
 export const metadata = {
-  title: 'פורשים כנף — דיגיטלי',
-  description: 'הכסף שתרוויח מחר תלוי במה שתדע היום.',
+  title: 'פורשים כנף — להבין כסף באמת',
+  description: 'להבין כסף באמת — במקום להמשיך לנחש מאיפה להתחיל.',
 }
 
 export default function Home() {
-  return <DPageShell content={contentD} />
+  return <N9PageShell content={contentN5} />
 }
