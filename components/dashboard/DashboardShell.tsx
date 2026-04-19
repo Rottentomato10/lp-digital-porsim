@@ -182,31 +182,38 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
   function calcScores(affs: Aff[]) {
     if (affs.length === 0) return new Map<string, { traffic: number; revenue: number; conversion: number; cost: number; profitPerVisit: number; total: number; normalized: number }>()
 
-    const maxVisits = Math.max(...affs.map(a => a.stats.visits), 1)
-    const maxRevenue = Math.max(...affs.map(a => a.stats.revenue), 1)
-    const maxConv = Math.max(...affs.map(a => a.stats.visits > 0 ? a.stats.purchases / a.stats.visits : 0), 0.001)
-    const maxPpv = Math.max(...affs.map(a => a.stats.visits > 0 ? (a.stats.revenue - a.stats.commission) / a.stats.visits : 0), 0.01)
+    // Calculate averages across all affiliates
+    const avgVisits = affs.reduce((s, a) => s + a.stats.visits, 0) / affs.length || 1
+    const avgRevenue = affs.reduce((s, a) => s + a.stats.revenue, 0) / affs.length || 1
+    const convRates = affs.map(a => a.stats.visits > 0 ? a.stats.purchases / a.stats.visits : 0)
+    const avgConv = convRates.reduce((s, c) => s + c, 0) / affs.length || 0.01
+    const avgCommPct = affs.reduce((s, a) => s + a.commissionPercent, 0) / affs.length || 1
+    const ppvs = affs.map(a => a.stats.visits > 0 ? (a.stats.revenue - a.stats.commission) / a.stats.visits : 0)
+    const avgPpv = ppvs.reduce((s, p) => s + p, 0) / affs.length || 0.01
 
     const scores = new Map<string, any>()
 
     for (const aff of affs) {
-      // 1. Traffic score — how much audience (visits relative to top)
-      const traffic = Math.round((aff.stats.visits / maxVisits) * 100)
+      // Each score: 50 = average, 0-100 scale relative to group average
+      // score = min(100, (value / average) * 50)
 
-      // 2. Revenue score — total revenue relative to top
-      const revenue = Math.round((aff.stats.revenue / maxRevenue) * 100)
+      // 1. Traffic — visits relative to group average
+      const traffic = Math.min(100, Math.round((aff.stats.visits / avgVisits) * 50))
 
-      // 3. Conversion score — purchase/visit ratio relative to best
+      // 2. Revenue — relative to group average
+      const revenue = Math.min(100, Math.round((aff.stats.revenue / avgRevenue) * 50))
+
+      // 3. Conversion — relative to group average
       const convRate = aff.stats.visits > 0 ? aff.stats.purchases / aff.stats.visits : 0
-      const conversion = Math.round((convRate / maxConv) * 100)
+      const conversion = Math.min(100, Math.round((convRate / avgConv) * 50))
 
       // 4. Cost efficiency — inverted: lower commission % = higher score
-      const maxCommPct = Math.max(...affs.map(a => a.commissionPercent), 1)
-      const cost = Math.round((1 - aff.commissionPercent / (maxCommPct + 1)) * 100)
+      // If avg is 10% and he's 5%, he's more efficient → score > 50
+      const cost = Math.min(100, Math.round((avgCommPct / Math.max(aff.commissionPercent, 0.1)) * 50))
 
-      // 5. Net profit per visit — (revenue - commission) / visits
+      // 5. Net profit per visit — relative to group average
       const ppv = aff.stats.visits > 0 ? (aff.stats.revenue - aff.stats.commission) / aff.stats.visits : 0
-      const profitPerVisit = Math.round((ppv / maxPpv) * 100)
+      const profitPerVisit = Math.min(100, Math.round((ppv / avgPpv) * 50))
 
       // Average of 5 scores → 0-100, then normalize to 0-1
       const total = Math.round((traffic + revenue + conversion + cost + profitPerVisit) / 5)
