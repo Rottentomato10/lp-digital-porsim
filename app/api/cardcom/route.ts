@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         TerminalNumber: Number(terminal),
         ApiName: apiName,
-        Amount: 1, // TEST — change back to 390
+        Amount: 390,
         Language: 'he',
         ISOCoinId: 1,
         ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}`,
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
           Products: [
             {
               Description: 'קורס פיננסים לצעירים — פורשים כנף',
-              UnitCost: 1, // TEST — change back to 390
+              UnitCost: 390,
             },
           ],
         },
