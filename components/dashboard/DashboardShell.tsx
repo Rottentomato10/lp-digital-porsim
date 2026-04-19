@@ -78,13 +78,15 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
 
   return (
     <div className="rounded-xl bg-white/[0.03] border border-[#F5A624]/20 p-5 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-bold">{initial?.id ? 'עריכת אפיליאייט' : 'יצירת אפיליאייט חדש'}</h3>
-        {initial?.affNumber && (
-          <span className="text-[#F5A624] text-sm font-mono font-bold bg-[#F5A624]/10 border border-[#F5A624]/20 px-3 py-1 rounded-lg">
-            מס׳ אפיליאייט: #{initial.affNumber}
-          </span>
-        )}
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-white font-bold text-lg">{initial?.id ? 'עריכת אפיליאייט' : 'יצירת אפיליאייט חדש'}</h3>
+        <span className={`text-sm font-mono font-bold px-4 py-1.5 rounded-lg border ${
+          initial?.affNumber
+            ? 'text-[#F5A624] bg-[#F5A624]/10 border-[#F5A624]/25'
+            : 'text-white/30 bg-white/5 border-white/10'
+        }`}>
+          {initial?.affNumber ? `מס׳ ${initial.affNumber}#` : 'מספר ייווצר אוטומטית'}
+        </span>
       </div>
 
       {/* Basic info + Status */}
@@ -104,11 +106,14 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
         </div>
         <div>
           <label className="block text-white/40 text-xs mb-1">סטטוס</label>
-          <select value={status} onChange={e => setStatus(e.target.value)}
-            className={inp + ' [appearance:auto]'}>
-            <option value="active">פעיל ✓</option>
-            <option value="inactive">מושבת ✗</option>
-          </select>
+          <button type="button" onClick={() => setStatus(status === 'active' ? 'inactive' : 'active')}
+            className={`w-full px-3 py-2 rounded-lg border text-sm font-bold transition-all ${
+              status === 'active'
+                ? 'bg-[#10B981]/15 border-[#10B981]/30 text-[#10B981]'
+                : 'bg-red-500/10 border-red-500/25 text-red-400'
+            }`}>
+            {status === 'active' ? '✓ פעיל' : '✗ מושבת'}
+          </button>
         </div>
       </div>
 
