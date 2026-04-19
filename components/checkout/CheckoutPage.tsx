@@ -104,7 +104,7 @@ export default function CheckoutPage() {
           <div className="flex items-center justify-center gap-3 flex-wrap mb-5">
             <div className="inline-flex items-center gap-2 bg-[#F5A624]/10 border border-[#F5A624]/20 rounded-full px-4 py-1.5">
               <Sparkles size={14} className="text-[#F5A624]" />
-              <span className="text-[#F5A624] text-sm font-semibold">גישה מיידית — לאחר אישור תשלום</span>
+              <span className="text-[#F5A624] text-sm font-semibold">גישה מיידית עם אישור התשלום</span>
             </div>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#25D366]/10 border border-[#25D366]/20 rounded-full px-4 py-1.5 hover:bg-[#25D366]/20 transition-colors">
@@ -216,26 +216,45 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* After payment */}
-            <div className="rounded-2xl p-5 md:p-6 border border-[#10B981]/15"
-              style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)' }}>
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 flex items-center justify-center">
-                  <Check size={16} className="text-[#10B981]" />
-                </div>
-                <p className="text-[#10B981] font-bold text-base">מה קורה אחרי התשלום?</p>
-              </div>
-              <div className="space-y-3 mr-10">
-                {[
-                  'מייל עם לינק גישה אישי — תוך דקות',
-                  'גישה מיידית לכל 57 השיעורים',
-                  'גישה לאפליקציה ולקהילה הפרטית',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]/50" />
-                    <span className="text-white/50 text-base">{item}</span>
+            {/* After payment + Guarantee — same height, side by side on desktop */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* After payment */}
+              <div className="rounded-2xl p-5 md:p-6 border border-[#10B981]/15 flex flex-col"
+                style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)' }}>
+                <div className="flex items-center gap-2.5 mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 flex items-center justify-center flex-shrink-0">
+                    <Check size={16} className="text-[#10B981]" />
                   </div>
-                ))}
+                  <p className="text-[#10B981] font-bold text-base">מה קורה אחרי התשלום?</p>
+                </div>
+                <div className="space-y-3 mr-10 flex-1">
+                  {[
+                    'מייל עם לינק גישה אישי — תוך דקות',
+                    'גישה מיידית לכל 57 השיעורים',
+                    'גישה לאפליקציה ולקהילה הפרטית',
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]/50" />
+                      <span className="text-white/50 text-base">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Guarantee — same height */}
+              <div className="rounded-2xl p-5 md:p-6 border border-[#F5A624]/10 bg-[#F5A624]/[0.03] flex flex-col">
+                <div className="flex items-center gap-2.5 mb-4">
+                  <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0" />
+                  <p className="text-[#F5A624] font-bold text-base">אחריות מלאה — 7 ימים</p>
+                </div>
+                <div className="flex-1 flex flex-col justify-center mr-8">
+                  <p className="text-white/45 text-base leading-relaxed">
+                    לא הרגשת שזה שווה? החזר מלא, בלי שאלות.
+                  </p>
+                  <p className="text-white/45 text-base leading-relaxed mt-2">
+                    אנחנו כאן בשביל התוצאות שלך.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -294,19 +313,6 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Guarantee — stretches to align with "מה קורה אחרי" */}
-              <div className="rounded-2xl p-5 md:p-6 border border-[#F5A624]/10 bg-[#F5A624]/[0.03] flex-1 flex flex-col justify-center">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <ShieldCheck size={20} className="text-[#F5A624]" />
-                  <p className="text-[#F5A624] font-bold text-lg">אחריות מלאה — 7 ימים</p>
-                </div>
-                <p className="text-white/45 text-base leading-relaxed mr-8">
-                  לא הרגשת שזה שווה? החזר מלא, בלי שאלות.
-                </p>
-                <p className="text-white/45 text-base leading-relaxed mr-8 mt-2">
-                  אנחנו כאן בשביל התוצאות שלך.
-                </p>
-              </div>
             </div>
           </div>
 
