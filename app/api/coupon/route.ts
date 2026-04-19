@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { validateCoupon } from '@/lib/pricing'
+import { validateCoupon, BASE_PRICE } from '@/lib/pricing'
+import { getAffiliateByCoupon } from '@/lib/affiliates'
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,6 +10,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ valid: false, error: 'נא להזין קוד קופון' }, { status: 400 })
     }
 
+    // First check affiliate coupons
+    const affiliate = getAffiliateByCoupon(code)
+    if (affiliate && affiliate.active) {
+      const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
+      return NextResponse.json({
+        valid: true,
+        code: affiliate.coupon,
+        discount: affiliate.discountPercent,
+        label: `הנחת ${affiliate.discountPercent}%`,
+        finalPrice: BASE_PRICE - savings,
+        savings,
+        affiliateId: affiliate.id,
+      })
+    }
+
+    // Then check static coupons
     const result = validateCoupon(code)
 
     if (!result.valid) {

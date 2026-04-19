@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateCoupon, BASE_PRICE } from '@/lib/pricing'
+import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
 
 export async function POST(req: NextRequest) {
   const terminal = process.env.CARDCOM_TERMINAL
@@ -30,15 +31,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'נא למלא שם, אימייל וטלפון' }, { status: 400 })
   }
 
-  // Calculate price — apply coupon if provided
+  // Calculate price — check affiliate coupon first, then static coupons
   let finalPrice = BASE_PRICE
   let couponLabel = ''
 
   if (couponCode) {
-    const couponResult = validateCoupon(couponCode)
-    if (couponResult.valid) {
-      finalPrice = couponResult.finalPrice
-      couponLabel = couponResult.label
+    // Check affiliate coupon
+    const affiliate = getAffiliateByCoupon(couponCode)
+    if (affiliate && affiliate.active) {
+      const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
+      finalPrice = BASE_PRICE - savings
+      couponLabel = `הנחת ${affiliate.discountPercent}%`
+      // Track purchase event
+      trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
+    } else {
+      // Check static coupon
+      const couponResult = validateCoupon(couponCode)
+      if (couponResult.valid) {
+        finalPrice = couponResult.finalPrice
+        couponLabel = couponResult.label
+      }
     }
   }
 
