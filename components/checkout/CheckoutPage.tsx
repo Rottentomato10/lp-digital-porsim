@@ -208,41 +208,38 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* After payment + Guarantee — side by side on desktop */}
-            <div className="grid md:grid-cols-2 gap-4 mb-8">
-              {/* What happens after */}
-              <div className="rounded-2xl p-5 border border-[#10B981]/15"
-                style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)' }}>
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-7 h-7 rounded-lg bg-[#10B981]/15 flex items-center justify-center">
-                    <Check size={14} className="text-[#10B981]" />
+            {/* After payment */}
+            <div className="rounded-2xl p-5 md:p-6 mb-5 border border-[#10B981]/15"
+              style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)' }}>
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 flex items-center justify-center">
+                  <Check size={16} className="text-[#10B981]" />
+                </div>
+                <p className="text-[#10B981] font-bold text-base">מה קורה אחרי התשלום?</p>
+              </div>
+              <div className="space-y-3 mr-10">
+                {[
+                  'מייל עם לינק גישה אישי — תוך דקות',
+                  'גישה מיידית לכל 57 השיעורים',
+                  'גישה לאפליקציה ולקהילה הפרטית',
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]/50" />
+                    <span className="text-white/50 text-base">{item}</span>
                   </div>
-                  <p className="text-[#10B981] font-bold text-sm">מה קורה אחרי התשלום?</p>
-                </div>
-                <div className="space-y-2 mr-9">
-                  {[
-                    'מייל עם לינק גישה אישי — תוך דקות',
-                    'גישה מיידית לכל 57 השיעורים',
-                    'גישה לאפליקציה ולקהילה הפרטית',
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <div className="w-1 h-1 rounded-full bg-[#10B981]/40" />
-                      <span className="text-white/40 text-sm">{item}</span>
-                    </div>
-                  ))}
-                </div>
+                ))}
               </div>
+            </div>
 
-              {/* Guarantee */}
-              <div className="rounded-2xl p-5 border border-[#F5A624]/10 bg-[#F5A624]/[0.03]">
-                <div className="flex items-center gap-2 mb-2">
-                  <ShieldCheck size={16} className="text-[#F5A624]" />
-                  <p className="text-[#F5A624] font-bold text-sm">אחריות מלאה — 7 ימים</p>
-                </div>
-                <p className="text-white/40 text-sm leading-relaxed mr-6">
-                  לא הרגשת שזה שווה? החזר מלא, בלי שאלות. אנחנו כאן בשביל התוצאות שלך.
-                </p>
+            {/* Guarantee */}
+            <div className="rounded-2xl p-5 md:p-6 mb-8 border border-[#F5A624]/10 bg-[#F5A624]/[0.03]">
+              <div className="flex items-center gap-2.5 mb-3">
+                <ShieldCheck size={18} className="text-[#F5A624]" />
+                <p className="text-[#F5A624] font-bold text-base">אחריות מלאה — 7 ימים</p>
               </div>
+              <p className="text-white/45 text-base leading-relaxed mr-7">
+                לא הרגשת שזה שווה? החזר מלא, בלי שאלות. אנחנו כאן בשביל התוצאות שלך.
+              </p>
             </div>
 
             {/* WhatsApp — prominent */}
