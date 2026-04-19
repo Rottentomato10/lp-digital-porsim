@@ -8,14 +8,14 @@ function isAuthed(req: NextRequest): boolean {
   return req.cookies.get('dash_auth')?.value === DASH_PASS
 }
 
-// GET — list all
 export async function GET(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const affiliates = getAllAffiliates().map(aff => ({
+  const allAffs = await getAllAffiliates()
+  const affiliates = await Promise.all(allAffs.map(async aff => ({
     ...aff,
-    stats: getStatsForAffiliate(aff.id, BASE_PRICE),
-  }))
+    stats: await getStatsForAffiliate(aff.id, BASE_PRICE),
+  })))
 
   const overall = {
     affiliateCount: affiliates.length,
@@ -29,7 +29,6 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ affiliates, overall })
 }
 
-// POST — create
 export async function POST(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
@@ -40,10 +39,10 @@ export async function POST(req: NextRequest) {
     if (!name || !email || !code || !coupon) {
       return NextResponse.json({ error: 'נא למלא שם, אימייל, קוד הפניה וקוד קופון' }, { status: 400 })
     }
-    if (getAffiliateByCode(code)) return NextResponse.json({ error: 'קוד הפניה כבר קיים' }, { status: 400 })
-    if (getAffiliateByCoupon(coupon)) return NextResponse.json({ error: 'קוד קופון כבר קיים' }, { status: 400 })
+    if (await getAffiliateByCode(code)) return NextResponse.json({ error: 'קוד הפניה כבר קיים' }, { status: 400 })
+    if (await getAffiliateByCoupon(coupon)) return NextResponse.json({ error: 'קוד קופון כבר קיים' }, { status: 400 })
 
-    const affiliate = createAffiliate({
+    const affiliate = await createAffiliate({
       name, email, phone: phone || '', code, coupon,
       discountPercent: Number(discountPercent) || 0,
       commissionPercent: Number(commissionPercent) || 0,
@@ -57,7 +56,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// PUT — update
 export async function PUT(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
@@ -66,7 +64,7 @@ export async function PUT(req: NextRequest) {
     const { id, ...updates } = body
     if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 })
 
-    const updated = updateAffiliate(id, updates)
+    const updated = await updateAffiliate(id, updates)
     if (!updated) return NextResponse.json({ error: 'לא נמצא' }, { status: 404 })
 
     return NextResponse.json({ affiliate: updated })
@@ -75,7 +73,6 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-// DELETE
 export async function DELETE(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
@@ -83,7 +80,7 @@ export async function DELETE(req: NextRequest) {
     const { id } = await req.json()
     if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 })
 
-    deleteAffiliate(id)
+    await deleteAffiliate(id)
     return NextResponse.json({ ok: true })
   } catch {
     return NextResponse.json({ error: 'שגיאה' }, { status: 500 })

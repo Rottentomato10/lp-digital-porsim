@@ -37,13 +37,13 @@ export async function POST(req: NextRequest) {
 
   if (couponCode) {
     // Check affiliate coupon
-    const affiliate = getAffiliateByCoupon(couponCode)
+    const affiliate = await getAffiliateByCoupon(couponCode)
     if (affiliate && affiliate.active) {
       const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
       finalPrice = BASE_PRICE - savings
       couponLabel = `הנחת ${affiliate.discountPercent}%`
       // Track purchase event
-      trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
+      await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
     } else {
       // Check static coupon
       const couponResult = validateCoupon(couponCode)

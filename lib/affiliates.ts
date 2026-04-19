@@ -1,17 +1,27 @@
 // ============================================
 // Affiliate System — פורשים כנף
+// Persistent storage via Upstash Redis
 // ============================================
+
+import { Redis } from '@upstash/redis'
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+})
+
+const AFFILIATES_KEY = 'affiliates'
+const EVENTS_KEY = 'affiliate_events'
 
 export interface Affiliate {
   id: string
   name: string
   email: string
   phone: string
-  code: string          // unique referral code (used in ?via=CODE)
-  coupon: string        // coupon code customers use at checkout
+  code: string
+  coupon: string
   discountPercent: number
   commissionPercent: number
-  // Payment details
   bankName: string
   bankBranch: string
   bankAccount: string
@@ -35,31 +45,50 @@ export interface AffiliateStats {
   commission: number
 }
 
-// In-memory store
-const affiliatesStore: Map<string, Affiliate> = new Map()
-const eventsStore: AffiliateEvent[] = []
+// ── Helpers ──
+
+async function loadAffiliates(): Promise<Affiliate[]> {
+  const data = await redis.get<Affiliate[]>(AFFILIATES_KEY)
+  return data || []
+}
+
+async function saveAffiliates(affiliates: Affiliate[]): Promise<void> {
+  await redis.set(AFFILIATES_KEY, affiliates)
+}
+
+async function loadEvents(): Promise<AffiliateEvent[]> {
+  const data = await redis.get<AffiliateEvent[]>(EVENTS_KEY)
+  return data || []
+}
+
+async function saveEvents(events: AffiliateEvent[]): Promise<void> {
+  await redis.set(EVENTS_KEY, events)
+}
 
 // ── CRUD ──
 
-export function getAllAffiliates(): Affiliate[] {
-  return Array.from(affiliatesStore.values()).sort((a, b) =>
-    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  )
+export async function getAllAffiliates(): Promise<Affiliate[]> {
+  const all = await loadAffiliates()
+  return all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 }
 
-export function getAffiliateById(id: string): Affiliate | undefined {
-  return affiliatesStore.get(id)
+export async function getAffiliateById(id: string): Promise<Affiliate | undefined> {
+  const all = await loadAffiliates()
+  return all.find(a => a.id === id)
 }
 
-export function getAffiliateByCode(code: string): Affiliate | undefined {
-  return Array.from(affiliatesStore.values()).find(a => a.code === code.toLowerCase())
+export async function getAffiliateByCode(code: string): Promise<Affiliate | undefined> {
+  const all = await loadAffiliates()
+  return all.find(a => a.code === code.toLowerCase())
 }
 
-export function getAffiliateByCoupon(coupon: string): Affiliate | undefined {
-  return Array.from(affiliatesStore.values()).find(a => a.coupon === coupon.toUpperCase())
+export async function getAffiliateByCoupon(coupon: string): Promise<Affiliate | undefined> {
+  const all = await loadAffiliates()
+  return all.find(a => a.coupon === coupon.toUpperCase())
 }
 
-export function createAffiliate(data: Omit<Affiliate, 'id' | 'active' | 'createdAt'>): Affiliate {
+export async function createAffiliate(data: Omit<Affiliate, 'id' | 'active' | 'createdAt'>): Promise<Affiliate> {
+  const all = await loadAffiliates()
   const id = `aff_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
   const affiliate: Affiliate = {
     ...data,
@@ -69,57 +98,51 @@ export function createAffiliate(data: Omit<Affiliate, 'id' | 'active' | 'created
     active: true,
     createdAt: new Date().toISOString(),
   }
-  affiliatesStore.set(id, affiliate)
+  all.push(affiliate)
+  await saveAffiliates(all)
   return affiliate
 }
 
-export function updateAffiliate(id: string, updates: Partial<Affiliate>): Affiliate | null {
-  const existing = affiliatesStore.get(id)
-  if (!existing) return null
-  const updated = { ...existing, ...updates, id }
+export async function updateAffiliate(id: string, updates: Partial<Affiliate>): Promise<Affiliate | null> {
+  const all = await loadAffiliates()
+  const idx = all.findIndex(a => a.id === id)
+  if (idx === -1) return null
+  const updated = { ...all[idx], ...updates, id }
   if (updates.code) updated.code = updates.code.toLowerCase()
   if (updates.coupon) updated.coupon = updates.coupon.toUpperCase()
-  affiliatesStore.set(id, updated)
+  all[idx] = updated
+  await saveAffiliates(all)
   return updated
 }
 
-export function deleteAffiliate(id: string): boolean {
-  return affiliatesStore.delete(id)
+export async function deleteAffiliate(id: string): Promise<boolean> {
+  const all = await loadAffiliates()
+  const filtered = all.filter(a => a.id !== id)
+  if (filtered.length === all.length) return false
+  await saveAffiliates(filtered)
+  return true
 }
 
 // ── Events ──
 
-export function trackEvent(event: AffiliateEvent): void {
-  eventsStore.push(event)
+export async function trackEvent(event: AffiliateEvent): Promise<void> {
+  const events = await loadEvents()
+  events.push(event)
+  await saveEvents(events)
 }
 
-export function getStatsForAffiliate(affiliateId: string, basePrice: number): AffiliateStats {
-  const events = eventsStore.filter(e => e.affiliateId === affiliateId)
-  const affiliate = getAffiliateById(affiliateId)
+export async function getStatsForAffiliate(affiliateId: string, basePrice: number): Promise<AffiliateStats> {
+  const events = await loadEvents()
+  const affiliate = await getAffiliateById(affiliateId)
+  const affEvents = events.filter(e => e.affiliateId === affiliateId)
 
-  const visits = events.filter(e => e.type === 'visit').length
-  const checkouts = events.filter(e => e.type === 'checkout').length
-  const purchases = events.filter(e => e.type === 'purchase').length
+  const visits = affEvents.filter(e => e.type === 'visit').length
+  const checkouts = affEvents.filter(e => e.type === 'checkout').length
+  const purchases = affEvents.filter(e => e.type === 'purchase').length
 
   const discountedPrice = affiliate ? basePrice * (1 - affiliate.discountPercent / 100) : basePrice
   const revenue = purchases * discountedPrice
   const commission = affiliate ? revenue * (affiliate.commissionPercent / 100) : 0
 
   return { visits, checkouts, purchases, revenue: Math.round(revenue), commission: Math.round(commission) }
-}
-
-export function getOverallStats(basePrice: number): AffiliateStats & { affiliateCount: number } {
-  const affiliates = getAllAffiliates()
-  let totalVisits = 0, totalCheckouts = 0, totalPurchases = 0, totalRevenue = 0, totalCommission = 0
-
-  for (const aff of affiliates) {
-    const stats = getStatsForAffiliate(aff.id, basePrice)
-    totalVisits += stats.visits
-    totalCheckouts += stats.checkouts
-    totalPurchases += stats.purchases
-    totalRevenue += stats.revenue
-    totalCommission += stats.commission
-  }
-
-  return { affiliateCount: affiliates.length, visits: totalVisits, checkouts: totalCheckouts, purchases: totalPurchases, revenue: totalRevenue, commission: totalCommission }
 }

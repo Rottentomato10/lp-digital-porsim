@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAffiliateByCode, trackEvent } from '@/lib/affiliates'
 
-// POST — track an event (visit, checkout, purchase)
 export async function POST(req: NextRequest) {
   try {
     const { code, type } = await req.json()
@@ -10,12 +9,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false }, { status: 400 })
     }
 
-    const affiliate = getAffiliateByCode(code)
+    const affiliate = await getAffiliateByCode(code)
     if (!affiliate || !affiliate.active) {
       return NextResponse.json({ ok: false, error: 'Invalid affiliate' }, { status: 404 })
     }
 
-    trackEvent({
+    await trackEvent({
       affiliateId: affiliate.id,
       type,
       timestamp: new Date().toISOString(),

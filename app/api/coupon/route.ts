@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ valid: false, error: 'נא להזין קוד קופון' }, { status: 400 })
     }
 
-    // First check affiliate coupons
-    const affiliate = getAffiliateByCoupon(code)
+    // Check affiliate coupons first
+    const affiliate = await getAffiliateByCoupon(code)
     if (affiliate && affiliate.active) {
       const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
       return NextResponse.json({
@@ -25,9 +25,8 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Then check static coupons
+    // Then static coupons
     const result = validateCoupon(code)
-
     if (!result.valid) {
       return NextResponse.json({ valid: false, error: 'קוד קופון לא תקין' })
     }
