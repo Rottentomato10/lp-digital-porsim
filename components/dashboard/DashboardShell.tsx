@@ -23,17 +23,23 @@ function DualField({ label, pct, onPctChange }: { label: string; pct: string; on
     <div>
       <label className="block text-white/40 text-xs mb-1">{label}</label>
       <div className="grid grid-cols-2 gap-2">
-        <div className="relative">
-          <input type="number" value={pct} onChange={e => onPctChange(e.target.value)} min="0" max="50" step="1"
-            className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#F5A624]/50" />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25 text-xs">%</span>
+        <div>
+          <div className="relative">
+            <input type="number" value={pct} onChange={e => onPctChange(e.target.value)} min="0" max="50" step="1"
+              className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#F5A624]/50" />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25 text-xs">%</span>
+          </div>
+          <p className="text-white/20 text-[10px] mt-1">אחוזים</p>
         </div>
-        <div className="relative">
-          <input type="number" value={amount}
-            onChange={e => onPctChange(String(amountToPct(Number(e.target.value) || 0)))}
-            min="0" max={BASE_PRICE}
-            className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#F5A624]/50" />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25 text-xs">₪</span>
+        <div>
+          <div className="relative">
+            <input type="number" value={amount}
+              onChange={e => onPctChange(String(amountToPct(Number(e.target.value) || 0)))}
+              min="0" max={BASE_PRICE}
+              className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#F5A624]/50" />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25 text-xs">₪</span>
+          </div>
+          <p className="text-white/20 text-[10px] mt-1">סכום (מתוך ₪{BASE_PRICE})</p>
         </div>
       </div>
     </div>
