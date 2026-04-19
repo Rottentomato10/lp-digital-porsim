@@ -17,29 +17,29 @@ interface Aff {
 function pctToAmount(pct: number) { return Math.round(BASE_PRICE * pct / 100) }
 function amountToPct(amt: number) { return Math.round(amt / BASE_PRICE * 100 * 10) / 10 }
 
-function DualField({ label, pct, onPctChange }: { label: string; pct: string; onPctChange: (v: string) => void }) {
+function DualField({ label, pct, onPctChange, color = '#F5A624' }: { label: string; pct: string; onPctChange: (v: string) => void; color?: string }) {
   const amount = pctToAmount(Number(pct) || 0)
-  const inp = "w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#F5A624]/50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+  const inp = `w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-base font-bold text-center focus:outline-none focus:ring-1 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`
   return (
     <div>
-      <label className="block text-white/40 text-xs mb-2">{label}</label>
+      {label && <label className="block text-white/40 text-xs mb-2">{label}</label>}
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="block text-white/30 text-[10px] font-bold uppercase tracking-wider mb-1">אחוזים %</label>
+          <label className="block text-white/40 text-[11px] font-semibold mb-1.5">אחוזים</label>
           <div className="flex items-center gap-2">
             <input type="number" value={pct} onChange={e => onPctChange(e.target.value)} min="0" max="50" step="1"
-              className={inp} />
-            <span className="text-white/40 text-sm font-bold flex-shrink-0">%</span>
+              className={inp} style={{ borderColor: `${color}30` }} />
+            <span className="text-lg font-black flex-shrink-0" style={{ color }}>%</span>
           </div>
         </div>
         <div>
-          <label className="block text-white/30 text-[10px] font-bold uppercase tracking-wider mb-1">סכום ₪ (מתוך {BASE_PRICE})</label>
+          <label className="block text-white/40 text-[11px] font-semibold mb-1.5">סכום (מתוך ₪{BASE_PRICE})</label>
           <div className="flex items-center gap-2">
             <input type="number" value={amount}
               onChange={e => onPctChange(String(amountToPct(Number(e.target.value) || 0)))}
               min="0" max={BASE_PRICE}
-              className={inp} />
-            <span className="text-white/40 text-sm font-bold flex-shrink-0">₪</span>
+              className={inp} style={{ borderColor: `${color}30` }} />
+            <span className="text-lg font-black flex-shrink-0" style={{ color }}>₪</span>
           </div>
         </div>
       </div>
@@ -110,11 +110,16 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
         </div>
       </div>
 
-      {/* Discount + Commission */}
-      <p className="text-white/30 text-xs font-bold uppercase tracking-wider mb-3">הנחה ועמלה</p>
-      <div className="grid md:grid-cols-2 gap-3 mb-5">
-        <DualField label="הנחה ללקוח" pct={discount} onPctChange={setDiscount} />
-        <DualField label="עמלה לאפיליאייט" pct={commission} onPctChange={setCommission} />
+      {/* Discount + Commission — separate framed sections */}
+      <div className="grid md:grid-cols-2 gap-4 mb-5">
+        <div className="rounded-xl border-2 border-[#10B981]/25 bg-[#10B981]/[0.04] p-4">
+          <p className="text-[#10B981] text-sm font-bold mb-3">💰 הנחה ללקוח</p>
+          <DualField label="" pct={discount} onPctChange={setDiscount} color="#10B981" />
+        </div>
+        <div className="rounded-xl border-2 border-[#F5A624]/25 bg-[#F5A624]/[0.04] p-4">
+          <p className="text-[#F5A624] text-sm font-bold mb-3">🤝 עמלה לאפיליאייט</p>
+          <DualField label="" pct={commission} onPctChange={setCommission} color="#F5A624" />
+        </div>
       </div>
 
       {/* Bank details */}

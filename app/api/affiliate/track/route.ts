@@ -10,10 +10,11 @@ export async function POST(req: NextRequest) {
     }
 
     const affiliate = await getAffiliateByCode(code)
-    if (!affiliate || !affiliate.active) {
+    if (!affiliate) {
       return NextResponse.json({ ok: false, error: 'Invalid affiliate' }, { status: 404 })
     }
 
+    // Link tracking (visits/checkouts) always works — even if inactive
     await trackEvent({
       affiliateId: affiliate.id,
       type,
@@ -22,8 +23,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       ok: true,
-      coupon: affiliate.coupon,
-      discount: affiliate.discountPercent,
+      // Coupon only returned if affiliate is active
+      coupon: affiliate.active ? affiliate.coupon : null,
+      discount: affiliate.active ? affiliate.discountPercent : 0,
+      active: affiliate.active,
     })
   } catch {
     return NextResponse.json({ ok: false }, { status: 500 })
