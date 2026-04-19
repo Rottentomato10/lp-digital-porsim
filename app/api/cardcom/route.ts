@@ -27,6 +27,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'נא למלא שם, אימייל וטלפון' }, { status: 400 })
   }
 
+  // Log lead
+  console.log(JSON.stringify({
+    event: 'checkout_initiated',
+    timestamp: new Date().toISOString(),
+    name: customerName,
+    email: customerEmail,
+    phone: customerPhone,
+  }))
+
   try {
     const res = await fetch('https://secure.cardcom.solutions/api/v11/LowProfile/Create', {
       method: 'POST',
@@ -54,6 +63,14 @@ export async function POST(req: NextRequest) {
     })
 
     const data = await res.json()
+
+    console.log(JSON.stringify({
+      event: data.ResponseCode === 0 ? 'cardcom_page_created' : 'cardcom_error',
+      timestamp: new Date().toISOString(),
+      email: customerEmail,
+      responseCode: data.ResponseCode,
+      description: data.Description,
+    }))
 
     if (data.ResponseCode !== 0) {
       return NextResponse.json(
