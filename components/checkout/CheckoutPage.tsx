@@ -68,9 +68,13 @@ export default function CheckoutPage() {
   const finalPrice = couponApplied ? couponApplied.finalPrice : BASE_PRICE
 
   const handlePay = async () => {
-    if (!name.trim()) { setError('נא למלא שם מלא'); return }
-    if (!email.trim() || !email.includes('@')) { setError('נא למלא אימייל תקין'); return }
-    if (!phone.trim() || phone.trim().length < 9) { setError('נא למלא מספר טלפון'); return }
+    if (!name.trim() || name.trim().length < 2) { setError('נא למלא שם מלא (לפחות 2 תווים)'); return }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+    if (!email.trim() || !emailRegex.test(email.trim())) { setError('נא למלא כתובת אימייל תקינה (לדוגמה: you@example.com)'); return }
+
+    const phoneClean = phone.trim().replace(/[-\s()]/g, '')
+    if (!phoneClean || phoneClean.length < 9 || phoneClean.length > 15 || !/^\+?\d+$/.test(phoneClean)) { setError('נא למלא מספר טלפון תקין (לפחות 9 ספרות)'); return }
 
     setLoading(true)
     setError(null)

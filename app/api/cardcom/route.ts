@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
           IsHideCardOwnerName: true,
           IsHideCardOwnerPhone: true,
           IsHideCardOwnerEmail: true,
-          CSSUrl: `${baseUrl}/cardcom-custom-good.css`,
+          // CSSUrl: `${baseUrl}/cardcom-custom-good.css`, // CardCom not approving yet
         },
         Document: {
           TypeToCreate: 'Auto',
