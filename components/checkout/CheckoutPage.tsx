@@ -19,33 +19,16 @@ export default function CheckoutPage() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  // Check for affiliate code from cookie or URL param
+  // Track affiliate checkout (stats only, no coupon auto-apply)
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const urlCoupon = params.get('coupon') || params.get('code')
-
-    // Check cookie from ?via= landing
     const viaCookie = document.cookie.split('; ').find(c => c.startsWith('aff_via='))
     const viaCode = viaCookie?.split('=')[1]
-
-    if (urlCoupon) {
-      setCoupon(urlCoupon.toUpperCase())
-      handleCouponCheck(urlCoupon)
-    } else if (viaCode) {
-      // Affiliate visit — auto-fetch their coupon
+    if (viaCode) {
       fetch('/api/affiliate/track', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: viaCode, type: 'checkout' }),
-      })
-        .then(r => r.json())
-        .then(data => {
-          if (data.ok && data.coupon) {
-            setCoupon(data.coupon)
-            handleCouponCheck(data.coupon)
-          }
-        })
-        .catch(() => {})
+      }).catch(() => {})
     }
   }, [])
 
