@@ -11,31 +11,30 @@
 
     .page { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
 
-    /* Header */
     .top { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px; }
     .top img { height: 36px; }
     .top .secure { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.3); font-size: 12px; }
-    .top .secure svg { width: 12px; height: 12px; }
 
-    /* Total */
+    .course-title { text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+
     .total-bar { text-align: center; margin-bottom: 24px; }
     .total-bar .label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
     .total-bar .amount { font-size: 36px; font-weight: 900; color: #F5A624; }
 
-    /* Payment method tabs */
-    .methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
-    .method-tab { padding: 14px 8px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    /* Tabs */
+    .methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
+    .method-tab { padding: 12px 6px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .method-tab:hover { border-color: rgba(255,255,255,0.15); }
     .method-tab.active { border-color: #F5A624; background: rgba(245,166,36,0.06); }
     .method-tab .icon { height: 24px; display: flex; align-items: center; justify-content: center; }
-    .method-tab .name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); }
+    .method-tab .name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); }
     .method-tab.active .name { color: #F5A624; }
 
-    /* Payment panels */
+    /* Panels */
     .panel { display: none; }
     .panel.active { display: block; }
 
-    /* Card form */
+    /* Form */
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
     .form-group input, .form-group select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
@@ -45,6 +44,12 @@
     .form-group select option { background: #1a1f2e; color: #fff; }
 
     .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+    /* Card number formatting */
+    .card-input-wrap { position: relative; }
+    .card-input-wrap .card-brands { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); display: flex; gap: 4px; pointer-events: none; }
+    .card-input-wrap .card-brands img { height: 18px; opacity: 0.4; }
 
     /* Submit */
     .submit-btn { width: 100%; padding: 16px; border: none; border-radius: 50px; background: #F5A624; color: #000; font-size: 18px; font-weight: 900; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
@@ -54,19 +59,15 @@
     .wallet-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
     .wallet-btn:hover { transform: scale(1.01); }
     .wallet-btn.apple { background: #000; color: #fff; }
-    .wallet-btn.google { background: #fff; color: #1a1a1a; border: 1px solid rgba(255,255,255,0.15); }
-    .wallet-btn.bit { background: #3CC1D1; color: #fff; }
+    .wallet-btn.google { background: #fff; color: #1a1a1a; }
+    .wallet-btn.bit { background: #1EBDB8; color: #fff; border-radius: 12px; }
     .wallet-info { text-align: center; color: rgba(255,255,255,0.25); font-size: 12px; margin-top: 12px; }
 
     /* Security */
     .security { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
     .security span { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.2); font-size: 11px; }
 
-    /* Footer */
     .foot { text-align: center; color: rgba(255,255,255,0.15); font-size: 11px; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.04); }
-
-    /* ID field */
-    .form-group .hint { color: rgba(255,255,255,0.2); font-size: 11px; margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -77,10 +78,13 @@
   <div class="top">
     <img src="/logo.png" alt="פורשים כנף" />
     <div class="secure">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
       תשלום מאובטח
     </div>
   </div>
+
+  <!-- Course title -->
+  <p class="course-title">קורס פיננסים לצעירים — פורשים כנף</p>
 
   <!-- Total -->
   <div class="total-bar">
@@ -88,25 +92,31 @@
     <div class="amount">₪390</div>
   </div>
 
-  <!-- Payment method selector -->
+  <!-- Payment method tabs -->
   <div class="methods">
     <div class="method-tab active" onclick="switchTab('card')">
       <div class="icon">
-        <svg width="28" height="20" viewBox="0 0 28 20" fill="none"><rect x="0.5" y="0.5" width="27" height="19" rx="3.5" stroke="rgba(255,255,255,0.3)"/><rect x="0" y="4" width="28" height="4" fill="rgba(255,255,255,0.15)"/><rect x="4" y="12" width="8" height="2" rx="1" fill="rgba(255,255,255,0.2)"/></svg>
+        <svg width="26" height="18" viewBox="0 0 28 20" fill="none"><rect x="0.5" y="0.5" width="27" height="19" rx="3.5" stroke="rgba(255,255,255,0.3)"/><rect x="0" y="4" width="28" height="4" fill="rgba(255,255,255,0.15)"/><rect x="4" y="12" width="8" height="2" rx="1" fill="rgba(255,255,255,0.2)"/></svg>
       </div>
       <span class="name">כרטיס אשראי</span>
     </div>
     <div class="method-tab" onclick="switchTab('apple')">
       <div class="icon">
-        <svg width="20" height="24" viewBox="0 0 814 1000" fill="rgba(255,255,255,0.7)"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.2-81-105.6-207.6-105.6-328.3 0-193.1 125.7-295.5 249.3-295.5 65.7 0 120.5 43.1 161.8 43.1 39.4 0 100.8-45.7 175.4-45.7 28.4 0 130.3 2.6 197.7 99.8zm-234.4-184c31.3-37 53.3-88.5 53.3-140 0-7.1-.6-14.3-1.9-20.1-50.8 1.9-110.5 33.8-146.7 76.1-25.8 29-52.7 80.4-52.7 132.9 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.2 1.3 45.7 0 103.3-30.4 136.5-68.4z"/></svg>
+        <svg width="18" height="22" viewBox="0 0 814 1000" fill="rgba(255,255,255,0.7)"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.2-81-105.6-207.6-105.6-328.3 0-193.1 125.7-295.5 249.3-295.5 65.7 0 120.5 43.1 161.8 43.1 39.4 0 100.8-45.7 175.4-45.7 28.4 0 130.3 2.6 197.7 99.8zm-234.4-184c31.3-37 53.3-88.5 53.3-140 0-7.1-.6-14.3-1.9-20.1-50.8 1.9-110.5 33.8-146.7 76.1-25.8 29-52.7 80.4-52.7 132.9 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.2 1.3 45.7 0 103.3-30.4 136.5-68.4z"/></svg>
       </div>
       <span class="name">Apple Pay</span>
     </div>
     <div class="method-tab" onclick="switchTab('google')">
       <div class="icon">
-        <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
       </div>
       <span class="name">Google Pay</span>
+    </div>
+    <div class="method-tab" onclick="switchTab('bit')">
+      <div class="icon">
+        <svg width="28" height="16" viewBox="0 0 60 30" fill="none"><rect width="60" height="30" rx="6" fill="#1EBDB8"/><text x="30" y="21" text-anchor="middle" fill="white" font-size="16" font-weight="900" font-family="Arial">bit</text></svg>
+      </div>
+      <span class="name">Bit</span>
     </div>
   </div>
 
@@ -114,23 +124,44 @@
   <div class="panel active" id="panel-card">
     <div class="form-group">
       <label>מספר כרטיס</label>
-      <input type="text" placeholder="0000 0000 0000 0000" dir="ltr" />
+      <div class="card-input-wrap">
+        <input type="text" id="cardNum" placeholder="0000 0000 0000 0000" dir="ltr" maxlength="19" inputmode="numeric" />
+        <div class="card-brands">
+          <svg width="32" height="20" viewBox="0 0 48 32"><rect width="48" height="32" rx="4" fill="#1A1F71"/><path d="M19 22l3-14h4l-3 14h-4zm16-14l-4 9.5-.5-2.3-1.5-7.2h-4l6 14h4l6-14h-4zm-21 0l-5 14h4l.7-2h5l.4 2h4l-4-14h-5zm1.5 9l2-5.5 1 5.5h-3z" fill="white"/></svg>
+          <svg width="32" height="20" viewBox="0 0 48 32"><rect width="48" height="32" rx="4" fill="#252525"/><circle cx="19" cy="16" r="8" fill="#EB001B"/><circle cx="29" cy="16" r="8" fill="#F79E1B"/><path d="M24 10a8 8 0 010 12 8 8 0 010-12z" fill="#FF5F00"/></svg>
+        </div>
+      </div>
     </div>
 
-    <div class="row-2">
+    <div class="row-3">
       <div class="form-group">
-        <label>תוקף</label>
-        <input type="text" placeholder="MM / YY" dir="ltr" />
+        <label>חודש</label>
+        <select>
+          <option value="">חודש</option>
+          <option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>שנה</label>
+        <select>
+          <option value="">שנה</option>
+          <option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option><option>2031</option><option>2032</option><option>2033</option><option>2034</option><option>2035</option>
+        </select>
       </div>
       <div class="form-group">
         <label>CVV</label>
-        <input type="text" placeholder="123" dir="ltr" maxlength="4" />
+        <input type="text" placeholder="123" dir="ltr" maxlength="4" inputmode="numeric" />
       </div>
     </div>
 
     <div class="form-group">
-      <label>תעודת זהות</label>
-      <input type="text" placeholder="000000000" dir="ltr" />
+      <label>שם בעל הכרטיס</label>
+      <input type="text" placeholder="ישראל ישראלי" />
+    </div>
+
+    <div class="form-group">
+      <label>תעודת זהות בעל הכרטיס</label>
+      <input type="text" placeholder="000000000" dir="ltr" maxlength="9" inputmode="numeric" />
     </div>
 
     <button class="submit-btn">שלם ₪390</button>
@@ -154,7 +185,16 @@
     <p class="wallet-info">לחץ לפתיחת Google Pay</p>
   </div>
 
-  <!-- Security badges -->
+  <!-- Bit Panel -->
+  <div class="panel" id="panel-bit">
+    <button class="wallet-btn bit">
+      <svg width="24" height="14" viewBox="0 0 60 30" fill="none"><text x="30" y="22" text-anchor="middle" fill="white" font-size="18" font-weight="900" font-family="Arial">bit</text></svg>
+      שלם עם Bit
+    </button>
+    <p class="wallet-info">לחץ לפתיחת אפליקציית Bit</p>
+  </div>
+
+  <!-- Security -->
   <div class="security">
     <span>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -170,7 +210,6 @@
     </span>
   </div>
 
-  <!-- Footer -->
   <div class="foot">
     מאובטח על ידי קארדקום — סליקת אשראי
   </div>
@@ -178,13 +217,20 @@
 </div>
 
 <script>
+// Tab switching
 function switchTab(method) {
   document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-
   event.currentTarget.classList.add('active');
   document.getElementById('panel-' + method).classList.add('active');
 }
+
+// Card number formatting: space every 4 digits
+document.getElementById('cardNum').addEventListener('input', function(e) {
+  let v = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+  if (v.length > 16) v = v.slice(0, 16);
+  e.target.value = v.replace(/(.{4})/g, '$1 ').trim();
+});
 </script>
 
 </body>
