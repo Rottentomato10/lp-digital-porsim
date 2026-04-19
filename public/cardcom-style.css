@@ -1,0 +1,365 @@
+/* ================================
+   פורשים כנף — CardCom Custom Theme
+   ================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+
+/* ── Base ── */
+body {
+  background-color: #0D1117 !important;
+  color: #e5e5e5 !important;
+  font-family: 'Heebo', Tahoma, sans-serif !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body * {
+  font-family: 'Heebo', Tahoma, sans-serif !important;
+}
+
+h1 {
+  color: #ffffff !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  padding: 16px 0 0 !important;
+  margin: 0 !important;
+}
+
+/* ── Header ── */
+.header {
+  background-color: #080B16 !important;
+  padding: 16px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+.header .headerIn {
+  width: 92% !important;
+  max-width: 540px !important;
+  margin: 0 auto !important;
+}
+
+.header .headerIn .logoDiv img {
+  max-width: 200px !important;
+  max-height: 60px !important;
+}
+
+.header .headerIn .detailsDiv {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 13px !important;
+  border-right: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.header .headerIn .detailsDiv div.company {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+/* ── Products / Order Summary ── */
+.productsDetails {
+  padding: 12px 0 !important;
+}
+
+.productsDetails .productsDetailsIn {
+  width: 92% !important;
+  max-width: 540px !important;
+}
+
+.totalProducts {
+  color: rgba(255,255,255,0.5) !important;
+  font-size: 14px !important;
+}
+
+.totalProducts .num {
+  color: #F5A624 !important;
+  font-size: 18px !important;
+}
+
+.productsTbl {
+  background-color: transparent !important;
+  border-collapse: collapse !important;
+}
+
+.productsTbl td {
+  color: rgba(255,255,255,0.6) !important;
+  background-color: rgba(255,255,255,0.03) !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+.productsTbl .title th {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  background-color: rgba(255,255,255,0.02) !important;
+}
+
+.productsTbl .odd td {
+  background-color: rgba(255,255,255,0.03) !important;
+}
+
+.productsTbl .even td {
+  background-color: rgba(255,255,255,0.05) !important;
+}
+
+.productsTbl .total {
+  background-color: transparent !important;
+}
+
+.productsTbl .total .num {
+  color: #F5A624 !important;
+}
+
+/* ── Block Details (form sections) ── */
+.blockDetails {
+  padding: 16px 0 !important;
+}
+
+.blockDetailsIn {
+  width: 92% !important;
+  max-width: 540px !important;
+  font-size: 14px !important;
+  color: rgba(255,255,255,0.6) !important;
+  background-image: none !important;
+}
+
+.blockDetailsIn .title {
+  color: #F5A624 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid rgba(245,166,36,0.1) !important;
+  margin-bottom: 8px !important;
+}
+
+.paymentDetails .blockDetailsIn {
+  background-image: none !important;
+}
+
+.OrderDetails .blockDetailsIn {
+  background-image: none !important;
+}
+
+.customDetails {
+  background-color: rgba(255,255,255,0.02) !important;
+}
+
+/* ── Form Fields ── */
+.blockDetailsIn .formRow .fieldName {
+  color: rgba(255,255,255,0.5) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.blockDetailsIn .formRow .fieldInput input,
+.blockDetailsIn .formRow .fieldInput select {
+  background-color: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  padding: 12px 14px !important;
+  transition: border-color 0.2s !important;
+}
+
+.blockDetailsIn .formRow .fieldInput input:focus,
+.blockDetailsIn .formRow .fieldInput select:focus {
+  border-color: rgba(245,166,36,0.5) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(245,166,36,0.15) !important;
+}
+
+.blockDetailsIn .formRow .fieldInput input::placeholder {
+  color: rgba(255,255,255,0.15) !important;
+}
+
+/* Validity date dropdowns */
+.validityDate select {
+  background-color: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  padding: 12px 8px !important;
+}
+
+/* Error state */
+.blockDetailsIn .formRow.errorRow .fieldInput select,
+.blockDetailsIn .formRow.errorRow .fieldInput input {
+  border: 1px solid rgba(239,68,68,0.6) !important;
+  color: #fca5a5 !important;
+}
+
+.blockDetailsIn .formRow.errorRow .fieldName:before {
+  color: #ef4444 !important;
+}
+
+/* Success state */
+.blockDetailsIn .formRow.success .fieldInput input,
+.blockDetailsIn .formRow.success .fieldInput select {
+  border-color: rgba(16,185,129,0.4) !important;
+}
+
+/* ── Submit Button ── */
+.submitDiv {
+  max-width: 540px !important;
+  padding: 16px 0 !important;
+  background-color: transparent !important;
+}
+
+.submitDiv .buttonDiv input {
+  background-color: #F5A624 !important;
+  border: none !important;
+  border-color: transparent !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  padding: 14px 32px !important;
+  border-radius: 50px !important;
+  width: auto !important;
+  min-width: 200px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.submitDiv .buttonDiv input:hover {
+  filter: brightness(1.1) !important;
+  transform: scale(1.02) !important;
+}
+
+.submitDiv .homeLink a {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 13px !important;
+}
+
+.submitDiv .homeLink a:before {
+  filter: invert(1) opacity(0.4) !important;
+}
+
+/* ── Error Messages ── */
+.errorDiv {
+  background-color: rgba(239,68,68,0.15) !important;
+  border: 1px solid rgba(239,68,68,0.3) !important;
+  border-radius: 12px !important;
+  color: #fca5a5 !important;
+  width: 100% !important;
+  max-width: 540px !important;
+  margin-top: 8px !important;
+}
+
+/* ── Apple Pay ── */
+.apple-pay-button {
+  border-radius: 10px !important;
+}
+
+/* ── Google Pay ── */
+.GooglePayDiv {
+  margin-bottom: 12px !important;
+}
+
+/* ── Bit ── */
+#bit-payment-button {
+  border-radius: 10px !important;
+}
+
+/* ── Footer ── */
+.footer {
+  background-color: #080B16 !important;
+  border-top: 1px solid rgba(255,255,255,0.05) !important;
+  padding: 12px 0 !important;
+}
+
+.footer .footerIn {
+  width: 92% !important;
+  max-width: 540px !important;
+}
+
+.footer .footerIn .footer-text span,
+.footer .footerIn .footer-text span a {
+  color: rgba(255,255,255,0.25) !important;
+  font-size: 11px !important;
+}
+
+/* ── HTML Comments (shop owner notes) ── */
+.htmlCommentsDiv {
+  color: rgba(255,255,255,0.5) !important;
+  font-size: 14px !important;
+}
+
+/* ── Cookies Banner ── */
+#cookies-banner {
+  background-color: #0D1117 !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+#cookies-banner span {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+#cookies-banner #btn-cookies-accept {
+  background-color: #F5A624 !important;
+  border-color: #F5A624 !important;
+  color: #000 !important;
+  border-radius: 50px !important;
+  font-weight: 700 !important;
+}
+
+/* ── Number of Payments ── */
+.fieldName.summaryTotal {
+  color: rgba(255,255,255,0.4) !important;
+}
+
+/* ── Loading Overlay ── */
+.loading-indicator-wrapper {
+  background: rgba(0,0,0,0.8) !important;
+}
+
+/* ── Popup Messages ── */
+.white-popup, .white-popup-rtl {
+  background-color: #0D1117 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 16px !important;
+}
+
+/* ── Privacy Policy ── */
+#privacy-policy-popup #popupContent {
+  background-color: #0D1117 !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 16px !important;
+}
+
+/* ── Mobile Responsive ── */
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 12px 0 !important;
+  }
+
+  .blockDetailsIn .formRow .fieldInput input,
+  .blockDetailsIn .formRow .fieldInput select {
+    width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .blockDetailsIn .formRow .fieldName {
+    padding: 8px 0 4px !important;
+  }
+
+  .submitDiv .buttonDiv input {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+
+  .submitDiv .buttonDiv {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .submitDiv {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .submitDiv .homeLink {
+    float: none !important;
+    text-align: center !important;
+  }
+}

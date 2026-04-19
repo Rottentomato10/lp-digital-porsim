@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
           IsHideCardOwnerName: true,
           IsHideCardOwnerPhone: true,
           IsHideCardOwnerEmail: true,
+          CSSUrl: `${baseUrl}/cardcom-style.css`,
         },
         Document: {
           TypeToCreate: 'Auto',
