@@ -15,6 +15,7 @@ const EVENTS_KEY = 'affiliate_events'
 
 export interface Affiliate {
   id: string
+  affNumber: number     // unique 4-digit random number
   name: string
   email: string
   phone: string
@@ -87,12 +88,23 @@ export async function getAffiliateByCoupon(coupon: string): Promise<Affiliate | 
   return all.find(a => a.coupon === coupon.toUpperCase())
 }
 
-export async function createAffiliate(data: Omit<Affiliate, 'id' | 'active' | 'createdAt'>): Promise<Affiliate> {
+function generateUniqueNumber(existing: Affiliate[]): number {
+  const usedNumbers = new Set(existing.map(a => a.affNumber).filter(Boolean))
+  let num: number
+  do {
+    num = Math.floor(1000 + Math.random() * 9000) // 1000-9999
+  } while (usedNumbers.has(num))
+  return num
+}
+
+export async function createAffiliate(data: Omit<Affiliate, 'id' | 'affNumber' | 'active' | 'createdAt'>): Promise<Affiliate> {
   const all = await loadAffiliates()
   const id = `aff_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
+  const affNumber = generateUniqueNumber(all)
   const affiliate: Affiliate = {
     ...data,
     id,
+    affNumber,
     code: data.code.toLowerCase(),
     coupon: data.coupon.toUpperCase(),
     active: true,

@@ -8,7 +8,7 @@ const DOMAIN = 'https://digital.porsimkanaf.com'
 
 interface Stats { visits: number; checkouts: number; purchases: number; revenue: number; commission: number }
 interface Aff {
-  id: string; name: string; email: string; phone: string; code: string; coupon: string
+  id: string; affNumber: number; name: string; email: string; phone: string; code: string; coupon: string
   discountPercent: number; commissionPercent: number
   bankName: string; bankBranch: string; bankAccount: string; notes: string
   active: boolean; createdAt: string; stats: Stats
@@ -289,6 +289,7 @@ export default function DashboardShell() {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 mb-1">
+                          <span className="text-white/20 text-xs font-mono bg-white/5 px-2 py-0.5 rounded">#{aff.affNumber || '—'}</span>
                           <h3 className="text-white font-bold text-base">{aff.name}</h3>
                           <button onClick={() => handleToggle(aff)}
                             className={`text-xs px-2 py-0.5 rounded-full cursor-pointer transition-colors ${aff.active ? 'bg-[#10B981]/15 text-[#10B981] hover:bg-[#10B981]/25' : 'bg-white/5 text-white/30 hover:bg-white/10'}`}>
