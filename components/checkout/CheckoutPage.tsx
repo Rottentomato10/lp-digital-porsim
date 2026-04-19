@@ -120,7 +120,7 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-8">
+        <div className="grid md:grid-cols-5 gap-8 md:items-start">
 
           {/* Main column */}
           <div className="md:col-span-3 order-2 md:order-1">
@@ -294,8 +294,8 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Guarantee — under summary */}
-              <div className="rounded-2xl p-5 md:p-6 mt-4 border border-[#F5A624]/10 bg-[#F5A624]/[0.03]">
+              {/* Guarantee — stretches to match "מה קורה אחרי" height */}
+              <div className="rounded-2xl p-5 md:p-6 border border-[#F5A624]/10 bg-[#F5A624]/[0.03] flex-1 flex flex-col justify-center">
                 <div className="flex items-center gap-2.5 mb-3">
                   <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0" />
                   <p className="text-[#F5A624] font-bold text-base">אחריות מלאה — 7 ימים</p>
