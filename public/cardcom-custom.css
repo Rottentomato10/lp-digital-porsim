@@ -1,0 +1,331 @@
+/* ============================================
+   פורשים כנף — CardCom Custom CSS
+   להגשה לקארדקום לאישור
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  background: #0D1117 !important;
+  color: #fff !important;
+  font-family: 'Heebo', Tahoma, sans-serif !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+body * {
+  font-family: 'Heebo', Tahoma, sans-serif !important;
+}
+
+h1 {
+  color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  padding: 14px 0 0 !important;
+  margin: 0 !important;
+}
+
+/* ── Header ── */
+.header {
+  background-color: #080B16 !important;
+  padding: 14px 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+.header .headerIn {
+  width: 92% !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+}
+
+.header .headerIn .logoDiv img {
+  max-width: 160px !important;
+  max-height: 48px !important;
+}
+
+.header .headerIn .detailsDiv {
+  color: rgba(255,255,255,0.35) !important;
+  font-size: 12px !important;
+  border-right: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+.header .headerIn .detailsDiv div.company {
+  color: rgba(255,255,255,0.5) !important;
+}
+
+/* ── Products / Total ── */
+.productsDetails {
+  padding: 10px 0 !important;
+}
+
+.productsDetails .productsDetailsIn {
+  width: 92% !important;
+  max-width: 480px !important;
+}
+
+.totalProducts {
+  color: rgba(255,255,255,0.45) !important;
+  font-size: 14px !important;
+}
+
+.totalProducts .num {
+  color: #F5A624 !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+}
+
+.productsTbl {
+  background-color: transparent !important;
+}
+
+.productsTbl td {
+  color: rgba(255,255,255,0.5) !important;
+  background-color: rgba(255,255,255,0.03) !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+.productsTbl .title th {
+  color: rgba(255,255,255,0.35) !important;
+  font-size: 13px !important;
+  background-color: rgba(255,255,255,0.02) !important;
+}
+
+.productsTbl .odd td {
+  background-color: rgba(255,255,255,0.03) !important;
+}
+
+.productsTbl .even td {
+  background-color: rgba(255,255,255,0.05) !important;
+}
+
+.productsTbl .total {
+  background-color: transparent !important;
+}
+
+.productsTbl .total .num {
+  color: #F5A624 !important;
+}
+
+/* ── Block Details ── */
+.blockDetails {
+  padding: 14px 0 !important;
+}
+
+.blockDetailsIn {
+  width: 92% !important;
+  max-width: 480px !important;
+  font-size: 14px !important;
+  color: rgba(255,255,255,0.5) !important;
+  background-image: none !important;
+}
+
+.blockDetailsIn .title {
+  color: rgba(255,255,255,0.45) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+  margin-bottom: 8px !important;
+}
+
+.paymentDetails .blockDetailsIn {
+  background-image: none !important;
+}
+
+.OrderDetails .blockDetailsIn {
+  background-image: none !important;
+}
+
+.customDetails {
+  background-color: rgba(255,255,255,0.02) !important;
+}
+
+/* ── Form Fields ── */
+.blockDetailsIn .formRow .fieldName {
+  color: rgba(255,255,255,0.45) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+.blockDetailsIn .formRow .fieldInput input,
+.blockDetailsIn .formRow .fieldInput select {
+  background-color: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  padding: 12px 14px !important;
+  transition: border-color 0.2s !important;
+}
+
+.blockDetailsIn .formRow .fieldInput input:focus,
+.blockDetailsIn .formRow .fieldInput select:focus {
+  border-color: rgba(245,166,36,0.5) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(245,166,36,0.12) !important;
+}
+
+.blockDetailsIn .formRow .fieldInput input::placeholder {
+  color: rgba(255,255,255,0.15) !important;
+}
+
+.blockDetailsIn .formRow .fieldInput select option {
+  background: #1a1f2e !important;
+  color: #fff !important;
+}
+
+/* Error state */
+.blockDetailsIn .formRow.errorRow .fieldInput select,
+.blockDetailsIn .formRow.errorRow .fieldInput input {
+  border: 1px solid rgba(239,68,68,0.5) !important;
+  color: #fca5a5 !important;
+}
+
+.blockDetailsIn .formRow.errorRow .fieldName:before {
+  color: #ef4444 !important;
+}
+
+/* Success state */
+.blockDetailsIn .formRow.success .fieldInput input,
+.blockDetailsIn .formRow.success .fieldInput select {
+  border-color: rgba(16,185,129,0.4) !important;
+}
+
+/* ── Submit Button ── */
+.submitDiv {
+  max-width: 480px !important;
+  padding: 14px 0 !important;
+  background-color: transparent !important;
+}
+
+.submitDiv .buttonDiv input {
+  background-color: #F5A624 !important;
+  border: none !important;
+  border-color: transparent !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  font-size: 17px !important;
+  padding: 14px 28px !important;
+  border-radius: 50px !important;
+  width: auto !important;
+  min-width: 200px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.submitDiv .buttonDiv input:hover {
+  filter: brightness(1.1) !important;
+}
+
+.submitDiv .homeLink a {
+  color: rgba(255,255,255,0.35) !important;
+  font-size: 13px !important;
+}
+
+/* ── Error Messages ── */
+.errorDiv {
+  background-color: rgba(239,68,68,0.12) !important;
+  border: 1px solid rgba(239,68,68,0.25) !important;
+  border-radius: 10px !important;
+  color: #fca5a5 !important;
+  width: 100% !important;
+  max-width: 480px !important;
+}
+
+/* ── Apple Pay ── */
+.apple-pay-button {
+  border-radius: 10px !important;
+}
+
+/* ── Footer ── */
+.footer {
+  background-color: #080B16 !important;
+  border-top: 1px solid rgba(255,255,255,0.05) !important;
+  padding: 12px 0 !important;
+}
+
+.footer .footerIn {
+  width: 92% !important;
+  max-width: 480px !important;
+}
+
+.footer .footerIn .footer-text span,
+.footer .footerIn .footer-text span a {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 12px !important;
+}
+
+/* ── Cookies ── */
+#cookies-banner {
+  background-color: #0D1117 !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+#cookies-banner span {
+  color: rgba(255,255,255,0.5) !important;
+}
+
+#cookies-banner #btn-cookies-accept {
+  background-color: #F5A624 !important;
+  border-color: #F5A624 !important;
+  color: #000 !important;
+  border-radius: 50px !important;
+  font-weight: 700 !important;
+}
+
+/* ── Loading ── */
+.loading-indicator-wrapper {
+  background: rgba(0,0,0,0.8) !important;
+}
+
+/* ── Popups ── */
+.white-popup, .white-popup-rtl {
+  background-color: #0D1117 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 14px !important;
+}
+
+/* ── Mobile ── */
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 10px 0 !important;
+  }
+
+  .blockDetailsIn .formRow .fieldInput input,
+  .blockDetailsIn .formRow .fieldInput select {
+    width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .blockDetailsIn .formRow .fieldName {
+    padding: 6px 0 3px !important;
+  }
+
+  .submitDiv .buttonDiv input {
+    width: 100% !important;
+    padding: 16px !important;
+  }
+
+  .submitDiv .buttonDiv {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .submitDiv {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .submitDiv .homeLink {
+    float: none !important;
+    text-align: center !important;
+  }
+}
