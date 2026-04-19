@@ -1,18 +1,88 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { ShieldCheck, Lock, Check, X, Loader2, Sparkles, User, Mail, Phone } from 'lucide-react'
+import { ShieldCheck, Lock, Check, X, Loader2, Sparkles, User, Mail, Phone, Tag } from 'lucide-react'
 
 const WHATSAPP_URL = 'https://wa.me/9720537282727?text=היי, יש לי שאלה לגבי הקורס'
+const BASE_PRICE = 390
 
 export default function CheckoutPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [coupon, setCoupon] = useState('')
+  const [couponApplied, setCouponApplied] = useState<{ code: string; discount: number; finalPrice: number; label: string } | null>(null)
+  const [couponLoading, setCouponLoading] = useState(false)
+  const [couponError, setCouponError] = useState('')
   const [loading, setLoading] = useState(false)
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  // Check for affiliate code from cookie or URL param
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const urlCoupon = params.get('coupon') || params.get('code')
+
+    // Check cookie from ?via= landing
+    const viaCookie = document.cookie.split('; ').find(c => c.startsWith('aff_via='))
+    const viaCode = viaCookie?.split('=')[1]
+
+    if (urlCoupon) {
+      setCoupon(urlCoupon.toUpperCase())
+      handleCouponCheck(urlCoupon)
+    } else if (viaCode) {
+      // Affiliate visit — auto-fetch their coupon
+      fetch('/api/affiliate/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: viaCode, type: 'checkout' }),
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.ok && data.coupon) {
+            setCoupon(data.coupon)
+            handleCouponCheck(data.coupon)
+          }
+        })
+        .catch(() => {})
+    }
+  }, [])
+
+  const handleCouponCheck = async (code?: string) => {
+    const checkCode = (code || coupon).trim()
+    if (!checkCode) { setCouponError('נא להזין קוד'); return }
+
+    setCouponLoading(true)
+    setCouponError('')
+    try {
+      const res = await fetch('/api/coupon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: checkCode }),
+      })
+      const data = await res.json()
+
+      if (data.valid) {
+        setCouponApplied({ code: data.code, discount: data.discount, finalPrice: data.finalPrice, label: data.label })
+        setCouponError('')
+      } else {
+        setCouponError(data.error || 'קוד לא תקין')
+        setCouponApplied(null)
+      }
+    } catch {
+      setCouponError('שגיאה בבדיקת הקוד')
+    }
+    setCouponLoading(false)
+  }
+
+  const removeCoupon = () => {
+    setCouponApplied(null)
+    setCoupon('')
+    setCouponError('')
+  }
+
+  const finalPrice = couponApplied ? couponApplied.finalPrice : BASE_PRICE
 
   const handlePay = async () => {
     if (!name.trim()) { setError('נא למלא שם מלא'); return }
@@ -25,14 +95,19 @@ export default function CheckoutPage() {
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim() }),
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '' }),
     }).catch(() => {})
 
     try {
       const res = await fetch('/api/cardcom', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim() }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          coupon: couponApplied?.code || '',
+        }),
       })
       const data = await res.json()
 
@@ -50,35 +125,26 @@ export default function CheckoutPage() {
     }
   }
 
-  const closeModal = () => {
-    setIframeUrl(null)
-  }
+  const closeModal = () => { setIframeUrl(null) }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#080B16] to-[#0D1117]" dir="rtl" style={{ fontFamily: "'Heebo', sans-serif" }}>
 
-      {/* CardCom Payment — full screen on mobile, large modal on desktop */}
+      {/* CardCom Payment Modal */}
       {iframeUrl && (
         <div className="fixed inset-0 z-[100] flex items-end md:items-center md:justify-center md:p-6"
           style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
-          <div className="relative w-full md:max-w-2xl bg-white md:rounded-2xl overflow-hidden shadow-2xl
-            h-[100dvh] md:h-auto md:max-h-[92vh]">
+          <div className="relative w-full md:max-w-2xl bg-white md:rounded-2xl overflow-hidden shadow-2xl h-[100dvh] md:h-auto md:max-h-[92vh]">
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-white sticky top-0 z-10">
               <div className="flex items-center gap-2">
                 <Lock size={13} className="text-green-500" />
                 <span className="text-gray-500 text-sm">תשלום מאובטח</span>
               </div>
-              <button onClick={closeModal}
-                className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+              <button onClick={closeModal} className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
                 <X size={18} className="text-gray-400" />
               </button>
             </div>
-            <iframe
-              src={iframeUrl}
-              className="w-full border-0"
-              style={{ height: 'calc(100dvh - 52px)', minHeight: '500px' }}
-              allow="payment"
-            />
+            <iframe src={iframeUrl} className="w-full border-0" style={{ height: 'calc(100dvh - 52px)', minHeight: '500px' }} allow="payment" />
           </div>
         </div>
       )}
@@ -99,7 +165,7 @@ export default function CheckoutPage() {
 
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-14">
 
-        {/* Header — badge + WhatsApp side by side */}
+        {/* Header */}
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-3 flex-wrap mb-5">
             <div className="inline-flex items-center gap-2 bg-[#F5A624]/10 border border-[#F5A624]/20 rounded-full px-4 py-1.5">
@@ -130,77 +196,89 @@ export default function CheckoutPage() {
               <h2 className="text-white font-bold text-base mb-5">פרטים לקבלת גישה</h2>
 
               <div className="space-y-4">
-                {/* Name */}
                 <div>
                   <label className="block text-white/50 text-sm font-medium mb-1.5">שם מלא *</label>
                   <div className="relative">
                     <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="ישראל ישראלי"
-                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all"
-                    />
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="ישראל ישראלי"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all" />
                   </div>
                   <p className="text-white/25 text-xs mt-1.5">שנדע איך לפנות אליך</p>
                 </div>
 
-                {/* Email */}
                 <div>
                   <label className="block text-white/50 text-sm font-medium mb-1.5">אימייל *</label>
                   <div className="relative">
                     <Mail size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      dir="ltr"
-                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left"
-                    />
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                   </div>
                   <p className="text-white/25 text-xs mt-1.5">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
                 </div>
 
-                {/* Phone */}
                 <div>
                   <label className="block text-white/50 text-sm font-medium mb-1.5">טלפון *</label>
                   <div className="relative">
                     <Phone size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="050-0000000"
-                      dir="ltr"
-                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left"
-                    />
+                    <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="050-0000000" dir="ltr"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Coupon code */}
+            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6 mb-6">
+              <h2 className="text-white font-bold text-base mb-4">יש לך קוד קופון?</h2>
+
+              {couponApplied ? (
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#10B981]/10 border border-[#10B981]/20">
+                  <div className="flex items-center gap-2.5">
+                    <Check size={16} className="text-[#10B981]" />
+                    <div>
+                      <p className="text-[#10B981] font-bold text-sm">{couponApplied.code} — {couponApplied.label}</p>
+                      <p className="text-[#10B981]/60 text-xs">חיסכון של ₪{BASE_PRICE - couponApplied.finalPrice}</p>
+                    </div>
+                  </div>
+                  <button onClick={removeCoupon} className="text-white/30 hover:text-white/60 transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Tag size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
+                    <input
+                      type="text"
+                      value={coupon}
+                      onChange={(e) => setCoupon(e.target.value.toUpperCase())}
+                      onKeyDown={e => e.key === 'Enter' && handleCouponCheck()}
+                      placeholder="הזן קוד קופון"
+                      dir="ltr"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left"
+                    />
+                  </div>
+                  <button onClick={() => handleCouponCheck()} disabled={couponLoading}
+                    className="px-5 py-3 rounded-xl bg-white/[0.08] border border-white/10 text-white/70 font-bold text-sm hover:bg-white/[0.12] transition-all disabled:opacity-50 flex-shrink-0">
+                    {couponLoading ? <Loader2 size={16} className="animate-spin" /> : 'החל'}
+                  </button>
+                </div>
+              )}
+              {couponError && <p className="text-red-400 text-xs mt-2">{couponError}</p>}
+            </div>
+
             {/* Pay button */}
             <div className="mb-8">
-              <button
-                onClick={handlePay}
-                disabled={loading}
-                className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3"
-              >
+              <button onClick={handlePay} disabled={loading}
+                className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3">
                 {loading ? (
-                  <>
-                    <Loader2 size={22} className="animate-spin" />
-                    <span>פותח טופס תשלום...</span>
-                  </>
+                  <><Loader2 size={22} className="animate-spin" /><span>פותח טופס תשלום...</span></>
                 ) : (
-                  <span>המשך לתשלום — ₪390</span>
+                  <span>המשך לתשלום — ₪{finalPrice}</span>
                 )}
               </button>
 
-              {error && (
-                <p className="text-red-400 text-sm text-center mb-3">{error}</p>
-              )}
+              {error && <p className="text-red-400 text-sm text-center mb-3">{error}</p>}
 
               <div className="flex items-center justify-center gap-5">
                 {[
@@ -226,11 +304,7 @@ export default function CheckoutPage() {
                 <p className="text-[#10B981] font-bold text-base">מה קורה אחרי התשלום?</p>
               </div>
               <div className="space-y-3 mr-10">
-                {[
-                  'מייל עם לינק גישה אישי — תוך דקות',
-                  'גישה מיידית לכל 57 השיעורים',
-                  'גישה לאפליקציה ולקהילה הפרטית',
-                ].map((item, i) => (
+                {['מייל עם לינק גישה אישי — תוך דקות', 'גישה מיידית לכל 57 השיעורים', 'גישה לאפליקציה ולקהילה הפרטית'].map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]/50" />
                     <span className="text-white/50 text-base">{item}</span>
@@ -243,9 +317,7 @@ export default function CheckoutPage() {
           {/* Summary sidebar */}
           <div className="md:col-span-2 order-1 md:order-2 flex flex-col">
             <div className="flex flex-col gap-4 flex-1">
-              {/* Order summary */}
               <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6">
-
                 <h2 className="text-white font-bold text-base mb-4">סיכום הזמנה</h2>
 
                 <div className="flex items-start gap-3 pb-4 border-b border-white/6">
@@ -261,13 +333,7 @@ export default function CheckoutPage() {
                 <div className="py-4 border-b border-white/6">
                   <p className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-3">מה כלול</p>
                   <div className="space-y-2">
-                    {[
-                      'קורס מלא — א׳ עד ת׳',
-                      'אפליקציית ניהול תזרים',
-                      'תעודת סיום',
-                      'קהילה פרטית + תמיכה',
-                      'עדכונים עתידיים — חינם',
-                    ].map((item, i) => (
+                    {['קורס מלא — א׳ עד ת׳', 'אפליקציית ניהול תזרים', 'תעודת סיום', 'קהילה פרטית + תמיכה', 'עדכונים עתידיים — חינם'].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <Check size={12} className="text-[#10B981] flex-shrink-0" />
                         <span className="text-white/50 text-sm">{item}</span>
@@ -282,19 +348,25 @@ export default function CheckoutPage() {
                     <span className="text-white/30 text-xs line-through">₪1,140</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-white/30 text-xs">הנחה</span>
-                    <span className="text-[#10B981] text-xs font-medium">−₪750</span>
+                    <span className="text-white/30 text-xs">הנחת השקה</span>
+                    <span className="text-[#10B981] text-xs font-medium">−₪{1140 - BASE_PRICE}</span>
                   </div>
+                  {couponApplied && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#F5A624] text-xs font-medium">קופון {couponApplied.code}</span>
+                      <span className="text-[#F5A624] text-xs font-medium">−₪{BASE_PRICE - couponApplied.finalPrice}</span>
+                    </div>
+                  )}
                   <div className="h-px bg-white/6 my-2" />
                   <div className="flex items-center justify-between">
                     <span className="text-white font-bold">סה״כ</span>
-                    <span className="text-[#F5A624] font-black text-2xl">₪390</span>
+                    <span className="text-[#F5A624] font-black text-2xl">₪{finalPrice}</span>
                   </div>
                   <p className="text-white/20 text-[10px] text-center pt-1">תשלום חד-פעמי · ללא מנוי · ללא חיובים נוספים</p>
                 </div>
               </div>
 
-              {/* Guarantee — stretches to match "מה קורה אחרי" height */}
+              {/* Guarantee */}
               <div className="rounded-2xl p-5 md:p-6 border border-[#F5A624]/10 bg-[#F5A624]/[0.03] flex-1 flex flex-col justify-center">
                 <div className="flex items-center gap-2.5 mb-3">
                   <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0" />

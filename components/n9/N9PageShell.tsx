@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { VariantProvider } from '@/lib/content-context'
 import type { ContentType } from '@/lib/content-context'
 
@@ -23,6 +24,22 @@ import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 import DCookieConsent from '@/components/d/DCookieConsent'
 
 export default function N9PageShell({ content, checkoutUrl }: { content: ContentType; checkoutUrl?: string }) {
+  // Track affiliate visit from ?via= parameter
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const via = params.get('via')
+    if (via) {
+      // Save affiliate code in cookie for checkout
+      document.cookie = `aff_via=${via}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`
+      // Track visit
+      fetch('/api/affiliate/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: via, type: 'visit' }),
+      }).catch(() => {})
+    }
+  }, [])
+
   return (
     <VariantProvider content={content} checkoutUrl={checkoutUrl}>
       <main className="bg-[#080808]">
