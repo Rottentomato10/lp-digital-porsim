@@ -165,7 +165,7 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
 }
 
 // ── Stats Table ──
-type SortKey = 'name' | 'visits' | 'checkouts' | 'purchases' | 'revenue' | 'commission' | 'discountPercent' | 'commissionPercent'
+type SortKey = 'name' | 'visits' | 'checkouts' | 'purchases' | 'revenue' | 'commission' | 'discountPercent' | 'commissionPercent' | 'efficiency'
 
 function StatsTab({ affiliates }: { affiliates: Aff[] }) {
   const [sortBy, setSortBy] = useState<SortKey>('revenue')
@@ -176,14 +176,26 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
     else { setSortBy(key); setSortDir('desc') }
   }
 
+  function getEfficiency(aff: Aff): number {
+    if (aff.stats.visits === 0) return 0
+    const netRevenue = aff.stats.revenue - aff.stats.commission
+    const conversionRate = aff.stats.purchases / aff.stats.visits
+    const revenuePerVisit = netRevenue / aff.stats.visits
+    // Score = net revenue per visit × conversion rate × 100 (normalized)
+    return Math.round(revenuePerVisit * conversionRate * 100 * 10) / 10
+  }
+
   const sorted = [...affiliates].sort((a, b) => {
     let va: number, vb: number
     if (sortBy === 'name') return sortDir === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
     if (sortBy === 'discountPercent') { va = a.discountPercent; vb = b.discountPercent }
     else if (sortBy === 'commissionPercent') { va = a.commissionPercent; vb = b.commissionPercent }
+    else if (sortBy === 'efficiency') { va = getEfficiency(a); vb = getEfficiency(b) }
     else { va = (a.stats as any)[sortBy] || 0; vb = (b.stats as any)[sortBy] || 0 }
     return sortDir === 'asc' ? va - vb : vb - va
   })
+
+  const maxEfficiency = Math.max(...affiliates.map(a => getEfficiency(a)), 1)
 
   const totalVisits = affiliates.reduce((s, a) => s + a.stats.visits, 0)
   const totalCheckouts = affiliates.reduce((s, a) => s + a.stats.checkouts, 0)
@@ -238,10 +250,14 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                 <SortHeader label="הנחה %" k="discountPercent" />
                 <SortHeader label="עמלה %" k="commissionPercent" />
                 <SortHeader label="עמלה ₪" k="commission" />
+                <SortHeader label="יעילות" k="efficiency" />
               </tr>
             </thead>
             <tbody>
               {sorted.map((aff, i) => {
+                const eff = getEfficiency(aff)
+                const effPct = maxEfficiency > 0 ? (eff / maxEfficiency) * 100 : 0
+                const effColor = effPct >= 70 ? '#10B981' : effPct >= 40 ? '#F5A624' : '#EF4444'
                 const convRate = aff.stats.visits > 0 ? ((aff.stats.purchases / aff.stats.visits) * 100).toFixed(1) : '0'
                 return (
                   <tr key={aff.id} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
@@ -266,6 +282,14 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                     <td className="px-3 py-3 text-white/40">{aff.discountPercent}%</td>
                     <td className="px-3 py-3 text-white/40">{aff.commissionPercent}%</td>
                     <td className="px-3 py-3 text-[#F59E0B] font-bold">₪{aff.stats.commission.toLocaleString()}</td>
+                    <td className="px-3 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 h-2 rounded-full bg-white/5 overflow-hidden">
+                          <div className="h-full rounded-full transition-all" style={{ width: `${effPct}%`, background: effColor }} />
+                        </div>
+                        <span className="font-bold text-xs" style={{ color: effColor }}>{eff}</span>
+                      </div>
+                    </td>
                   </tr>
                 )
               })}
@@ -283,6 +307,7 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                 <td className="px-3 py-3"></td>
                 <td className="px-3 py-3"></td>
                 <td className="px-3 py-3 text-[#F59E0B] font-black">₪{totalCommission.toLocaleString()}</td>
+                <td className="px-3 py-3"></td>
               </tr>
             </tfoot>
           </table>
@@ -412,8 +437,16 @@ export default function DashboardShell() {
         {/* ── Orders Tab ── */}
         {tab === 'orders' && (
           <>
-            <div className="flex items-center justify-between mb-6 gap-4">
-              <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
+            <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
+                {orders.length === 0 && (
+                  <button onClick={async () => { await fetch('/api/orders/seed', { method: 'POST' }); fetchOrders() }}
+                    className="text-white/30 text-xs border border-white/10 px-3 py-1 rounded-lg hover:text-white/50">
+                    נתוני דוגמה
+                  </button>
+                )}
+              </div>
               <div className="relative flex-1 max-w-sm">
                 <input
                   type="text"
