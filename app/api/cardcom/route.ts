@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing customer details' }, { status: 400 })
   }
 
-  if (!customerName || !customerEmail) {
-    return NextResponse.json({ error: 'נא למלא שם ואימייל' }, { status: 400 })
+  if (!customerName || !customerEmail || !customerPhone) {
+    return NextResponse.json({ error: 'נא למלא שם, אימייל וטלפון' }, { status: 400 })
   }
 
   try {
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
         TerminalNumber: Number(terminal),
         ApiName: apiName,
         Amount: 390,
-        ReturnValue: `order_${Date.now()}_${customerEmail}`,
+        ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}`,
         SuccessRedirectUrl: `${baseUrl}/checkout/success`,
         FailedRedirectUrl: `${baseUrl}/checkout/failed`,
         WebHookUrl: `${baseUrl}/api/cardcom/webhook`,

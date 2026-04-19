@@ -15,6 +15,7 @@ export default function CheckoutPage() {
   const handlePay = async () => {
     if (!name.trim()) { setError('נא למלא שם מלא'); return }
     if (!email.trim() || !email.includes('@')) { setError('נא למלא אימייל תקין'); return }
+    if (!phone.trim() || phone.trim().length < 9) { setError('נא למלא מספר טלפון'); return }
 
     setLoading(true)
     setError(null)
@@ -145,7 +146,7 @@ export default function CheckoutPage() {
 
                 {/* Phone */}
                 <div>
-                  <label className="block text-white/40 text-sm font-medium mb-1.5">טלפון <span className="text-white/15">(אופציונלי)</span></label>
+                  <label className="block text-white/40 text-sm font-medium mb-1.5">טלפון *</label>
                   <div className="relative">
                     <Phone size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
                     <input
