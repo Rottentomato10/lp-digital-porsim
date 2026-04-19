@@ -120,7 +120,7 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-8 md:items-start">
+        <div className="grid md:grid-cols-5 gap-8 md:items-stretch">
 
           {/* Main column */}
           <div className="md:col-span-3 order-2 md:order-1">
@@ -241,8 +241,8 @@ export default function CheckoutPage() {
           </div>
 
           {/* Summary sidebar */}
-          <div className="md:col-span-2 order-1 md:order-2">
-            <div className="md:sticky md:top-8 flex flex-col gap-4">
+          <div className="md:col-span-2 order-1 md:order-2 flex flex-col">
+            <div className="flex flex-col gap-4 flex-1">
               {/* Order summary */}
               <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6">
 
