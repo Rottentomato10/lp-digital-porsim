@@ -5,7 +5,7 @@ const nextConfig = {
       {
         source: '/.well-known/apple-developer-merchantid-domain-association',
         headers: [
-          { key: 'Content-Type', value: 'application/octet-stream' },
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
         ],
       },
     ]
