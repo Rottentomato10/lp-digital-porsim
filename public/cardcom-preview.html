@@ -17,6 +17,13 @@
 
     .course-title { text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
 
+    /* Order line */
+    .order-line { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px; }
+    .order-item { display: flex; align-items: center; gap: 6px; }
+    .order-name { color: rgba(255,255,255,0.6); font-size: 14px; }
+    .order-qty { color: rgba(255,255,255,0.25); font-size: 13px; }
+    .order-price { color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 700; }
+
     .total-bar { text-align: center; margin-bottom: 24px; }
     .total-bar .label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
     .total-bar .amount { font-size: 36px; font-weight: 900; color: #F5A624; }
@@ -84,6 +91,15 @@
 
   <!-- Course title -->
   <p class="course-title">קורס פיננסים לצעירים — פורשים כנף</p>
+
+  <!-- Order line -->
+  <div class="order-line">
+    <div class="order-item">
+      <span class="order-name">קורס פיננסים לצעירים — פורשים כנף</span>
+      <span class="order-qty">× 1</span>
+    </div>
+    <span class="order-price">₪390</span>
+  </div>
 
   <!-- Total -->
   <div class="total-bar">
@@ -203,7 +219,7 @@
   </div>
 
   <div class="foot">
-    מאובטח על ידי קארדקום — סליקת אשראי
+    התשלום מתבצע באמצעות חברת קארדקום — סליקת אשראי לעסקים
   </div>
 
 </div>
