@@ -397,11 +397,17 @@ export default function DashboardShell() {
   const [orders, setOrders] = useState<any[]>([])
   const [orderSearch, setOrderSearch] = useState('')
 
-  const handleLogin = () => {
-    if (password === 'Freedom1992@') {
-      document.cookie = `dash_auth=${password}; path=/; max-age=${60 * 60 * 24 * 30}; SameSite=Lax`
-      setAuthed(true); setLoginError('')
-    } else { setLoginError('סיסמה שגויה') }
+  const handleLogin = async () => {
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+      const data = await res.json()
+      if (data.ok) { setAuthed(true); setLoginError('') }
+      else { setLoginError(data.error || 'סיסמה שגויה') }
+    } catch { setLoginError('שגיאה בתקשורת') }
   }
 
   const fetchData = useCallback(async () => {
@@ -422,7 +428,10 @@ export default function DashboardShell() {
     } catch {}
   }, [])
 
-  useEffect(() => { if (document.cookie.includes('dash_auth=Freedom1992@')) setAuthed(true) }, [])
+  // Check if already authed by trying to fetch data
+  useEffect(() => {
+    fetch('/api/affiliate').then(r => { if (r.ok) setAuthed(true) }).catch(() => {})
+  }, [])
   useEffect(() => { if (authed) { fetchData(); fetchOrders() } }, [authed, fetchData, fetchOrders])
 
   const handleCreate = async (data: any) => {
