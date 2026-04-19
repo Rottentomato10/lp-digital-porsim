@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { validateCoupon, BASE_PRICE } from '@/lib/pricing'
 
 export async function POST(req: NextRequest) {
   const terminal = process.env.CARDCOM_TERMINAL
@@ -13,18 +14,32 @@ export async function POST(req: NextRequest) {
   let customerName = ''
   let customerEmail = ''
   let customerPhone = ''
+  let couponCode = ''
 
   try {
     const body = await req.json()
     customerName = body.name || ''
     customerEmail = body.email || ''
     customerPhone = body.phone || ''
+    couponCode = body.coupon || ''
   } catch {
     return NextResponse.json({ error: 'Missing customer details' }, { status: 400 })
   }
 
   if (!customerName || !customerEmail || !customerPhone) {
     return NextResponse.json({ error: 'נא למלא שם, אימייל וטלפון' }, { status: 400 })
+  }
+
+  // Calculate price — apply coupon if provided
+  let finalPrice = BASE_PRICE
+  let couponLabel = ''
+
+  if (couponCode) {
+    const couponResult = validateCoupon(couponCode)
+    if (couponResult.valid) {
+      finalPrice = couponResult.finalPrice
+      couponLabel = couponResult.label
+    }
   }
 
   try {
@@ -34,10 +49,10 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         TerminalNumber: Number(terminal),
         ApiName: apiName,
-        Amount: 390,
+        Amount: finalPrice,
         Language: 'he',
         ISOCoinId: 1,
-        ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}`,
+        ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}|${couponCode || 'none'}`,
         SuccessRedirectUrl: `${baseUrl}/checkout/success`,
         FailedRedirectUrl: `${baseUrl}/checkout/failed`,
         WebHookUrl: `${baseUrl}/api/cardcom/webhook`,
@@ -59,8 +74,10 @@ export async function POST(req: NextRequest) {
           IsSendByEmail: true,
           Products: [
             {
-              Description: 'קורס פיננסים לצעירים — פורשים כנף',
-              UnitCost: 390,
+              Description: couponLabel
+                ? `קורס פיננסים לצעירים — פורשים כנף (${couponLabel})`
+                : 'קורס פיננסים לצעירים — פורשים כנף',
+              UnitCost: finalPrice,
             },
           ],
         },
@@ -76,7 +93,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    return NextResponse.json({ url: data.Url })
+    return NextResponse.json({ url: data.Url, price: finalPrice })
   } catch {
     return NextResponse.json({ error: 'Failed to create payment' }, { status: 500 })
   }
