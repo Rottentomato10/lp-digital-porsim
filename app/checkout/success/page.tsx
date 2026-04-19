@@ -4,12 +4,22 @@ import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import Image from 'next/image'
 import { CheckCircle2, Copy, Check } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function SuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order') || ''
   const [copied, setCopied] = useState(false)
+
+  // Fire purchase events once
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'Purchase', { value: 390, currency: 'ILS', content_name: 'קורס פיננסים לצעירים' })
+    }
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'purchase', { transaction_id: orderId, value: 390, currency: 'ILS' })
+    }
+  }, [orderId])
 
   const copyOrder = () => {
     navigator.clipboard.writeText(orderId)

@@ -1,5 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { updateOrder } from '@/lib/orders'
+import { updateOrder, getOrderById } from '@/lib/orders'
+
+async function notifyPurchase(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
+  // Send WhatsApp notification via WhatsApp API (wa.me link won't work server-side)
+  // Instead, log for now — can connect to WhatsApp Business API later
+  console.log(JSON.stringify({
+    event: 'PURCHASE_NOTIFICATION',
+    orderId: order.id,
+    name: order.name,
+    email: order.email,
+    phone: order.phone,
+    amount: order.amount,
+    coupon: order.coupon || 'ללא',
+    timestamp: new Date().toISOString(),
+  }))
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,11 +24,14 @@ export async function POST(req: NextRequest) {
     const dealResponse = params.get('DealResponse') || ''
 
     if (orderId && dealResponse === '0') {
-      // Payment successful — update order status
       await updateOrder(orderId, {
         status: 'paid',
         paidAt: new Date().toISOString(),
       })
+
+      // Notify on purchase
+      const order = await getOrderById(orderId)
+      if (order) await notifyPurchase(order)
     }
 
     return NextResponse.json({ ok: true })
@@ -31,6 +49,9 @@ export async function GET(req: NextRequest) {
       status: 'paid',
       paidAt: new Date().toISOString(),
     })
+
+    const order = await getOrderById(orderId)
+    if (order) await notifyPurchase(order)
   }
 
   return NextResponse.json({ ok: true })

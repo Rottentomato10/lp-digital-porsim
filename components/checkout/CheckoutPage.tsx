@@ -79,6 +79,15 @@ export default function CheckoutPage() {
     setLoading(true)
     setError(null)
 
+    // Facebook Pixel: InitiateCheckout
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout', { value: finalPrice, currency: 'ILS' })
+    }
+    // GA4: begin_checkout
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'begin_checkout', { value: finalPrice, currency: 'ILS' })
+    }
+
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -366,6 +375,20 @@ export default function CheckoutPage() {
             </div>
           </div>
 
+        </div>
+
+        {/* Footer */}
+        <div className="mt-12 pt-6 border-t border-white/5 text-center text-white/15 text-xs space-y-1">
+          <p>© 2026 פורשים כנף · כל הזכויות שמורות</p>
+          <div className="flex items-center justify-center gap-3">
+            <a href="/course" className="hover:text-white/30 transition-colors">חזרה לאתר</a>
+            <span>·</span>
+            <button onClick={() => document.querySelector('[data-modal="privacy"]')?.dispatchEvent(new Event('click'))} className="hover:text-white/30 transition-colors">מדיניות פרטיות</button>
+            <span>·</span>
+            <button onClick={() => document.querySelector('[data-modal="terms"]')?.dispatchEvent(new Event('click'))} className="hover:text-white/30 transition-colors">תנאי שימוש</button>
+            <span>·</span>
+            <button onClick={() => document.querySelector('[data-modal="accessibility"]')?.dispatchEvent(new Event('click'))} className="hover:text-white/30 transition-colors">נגישות</button>
+          </div>
         </div>
       </div>
     </div>

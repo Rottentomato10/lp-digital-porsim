@@ -10,14 +10,21 @@ const heebo = Heebo({
 })
 
 export const metadata: Metadata = {
-  title: 'פורשים כנף — דיגיטלי',
-  description: 'הידע הפיננסי שלא לימדו אותך בבית הספר. 3 שעות שישנו את הדרך שאתה מתנהל עם כסף.',
+  title: 'פורשים כנף — להבין כסף באמת',
+  description: 'להבין כסף באמת — במקום להמשיך לנחש. 3 שעות שישנו את הדרך שאתה מתנהל עם כסף. 15,000+ תלמידים. 300+ כיתות.',
   openGraph: {
-    title: 'פורשים כנף — דיגיטלי',
-    description: 'הידע הפיננסי שלא לימדו אותך בבית הספר.',
+    title: 'פורשים כנף — להבין כסף באמת',
+    description: 'להבין כסף באמת — במקום להמשיך לנחש. קורס פיננסים מעשי לצעירים.',
     locale: 'he_IL',
     type: 'website',
+    siteName: 'פורשים כנף',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'פורשים כנף — להבין כסף באמת',
+    description: 'קורס פיננסים מעשי לצעירים. 3 שעות. 57 שיעורים. גישה לכל החיים.',
+  },
+  keywords: ['קורס פיננסים', 'חינוך פיננסי', 'השקעות', 'ניהול כסף', 'פורשים כנף', 'קורס דיגיטלי'],
 }
 
 
@@ -33,6 +40,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           gtag('js', new Date());
           gtag('config', 'G-QFNH2ML23S');
         `}} />
+        {/* Facebook Pixel */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '1075380986890693');
+          fbq('track', 'PageView');
+        `}} />
+        <noscript>
+          <img height="1" width="1" style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=1075380986890693&ev=PageView&noscript=1" />
+        </noscript>
         {/* Microsoft Clarity */}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(c,l,a,r,i,t,y){
@@ -43,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}} />
       </head>
       <body className={`${heebo.variable} font-heebo`}>
-<div className="grain-overlay" aria-hidden="true" />
+        <div className="grain-overlay" aria-hidden="true" />
         {children}
       </body>
     </html>
