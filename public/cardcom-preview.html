@@ -4,177 +4,188 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CardCom Preview — פורשים כנף</title>
-  <!-- Original CardCom base styles (simplified) -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    body { background-color: #fff; padding: 0; margin: 0; }
-    img { border: 0; }
-    body * { font-family: Tahoma,Helvetica,sans-serif; }
-    .directionLTR { direction: ltr; }
-    h1 { text-align: center; }
-    body { text-align: right; direction: rtl; }
-    .header { width: 100%; display: block; background-color: #0464a0; padding: 34px 0 23px; }
-    .header .headerIn { width: 92%; max-width: 600px; margin: 0 auto; display: block; }
-    .header .headerIn .logoDiv { float: right; vertical-align: top; max-width: 700px; }
-    .header .headerIn .logoDiv img { display: block; max-width: 200px; height: auto; }
-    .header .headerIn .detailsDiv { display: inline-block; vertical-align: top; margin: 10px 0 0; color: #eee; font-size: 16px; line-height: 1.4em; min-width: 250px; border-right: 1px dashed #7caecd; padding: 0 10px 0 0; float: left; }
-    .header .headerIn .detailsDiv div.company { font-weight: bold; }
-    .clear { clear: both; }
-    .blockDetails { display: block; width: 100%; padding: 23px 0 26px; }
-    .blockDetailsIn { width: 92%; max-width: 600px; margin: 0 auto; font-size: 15px; color: #444; }
-    .blockDetailsIn .title { display: block; font-size: 19px; padding-bottom: 10px; color: #0464a0; margin-right: 3px; }
-    .blockDetailsIn .formRow { display: block; margin: 0 0 4px; }
-    .blockDetailsIn .formRow .fieldName { width: 183px; display: inline-block; vertical-align: top; padding: 7px 0 0; }
-    .blockDetailsIn .formRow .fieldInput { display: inline-block; vertical-align: top; border: none; }
-    .blockDetailsIn .formRow .fieldInput input { margin: 0 10px; color: #444; font-size: 15px; border-radius: 3px; border: 1px solid #c5c5c5; padding: 8px 5px; width: 313px; }
-    .blockDetailsIn .formRow .fieldInput select { margin: 0 10px; color: #444; font-size: 15px; border-radius: 3px; border: 1px solid #c5c5c5; padding: 8px 3px; width: 100px; }
-    .blockDetailsIn .formRow .fieldInput select.tiny { width: 60px; }
-    .validityDate { width: 345px; }
-    .blockDetailsIn .formRow.errorRow .fieldInput input { border: 1px solid #e80505; color: #e80505; }
-    .blockDetailsIn .formRow.errorRow .fieldName:before { content: "*"; color: #e80505; font-weight: bold; font-size: 25px; display: inline-block; margin: -2px -28px 0px 8px; vertical-align: top; }
-    .paymentDetails .blockDetailsIn { background-image: none; background-repeat: no-repeat; }
-    .totalProducts { display: block; width: 100%; text-align: right; color: #444; font-size: 16px; margin: 10px 0 0; }
-    .totalProducts .num { color: #0464a0; font-size: 19px; font-weight: bold; display: inline-block; padding: 0 4px 0 0; }
-    .submitDiv { max-width: 566px; padding: 3px 3px 15px 3px; min-height: 35px; display: flex; align-items: center; justify-content: flex-end; }
-    .submitDiv .buttonDiv input { color: #fff; width: 174px; background-color: #286090; border-color: #204d74; padding: 10px 16px; font-size: 18px; line-height: 1.333; border-radius: 6px; cursor: pointer; border: 1px solid #204d74; }
-    .submitDiv .homeLink { float: right; }
-    .submitDiv .homeLink a { font-size: 14px; color: #0464a0; cursor: pointer; text-decoration: none; }
-    .submitDiv .buttonDiv { float: left; margin-left: 48px; }
-    .footer { background-color: #cdcdcd; width: 100%; padding: 18px 0 10px; }
-    .footer .footerIn { width: 92%; max-width: 600px; margin: 0 auto; display: flex; align-items: center; }
-    .footer .footerIn .footer-text span { font-size: 14px; }
-    .footer .footerIn .footer-logo { margin-left: 10px; }
-    .productsDetails { width: 100%; display: block; padding: 12px 0; }
-    .productsDetails .productsDetailsIn { display: block; margin: 0 auto; width: 92%; max-width: 600px; }
-    .apple-pay-button { height: 44px; width: 328px; border-radius: 5px; cursor: pointer; background: black; color: white; border: none; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .GooglePayDiv button { height: 44px; width: 328px; border-radius: 5px; cursor: pointer; border: 1px solid #ccc; background: white; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    @media screen and (max-width: 480px) {
-      .blockDetailsIn .formRow .fieldName { width: 100%; padding: 7px 0; }
-      .blockDetailsIn .formRow .fieldInput input { width: 94%; margin: 0; }
-      .blockDetailsIn .formRow .fieldInput { width: 100%; }
-      .submitDiv { width: 100%; }
-      .submitDiv .buttonDiv { margin-left: 15px; }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0D1117; color: #fff; font-family: 'Heebo', sans-serif; direction: rtl; min-height: 100vh; }
+
+    .page { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
+
+    /* Header */
+    .top { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px; }
+    .top img { height: 36px; }
+    .top .secure { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.3); font-size: 12px; }
+    .top .secure svg { width: 12px; height: 12px; }
+
+    /* Total */
+    .total-bar { text-align: center; margin-bottom: 24px; }
+    .total-bar .label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
+    .total-bar .amount { font-size: 36px; font-weight: 900; color: #F5A624; }
+
+    /* Payment method tabs */
+    .methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+    .method-tab { padding: 14px 8px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .method-tab:hover { border-color: rgba(255,255,255,0.15); }
+    .method-tab.active { border-color: #F5A624; background: rgba(245,166,36,0.06); }
+    .method-tab .icon { height: 24px; display: flex; align-items: center; justify-content: center; }
+    .method-tab .name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); }
+    .method-tab.active .name { color: #F5A624; }
+
+    /* Payment panels */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* Card form */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
+    .form-group input:focus, .form-group select:focus { border-color: rgba(245,166,36,0.5); box-shadow: 0 0 0 2px rgba(245,166,36,0.12); }
+    .form-group input::placeholder { color: rgba(255,255,255,0.15); }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 12px center; padding-left: 32px; }
+    .form-group select option { background: #1a1f2e; color: #fff; }
+
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* Submit */
+    .submit-btn { width: 100%; padding: 16px; border: none; border-radius: 50px; background: #F5A624; color: #000; font-size: 18px; font-weight: 900; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+    .submit-btn:hover { filter: brightness(1.1); transform: scale(1.01); }
+
+    /* Wallet buttons */
+    .wallet-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+    .wallet-btn:hover { transform: scale(1.01); }
+    .wallet-btn.apple { background: #000; color: #fff; }
+    .wallet-btn.google { background: #fff; color: #1a1a1a; border: 1px solid rgba(255,255,255,0.15); }
+    .wallet-btn.bit { background: #3CC1D1; color: #fff; }
+    .wallet-info { text-align: center; color: rgba(255,255,255,0.25); font-size: 12px; margin-top: 12px; }
+
+    /* Security */
+    .security { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .security span { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.2); font-size: 11px; }
+
+    /* Footer */
+    .foot { text-align: center; color: rgba(255,255,255,0.15); font-size: 11px; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.04); }
+
+    /* ID field */
+    .form-group .hint { color: rgba(255,255,255,0.2); font-size: 11px; margin-top: 4px; }
   </style>
-  <!-- Our custom CSS override -->
-  <link rel="stylesheet" href="/cardcom-style.css">
 </head>
 <body>
 
-  <!-- Header -->
-  <div class="header user-header">
-    <div class="headerIn">
-      <div class="logoDiv">
-        <img src="/logo.png" alt="פורשים כנף" />
-      </div>
-      <div class="detailsDiv user-detailsDiv">
-        <div class="adress company"><span class="title">פורשים כנף בע״מ</span></div>
-        <div class="Line1"><span class="title">חינוך פיננסי לצעירים</span></div>
-      </div>
-    </div>
-    <div class="clear"></div>
-  </div>
+<div class="page">
 
-  <h1>תשלום מאובטח</h1>
-
-  <!-- Products -->
-  <div class="productsDetails showProductsTabs">
-    <div class="productsDetailsIn">
-      <div class="totalProducts">
-        <span class="text">סה"כ לתשלום:</span>
-        <span class="num">₪390.00</span>
-      </div>
+  <!-- Top bar -->
+  <div class="top">
+    <img src="/logo.png" alt="פורשים כנף" />
+    <div class="secure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      תשלום מאובטח
     </div>
   </div>
 
-  <!-- Payment Details -->
-  <div class="blockDetails paymentDetails">
-    <div class="blockDetailsIn">
-      <div class="title"><span>אמצעי תשלום</span></div>
+  <!-- Total -->
+  <div class="total-bar">
+    <div class="label">סה״כ לתשלום</div>
+    <div class="amount">₪390</div>
+  </div>
 
-      <!-- Apple Pay -->
-      <div style="margin-bottom: 12px;">
-        <div class="apple-pay-button">
-          <span style="font-size: 20px;">🍎</span> Apple Pay
-        </div>
+  <!-- Payment method selector -->
+  <div class="methods">
+    <div class="method-tab active" onclick="switchTab('card')">
+      <div class="icon">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none"><rect x="0.5" y="0.5" width="27" height="19" rx="3.5" stroke="rgba(255,255,255,0.3)"/><rect x="0" y="4" width="28" height="4" fill="rgba(255,255,255,0.15)"/><rect x="4" y="12" width="8" height="2" rx="1" fill="rgba(255,255,255,0.2)"/></svg>
       </div>
-
-      <!-- Google Pay -->
-      <div class="GooglePayDiv" style="margin-bottom: 16px;">
-        <button>
-          <span style="font-weight: bold;">G</span> Google Pay
-        </button>
-      </div>
-
-      <div class="title"><span>תשלום בכרטיס אשראי</span></div>
-
-      <!-- Card Number -->
-      <div class="formRow cardRow">
-        <label class="fieldName">מספר כרטיס</label>
-        <span class="fieldInput"><input type="text" placeholder="0000 0000 0000 0000" dir="ltr" /></span>
-      </div>
-
-      <!-- Expiration -->
-      <div class="formRow">
-        <label class="fieldName">תוקף</label>
-        <span class="fieldInput validityDate">
-          <select class="mini">
-            <option>2026</option><option>2027</option><option>2028</option>
-          </select>
-          <select class="tiny">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
-          </select>
-        </span>
-      </div>
-
-      <!-- CVV -->
-      <div class="formRow cvvRow">
-        <span class="fieldName"><label>CVV</label></span>
-        <span class="fieldInput"><input maxlength="4" placeholder="123" dir="ltr" /></span>
-      </div>
-
-      <!-- ID -->
-      <div class="formRow cardRow">
-        <label class="fieldName">תעודת זהות</label>
-        <span class="fieldInput"><input type="text" placeholder="000000000" dir="ltr" /></span>
-      </div>
-
-      <!-- Number of payments -->
-      <div class="formRow cardRow">
-        <label class="fieldName">מספר תשלומים</label>
-        <span class="fieldInput">
-          <select class="tiny">
-            <option>1</option><option>2</option><option>3</option>
-          </select>
-        </span>
-      </div>
-
-      <!-- Submit -->
-      <div class="submitDiv">
-        <div class="homeLink"><a href="#">חזרה לאתר</a></div>
-        <div class="buttonDiv">
-          <input type="button" value="שלם ₪390" />
-        </div>
-      </div>
-
-      <!-- Error example (hidden by default) -->
-      <!--
-      <div class="errorDiv">
-        <div class="errorDivIn">
-          <ul><li><span class="message">דוגמה לשגיאה</span></li></ul>
-        </div>
-      </div>
-      -->
+      <span class="name">כרטיס אשראי</span>
     </div>
+    <div class="method-tab" onclick="switchTab('apple')">
+      <div class="icon">
+        <svg width="20" height="24" viewBox="0 0 814 1000" fill="rgba(255,255,255,0.7)"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.2-81-105.6-207.6-105.6-328.3 0-193.1 125.7-295.5 249.3-295.5 65.7 0 120.5 43.1 161.8 43.1 39.4 0 100.8-45.7 175.4-45.7 28.4 0 130.3 2.6 197.7 99.8zm-234.4-184c31.3-37 53.3-88.5 53.3-140 0-7.1-.6-14.3-1.9-20.1-50.8 1.9-110.5 33.8-146.7 76.1-25.8 29-52.7 80.4-52.7 132.9 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.2 1.3 45.7 0 103.3-30.4 136.5-68.4z"/></svg>
+      </div>
+      <span class="name">Apple Pay</span>
+    </div>
+    <div class="method-tab" onclick="switchTab('google')">
+      <div class="icon">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      </div>
+      <span class="name">Google Pay</span>
+    </div>
+  </div>
+
+  <!-- Credit Card Panel -->
+  <div class="panel active" id="panel-card">
+    <div class="form-group">
+      <label>מספר כרטיס</label>
+      <input type="text" placeholder="0000 0000 0000 0000" dir="ltr" />
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label>תוקף</label>
+        <input type="text" placeholder="MM / YY" dir="ltr" />
+      </div>
+      <div class="form-group">
+        <label>CVV</label>
+        <input type="text" placeholder="123" dir="ltr" maxlength="4" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>תעודת זהות</label>
+      <input type="text" placeholder="000000000" dir="ltr" />
+    </div>
+
+    <button class="submit-btn">שלם ₪390</button>
+  </div>
+
+  <!-- Apple Pay Panel -->
+  <div class="panel" id="panel-apple">
+    <button class="wallet-btn apple">
+      <svg width="18" height="22" viewBox="0 0 814 1000" fill="white"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57.8-155.5-127.4c-58.2-81-105.6-207.6-105.6-328.3 0-193.1 125.7-295.5 249.3-295.5 65.7 0 120.5 43.1 161.8 43.1 39.4 0 100.8-45.7 175.4-45.7 28.4 0 130.3 2.6 197.7 99.8zm-234.4-184c31.3-37 53.3-88.5 53.3-140 0-7.1-.6-14.3-1.9-20.1-50.8 1.9-110.5 33.8-146.7 76.1-25.8 29-52.7 80.4-52.7 132.9 0 7.8.6 15.6 1.3 18.2 2.6.6 6.4 1.3 10.2 1.3 45.7 0 103.3-30.4 136.5-68.4z"/></svg>
+      שלם עם Apple Pay
+    </button>
+    <p class="wallet-info">לחץ לפתיחת Apple Pay במכשיר שלך</p>
+  </div>
+
+  <!-- Google Pay Panel -->
+  <div class="panel" id="panel-google">
+    <button class="wallet-btn google">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      שלם עם Google Pay
+    </button>
+    <p class="wallet-info">לחץ לפתיחת Google Pay</p>
+  </div>
+
+  <!-- Security badges -->
+  <div class="security">
+    <span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      SSL
+    </span>
+    <span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      256-bit
+    </span>
+    <span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      PCI DSS
+    </span>
   </div>
 
   <!-- Footer -->
-  <div class="footer">
-    <div class="footerIn">
-      <div class="footer-text">
-        <span>מאובטח על ידי קארדקום — סליקת אשראי</span>
-      </div>
-    </div>
+  <div class="foot">
+    מאובטח על ידי קארדקום — סליקת אשראי
   </div>
+
+</div>
+
+<script>
+function switchTab(method) {
+  document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+
+  event.currentTarget.classList.add('active');
+  document.getElementById('panel-' + method).classList.add('active');
+}
+</script>
 
 </body>
 </html>
