@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Users, Eye, ShoppingCart, DollarSign, Copy, Check, Trash2, Pencil, X } from 'lucide-react'
+import { Plus, Users, Eye, ShoppingCart, DollarSign, Copy, Check, Trash2, Pencil, X, ArrowUpDown, ChevronUp, ChevronDown } from 'lucide-react'
 
 const BASE_PRICE = 390
 const DOMAIN = 'https://digital.porsimkanaf.com'
@@ -85,11 +85,10 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
             ? 'text-[#F5A624] bg-[#F5A624]/10 border-[#F5A624]/25'
             : 'text-white/30 bg-white/5 border-white/10'
         }`}>
-          {initial?.affNumber ? `מס׳ ${initial.affNumber}#` : 'מספר ייווצר אוטומטית'}
+          {initial?.affNumber ? `#${initial.affNumber}` : 'מספר ייווצר אוטומטית'}
         </span>
       </div>
 
-      {/* Basic info + Status */}
       <p className="text-white/30 text-xs font-bold uppercase tracking-wider mb-3">פרטים בסיסיים</p>
       <div className="grid md:grid-cols-4 gap-3 mb-5">
         <div>
@@ -117,7 +116,6 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
         </div>
       </div>
 
-      {/* Codes */}
       <p className="text-white/30 text-xs font-bold uppercase tracking-wider mb-3">קודים</p>
       <div className="grid md:grid-cols-2 gap-3 mb-5">
         <div>
@@ -131,7 +129,6 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
         </div>
       </div>
 
-      {/* Discount + Commission — separate framed sections */}
       <div className="grid md:grid-cols-2 gap-4 mb-5">
         <div className="rounded-xl border-2 border-[#10B981]/25 bg-[#10B981]/[0.04] p-4">
           <p className="text-[#10B981] text-sm font-bold mb-3">💰 הנחה ללקוח</p>
@@ -143,24 +140,16 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
         </div>
       </div>
 
-      {/* Bank details */}
       <p className="text-white/30 text-xs font-bold uppercase tracking-wider mb-3">פרטי תשלום (בנק)</p>
       <div className="grid md:grid-cols-3 gap-3 mb-5">
-        <div>
-          <label className="block text-white/40 text-xs mb-1">שם בנק</label>
-          <input value={bankName} onChange={e => setBankName(e.target.value)} placeholder="לאומי / הפועלים..." className={inp} />
-        </div>
-        <div>
-          <label className="block text-white/40 text-xs mb-1">סניף</label>
-          <input value={bankBranch} onChange={e => setBankBranch(e.target.value)} placeholder="מספר סניף" dir="ltr" className={inp + ' text-left'} />
-        </div>
-        <div>
-          <label className="block text-white/40 text-xs mb-1">מספר חשבון</label>
-          <input value={bankAccount} onChange={e => setBankAccount(e.target.value)} placeholder="מספר חשבון" dir="ltr" className={inp + ' text-left'} />
-        </div>
+        <div><label className="block text-white/40 text-xs mb-1">שם בנק</label>
+          <input value={bankName} onChange={e => setBankName(e.target.value)} placeholder="לאומי / הפועלים..." className={inp} /></div>
+        <div><label className="block text-white/40 text-xs mb-1">סניף</label>
+          <input value={bankBranch} onChange={e => setBankBranch(e.target.value)} placeholder="מספר סניף" dir="ltr" className={inp + ' text-left'} /></div>
+        <div><label className="block text-white/40 text-xs mb-1">מספר חשבון</label>
+          <input value={bankAccount} onChange={e => setBankAccount(e.target.value)} placeholder="מספר חשבון" dir="ltr" className={inp + ' text-left'} /></div>
       </div>
 
-      {/* Notes */}
       <div className="mb-4">
         <label className="block text-white/40 text-xs mb-1">הערות</label>
         <input value={notes} onChange={e => setNotes(e.target.value)} placeholder="הערות חופשיות..." className={inp} />
@@ -168,15 +157,142 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
 
       {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
       <div className="flex gap-3">
-        <button onClick={handle} className="bg-[#F5A624] text-black font-bold text-sm px-6 py-2 rounded-lg hover:brightness-110 transition-all">
-          {submitLabel}
-        </button>
+        <button onClick={handle} className="bg-[#F5A624] text-black font-bold text-sm px-6 py-2 rounded-lg hover:brightness-110 transition-all">{submitLabel}</button>
         <button onClick={onCancel} className="text-white/30 text-sm hover:text-white/60 transition-colors">ביטול</button>
       </div>
     </div>
   )
 }
 
+// ── Stats Table ──
+type SortKey = 'name' | 'visits' | 'checkouts' | 'purchases' | 'revenue' | 'commission' | 'discountPercent' | 'commissionPercent'
+
+function StatsTab({ affiliates }: { affiliates: Aff[] }) {
+  const [sortBy, setSortBy] = useState<SortKey>('revenue')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc')
+
+  const toggleSort = (key: SortKey) => {
+    if (sortBy === key) { setSortDir(sortDir === 'asc' ? 'desc' : 'asc') }
+    else { setSortBy(key); setSortDir('desc') }
+  }
+
+  const sorted = [...affiliates].sort((a, b) => {
+    let va: number, vb: number
+    if (sortBy === 'name') return sortDir === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+    if (sortBy === 'discountPercent') { va = a.discountPercent; vb = b.discountPercent }
+    else if (sortBy === 'commissionPercent') { va = a.commissionPercent; vb = b.commissionPercent }
+    else { va = (a.stats as any)[sortBy] || 0; vb = (b.stats as any)[sortBy] || 0 }
+    return sortDir === 'asc' ? va - vb : vb - va
+  })
+
+  const totalVisits = affiliates.reduce((s, a) => s + a.stats.visits, 0)
+  const totalCheckouts = affiliates.reduce((s, a) => s + a.stats.checkouts, 0)
+  const totalPurchases = affiliates.reduce((s, a) => s + a.stats.purchases, 0)
+  const totalRevenue = affiliates.reduce((s, a) => s + a.stats.revenue, 0)
+  const totalCommission = affiliates.reduce((s, a) => s + a.stats.commission, 0)
+
+  function SortHeader({ label, k }: { label: string; k: SortKey }) {
+    const active = sortBy === k
+    return (
+      <th className="px-3 py-3 text-right cursor-pointer hover:text-white/60 transition-colors select-none" onClick={() => toggleSort(k)}>
+        <div className="flex items-center gap-1">
+          <span>{label}</span>
+          {active ? (sortDir === 'desc' ? <ChevronDown size={12} /> : <ChevronUp size={12} />) : <ArrowUpDown size={10} className="opacity-30" />}
+        </div>
+      </th>
+    )
+  }
+
+  return (
+    <div>
+      {/* Summary cards */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+        {[
+          { label: 'סה״כ כניסות', value: totalVisits.toLocaleString(), color: '#3B82F6' },
+          { label: 'סה״כ צ׳קאווטים', value: totalCheckouts.toLocaleString(), color: '#8B5CF6' },
+          { label: 'סה״כ רכישות', value: totalPurchases.toLocaleString(), color: '#10B981' },
+          { label: 'סה״כ הכנסות', value: `₪${totalRevenue.toLocaleString()}`, color: '#10B981' },
+          { label: 'סה״כ עמלות', value: `₪${totalCommission.toLocaleString()}`, color: '#F59E0B' },
+        ].map((s, i) => (
+          <div key={i} className="rounded-xl bg-white/[0.03] border border-white/6 p-3 text-center">
+            <p className="text-white/30 text-[10px] mb-1">{s.label}</p>
+            <p className="font-black text-xl" style={{ color: s.color }}>{s.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="rounded-xl border border-white/6 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-white/[0.03] text-white/40 text-xs">
+                <th className="px-3 py-3 text-right w-8">#</th>
+                <SortHeader label="שם" k="name" />
+                <th className="px-3 py-3 text-right">סטטוס</th>
+                <SortHeader label="כניסות" k="visits" />
+                <SortHeader label="צ׳קאווט" k="checkouts" />
+                <SortHeader label="רכישות" k="purchases" />
+                <th className="px-3 py-3 text-right">המרה</th>
+                <SortHeader label="הכנסות" k="revenue" />
+                <SortHeader label="הנחה %" k="discountPercent" />
+                <SortHeader label="עמלה %" k="commissionPercent" />
+                <SortHeader label="עמלה ₪" k="commission" />
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((aff, i) => {
+                const convRate = aff.stats.visits > 0 ? ((aff.stats.purchases / aff.stats.visits) * 100).toFixed(1) : '0'
+                return (
+                  <tr key={aff.id} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
+                    <td className="px-3 py-3 text-white/20 font-mono text-xs">{i + 1}</td>
+                    <td className="px-3 py-3">
+                      <div>
+                        <span className="text-white font-bold">{aff.name}</span>
+                        <span className="text-white/20 text-xs mr-2">#{aff.affNumber || '—'}</span>
+                      </div>
+                      <p className="text-white/20 text-xs">{aff.coupon}</p>
+                    </td>
+                    <td className="px-3 py-3">
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${aff.active ? 'bg-[#10B981]/15 text-[#10B981]' : 'bg-red-500/10 text-red-400'}`}>
+                        {aff.active ? 'פעיל' : 'מושבת'}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 text-white/60">{aff.stats.visits.toLocaleString()}</td>
+                    <td className="px-3 py-3 text-white/60">{aff.stats.checkouts.toLocaleString()}</td>
+                    <td className="px-3 py-3 text-[#10B981] font-bold">{aff.stats.purchases.toLocaleString()}</td>
+                    <td className="px-3 py-3 text-white/40">{convRate}%</td>
+                    <td className="px-3 py-3 text-[#10B981] font-bold">₪{aff.stats.revenue.toLocaleString()}</td>
+                    <td className="px-3 py-3 text-white/40">{aff.discountPercent}%</td>
+                    <td className="px-3 py-3 text-white/40">{aff.commissionPercent}%</td>
+                    <td className="px-3 py-3 text-[#F59E0B] font-bold">₪{aff.stats.commission.toLocaleString()}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+            <tfoot>
+              <tr className="border-t-2 border-white/10 bg-white/[0.02]">
+                <td className="px-3 py-3" colSpan={3}>
+                  <span className="text-white font-bold text-sm">סה״כ</span>
+                </td>
+                <td className="px-3 py-3 text-white font-bold">{totalVisits.toLocaleString()}</td>
+                <td className="px-3 py-3 text-white font-bold">{totalCheckouts.toLocaleString()}</td>
+                <td className="px-3 py-3 text-[#10B981] font-bold">{totalPurchases.toLocaleString()}</td>
+                <td className="px-3 py-3 text-white/40">{totalVisits > 0 ? ((totalPurchases / totalVisits) * 100).toFixed(1) : '0'}%</td>
+                <td className="px-3 py-3 text-[#10B981] font-black">₪{totalRevenue.toLocaleString()}</td>
+                <td className="px-3 py-3"></td>
+                <td className="px-3 py-3"></td>
+                <td className="px-3 py-3 text-[#F59E0B] font-black">₪{totalCommission.toLocaleString()}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Main Dashboard ──
 export default function DashboardShell() {
   const [authed, setAuthed] = useState(false)
   const [password, setPassword] = useState('')
@@ -187,6 +303,8 @@ export default function DashboardShell() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [copied, setCopied] = useState('')
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
+  const [tab, setTab] = useState<'affiliates' | 'stats'>('affiliates')
+  const [seeding, setSeeding] = useState(false)
 
   const handleLogin = () => {
     if (password === 'Freedom1992@') {
@@ -212,20 +330,23 @@ export default function DashboardShell() {
     const res = await fetch('/api/affiliate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
     if (res.ok) { setShowCreate(false); fetchData() }
   }
-
   const handleEdit = async (data: any) => {
     const res = await fetch('/api/affiliate', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
     if (res.ok) { setEditingId(null); fetchData() }
   }
-
   const handleDelete = async (id: string) => {
     await fetch('/api/affiliate', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
     setConfirmDelete(null); fetchData()
   }
-
   const handleToggle = async (aff: Aff) => {
     await fetch('/api/affiliate', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: aff.id, active: !aff.active }) })
     fetchData()
+  }
+  const handleSeed = async () => {
+    setSeeding(true)
+    await fetch('/api/affiliate/seed', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ force: true }) })
+    await fetchData()
+    setSeeding(false)
   }
 
   const copy = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopied(id); setTimeout(() => setCopied(''), 2000) }
@@ -249,145 +370,179 @@ export default function DashboardShell() {
 
   return (
     <div className="min-h-screen bg-[#0D1117] text-white" dir="rtl" style={{ fontFamily: "'Heebo', sans-serif" }}>
+      {/* Top bar */}
       <div className="border-b border-white/5 bg-[#080B16]">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <h1 className="text-white font-bold text-lg">פורשים כנף — אפיליאייטים</h1>
+          <h1 className="text-white font-bold text-lg">פורשים כנף — דשבורד</h1>
           <button onClick={() => { document.cookie = 'dash_auth=; path=/; max-age=0'; setAuthed(false) }} className="text-white/30 text-sm hover:text-white/60">יציאה</button>
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="border-b border-white/5">
+        <div className="max-w-6xl mx-auto px-4 flex gap-0">
+          {[
+            { key: 'affiliates' as const, label: 'אפיליאייטים', icon: Users },
+            { key: 'stats' as const, label: 'סטטיסטיקות', icon: ArrowUpDown },
+          ].map(t => (
+            <button key={t.key} onClick={() => setTab(t.key)}
+              className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-colors ${
+                tab === t.key ? 'border-[#F5A624] text-[#F5A624]' : 'border-transparent text-white/30 hover:text-white/50'
+              }`}>
+              <t.icon size={15} />
+              {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Stats */}
-        {overall && (
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
-            {[
-              { icon: Users, label: 'אפיליאייטים', value: overall.affiliateCount, color: '#F5A624' },
-              { icon: Eye, label: 'כניסות', value: overall.visits, color: '#3B82F6' },
-              { icon: ShoppingCart, label: 'צ׳קאווטים', value: overall.checkouts, color: '#8B5CF6' },
-              { icon: DollarSign, label: 'רכישות', value: overall.purchases, color: '#10B981' },
-              { icon: DollarSign, label: 'הכנסות', value: `₪${overall.revenue.toLocaleString()}`, color: '#10B981' },
-              { icon: DollarSign, label: 'עמלות', value: `₪${overall.commission.toLocaleString()}`, color: '#F59E0B' },
-            ].map((s, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.03] border border-white/6 p-3">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <s.icon size={13} style={{ color: s.color }} />
-                  <span className="text-white/35 text-[10px]">{s.label}</span>
-                </div>
-                <p className="text-white font-black text-xl">{s.value}</p>
+
+        {/* ── Stats Tab ── */}
+        {tab === 'stats' && (
+          <>
+            {affiliates.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-white/20 text-lg mb-4">אין נתונים עדיין</p>
+                <button onClick={handleSeed} disabled={seeding}
+                  className="bg-[#F5A624] text-black font-bold text-sm px-6 py-2 rounded-lg hover:brightness-110 disabled:opacity-50">
+                  {seeding ? 'טוען נתוני דוגמה...' : 'טען נתוני דוגמה לבדיקה'}
+                </button>
               </div>
-            ))}
-          </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-white font-bold text-lg">טבלת סטטיסטיקות</h2>
+                  <p className="text-white/20 text-xs">לחץ על כותרת עמודה למיון</p>
+                </div>
+                <StatsTab affiliates={affiliates} />
+              </>
+            )}
+          </>
         )}
 
-        {/* Actions */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-white font-bold text-lg">רשימת אפיליאייטים</h2>
-          <button onClick={() => { setShowCreate(true); setEditingId(null) }}
-            className="flex items-center gap-2 bg-[#F5A624] text-black font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110">
-            <Plus size={16} /> אפיליאייט חדש
-          </button>
-        </div>
-
-        {/* Create form */}
-        {showCreate && <AffForm onSubmit={handleCreate} onCancel={() => setShowCreate(false)} submitLabel="צור אפיליאייט" />}
-
-        {/* List */}
-        {affiliates.length === 0 && !showCreate ? (
-          <div className="text-center py-16 text-white/20">
-            <Users size={48} className="mx-auto mb-4 opacity-30" />
-            <p className="text-lg">אין אפיליאייטים עדיין</p>
-            <p className="text-sm mt-1">לחץ ״אפיליאייט חדש״ כדי להתחיל</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {affiliates.map(aff => (
-              <div key={aff.id}>
-                {editingId === aff.id ? (
-                  <AffForm initial={aff} onSubmit={handleEdit} onCancel={() => setEditingId(null)} submitLabel="שמור שינויים" />
-                ) : (
-                  <div className="rounded-xl bg-white/[0.03] border border-white/6 p-4 md:p-5">
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                      {/* Info */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-1">
-                          <span className="text-white/20 text-xs font-mono bg-white/5 px-2 py-0.5 rounded">#{aff.affNumber || '—'}</span>
-                          <h3 className="text-white font-bold text-base">{aff.name}</h3>
-                          <button onClick={() => handleToggle(aff)}
-                            className={`text-xs px-2 py-0.5 rounded-full cursor-pointer transition-colors ${aff.active ? 'bg-[#10B981]/15 text-[#10B981] hover:bg-[#10B981]/25' : 'bg-white/5 text-white/30 hover:bg-white/10'}`}>
-                            {aff.active ? 'פעיל' : 'מושבת'}
-                          </button>
-                        </div>
-                        <p className="text-white/30 text-xs mb-2">{aff.email}{aff.phone ? ` · ${aff.phone}` : ''}</p>
-
-                        {/* Links + coupon */}
-                        <div className="flex flex-wrap gap-2 mb-2">
-                          <button onClick={() => copy(`${DOMAIN}/course?via=${aff.code}`, `link-${aff.id}`)}
-                            className="flex items-center gap-1.5 text-xs bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg px-3 py-1.5">
-                            {copied === `link-${aff.id}` ? <Check size={12} className="text-[#10B981]" /> : <Copy size={12} className="text-white/30" />}
-                            <span className="text-white/50">לינק:</span>
-                            <span className="text-white/70" dir="ltr">?via={aff.code}</span>
-                          </button>
-                          <button onClick={() => copy(aff.coupon, `coupon-${aff.id}`)}
-                            className="flex items-center gap-1.5 text-xs bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg px-3 py-1.5">
-                            {copied === `coupon-${aff.id}` ? <Check size={12} className="text-[#10B981]" /> : <Copy size={12} className="text-white/30" />}
-                            <span className="text-white/50">קופון:</span>
-                            <span className="text-[#F5A624] font-bold">{aff.coupon}</span>
-                          </button>
-                          <span className="text-xs text-white/20 px-2 py-1.5">
-                            הנחה {aff.discountPercent}% (₪{pctToAmount(aff.discountPercent)}) · עמלה {aff.commissionPercent}% (₪{pctToAmount(aff.commissionPercent)})
-                          </span>
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex items-center gap-2">
-                          <button onClick={() => { setEditingId(aff.id); setShowCreate(false) }}
-                            className="flex items-center gap-1 text-xs text-white/30 hover:text-[#F5A624] transition-colors">
-                            <Pencil size={12} /> עריכה
-                          </button>
-                          {confirmDelete === aff.id ? (
-                            <div className="flex items-center gap-2">
-                              <span className="text-red-400 text-xs">למחוק?</span>
-                              <button onClick={() => handleDelete(aff.id)} className="text-xs text-red-400 font-bold hover:text-red-300">כן</button>
-                              <button onClick={() => setConfirmDelete(null)} className="text-xs text-white/30 hover:text-white/50">לא</button>
-                            </div>
-                          ) : (
-                            <button onClick={() => setConfirmDelete(aff.id)}
-                              className="flex items-center gap-1 text-xs text-white/30 hover:text-red-400 transition-colors">
-                              <Trash2 size={12} /> מחיקה
-                            </button>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Stats */}
-                      <div className="flex items-center gap-4 md:gap-5 flex-shrink-0">
-                        <div className="text-center">
-                          <p className="text-white/25 text-[10px]">כניסות</p>
-                          <p className="text-white font-bold text-lg">{aff.stats?.visits || 0}</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-white/25 text-[10px]">צ׳קאווט</p>
-                          <p className="text-white font-bold text-lg">{aff.stats?.checkouts || 0}</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-white/25 text-[10px]">רכישות</p>
-                          <p className="text-[#10B981] font-bold text-lg">{aff.stats?.purchases || 0}</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-white/25 text-[10px]">הכנסות</p>
-                          <p className="text-[#F5A624] font-bold text-lg">₪{aff.stats?.revenue || 0}</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-white/25 text-[10px]">עמלה</p>
-                          <p className="text-[#F59E0B] font-bold text-lg">₪{aff.stats?.commission || 0}</p>
-                        </div>
-                      </div>
+        {/* ── Affiliates Tab ── */}
+        {tab === 'affiliates' && (
+          <>
+            {/* Overall Stats */}
+            {overall && (
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
+                {[
+                  { icon: Users, label: 'אפיליאייטים', value: overall.affiliateCount, color: '#F5A624' },
+                  { icon: Eye, label: 'כניסות', value: overall.visits, color: '#3B82F6' },
+                  { icon: ShoppingCart, label: 'צ׳קאווטים', value: overall.checkouts, color: '#8B5CF6' },
+                  { icon: DollarSign, label: 'רכישות', value: overall.purchases, color: '#10B981' },
+                  { icon: DollarSign, label: 'הכנסות', value: `₪${overall.revenue.toLocaleString()}`, color: '#10B981' },
+                  { icon: DollarSign, label: 'עמלות', value: `₪${overall.commission.toLocaleString()}`, color: '#F59E0B' },
+                ].map((s, i) => (
+                  <div key={i} className="rounded-xl bg-white/[0.03] border border-white/6 p-3">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <s.icon size={13} style={{ color: s.color }} />
+                      <span className="text-white/35 text-[10px]">{s.label}</span>
                     </div>
+                    <p className="text-white font-black text-xl">{s.value}</p>
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
+            )}
+
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-white font-bold text-lg">רשימת אפיליאייטים</h2>
+              <div className="flex gap-2">
+                {affiliates.length === 0 && (
+                  <button onClick={handleSeed} disabled={seeding}
+                    className="text-white/30 text-sm border border-white/10 px-3 py-1.5 rounded-lg hover:text-white/50 disabled:opacity-50">
+                    {seeding ? 'טוען...' : 'נתוני דוגמה'}
+                  </button>
+                )}
+                <button onClick={() => { setShowCreate(true); setEditingId(null) }}
+                  className="flex items-center gap-2 bg-[#F5A624] text-black font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110">
+                  <Plus size={16} /> אפיליאייט חדש
+                </button>
+              </div>
+            </div>
+
+            {showCreate && <AffForm onSubmit={handleCreate} onCancel={() => setShowCreate(false)} submitLabel="צור אפיליאייט" />}
+
+            {affiliates.length === 0 && !showCreate ? (
+              <div className="text-center py-16 text-white/20">
+                <Users size={48} className="mx-auto mb-4 opacity-30" />
+                <p className="text-lg">אין אפיליאייטים עדיין</p>
+                <p className="text-sm mt-1">לחץ ״אפיליאייט חדש״ כדי להתחיל</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {affiliates.map(aff => (
+                  <div key={aff.id}>
+                    {editingId === aff.id ? (
+                      <AffForm initial={aff} onSubmit={handleEdit} onCancel={() => setEditingId(null)} submitLabel="שמור שינויים" />
+                    ) : (
+                      <div className={`rounded-xl border p-4 md:p-5 ${aff.active ? 'bg-white/[0.03] border-white/6' : 'bg-red-500/[0.02] border-red-500/10'}`}>
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 mb-1">
+                              <span className="text-white/20 text-xs font-mono bg-white/5 px-2 py-0.5 rounded">#{aff.affNumber || '—'}</span>
+                              <h3 className="text-white font-bold text-base">{aff.name}</h3>
+                              <button onClick={() => handleToggle(aff)}
+                                className={`text-xs px-2 py-0.5 rounded-full cursor-pointer transition-colors ${aff.active ? 'bg-[#10B981]/15 text-[#10B981] hover:bg-[#10B981]/25' : 'bg-red-500/15 text-red-400 hover:bg-red-500/25'}`}>
+                                {aff.active ? 'פעיל' : 'מושבת'}
+                              </button>
+                            </div>
+                            <p className="text-white/30 text-xs mb-2">{aff.email}{aff.phone ? ` · ${aff.phone}` : ''}</p>
+
+                            <div className="flex flex-wrap gap-2 mb-2">
+                              <button onClick={() => copy(`${DOMAIN}/course?via=${aff.code}`, `link-${aff.id}`)}
+                                className="flex items-center gap-1.5 text-xs bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg px-3 py-1.5">
+                                {copied === `link-${aff.id}` ? <Check size={12} className="text-[#10B981]" /> : <Copy size={12} className="text-white/30" />}
+                                <span className="text-white/50">לינק:</span>
+                                <span className="text-white/70" dir="ltr">?via={aff.code}</span>
+                              </button>
+                              <button onClick={() => copy(aff.coupon, `coupon-${aff.id}`)}
+                                className="flex items-center gap-1.5 text-xs bg-white/5 hover:bg-white/10 border border-white/8 rounded-lg px-3 py-1.5">
+                                {copied === `coupon-${aff.id}` ? <Check size={12} className="text-[#10B981]" /> : <Copy size={12} className="text-white/30" />}
+                                <span className="text-white/50">קופון:</span>
+                                <span className="text-[#F5A624] font-bold">{aff.coupon}</span>
+                              </button>
+                              <span className="text-xs text-white/20 px-2 py-1.5">
+                                הנחה {aff.discountPercent}% (₪{pctToAmount(aff.discountPercent)}) · עמלה {aff.commissionPercent}% (₪{pctToAmount(aff.commissionPercent)})
+                              </span>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <button onClick={() => { setEditingId(aff.id); setShowCreate(false) }}
+                                className="flex items-center gap-1 text-xs text-white/30 hover:text-[#F5A624] transition-colors">
+                                <Pencil size={12} /> עריכה
+                              </button>
+                              {confirmDelete === aff.id ? (
+                                <div className="flex items-center gap-2">
+                                  <span className="text-red-400 text-xs">למחוק?</span>
+                                  <button onClick={() => handleDelete(aff.id)} className="text-xs text-red-400 font-bold hover:text-red-300">כן</button>
+                                  <button onClick={() => setConfirmDelete(null)} className="text-xs text-white/30 hover:text-white/50">לא</button>
+                                </div>
+                              ) : (
+                                <button onClick={() => setConfirmDelete(aff.id)}
+                                  className="flex items-center gap-1 text-xs text-white/30 hover:text-red-400 transition-colors">
+                                  <Trash2 size={12} /> מחיקה
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-4 md:gap-5 flex-shrink-0">
+                            <div className="text-center"><p className="text-white/25 text-[10px]">כניסות</p><p className="text-white font-bold text-lg">{aff.stats?.visits || 0}</p></div>
+                            <div className="text-center"><p className="text-white/25 text-[10px]">צ׳קאווט</p><p className="text-white font-bold text-lg">{aff.stats?.checkouts || 0}</p></div>
+                            <div className="text-center"><p className="text-white/25 text-[10px]">רכישות</p><p className="text-[#10B981] font-bold text-lg">{aff.stats?.purchases || 0}</p></div>
+                            <div className="text-center"><p className="text-white/25 text-[10px]">הכנסות</p><p className="text-[#F5A624] font-bold text-lg">₪{aff.stats?.revenue || 0}</p></div>
+                            <div className="text-center"><p className="text-white/25 text-[10px]">עמלה</p><p className="text-[#F59E0B] font-bold text-lg">₪{aff.stats?.commission || 0}</p></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
