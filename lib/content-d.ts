@@ -1,5 +1,4 @@
-// ← החלף בקישור הסליקה שלך
-export const CHECKOUT_URL = '#checkout'
+export const CHECKOUT_URL = '/checkout'
 
 export const contentD = {
 

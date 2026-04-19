@@ -41,8 +41,8 @@ export default function CheckoutPage() {
       {iframeUrl && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4"
           style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}>
-          <div className="relative w-full max-w-lg bg-white rounded-2xl overflow-hidden shadow-2xl"
-            style={{ maxHeight: '90vh' }}>
+          <div className="relative w-full max-w-2xl bg-white rounded-2xl overflow-hidden shadow-2xl"
+            style={{ maxHeight: '95vh' }}>
             {/* Modal header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
               <div className="flex items-center gap-2">
@@ -58,7 +58,7 @@ export default function CheckoutPage() {
             <iframe
               src={iframeUrl}
               className="w-full border-0"
-              style={{ height: 'min(75vh, 580px)' }}
+              style={{ height: 'min(82vh, 700px)' }}
               allow="payment"
             />
           </div>
