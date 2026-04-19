@@ -216,45 +216,26 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* After payment + Guarantee — same height, side by side on desktop */}
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* After payment */}
-              <div className="rounded-2xl p-5 md:p-6 border border-[#10B981]/15 flex flex-col"
-                style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)' }}>
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 flex items-center justify-center flex-shrink-0">
-                    <Check size={16} className="text-[#10B981]" />
-                  </div>
-                  <p className="text-[#10B981] font-bold text-base">מה קורה אחרי התשלום?</p>
+            {/* After payment */}
+            <div className="rounded-2xl p-5 md:p-6 border border-[#10B981]/15"
+              style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)' }}>
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-[#10B981]/15 flex items-center justify-center flex-shrink-0">
+                  <Check size={16} className="text-[#10B981]" />
                 </div>
-                <div className="space-y-3 mr-10 flex-1">
-                  {[
-                    'מייל עם לינק גישה אישי — תוך דקות',
-                    'גישה מיידית לכל 57 השיעורים',
-                    'גישה לאפליקציה ולקהילה הפרטית',
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]/50" />
-                      <span className="text-white/50 text-base">{item}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-[#10B981] font-bold text-base">מה קורה אחרי התשלום?</p>
               </div>
-
-              {/* Guarantee — same height */}
-              <div className="rounded-2xl p-5 md:p-6 border border-[#F5A624]/10 bg-[#F5A624]/[0.03] flex flex-col">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0" />
-                  <p className="text-[#F5A624] font-bold text-base">אחריות מלאה — 7 ימים</p>
-                </div>
-                <div className="flex-1 flex flex-col justify-center mr-8">
-                  <p className="text-white/45 text-base leading-relaxed">
-                    לא הרגשת שזה שווה? החזר מלא, בלי שאלות.
-                  </p>
-                  <p className="text-white/45 text-base leading-relaxed mt-2">
-                    אנחנו כאן בשביל התוצאות שלך.
-                  </p>
-                </div>
+              <div className="space-y-3 mr-10">
+                {[
+                  'מייל עם לינק גישה אישי — תוך דקות',
+                  'גישה מיידית לכל 57 השיעורים',
+                  'גישה לאפליקציה ולקהילה הפרטית',
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]/50" />
+                    <span className="text-white/50 text-base">{item}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -313,6 +294,16 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
+              {/* Guarantee — under summary */}
+              <div className="rounded-2xl p-5 md:p-6 mt-4 border border-[#F5A624]/10 bg-[#F5A624]/[0.03]">
+                <div className="flex items-center gap-2.5 mb-3">
+                  <ShieldCheck size={20} className="text-[#F5A624] flex-shrink-0" />
+                  <p className="text-[#F5A624] font-bold text-base">אחריות מלאה — 7 ימים</p>
+                </div>
+                <p className="text-white/45 text-base leading-relaxed mr-8">
+                  לא הרגשת שזה שווה? החזר מלא, בלי שאלות. אנחנו כאן בשביל התוצאות שלך.
+                </p>
+              </div>
             </div>
           </div>
 
