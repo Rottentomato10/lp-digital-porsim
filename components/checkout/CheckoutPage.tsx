@@ -104,7 +104,7 @@ export default function CheckoutPage() {
           <div className="flex items-center justify-center gap-3 flex-wrap mb-5">
             <div className="inline-flex items-center gap-2 bg-[#F5A624]/10 border border-[#F5A624]/20 rounded-full px-4 py-1.5">
               <Sparkles size={14} className="text-[#F5A624]" />
-              <span className="text-[#F5A624] text-sm font-semibold">מיד לאחר התשלום — גישה מיידית</span>
+              <span className="text-[#F5A624] text-sm font-semibold">גישה מיידית — לאחר אישור תשלום</span>
             </div>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#25D366]/10 border border-[#25D366]/20 rounded-full px-4 py-1.5 hover:bg-[#25D366]/20 transition-colors">
@@ -242,65 +242,71 @@ export default function CheckoutPage() {
 
           {/* Summary sidebar */}
           <div className="md:col-span-2 order-1 md:order-2">
-            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6 md:sticky md:top-8">
+            <div className="md:sticky md:top-8 flex flex-col gap-4">
+              {/* Order summary */}
+              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6">
 
-              <h2 className="text-white font-bold text-base mb-4">סיכום הזמנה</h2>
+                <h2 className="text-white font-bold text-base mb-4">סיכום הזמנה</h2>
 
-              <div className="flex items-start gap-3 pb-4 border-b border-white/6">
-                <div className="w-12 h-12 rounded-xl bg-[#F5A624]/10 flex items-center justify-center flex-shrink-0">
-                  <Image src="/logo.png" alt="" width={32} height={32} className="w-8 h-8 object-contain" />
+                <div className="flex items-start gap-3 pb-4 border-b border-white/6">
+                  <div className="w-12 h-12 rounded-xl bg-[#F5A624]/10 flex items-center justify-center flex-shrink-0">
+                    <Image src="/logo.png" alt="" width={32} height={32} className="w-8 h-8 object-contain" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">קורס פיננסים לצעירים</p>
+                    <p className="text-white/30 text-xs">57 שיעורים · 3 שעות · לכל החיים</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-white font-semibold text-sm">קורס פיננסים לצעירים</p>
-                  <p className="text-white/30 text-xs">57 שיעורים · 3 שעות · לכל החיים</p>
+
+                <div className="py-4 border-b border-white/6">
+                  <p className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-3">מה כלול</p>
+                  <div className="space-y-2">
+                    {[
+                      'קורס מלא — א׳ עד ת׳',
+                      'אפליקציית ניהול תזרים',
+                      'תעודת סיום',
+                      'קהילה פרטית + תמיכה',
+                      'עדכונים עתידיים — חינם',
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <Check size={12} className="text-[#10B981] flex-shrink-0" />
+                        <span className="text-white/50 text-sm">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-white/30 text-xs">שווי כולל</span>
+                    <span className="text-white/30 text-xs line-through">₪1,140</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-white/30 text-xs">הנחה</span>
+                    <span className="text-[#10B981] text-xs font-medium">−₪750</span>
+                  </div>
+                  <div className="h-px bg-white/6 my-2" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-white font-bold">סה״כ</span>
+                    <span className="text-[#F5A624] font-black text-2xl">₪390</span>
+                  </div>
+                  <p className="text-white/20 text-[10px] text-center pt-1">תשלום חד-פעמי · ללא מנוי · ללא חיובים נוספים</p>
                 </div>
               </div>
 
-              <div className="py-4 border-b border-white/6">
-                <p className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-3">מה כלול</p>
-                <div className="space-y-2">
-                  {[
-                    'קורס מלא — א׳ עד ת׳',
-                    'אפליקציית ניהול תזרים',
-                    'תעודת סיום',
-                    'קהילה פרטית + תמיכה',
-                    'עדכונים עתידיים — חינם',
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <Check size={12} className="text-[#10B981] flex-shrink-0" />
-                      <span className="text-white/50 text-sm">{item}</span>
-                    </div>
-                  ))}
+              {/* Guarantee — stretches to align with "מה קורה אחרי" */}
+              <div className="rounded-2xl p-5 md:p-6 border border-[#F5A624]/10 bg-[#F5A624]/[0.03] flex-1 flex flex-col justify-center">
+                <div className="flex items-center gap-2.5 mb-4">
+                  <ShieldCheck size={20} className="text-[#F5A624]" />
+                  <p className="text-[#F5A624] font-bold text-lg">אחריות מלאה — 7 ימים</p>
                 </div>
+                <p className="text-white/45 text-base leading-relaxed mr-8">
+                  לא הרגשת שזה שווה? החזר מלא, בלי שאלות.
+                </p>
+                <p className="text-white/45 text-base leading-relaxed mr-8 mt-2">
+                  אנחנו כאן בשביל התוצאות שלך.
+                </p>
               </div>
-
-              <div className="pt-4 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-white/30 text-xs">שווי כולל</span>
-                  <span className="text-white/30 text-xs line-through">₪1,140</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-white/30 text-xs">הנחה</span>
-                  <span className="text-[#10B981] text-xs font-medium">−₪750</span>
-                </div>
-                <div className="h-px bg-white/6 my-2" />
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-bold">סה״כ</span>
-                  <span className="text-[#F5A624] font-black text-2xl">₪390</span>
-                </div>
-                <p className="text-white/20 text-[10px] text-center pt-1">תשלום חד-פעמי · ללא מנוי · ללא חיובים נוספים</p>
-              </div>
-            </div>
-
-            {/* Guarantee — under summary on sidebar */}
-            <div className="rounded-2xl p-5 md:p-6 mt-4 border border-[#F5A624]/10 bg-[#F5A624]/[0.03]">
-              <div className="flex items-center gap-2.5 mb-3">
-                <ShieldCheck size={18} className="text-[#F5A624]" />
-                <p className="text-[#F5A624] font-bold text-base">אחריות מלאה — 7 ימים</p>
-              </div>
-              <p className="text-white/45 text-base leading-relaxed mr-7">
-                לא הרגשת שזה שווה? החזר מלא, בלי שאלות. אנחנו כאן בשביל התוצאות שלך.
-              </p>
             </div>
           </div>
 
