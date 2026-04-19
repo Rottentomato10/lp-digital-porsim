@@ -1,4 +1,4 @@
-import N12Shell from '@/components/n12/N12Shell'
+import N9PageShell from '@/components/n9/N9PageShell'
 import { contentN5 } from '@/lib/content-n5'
 
 export const metadata = {
@@ -6,6 +6,6 @@ export const metadata = {
   description: 'להבין כסף באמת — במקום להמשיך לנחש מאיפה להתחיל.',
 }
 
-export default function NN1() {
-  return <N12Shell content={contentN5} />
+export default function Course() {
+  return <N9PageShell content={contentN5} />
 }
