@@ -6,10 +6,16 @@ export interface Affiliate {
   id: string
   name: string
   email: string
+  phone: string
   code: string          // unique referral code (used in ?via=CODE)
   coupon: string        // coupon code customers use at checkout
   discountPercent: number
   commissionPercent: number
+  // Payment details
+  bankName: string
+  bankBranch: string
+  bankAccount: string
+  notes: string
   active: boolean
   createdAt: string
 }
@@ -29,12 +35,11 @@ export interface AffiliateStats {
   commission: number
 }
 
-// In-memory store — persists per serverless instance
-// For production, replace with Vercel KV or database
+// In-memory store
 const affiliatesStore: Map<string, Affiliate> = new Map()
 const eventsStore: AffiliateEvent[] = []
 
-// ── Affiliate CRUD ──
+// ── CRUD ──
 
 export function getAllAffiliates(): Affiliate[] {
   return Array.from(affiliatesStore.values()).sort((a, b) =>
@@ -54,23 +59,13 @@ export function getAffiliateByCoupon(coupon: string): Affiliate | undefined {
   return Array.from(affiliatesStore.values()).find(a => a.coupon === coupon.toUpperCase())
 }
 
-export function createAffiliate(data: {
-  name: string
-  email: string
-  code: string
-  coupon: string
-  discountPercent: number
-  commissionPercent: number
-}): Affiliate {
+export function createAffiliate(data: Omit<Affiliate, 'id' | 'active' | 'createdAt'>): Affiliate {
   const id = `aff_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
   const affiliate: Affiliate = {
+    ...data,
     id,
-    name: data.name,
-    email: data.email,
     code: data.code.toLowerCase(),
     coupon: data.coupon.toUpperCase(),
-    discountPercent: data.discountPercent,
-    commissionPercent: data.commissionPercent,
     active: true,
     createdAt: new Date().toISOString(),
   }
@@ -81,7 +76,9 @@ export function createAffiliate(data: {
 export function updateAffiliate(id: string, updates: Partial<Affiliate>): Affiliate | null {
   const existing = affiliatesStore.get(id)
   if (!existing) return null
-  const updated = { ...existing, ...updates, id } // id can't change
+  const updated = { ...existing, ...updates, id }
+  if (updates.code) updated.code = updates.code.toLowerCase()
+  if (updates.coupon) updated.coupon = updates.coupon.toUpperCase()
   affiliatesStore.set(id, updated)
   return updated
 }
@@ -90,38 +87,25 @@ export function deleteAffiliate(id: string): boolean {
   return affiliatesStore.delete(id)
 }
 
-// ── Events / Tracking ──
+// ── Events ──
 
 export function trackEvent(event: AffiliateEvent): void {
   eventsStore.push(event)
 }
 
-export function getEventsForAffiliate(affiliateId: string): AffiliateEvent[] {
-  return eventsStore.filter(e => e.affiliateId === affiliateId)
-}
-
-export function getAllEvents(): AffiliateEvent[] {
-  return [...eventsStore]
-}
-
 export function getStatsForAffiliate(affiliateId: string, basePrice: number): AffiliateStats {
-  const events = getEventsForAffiliate(affiliateId)
+  const events = eventsStore.filter(e => e.affiliateId === affiliateId)
   const affiliate = getAffiliateById(affiliateId)
 
   const visits = events.filter(e => e.type === 'visit').length
   const checkouts = events.filter(e => e.type === 'checkout').length
   const purchases = events.filter(e => e.type === 'purchase').length
 
-  const discountedPrice = affiliate
-    ? basePrice * (1 - affiliate.discountPercent / 100)
-    : basePrice
-
+  const discountedPrice = affiliate ? basePrice * (1 - affiliate.discountPercent / 100) : basePrice
   const revenue = purchases * discountedPrice
-  const commission = affiliate
-    ? revenue * (affiliate.commissionPercent / 100)
-    : 0
+  const commission = affiliate ? revenue * (affiliate.commissionPercent / 100) : 0
 
-  return { visits, checkouts, purchases, revenue, commission }
+  return { visits, checkouts, purchases, revenue: Math.round(revenue), commission: Math.round(commission) }
 }
 
 export function getOverallStats(basePrice: number): AffiliateStats & { affiliateCount: number } {
@@ -137,12 +121,5 @@ export function getOverallStats(basePrice: number): AffiliateStats & { affiliate
     totalCommission += stats.commission
   }
 
-  return {
-    affiliateCount: affiliates.length,
-    visits: totalVisits,
-    checkouts: totalCheckouts,
-    purchases: totalPurchases,
-    revenue: totalRevenue,
-    commission: totalCommission,
-  }
+  return { affiliateCount: affiliates.length, visits: totalVisits, checkouts: totalCheckouts, purchases: totalPurchases, revenue: totalRevenue, commission: totalCommission }
 }
