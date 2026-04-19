@@ -33,12 +33,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl">
       <head>
         {/* Google Analytics 4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QFNH2ML23S" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JL82KJZXN" />
         <script dangerouslySetInnerHTML={{ __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-QFNH2ML23S');
+          gtag('config', 'G-3JL82KJZXN');
         `}} />
         {/* Facebook Pixel */}
         <script dangerouslySetInnerHTML={{ __html: `
