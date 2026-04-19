@@ -146,6 +146,51 @@ function ChapterRow({ chapter, color }: { chapter: typeof STAGES[0]['chapters'][
   )
 }
 
+function StageAccordion({ stage, si, inView }: { stage: typeof STAGES[0]; si: number; inView: boolean }) {
+  const [open, setOpen] = useState(false)
+  const chapterCount = stage.chapters.length
+  const lessonCount = stage.chapters.reduce((s, c) => s + Math.max(c.lessons.length, 1), 0)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: si * 0.1 }}
+      className="rounded-2xl overflow-hidden border"
+      style={{ borderColor: open ? `${stage.color}30` : `${stage.color}15`, background: `linear-gradient(160deg, ${stage.color}06 0%, #0E0E0E 50%)` }}
+    >
+      <button onClick={() => setOpen(!open)} className="w-full p-5 xs:p-6 md:p-8 text-right">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-bold px-3 py-1 rounded-full"
+              style={{ background: `${stage.color}15`, color: stage.color }}>
+              {stage.phase}
+            </span>
+            <h3 className="text-white font-bold text-lg md:text-xl">{stage.phaseTitle}</h3>
+          </div>
+          <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}
+            className="flex-shrink-0" style={{ color: stage.color }}>
+            <ChevronDown size={20} />
+          </motion.span>
+        </div>
+        <p className="text-white/25 text-sm mt-2 mr-1">{chapterCount} פרקים · {lessonCount} שיעורים</p>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
+            <div className="px-5 xs:px-6 md:px-8 pb-5 xs:pb-6 md:pb-8 pt-0">
+              {stage.chapters.map((chapter, ci) => (
+                <ChapterRow key={ci} chapter={chapter} color={stage.color} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
+}
+
 export default function N9aSyllabus() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
@@ -181,30 +226,10 @@ export default function N9aSyllabus() {
           <p className="text-white/40 text-lg">לחץ על כל פרק כדי לראות את השיעורים</p>
         </motion.div>
 
-        {/* Full syllabus accordion */}
-        <div className="space-y-6">
+        {/* Full syllabus accordion — stages closed by default */}
+        <div className="space-y-4">
           {STAGES.map((stage, si) => (
-            <motion.div key={si}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: si * 0.1 }}
-              className="rounded-2xl overflow-hidden border p-5 xs:p-6 md:p-8"
-              style={{ borderColor: `${stage.color}20`, background: `linear-gradient(160deg, ${stage.color}06 0%, #0E0E0E 50%)` }}
-            >
-              {/* Phase header */}
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-xs font-bold px-3 py-1 rounded-full"
-                  style={{ background: `${stage.color}15`, color: stage.color }}>
-                  {stage.phase}
-                </span>
-                <h3 className="text-white font-bold text-lg md:text-xl">{stage.phaseTitle}</h3>
-              </div>
-
-              {/* Chapters */}
-              {stage.chapters.map((chapter, ci) => (
-                <ChapterRow key={ci} chapter={chapter} color={stage.color} />
-              ))}
-            </motion.div>
+            <StageAccordion key={si} stage={stage} si={si} inView={inView} />
           ))}
         </div>
 
