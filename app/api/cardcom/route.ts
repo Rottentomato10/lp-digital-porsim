@@ -35,14 +35,27 @@ export async function POST(req: NextRequest) {
         TerminalNumber: Number(terminal),
         ApiName: apiName,
         Amount: 390,
+        Language: 'he',
+        ISOCoinId: 1,
         ReturnValue: `${Date.now()}|${customerEmail}|${customerPhone}`,
         SuccessRedirectUrl: `${baseUrl}/checkout/success`,
         FailedRedirectUrl: `${baseUrl}/checkout/failed`,
         WebHookUrl: `${baseUrl}/api/cardcom/webhook`,
         Operation: 'ChargeOnly',
+        UIDefinition: {
+          CardOwnerNameValue: customerName,
+          CardOwnerPhoneValue: customerPhone,
+          CardOwnerEmailValue: customerEmail,
+          IsHideCardOwnerName: true,
+          IsHideCardOwnerPhone: true,
+          IsHideCardOwnerEmail: true,
+        },
         Document: {
-          To: customerName,
+          TypeToCreate: 'Auto',
+          Name: customerName,
           Email: customerEmail,
+          Phone: customerPhone,
+          IsSendByEmail: true,
           Products: [
             {
               Description: 'קורס פיננסים לצעירים — פורשים כנף',
