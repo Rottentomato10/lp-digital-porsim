@@ -2,18 +2,28 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { ShieldCheck, Lock, Check, X, Loader2, ArrowRight, Sparkles } from 'lucide-react'
+import { ShieldCheck, Lock, Check, X, Loader2, Sparkles, User, Mail, Phone } from 'lucide-react'
 
 export default function CheckoutPage() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [loading, setLoading] = useState(false)
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const handlePay = async () => {
+    if (!name.trim()) { setError('נא למלא שם מלא'); return }
+    if (!email.trim() || !email.includes('@')) { setError('נא למלא אימייל תקין'); return }
+
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/cardcom', { method: 'POST' })
+      const res = await fetch('/api/cardcom', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim() }),
+      })
       const data = await res.json()
 
       if (!res.ok || !data.url) {
@@ -43,7 +53,6 @@ export default function CheckoutPage() {
           style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
           <div className="relative w-full md:max-w-2xl bg-white md:rounded-2xl overflow-hidden shadow-2xl
             h-[100dvh] md:h-auto md:max-h-[92vh]">
-            {/* Modal header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-white sticky top-0 z-10">
               <div className="flex items-center gap-2">
                 <Lock size={13} className="text-green-500" />
@@ -54,7 +63,6 @@ export default function CheckoutPage() {
                 <X size={18} className="text-gray-400" />
               </button>
             </div>
-            {/* Iframe — takes all remaining height */}
             <iframe
               src={iframeUrl}
               className="w-full border-0"
@@ -89,7 +97,7 @@ export default function CheckoutPage() {
           </div>
           <h1 className="font-black text-white text-3xl md:text-4xl mb-3">השלמת רכישה</h1>
           <p className="text-white/40 text-base max-w-md mx-auto">
-            תקבל מייל עם לינק גישה אישי תוך דקות. תתחיל מהשיעור הראשון — 4 דקות שישנו הכל.
+            מלא את הפרטים, שלם, ותקבל גישה מיידית לקורס ישירות למייל.
           </p>
         </div>
 
@@ -98,7 +106,62 @@ export default function CheckoutPage() {
           {/* Main column */}
           <div className="md:col-span-3 order-2 md:order-1">
 
-            {/* Pay button — big and bold */}
+            {/* Customer details form */}
+            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6 mb-6">
+              <h2 className="text-white font-bold text-base mb-5">פרטים לקבלת גישה</h2>
+
+              <div className="space-y-4">
+                {/* Name */}
+                <div>
+                  <label className="block text-white/40 text-sm font-medium mb-1.5">שם מלא *</label>
+                  <div className="relative">
+                    <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="ישראל ישראלי"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/15 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-white/40 text-sm font-medium mb-1.5">אימייל *</label>
+                  <div className="relative">
+                    <Mail size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      dir="ltr"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/15 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left"
+                    />
+                  </div>
+                  <p className="text-white/20 text-xs mt-1.5">לכתובת הזו יישלח הלינק לקורס</p>
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="block text-white/40 text-sm font-medium mb-1.5">טלפון <span className="text-white/15">(אופציונלי)</span></label>
+                  <div className="relative">
+                    <Phone size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="050-0000000"
+                      dir="ltr"
+                      className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/15 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Pay button */}
             <div className="mb-8">
               <button
                 onClick={handlePay}
@@ -111,10 +174,7 @@ export default function CheckoutPage() {
                     <span>פותח טופס תשלום...</span>
                   </>
                 ) : (
-                  <>
-                    <span>שלם ₪390 — והתחל ללמוד</span>
-                    <ArrowRight size={20} className="rotate-180" />
-                  </>
+                  <span>המשך לתשלום — ₪390</span>
                 )}
               </button>
 
@@ -122,7 +182,6 @@ export default function CheckoutPage() {
                 <p className="text-red-400 text-sm text-center mb-3">{error}</p>
               )}
 
-              {/* Security badges */}
               <div className="flex items-center justify-center gap-5">
                 {[
                   { icon: ShieldCheck, label: 'SSL מאובטח' },
@@ -188,7 +247,6 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* What's included */}
               <div className="py-4 border-b border-white/6">
                 <p className="text-[10px] font-semibold text-white/20 uppercase tracking-wider mb-3">מה כלול</p>
                 <div className="space-y-2">
@@ -207,7 +265,6 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Price */}
               <div className="pt-4 space-y-1.5">
                 <div className="flex items-center justify-between">
                   <span className="text-white/25 text-xs">שווי כולל</span>
@@ -226,7 +283,6 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* WhatsApp */}
             <p className="text-center text-white/15 text-xs mt-4">
               שאלות? <a href="https://wa.me/9720537282727?text=היי, יש לי שאלה לגבי הקורס"
                 target="_blank" rel="noopener noreferrer"

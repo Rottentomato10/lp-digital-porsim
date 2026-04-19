@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   const terminal = process.env.CARDCOM_TERMINAL
   const apiName = process.env.CARDCOM_API_NAME
   const apiPassword = process.env.CARDCOM_API_PASSWORD
@@ -8,6 +8,23 @@ export async function POST() {
 
   if (!terminal || !apiName || !apiPassword) {
     return NextResponse.json({ error: 'Missing CardCom credentials' }, { status: 500 })
+  }
+
+  let customerName = ''
+  let customerEmail = ''
+  let customerPhone = ''
+
+  try {
+    const body = await req.json()
+    customerName = body.name || ''
+    customerEmail = body.email || ''
+    customerPhone = body.phone || ''
+  } catch {
+    return NextResponse.json({ error: 'Missing customer details' }, { status: 400 })
+  }
+
+  if (!customerName || !customerEmail) {
+    return NextResponse.json({ error: 'נא למלא שם ואימייל' }, { status: 400 })
   }
 
   try {
@@ -18,13 +35,14 @@ export async function POST() {
         TerminalNumber: Number(terminal),
         ApiName: apiName,
         Amount: 390,
-        ReturnValue: `order_${Date.now()}`,
+        ReturnValue: `order_${Date.now()}_${customerEmail}`,
         SuccessRedirectUrl: `${baseUrl}/checkout/success`,
         FailedRedirectUrl: `${baseUrl}/checkout/failed`,
         WebHookUrl: `${baseUrl}/api/cardcom/webhook`,
         Operation: 'ChargeOnly',
         Document: {
-          Name: 'קורס פורשים כנף — דיגיטלי',
+          To: customerName,
+          Email: customerEmail,
           Products: [
             {
               Description: 'קורס פיננסים לצעירים — פורשים כנף',
@@ -45,7 +63,7 @@ export async function POST() {
     }
 
     return NextResponse.json({ url: data.Url })
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create payment' }, { status: 500 })
   }
 }
