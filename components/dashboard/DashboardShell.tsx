@@ -176,13 +176,52 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
     else { setSortBy(key); setSortDir('desc') }
   }
 
+  // ── Efficiency Score: multi-parameter normalized 0-1 ──
+  // 5 sub-scores, each 0-100, then averaged and normalized to 0-1
+
+  function calcScores(affs: Aff[]) {
+    if (affs.length === 0) return new Map<string, { traffic: number; revenue: number; conversion: number; cost: number; profitPerVisit: number; total: number; normalized: number }>()
+
+    const maxVisits = Math.max(...affs.map(a => a.stats.visits), 1)
+    const maxRevenue = Math.max(...affs.map(a => a.stats.revenue), 1)
+    const maxConv = Math.max(...affs.map(a => a.stats.visits > 0 ? a.stats.purchases / a.stats.visits : 0), 0.001)
+    const maxPpv = Math.max(...affs.map(a => a.stats.visits > 0 ? (a.stats.revenue - a.stats.commission) / a.stats.visits : 0), 0.01)
+
+    const scores = new Map<string, any>()
+
+    for (const aff of affs) {
+      // 1. Traffic score — how much audience (visits relative to top)
+      const traffic = Math.round((aff.stats.visits / maxVisits) * 100)
+
+      // 2. Revenue score — total revenue relative to top
+      const revenue = Math.round((aff.stats.revenue / maxRevenue) * 100)
+
+      // 3. Conversion score — purchase/visit ratio relative to best
+      const convRate = aff.stats.visits > 0 ? aff.stats.purchases / aff.stats.visits : 0
+      const conversion = Math.round((convRate / maxConv) * 100)
+
+      // 4. Cost efficiency — inverted: lower commission % = higher score
+      const maxCommPct = Math.max(...affs.map(a => a.commissionPercent), 1)
+      const cost = Math.round((1 - aff.commissionPercent / (maxCommPct + 1)) * 100)
+
+      // 5. Net profit per visit — (revenue - commission) / visits
+      const ppv = aff.stats.visits > 0 ? (aff.stats.revenue - aff.stats.commission) / aff.stats.visits : 0
+      const profitPerVisit = Math.round((ppv / maxPpv) * 100)
+
+      // Average of 5 scores → 0-100, then normalize to 0-1
+      const total = Math.round((traffic + revenue + conversion + cost + profitPerVisit) / 5)
+      const normalized = Math.round(total) / 100
+
+      scores.set(aff.id, { traffic, revenue, conversion, cost, profitPerVisit, total, normalized })
+    }
+
+    return scores
+  }
+
+  const effScores = calcScores(affiliates)
+
   function getEfficiency(aff: Aff): number {
-    if (aff.stats.visits === 0) return 0
-    const netRevenue = aff.stats.revenue - aff.stats.commission
-    const conversionRate = aff.stats.purchases / aff.stats.visits
-    const revenuePerVisit = netRevenue / aff.stats.visits
-    // Score = net revenue per visit × conversion rate × 100 (normalized)
-    return Math.round(revenuePerVisit * conversionRate * 100 * 10) / 10
+    return effScores.get(aff.id)?.total || 0
   }
 
   const sorted = [...affiliates].sort((a, b) => {
@@ -194,8 +233,6 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
     else { va = (a.stats as any)[sortBy] || 0; vb = (b.stats as any)[sortBy] || 0 }
     return sortDir === 'asc' ? va - vb : vb - va
   })
-
-  const maxEfficiency = Math.max(...affiliates.map(a => getEfficiency(a)), 1)
 
   const totalVisits = affiliates.reduce((s, a) => s + a.stats.visits, 0)
   const totalCheckouts = affiliates.reduce((s, a) => s + a.stats.checkouts, 0)
@@ -256,9 +293,10 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
             </thead>
             <tbody>
               {sorted.map((aff, i) => {
-                const eff = getEfficiency(aff)
-                const effPct = maxEfficiency > 0 ? (eff / maxEfficiency) * 100 : 0
-                const effColor = effPct >= 70 ? '#10B981' : effPct >= 40 ? '#F5A624' : '#EF4444'
+                const scores = effScores.get(aff.id)
+                const eff = scores?.total || 0
+                const norm = scores?.normalized || 0
+                const effColor = eff >= 70 ? '#10B981' : eff >= 40 ? '#F5A624' : '#EF4444'
                 const convRate = aff.stats.visits > 0 ? ((aff.stats.purchases / aff.stats.visits) * 100).toFixed(1) : '0'
                 return (
                   <tr key={aff.id} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
@@ -287,11 +325,26 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                       {aff.stats.revenue > 0 ? `${((aff.stats.commission / aff.stats.revenue) * 100).toFixed(1)}%` : '—'}
                     </td>
                     <td className="px-3 py-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 h-2 rounded-full bg-white/5 overflow-hidden">
-                          <div className="h-full rounded-full transition-all" style={{ width: `${effPct}%`, background: effColor }} />
+                      <div className="group relative">
+                        <div className="flex items-center gap-2">
+                          <div className="w-14 h-2.5 rounded-full bg-white/5 overflow-hidden">
+                            <div className="h-full rounded-full transition-all" style={{ width: `${eff}%`, background: effColor }} />
+                          </div>
+                          <span className="font-black text-sm" style={{ color: effColor }}>{norm.toFixed(2)}</span>
                         </div>
-                        <span className="font-bold text-xs" style={{ color: effColor }}>{eff}</span>
+                        {/* Tooltip with breakdown */}
+                        {scores && (
+                          <div className="hidden group-hover:block absolute z-20 bottom-full left-0 mb-2 p-3 rounded-lg bg-[#1a1f2e] border border-white/10 shadow-xl text-xs whitespace-nowrap">
+                            <p className="text-white font-bold mb-2">פירוט ציון יעילות: {eff}/100 ({norm.toFixed(2)})</p>
+                            <div className="space-y-1">
+                              <p className="text-white/50">קהל (תנועה): <span className="text-white font-bold">{scores.traffic}</span>/100</p>
+                              <p className="text-white/50">הכנסות: <span className="text-white font-bold">{scores.revenue}</span>/100</p>
+                              <p className="text-white/50">המרה: <span className="text-white font-bold">{scores.conversion}</span>/100</p>
+                              <p className="text-white/50">עלות (נמוך=טוב): <span className="text-white font-bold">{scores.cost}</span>/100</p>
+                              <p className="text-white/50">רווח/כניסה: <span className="text-white font-bold">{scores.profitPerVisit}</span>/100</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </td>
                   </tr>
