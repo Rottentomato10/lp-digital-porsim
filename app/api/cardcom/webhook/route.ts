@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { updateOrder, getOrderById } from '@/lib/orders'
 
 async function notifyPurchase(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
-  // Send WhatsApp notification via WhatsApp API (wa.me link won't work server-side)
-  // Instead, log for now — can connect to WhatsApp Business API later
   console.log(JSON.stringify({
     event: 'PURCHASE_NOTIFICATION',
     orderId: order.id,
@@ -16,43 +14,66 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
   }))
 }
 
+async function handleWebhook(orderId: string, dealResponse: string) {
+  console.log(JSON.stringify({
+    event: 'WEBHOOK_RECEIVED',
+    orderId,
+    dealResponse,
+    timestamp: new Date().toISOString(),
+  }))
+
+  // DealResponse 0 = success
+  if (orderId && dealResponse === '0') {
+    const updated = await updateOrder(orderId, {
+      status: 'paid',
+      paidAt: new Date().toISOString(),
+    })
+    console.log(JSON.stringify({ event: 'ORDER_UPDATED', orderId, updated: !!updated }))
+
+    const order = await getOrderById(orderId)
+    if (order) await notifyPurchase(order)
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.text()
-    const params = new URLSearchParams(body)
-    const orderId = params.get('ReturnValue') || ''
-    const dealResponse = params.get('DealResponse') || ''
+    const contentType = req.headers.get('content-type') || ''
+    let orderId = ''
+    let dealResponse = ''
 
-    if (orderId && dealResponse === '0') {
-      await updateOrder(orderId, {
-        status: 'paid',
-        paidAt: new Date().toISOString(),
-      })
-
-      // Notify on purchase
-      const order = await getOrderById(orderId)
-      if (order) await notifyPurchase(order)
+    if (contentType.includes('application/json')) {
+      // JSON format
+      const json = await req.json()
+      orderId = json.ReturnValue || json.returnValue || ''
+      dealResponse = String(json.DealResponse ?? json.dealResponse ?? '')
+      console.log(JSON.stringify({ event: 'WEBHOOK_JSON', data: json }))
+    } else {
+      // Form-urlencoded format
+      const body = await req.text()
+      const params = new URLSearchParams(body)
+      orderId = params.get('ReturnValue') || ''
+      dealResponse = params.get('DealResponse') || ''
+      console.log(JSON.stringify({ event: 'WEBHOOK_FORM', body }))
     }
 
+    await handleWebhook(orderId, dealResponse)
     return NextResponse.json({ ok: true })
-  } catch {
+  } catch (err) {
+    console.log(JSON.stringify({ event: 'WEBHOOK_ERROR', error: String(err) }))
     return NextResponse.json({ ok: false }, { status: 500 })
   }
 }
 
 export async function GET(req: NextRequest) {
-  const orderId = req.nextUrl.searchParams.get('ReturnValue') || ''
-  const dealResponse = req.nextUrl.searchParams.get('DealResponse') || ''
+  try {
+    const orderId = req.nextUrl.searchParams.get('ReturnValue') || ''
+    const dealResponse = req.nextUrl.searchParams.get('DealResponse') || ''
+    console.log(JSON.stringify({ event: 'WEBHOOK_GET', params: Object.fromEntries(req.nextUrl.searchParams) }))
 
-  if (orderId && dealResponse === '0') {
-    await updateOrder(orderId, {
-      status: 'paid',
-      paidAt: new Date().toISOString(),
-    })
-
-    const order = await getOrderById(orderId)
-    if (order) await notifyPurchase(order)
+    await handleWebhook(orderId, dealResponse)
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.log(JSON.stringify({ event: 'WEBHOOK_GET_ERROR', error: String(err) }))
+    return NextResponse.json({ ok: false }, { status: 500 })
   }
-
-  return NextResponse.json({ ok: true })
 }

@@ -393,9 +393,11 @@ export default function DashboardShell() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [copied, setCopied] = useState('')
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
-  const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders'>('affiliates')
+  const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders' | 'leads'>('affiliates')
   const [orders, setOrders] = useState<any[]>([])
+  const [leads, setLeads] = useState<any[]>([])
   const [orderSearch, setOrderSearch] = useState('')
+  const [leadSearch, setLeadSearch] = useState('')
 
   const handleLogin = async () => {
     try {
@@ -422,9 +424,17 @@ export default function DashboardShell() {
 
   const fetchOrders = useCallback(async (q?: string) => {
     try {
-      const url = q ? `/api/orders?q=${encodeURIComponent(q)}` : '/api/orders'
+      const url = q ? `/api/orders?type=orders&q=${encodeURIComponent(q)}` : '/api/orders?type=orders'
       const res = await fetch(url)
       if (res.ok) { const data = await res.json(); setOrders(data.orders || []) }
+    } catch {}
+  }, [])
+
+  const fetchLeads = useCallback(async (q?: string) => {
+    try {
+      const url = q ? `/api/orders?type=leads&q=${encodeURIComponent(q)}` : '/api/orders?type=leads'
+      const res = await fetch(url)
+      if (res.ok) { const data = await res.json(); setLeads(data.orders || []) }
     } catch {}
   }, [])
 
@@ -432,7 +442,7 @@ export default function DashboardShell() {
   useEffect(() => {
     fetch('/api/affiliate').then(r => { if (r.ok) setAuthed(true) }).catch(() => {})
   }, [])
-  useEffect(() => { if (authed) { fetchData(); fetchOrders() } }, [authed, fetchData, fetchOrders])
+  useEffect(() => { if (authed) { fetchData(); fetchOrders(); fetchLeads() } }, [authed, fetchData, fetchOrders, fetchLeads])
 
   const handleCreate = async (data: any) => {
     const res = await fetch('/api/affiliate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
@@ -486,6 +496,7 @@ export default function DashboardShell() {
           {[
             { key: 'affiliates' as const, label: 'אפיליאייטים', icon: Users },
             { key: 'orders' as const, label: 'הזמנות', icon: ShoppingCart },
+            { key: 'leads' as const, label: 'לידים', icon: Eye },
             { key: 'stats' as const, label: 'סטטיסטיקות', icon: ArrowUpDown },
           ].map(t => (
             <button key={t.key} onClick={() => setTab(t.key)}
@@ -577,6 +588,61 @@ export default function DashboardShell() {
                           </tr>
                         )
                       })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ── Leads Tab ── */}
+        {tab === 'leads' && (
+          <>
+            <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
+              <h2 className="text-white font-bold text-lg flex-shrink-0">לידים (נרשמו ולא שילמו)</h2>
+              <div className="relative flex-1 max-w-sm">
+                <input type="text" value={leadSearch}
+                  onChange={e => { setLeadSearch(e.target.value); fetchLeads(e.target.value || undefined) }}
+                  placeholder="חיפוש לפי שם, אימייל או טלפון..."
+                  className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/15 focus:outline-none focus:border-[#F5A624]/50" />
+              </div>
+            </div>
+
+            {leads.length === 0 ? (
+              <div className="text-center py-16 text-white/20">
+                <Eye size={48} className="mx-auto mb-4 opacity-30" />
+                <p className="text-lg">{leadSearch ? 'לא נמצאו תוצאות' : 'אין לידים עדיין'}</p>
+              </div>
+            ) : (
+              <div className="rounded-xl border border-white/6 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-white/[0.03] text-white/40 text-xs">
+                        <th className="px-3 py-3 text-right">מס׳</th>
+                        <th className="px-3 py-3 text-right">שם</th>
+                        <th className="px-3 py-3 text-right">אימייל</th>
+                        <th className="px-3 py-3 text-right">טלפון</th>
+                        <th className="px-3 py-3 text-right">קופון</th>
+                        <th className="px-3 py-3 text-right">תאריך</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leads.map((o: any) => (
+                        <tr key={o.id} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
+                          <td className="px-3 py-3 text-white/30 font-mono text-xs">{o.id}</td>
+                          <td className="px-3 py-3 text-white font-medium">{o.name}</td>
+                          <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.email}</td>
+                          <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.phone}</td>
+                          <td className="px-3 py-3 text-white/30 text-xs">{o.coupon || '—'}</td>
+                          <td className="px-3 py-3 text-white/30 text-xs">
+                            {new Date(o.createdAt).toLocaleDateString('he-IL')}
+                            <br />
+                            <span className="text-white/15">{new Date(o.createdAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}</span>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

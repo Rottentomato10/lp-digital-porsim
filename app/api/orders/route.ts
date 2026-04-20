@@ -11,14 +11,17 @@ export async function GET(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const search = req.nextUrl.searchParams.get('q')
+  const type = req.nextUrl.searchParams.get('type') // 'leads' or 'orders'
 
-  if (search) {
-    const results = await searchOrders(search)
-    return NextResponse.json({ orders: results })
+  let all = search ? await searchOrders(search) : await getAllOrders()
+
+  if (type === 'leads') {
+    all = all.filter(o => o.status === 'pending')
+  } else if (type === 'orders') {
+    all = all.filter(o => o.status !== 'pending')
   }
 
-  const orders = await getAllOrders()
-  return NextResponse.json({ orders })
+  return NextResponse.json({ orders: all })
 }
 
 export async function PUT(req: NextRequest) {
