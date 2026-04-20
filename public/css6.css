@@ -20,6 +20,18 @@ body * { font-family: 'Heebo', sans-serif !important; }
 h1, .blockDetails.paymentDetails, #privacy-policy-popup,
 #cookies-banner, #PopUpRTL, #PopUpLTR { display: none !important; }
 
+/* Fix Google Pay button to match other buttons */
+.GooglePayDiv, #GooglePayDiv { width: 100% !important; max-width: 100% !important; }
+.GooglePayDiv button, .GooglePayDiv .gpay-button, #GooglePayDiv button, #GooglePayDiv iframe, .GooglePayDiv > div { width: 100% !important; max-width: 100% !important; min-height: 48px !important; border-radius: 12px !important; }
+
+/* Fix Bit — hide original button image, use our styling only */
+#CardcomBitDiv #bit-payment-button { background-image: none !important; background-color: transparent !important; width: 0 !important; height: 0 !important; padding: 0 !important; border: none !important; overflow: hidden !important; }
+
+/* Center top bar */
+.pk-top { justify-content: center !important; position: relative !important; }
+.pk-top img { height: 40px !important; }
+.pk-secure { position: absolute !important; left: 0 !important; top: 50% !important; transform: translateY(-50%) !important; }
+
 /* ── Page container ── */
 .pk-page { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
 

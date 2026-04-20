@@ -1,8 +1,8 @@
 <div class="pk-page">
 
   <div class="pk-top">
-    <img data-bind="attr: { src: images.companyLogo }" alt="פורשים כנף" />
     <div class="pk-secure">🔒 תשלום מאובטח</div>
+    <img data-bind="attr: { src: images.companyLogo }" alt="פורשים כנף" />
   </div>
 
   <p class="pk-course-title">קורס פיננסים לצעירים — פורשים כנף</p>
@@ -107,9 +107,9 @@
   <!-- Bit Panel -->
   <div class="pk-panel" id="pk-panel-bit">
     <div id="CardcomBitDiv" data-bind="ifnot: hideCardcomBitBtn">
-      <button id="bit-payment-button" type="button" class="pk-wallet-btn pk-bit" data-bind="click: sendData_CardcomBit">
-        תשלום באמצעות Bit
-      </button>
+      <div class="pk-bit-wrapper" data-bind="click: sendData_CardcomBit" style="cursor:pointer;">
+        <div class="pk-wallet-btn pk-bit">תשלום באמצעות Bit</div>
+      </div>
     </div>
   </div>
 
