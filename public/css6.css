@@ -15,13 +15,28 @@ body {
 body * { font-family: 'Heebo', sans-serif !important; }
 
 /* Hide original CardCom elements we're replacing */
-.header, .productsDetails.showProductsTables, .blockDetails.OrderDetails,
-.blockDetails.customDetails, .footer, .footerIfIframe,
-h1, .blockDetails.paymentDetails, #privacy-policy-popup,
-#cookies-banner, #PopUpRTL, #PopUpLTR { display: none !important; }
+.header, .productsDetails.showProductsTables, .productsDetails.showProductsTabs,
+.blockDetails.OrderDetails, .blockDetails.customDetails,
+.footer, .footerIfIframe, h1,
+.blockDetails.paymentDetails, #privacy-policy-popup,
+#cookies-banner, #PopUpRTL, #PopUpLTR,
+#ApplePayDivContainer, .masterPassDiv, .paypalDiv { display: none !important; }
+
+/* Hide ALL original CardCom Bit/PayMe/uPay containers on page load */
+#CardcomBitDiv, #PayMeBitDiv, #uPayBitDiv, #BitDivContainer { display: none !important; }
+/* Only show them inside our active Bit panel */
+.pk-panel.pk-active #CardcomBitDiv { display: block !important; }
+.pk-panel.pk-active #PayMeBitDiv { display: block !important; }
+.pk-panel.pk-active #uPayBitDiv { display: block !important; }
+
+/* Hide original Apple Pay and Google Pay containers outside our panels */
+.ApplePayDiv { display: none !important; }
+.pk-panel.pk-active .ApplePayDiv { display: block !important; }
+.GooglePayDiv, #GooglePayDiv { display: none !important; }
+.pk-panel.pk-active .GooglePayDiv, .pk-panel.pk-active #GooglePayDiv { display: block !important; }
 
 /* Fix Google Pay button to match other buttons */
-.GooglePayDiv, #GooglePayDiv { width: 100% !important; max-width: 100% !important; }
+.pk-panel.pk-active .GooglePayDiv, .pk-panel.pk-active #GooglePayDiv { width: 100% !important; max-width: 100% !important; }
 .GooglePayDiv button, .GooglePayDiv .gpay-button, #GooglePayDiv button, #GooglePayDiv iframe, .GooglePayDiv > div { width: 100% !important; max-width: 100% !important; min-height: 48px !important; border-radius: 12px !important; }
 
 /* Fix Bit — hide original button image, use our styling only */
@@ -39,8 +54,8 @@ h1, .blockDetails.paymentDetails, #privacy-policy-popup,
 #payme-container-div { max-width: 480px !important; margin: 0 auto !important; overflow: hidden !important; background: #0D1117 !important; padding: 16px !important; border-radius: 12px !important; }
 .payme-payment-txt { color: rgba(255,255,255,0.5) !important; display: block !important; text-align: center !important; }
 
-/* Bit popup white box override — force dark */
-#PopUpRTLBit { display: block !important; background: #0D1117 !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; max-width: 400px !important; padding: 20px !important; }
+/* Bit popup white box override — force dark (only when visible via magnific popup) */
+#PopUpRTLBit { background: #0D1117 !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; max-width: 400px !important; padding: 20px !important; }
 #PopUpRTLBit h2 { color: #fff !important; font-size: 18px !important; }
 #PopUpRTLBit span { color: rgba(255,255,255,0.6) !important; }
 #PopUpRTLBit a { color: #F5A624 !important; }
