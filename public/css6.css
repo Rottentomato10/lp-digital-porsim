@@ -27,17 +27,30 @@ h1, .blockDetails.paymentDetails, #privacy-policy-popup,
 /* Fix Bit — hide original button image, use our styling only */
 #CardcomBitDiv #bit-payment-button { background-image: none !important; background-color: transparent !important; width: 0 !important; height: 0 !important; padding: 0 !important; border: none !important; overflow: hidden !important; }
 
-/* Contain Bit popup/QR within the panel — prevent page expansion */
-#cardcom-bit-container-div { max-width: 100% !important; overflow: hidden !important; }
-#cardcom-bit-container-div label, #cardcom-bit-container-div a { color: rgba(255,255,255,0.5) !important; font-size: 14px !important; }
-#cardcom-bit-container-div img { max-width: 200px !important; display: block !important; margin: 10px auto !important; }
-#cardcom-bit-countdown { color: rgba(255,255,255,0.4) !important; }
+/* Contain Bit popup/QR — dark background, limited height */
+#cardcom-bit-container-div { max-width: 480px !important; margin: 0 auto !important; overflow: hidden !important; background: #0D1117 !important; border-radius: 12px !important; padding: 16px !important; }
+#cardcom-bit-container-div label, #cardcom-bit-container-div a { color: rgba(255,255,255,0.6) !important; font-size: 14px !important; text-align: center !important; display: block !important; }
+#cardcom-bit-container-div img { max-width: 180px !important; display: block !important; margin: 12px auto !important; border-radius: 8px !important; }
+#cardcom-bit-countdown { color: #F5A624 !important; text-align: center !important; font-weight: 700 !important; }
 .cardcom-bit-payment-txt { color: rgba(255,255,255,0.5) !important; display: block !important; text-align: center !important; margin: 8px 0 !important; }
 .cardcom-bit-payment-txt.error { color: #fca5a5 !important; }
 
 /* Contain PayMe Bit */
-#payme-container-div { max-width: 100% !important; overflow: hidden !important; }
+#payme-container-div { max-width: 480px !important; margin: 0 auto !important; overflow: hidden !important; background: #0D1117 !important; padding: 16px !important; border-radius: 12px !important; }
 .payme-payment-txt { color: rgba(255,255,255,0.5) !important; display: block !important; text-align: center !important; }
+
+/* Bit popup white box override — force dark */
+#PopUpRTLBit { display: block !important; background: #0D1117 !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; max-width: 400px !important; padding: 20px !important; }
+#PopUpRTLBit h2 { color: #fff !important; font-size: 18px !important; }
+#PopUpRTLBit span { color: rgba(255,255,255,0.6) !important; }
+#PopUpRTLBit a { color: #F5A624 !important; }
+#PopUpRTLBit img { max-width: 160px !important; }
+
+/* Hide errors when switching tabs */
+.pk-panel:not(.pk-active) ~ .errorDiv { display: none !important; }
+
+/* Clear errors on tab switch — errors should only show for active method */
+.errorDiv { max-width: 480px !important; margin: 10px auto !important; }
 
 /* Center top bar */
 .pk-top { justify-content: center !important; position: relative !important; }

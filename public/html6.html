@@ -143,6 +143,9 @@ function pkSwitch(m){
   if(event&&event.currentTarget)event.currentTarget.classList.add('pk-active');
   var el=document.getElementById('pk-panel-'+m);
   if(el)el.classList.add('pk-active');
+  // Hide errors when switching payment method
+  var errDiv=document.querySelector('.errorDiv');
+  if(errDiv)errDiv.style.display='none';
 }
 
 // Card number formatting — space every 4 digits
