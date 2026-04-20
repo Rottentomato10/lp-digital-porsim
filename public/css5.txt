@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0D1117; color: #fff; font-family: 'Heebo', sans-serif; direction: rtl; min-height: 100vh; }
+
+.page { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
+
+.top { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px; }
+.top img { height: 36px; }
+.top .secure { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.3); font-size: 12px; }
+
+.course-title { text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+
+.order-line { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px; }
+.order-item { display: flex; align-items: center; gap: 6px; }
+.order-name { color: rgba(255,255,255,0.6); font-size: 14px; }
+.order-qty { color: rgba(255,255,255,0.25); font-size: 13px; }
+.order-price { color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 700; }
+
+.total-bar { text-align: center; margin-bottom: 24px; }
+.total-bar .label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
+.total-bar .amount { font-size: 36px; font-weight: 900; color: #F5A624; }
+
+/* Payment method tabs */
+.methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
+.method-tab { padding: 12px 6px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.method-tab:hover { border-color: rgba(255,255,255,0.15); }
+.method-tab.active { border-color: #F5A624; background: rgba(245,166,36,0.06); }
+.method-tab .icon { height: 24px; display: flex; align-items: center; justify-content: center; }
+.method-tab .name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); }
+.method-tab.active .name { color: #F5A624; }
+
+/* Panels */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* Form fields */
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.form-group input, .form-group select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
+.form-group input:focus, .form-group select:focus { border-color: rgba(245,166,36,0.5); box-shadow: 0 0 0 2px rgba(245,166,36,0.12); }
+.form-group input::placeholder { color: rgba(255,255,255,0.15); }
+.form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 12px center; padding-left: 32px; }
+.form-group select option { background: #1a1f2e; color: #fff; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+.card-input-wrap { position: relative; }
+
+/* Submit button */
+.submit-btn { width: 100%; padding: 16px; border: none; border-radius: 50px; background: #F5A624; color: #000; font-size: 18px; font-weight: 900; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+.submit-btn:hover { filter: brightness(1.1); transform: scale(1.01); }
+
+/* Wallet buttons */
+.wallet-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+.wallet-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
+.wallet-btn.apple { background: #fff; color: #1a1a1a; font-weight: 900; }
+.wallet-btn.google { background: #fff; color: #1a1a1a; font-weight: 900; }
+.wallet-btn.bit { background: #36D8D1; color: #fff; font-weight: 900; }
+
+/* Security badges */
+.security { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
+.security span { display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.2); font-size: 11px; }
+
+/* Footer */
+.foot { text-align: center; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
