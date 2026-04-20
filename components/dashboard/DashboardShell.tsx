@@ -359,7 +359,7 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                         </div>
                         {/* Tooltip with breakdown — opens down for first rows, up for rest */}
                         {scores && (
-                          <div className={`hidden group-hover:block absolute z-20 left-0 p-3 rounded-lg bg-[#1a1f2e] border border-white/10 shadow-xl text-xs whitespace-nowrap ${i < 2 ? 'top-full mt-2' : 'bottom-full mb-2'}`}>
+                          <div className="hidden group-hover:block absolute z-20 left-0 top-full mt-2 p-3 rounded-lg bg-[#1a1f2e] border border-white/10 shadow-xl text-xs whitespace-nowrap">
                             <p className="text-white font-bold mb-2">פירוט ציון יעילות: {eff}/100 ({norm.toFixed(2)})</p>
                             <div className="space-y-1">
                               <p className="text-white/50">קהל (תנועה): <span className="text-white font-bold">{scores.traffic}</span>/100</p>
