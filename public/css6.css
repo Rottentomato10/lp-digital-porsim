@@ -14,7 +14,7 @@ body {
 
 body * { font-family: 'Heebo', sans-serif !important; }
 
-/* Hide original CardCom elements we're replacing */
+/* Hide original CardCom elements */
 .header, .productsDetails.showProductsTables, .productsDetails.showProductsTabs,
 .blockDetails.OrderDetails, .blockDetails.customDetails,
 .footer, .footerIfIframe, h1,
@@ -22,70 +22,20 @@ body * { font-family: 'Heebo', sans-serif !important; }
 #cookies-banner, #PopUpRTL, #PopUpLTR,
 #ApplePayDivContainer, .masterPassDiv, .paypalDiv { display: none !important; }
 
-/* Hide ALL original CardCom Bit/PayMe/uPay containers on page load */
-#CardcomBitDiv, #PayMeBitDiv, #uPayBitDiv, #BitDivContainer { display: none !important; }
-/* Only show them inside our active Bit panel */
-.pk-panel.pk-active #CardcomBitDiv { display: block !important; }
-.pk-panel.pk-active #PayMeBitDiv { display: block !important; }
-.pk-panel.pk-active #uPayBitDiv { display: block !important; }
+/* Hide ALL Bit containers completely */
+#CardcomBitDiv, #PayMeBitDiv, #uPayBitDiv, #BitDivContainer,
+#bit-payment-button, #cardcom-bit-container-div,
+#payme-container-div, #PopUpRTLBit { display: none !important; }
 
-/* Hide original Apple Pay and Google Pay containers outside our panels */
+/* Hide Apple Pay and Google Pay outside our panels */
 .ApplePayDiv { display: none !important; }
 .pk-panel.pk-active .ApplePayDiv { display: block !important; }
 .GooglePayDiv, #GooglePayDiv { display: none !important; }
 .pk-panel.pk-active .GooglePayDiv, .pk-panel.pk-active #GooglePayDiv { display: block !important; }
 
-/* Fix Google Pay button to match other buttons */
+/* Fix Google Pay button size */
 .pk-panel.pk-active .GooglePayDiv, .pk-panel.pk-active #GooglePayDiv { width: 100% !important; max-width: 100% !important; }
 .GooglePayDiv button, .GooglePayDiv .gpay-button, #GooglePayDiv button, #GooglePayDiv iframe, .GooglePayDiv > div { width: 100% !important; max-width: 100% !important; min-height: 48px !important; border-radius: 12px !important; }
-
-/* Fix Bit — hide original button image, use our styling only */
-#CardcomBitDiv #bit-payment-button { background-image: none !important; background-color: transparent !important; width: 0 !important; height: 0 !important; padding: 0 !important; border: none !important; overflow: hidden !important; }
-
-/* Contain Bit popup/QR — fixed height, no page expansion */
-#cardcom-bit-container-div { max-width: 480px !important; max-height: 350px !important; overflow-y: auto !important; margin: 0 auto !important; background: #0D1117 !important; border-radius: 12px !important; padding: 16px !important; border: 1px solid rgba(255,255,255,0.08) !important; }
-#cardcom-bit-container-div label, #cardcom-bit-container-div a { color: rgba(255,255,255,0.6) !important; font-size: 14px !important; text-align: center !important; display: block !important; }
-#cardcom-bit-container-div img { max-width: 160px !important; display: block !important; margin: 12px auto !important; border-radius: 8px !important; }
-#cardcom-bit-countdown { color: #F5A624 !important; text-align: center !important; font-weight: 700 !important; }
-.cardcom-bit-payment-txt { color: rgba(255,255,255,0.5) !important; display: block !important; text-align: center !important; margin: 8px 0 !important; }
-.cardcom-bit-payment-txt.error { color: #fca5a5 !important; }
-
-/* Contain PayMe Bit */
-#payme-container-div { max-width: 480px !important; max-height: 350px !important; overflow-y: auto !important; margin: 0 auto !important; background: #0D1117 !important; padding: 16px !important; border-radius: 12px !important; border: 1px solid rgba(255,255,255,0.08) !important; }
-.payme-payment-txt { color: rgba(255,255,255,0.5) !important; display: block !important; text-align: center !important; }
-#payme-window-container { max-height: 250px !important; overflow: hidden !important; }
-
-/* Bit popup (magnific popup) — dark, contained, centered */
-#PopUpRTLBit { background: #0D1117 !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; max-width: 380px !important; padding: 24px !important; margin: 0 auto !important; }
-#PopUpRTLBit h2 { color: #fff !important; font-size: 16px !important; gap: 8px !important; }
-#PopUpRTLBit span { color: rgba(255,255,255,0.6) !important; font-size: 14px !important; }
-#PopUpRTLBit a { color: #F5A624 !important; font-size: 14px !important; }
-#PopUpRTLBit img { max-width: 140px !important; }
-#PopUpRTLBit ul { color: rgba(255,255,255,0.5) !important; font-size: 13px !important; }
-
-/* Magnific popup overlay — dark */
-.mfp-bg { background: rgba(0,0,0,0.85) !important; }
-.mfp-wrap { overflow-y: auto !important; }
-.mfp-container { max-width: 420px !important; margin: 0 auto !important; padding: 20px !important; }
-.white-popup, .white-popup-rtl { background: #0D1117 !important; color: #fff !important; border-radius: 16px !important; border: 1px solid rgba(255,255,255,0.1) !important; padding: 24px !important; max-width: 380px !important; }
-
-/* Hide errors when switching tabs */
-.pk-panel:not(.pk-active) ~ .errorDiv { display: none !important; }
-
-/* Clear errors on tab switch — errors should only show for active method */
-.errorDiv { max-width: 480px !important; margin: 10px auto !important; }
-
-/* Kill empty br spacers that CardCom injects after payment buttons */
-#CardcomBitDiv + span, #PayMeBitDiv + span, #uPayBitDiv + span { display: none !important; }
-#CardcomBitDiv br, #PayMeBitDiv br, #uPayBitDiv br { display: none !important; }
-.BitContainer + div br, .uPayBitContainer + span br { display: none !important; }
-
-/* Prevent scroll on Bit panel — contain everything */
-#pk-panel-bit { max-height: none !important; overflow: visible !important; }
-#pk-panel-bit > div { max-width: 480px !important; margin: 0 auto !important; }
-
-/* Hide any stray empty space below panels */
-.pk-panel span:empty, .pk-panel br { display: none !important; }
 
 /* Center top bar */
 .pk-top { justify-content: center !important; position: relative !important; }
@@ -113,13 +63,13 @@ body * { font-family: 'Heebo', sans-serif !important; }
 .pk-total-label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
 .pk-total-amount { font-size: 36px; font-weight: 900; color: #F5A624; }
 
-/* ── Method tabs ── */
-.pk-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
-.pk-method-tab { padding: 12px 6px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+/* ── Method tabs — 3 columns ── */
+.pk-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+.pk-method-tab { padding: 14px 8px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .pk-method-tab:hover { border-color: rgba(255,255,255,0.15); }
 .pk-method-tab.pk-active { border-color: #F5A624; background: rgba(245,166,36,0.06); }
 .pk-icon { height: 24px; display: flex; align-items: center; justify-content: center; }
-.pk-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); }
+.pk-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.45); }
 .pk-method-tab.pk-active .pk-name { color: #F5A624; }
 
 /* ── Panels ── */
@@ -146,10 +96,9 @@ body * { font-family: 'Heebo', sans-serif !important; }
 .pk-wallet-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
 .pk-wallet-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
 .pk-apple { background: #fff; color: #1a1a1a; }
-.pk-bit { background: #36D8D1; color: #fff; }
 
 /* ── Error ── */
-.errorDiv { background: rgba(239,68,68,0.12) !important; border: 1px solid rgba(239,68,68,0.25) !important; border-radius: 10px !important; color: #fca5a5 !important; padding: 10px !important; margin-top: 10px !important; width: auto !important; }
+.errorDiv { background: rgba(239,68,68,0.12) !important; border: 1px solid rgba(239,68,68,0.25) !important; border-radius: 10px !important; color: #fca5a5 !important; padding: 10px !important; margin-top: 10px !important; width: auto !important; max-width: 480px !important; }
 .errorDiv ul { list-style: none; padding: 0; margin: 0; }
 
 /* ── Security ── */
@@ -161,3 +110,6 @@ body * { font-family: 'Heebo', sans-serif !important; }
 
 /* ── Loading overlay ── */
 .loading-indicator-wrapper { background: rgba(0,0,0,0.8) !important; }
+
+/* ── Kill stray br/spans ── */
+.pk-panel br, .pk-panel span:empty { display: none !important; }
