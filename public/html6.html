@@ -144,4 +144,14 @@ function pkSwitch(m){
   var el=document.getElementById('pk-panel-'+m);
   if(el)el.classList.add('pk-active');
 }
+
+// Card number formatting — space every 4 digits
+var cardEl = document.getElementById('txtCardNumber');
+if(cardEl){
+  cardEl.addEventListener('input', function(e){
+    var v = e.target.value.replace(/\s/g,'').replace(/\D/g,'');
+    if(v.length > 16) v = v.slice(0,16);
+    e.target.value = v.replace(/(.{4})/g,'$1 ').trim();
+  });
+}
 </script>
