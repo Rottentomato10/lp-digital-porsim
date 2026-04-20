@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { ShieldCheck, Lock, Check, X, Loader2, Sparkles, User, Mail, Phone, Tag } from 'lucide-react'
+import DFooter from '@/components/d/DFooter'
+import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 
 const WHATSAPP_URL = 'https://wa.me/9720537282727?text=היי, יש לי שאלה לגבי הקורס'
 const BASE_PRICE = 390
@@ -377,19 +379,8 @@ export default function CheckoutPage() {
 
         </div>
 
-        {/* Footer */}
-        <div className="mt-12 pt-6 border-t border-white/5 text-center text-white/15 text-xs space-y-1">
-          <p>© 2026 פורשים כנף · כל הזכויות שמורות</p>
-          <div className="flex items-center justify-center gap-3">
-            <a href="/course" className="hover:text-white/30 transition-colors">חזרה לאתר</a>
-            <span>·</span>
-            <button onClick={() => document.querySelector('[data-modal="privacy"]')?.dispatchEvent(new Event('click'))} className="hover:text-white/30 transition-colors">מדיניות פרטיות</button>
-            <span>·</span>
-            <button onClick={() => document.querySelector('[data-modal="terms"]')?.dispatchEvent(new Event('click'))} className="hover:text-white/30 transition-colors">תנאי שימוש</button>
-            <span>·</span>
-            <button onClick={() => document.querySelector('[data-modal="accessibility"]')?.dispatchEvent(new Event('click'))} className="hover:text-white/30 transition-colors">נגישות</button>
-          </div>
-        </div>
+        <DFooter />
+        <AccessibilityWidget />
       </div>
     </div>
   )
