@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+    background: #0D1117 !important;
+    color: #fff !important;
+    font-family: 'Heebo', sans-serif !important;
+    direction: rtl !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body * { font-family: 'Heebo', sans-serif !important; }
+
+/* Hide original CardCom elements we're replacing */
+.header, .productsDetails.showProductsTables, .blockDetails.OrderDetails,
+.blockDetails.customDetails, .footer, .footerIfIframe,
+h1, .blockDetails.paymentDetails, #privacy-policy-popup,
+#cookies-banner, #PopUpRTL, #PopUpLTR { display: none !important; }
+
+/* ── Page container ── */
+.pk-page { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
+
+/* ── Top bar ── */
+.pk-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px; }
+.pk-top img { height: 36px; }
+.pk-secure { color: rgba(255,255,255,0.3); font-size: 12px; }
+
+/* ── Course title ── */
+.pk-course-title { text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+
+/* ── Order line ── */
+.pk-order-line { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px; }
+.pk-order-name { color: rgba(255,255,255,0.6); font-size: 14px; }
+.pk-order-price { color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 700; }
+
+/* ── Total ── */
+.pk-total-bar { text-align: center; margin-bottom: 24px; }
+.pk-total-label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
+.pk-total-amount { font-size: 36px; font-weight: 900; color: #F5A624; }
+
+/* ── Method tabs ── */
+.pk-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
+.pk-method-tab { padding: 12px 6px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.pk-method-tab:hover { border-color: rgba(255,255,255,0.15); }
+.pk-method-tab.pk-active { border-color: #F5A624; background: rgba(245,166,36,0.06); }
+.pk-icon { height: 24px; display: flex; align-items: center; justify-content: center; }
+.pk-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); }
+.pk-method-tab.pk-active .pk-name { color: #F5A624; }
+
+/* ── Panels ── */
+.pk-panel { display: none; }
+.pk-panel.pk-active { display: block; }
+
+/* ── Form fields ── */
+.pk-field { margin-bottom: 14px; }
+.pk-field label { display: block; color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.pk-field input,
+.pk-field select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; box-sizing: border-box; }
+.pk-field input:focus,
+.pk-field select:focus { border-color: rgba(245,166,36,0.5); box-shadow: 0 0 0 2px rgba(245,166,36,0.12); }
+.pk-field input::placeholder { color: rgba(255,255,255,0.15); }
+.pk-field select option { background: #1a1f2e; color: #fff; }
+
+.pk-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+/* ── Submit button ── */
+.pk-submit-btn { width: 100%; padding: 16px; border: none; border-radius: 50px; background: #F5A624; color: #000; font-size: 18px; font-weight: 900; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+.pk-submit-btn:hover { filter: brightness(1.1); transform: scale(1.01); }
+
+/* ── Wallet buttons ── */
+.pk-wallet-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+.pk-wallet-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
+.pk-apple { background: #fff; color: #1a1a1a; }
+.pk-bit { background: #36D8D1; color: #fff; }
+
+/* ── Error ── */
+.errorDiv { background: rgba(239,68,68,0.12) !important; border: 1px solid rgba(239,68,68,0.25) !important; border-radius: 10px !important; color: #fca5a5 !important; padding: 10px !important; margin-top: 10px !important; width: auto !important; }
+.errorDiv ul { list-style: none; padding: 0; margin: 0; }
+
+/* ── Security ── */
+.pk-security { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
+.pk-security span { color: rgba(255,255,255,0.2); font-size: 11px; }
+
+/* ── Footer ── */
+.pk-foot { text-align: center; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+/* ── Loading overlay ── */
+.loading-indicator-wrapper { background: rgba(0,0,0,0.8) !important; }
