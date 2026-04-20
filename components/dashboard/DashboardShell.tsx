@@ -297,6 +297,24 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                 <th className="px-3 py-3 text-right">% עמלה/הכנסה</th>
                 <SortHeader label="יעילות" k="efficiency" />
               </tr>
+              {/* Totals row — always at top */}
+              <tr className="bg-[#F5A624]/[0.06] border-b-2 border-[#F5A624]/20">
+                <td className="px-3 py-3"></td>
+                <td className="px-3 py-3">
+                  <span className="text-[#F5A624] font-black text-sm">סה״כ</span>
+                </td>
+                <td className="px-3 py-3"></td>
+                <td className="px-3 py-3 text-white font-black">{totalVisits.toLocaleString()}</td>
+                <td className="px-3 py-3 text-white font-black">{totalCheckouts.toLocaleString()}</td>
+                <td className="px-3 py-3 text-[#10B981] font-black">{totalPurchases.toLocaleString()}</td>
+                <td className="px-3 py-3 text-white/50 font-bold">{totalVisits > 0 ? ((totalPurchases / totalVisits) * 100).toFixed(1) : '0'}%</td>
+                <td className="px-3 py-3 text-[#10B981] font-black">₪{totalRevenue.toLocaleString()}</td>
+                <td className="px-3 py-3"></td>
+                <td className="px-3 py-3"></td>
+                <td className="px-3 py-3 text-[#F59E0B] font-black">₪{totalCommission.toLocaleString()}</td>
+                <td className="px-3 py-3 text-white/50 font-bold">{totalRevenue > 0 ? `${((totalCommission / totalRevenue) * 100).toFixed(1)}%` : '—'}</td>
+                <td className="px-3 py-3"></td>
+              </tr>
             </thead>
             <tbody>
               {sorted.map((aff, i) => {
@@ -358,23 +376,6 @@ function StatsTab({ affiliates }: { affiliates: Aff[] }) {
                 )
               })}
             </tbody>
-            <tfoot>
-              <tr className="border-t-2 border-white/10 bg-white/[0.02]">
-                <td className="px-3 py-3" colSpan={3}>
-                  <span className="text-white font-bold text-sm">סה״כ</span>
-                </td>
-                <td className="px-3 py-3 text-white font-bold">{totalVisits.toLocaleString()}</td>
-                <td className="px-3 py-3 text-white font-bold">{totalCheckouts.toLocaleString()}</td>
-                <td className="px-3 py-3 text-[#10B981] font-bold">{totalPurchases.toLocaleString()}</td>
-                <td className="px-3 py-3 text-white/40">{totalVisits > 0 ? ((totalPurchases / totalVisits) * 100).toFixed(1) : '0'}%</td>
-                <td className="px-3 py-3 text-[#10B981] font-black">₪{totalRevenue.toLocaleString()}</td>
-                <td className="px-3 py-3"></td>
-                <td className="px-3 py-3"></td>
-                <td className="px-3 py-3 text-[#F59E0B] font-black">₪{totalCommission.toLocaleString()}</td>
-                <td className="px-3 py-3 text-white/40">{totalRevenue > 0 ? `${((totalCommission / totalRevenue) * 100).toFixed(1)}%` : '—'}</td>
-                <td className="px-3 py-3"></td>
-              </tr>
-            </tfoot>
           </table>
         </div>
       </div>
