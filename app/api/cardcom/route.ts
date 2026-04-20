@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
           IsHideCardOwnerName: true,
           IsHideCardOwnerPhone: true,
           IsHideCardOwnerEmail: true,
-          CSSUrl: `${baseUrl}/cardcom-custom-good.css`,
+          // CSS applied via CardCom admin panel (not API)
         },
         Document: {
           TypeToCreate: 'Auto',
