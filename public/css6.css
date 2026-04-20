@@ -52,6 +52,18 @@ h1, .blockDetails.paymentDetails, #privacy-policy-popup,
 /* Clear errors on tab switch — errors should only show for active method */
 .errorDiv { max-width: 480px !important; margin: 10px auto !important; }
 
+/* Kill empty br spacers that CardCom injects after payment buttons */
+#CardcomBitDiv + span, #PayMeBitDiv + span, #uPayBitDiv + span { display: none !important; }
+#CardcomBitDiv br, #PayMeBitDiv br, #uPayBitDiv br { display: none !important; }
+.BitContainer + div br, .uPayBitContainer + span br { display: none !important; }
+
+/* Prevent scroll on Bit panel — contain everything */
+#pk-panel-bit { max-height: none !important; overflow: visible !important; }
+#pk-panel-bit > div { max-width: 480px !important; margin: 0 auto !important; }
+
+/* Hide any stray empty space below panels */
+.pk-panel span:empty, .pk-panel br { display: none !important; }
+
 /* Center top bar */
 .pk-top { justify-content: center !important; position: relative !important; }
 .pk-top img { height: 40px !important; }
