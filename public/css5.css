@@ -1,426 +1,91 @@
-/* ============================================
-   פורשים כנף — CardCom v5 CSS Override
-   Works on top of their existing HTML structure
-   ============================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap');
 
-/* ── Reset & Base ── */
+* { box-sizing: border-box; }
+
 body {
-    background-color: #0D1117 !important;
-    color: #e5e5e5 !important;
-    font-family: 'Heebo', Tahoma, sans-serif !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    text-align: right !important;
-    direction: rtl !important;
-}
-
-body * {
-    font-family: 'Heebo', Tahoma, sans-serif !important;
-}
-
-h1 {
-    color: #ffffff !important;
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    text-align: center !important;
-    padding: 12px 0 !important;
-    margin: 0 !important;
-}
-
-/* ── Header ── */
-.header {
-    background-color: #080B16 !important;
-    padding: 14px 0 !important;
-    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-}
-
-.header .headerIn {
-    width: 92% !important;
-    max-width: 500px !important;
-    margin: 0 auto !important;
-}
-
-.header .headerIn .logoDiv {
-    float: none !important;
-    text-align: center !important;
-    width: 100% !important;
-}
-
-.header .headerIn .logoDiv img {
-    max-width: 140px !important;
-    max-height: 50px !important;
-    display: inline-block !important;
-}
-
-.header .headerIn .detailsDiv {
-    display: none !important;
-}
-
-/* ── Products / Total ── */
-.productsDetails {
-    padding: 8px 0 !important;
-    background: transparent !important;
-}
-
-.productsDetails .productsDetailsIn {
-    width: 92% !important;
-    max-width: 500px !important;
-}
-
-.totalProducts {
-    color: rgba(255,255,255,0.5) !important;
-    font-size: 14px !important;
-    text-align: center !important;
-}
-
-.totalProducts .num {
-    color: #F5A624 !important;
-    font-size: 28px !important;
-    font-weight: 900 !important;
-    display: block !important;
-    margin-top: 4px !important;
-}
-
-.productsTbl {
-    background-color: transparent !important;
-    border-collapse: collapse !important;
-}
-
-.productsTbl td {
-    color: rgba(255,255,255,0.5) !important;
-    background-color: rgba(255,255,255,0.03) !important;
-    border: none !important;
-    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-}
-
-.productsTbl .title th {
-    color: rgba(255,255,255,0.35) !important;
-    font-size: 13px !important;
-    background-color: rgba(255,255,255,0.02) !important;
-}
-
-.productsTbl .odd td { background-color: rgba(255,255,255,0.03) !important; }
-.productsTbl .even td { background-color: rgba(255,255,255,0.05) !important; }
-.productsTbl .total { background-color: transparent !important; }
-.productsTbl .total .num { color: #F5A624 !important; }
-
-/* ── Block Details ── */
-.blockDetails {
-    padding: 12px 0 !important;
-    background: transparent !important;
-}
-
-.blockDetailsIn {
-    width: 92% !important;
-    max-width: 500px !important;
-    font-size: 14px !important;
-    color: rgba(255,255,255,0.6) !important;
-    background-image: none !important;
-}
-
-.blockDetailsIn .title {
-    color: rgba(255,255,255,0.5) !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    padding-bottom: 10px !important;
-    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
-    margin-bottom: 10px !important;
-}
-
-.paymentDetails .blockDetailsIn,
-.OrderDetails .blockDetailsIn {
-    background-image: none !important;
-}
-
-.customDetails {
-    background-color: rgba(255,255,255,0.02) !important;
-}
-
-/* ── Form Fields ── */
-.blockDetailsIn .formRow {
-    display: block !important;
-    margin: 0 0 10px !important;
-}
-
-.blockDetailsIn .formRow .fieldName {
-    color: rgba(255,255,255,0.45) !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    width: 100% !important;
-    display: block !important;
-    padding: 0 0 5px !important;
-}
-
-.blockDetailsIn .formRow .fieldInput {
-    display: block !important;
-    width: 100% !important;
-}
-
-.blockDetailsIn .formRow .fieldInput input,
-.blockDetailsIn .formRow .fieldInput select {
-    background-color: rgba(255,255,255,0.04) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 10px !important;
-    color: #ffffff !important;
-    font-size: 15px !important;
-    padding: 12px 14px !important;
-    width: 100% !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-    transition: border-color 0.2s !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-}
-
-.blockDetailsIn .formRow .fieldInput input:focus,
-.blockDetailsIn .formRow .fieldInput select:focus {
-    border-color: rgba(245,166,36,0.5) !important;
-    outline: none !important;
-    box-shadow: 0 0 0 2px rgba(245,166,36,0.12) !important;
-}
-
-.blockDetailsIn .formRow .fieldInput input::placeholder {
-    color: rgba(255,255,255,0.15) !important;
-}
-
-.blockDetailsIn .formRow .fieldInput select option {
-    background: #1a1f2e !important;
+    background: #0D1117 !important;
     color: #fff !important;
-}
-
-/* Validity date */
-.validityDate {
-    width: 100% !important;
-    display: flex !important;
-    gap: 8px !important;
-}
-
-.blockDetailsIn .formRow .fieldInput select.mini {
-    width: 50% !important;
-    flex: 1 !important;
-}
-
-.blockDetailsIn .formRow .fieldInput select.tiny {
-    width: 50% !important;
-    flex: 1 !important;
-}
-
-/* Error state */
-.blockDetailsIn .formRow.errorRow .fieldInput select,
-.blockDetailsIn .formRow.errorRow .fieldInput input {
-    border: 1px solid rgba(239,68,68,0.5) !important;
-    color: #fca5a5 !important;
-}
-
-.blockDetailsIn .formRow.errorRow .fieldName:before {
-    color: #ef4444 !important;
-}
-
-/* Success state */
-.blockDetailsIn .formRow.success .fieldInput input,
-.blockDetailsIn .formRow.success .fieldInput select {
-    border-color: rgba(16,185,129,0.4) !important;
-}
-
-/* ── Submit Button ── */
-.submitDiv {
-    max-width: 500px !important;
-    width: 92% !important;
-    margin: 0 auto !important;
-    padding: 16px 0 !important;
-    background-color: transparent !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 10px !important;
-}
-
-.submitDiv .buttonDiv {
-    float: none !important;
+    font-family: 'Heebo', sans-serif !important;
+    direction: rtl !important;
+    min-height: 100vh !important;
     margin: 0 !important;
-    width: 100% !important;
+    padding: 0 !important;
 }
 
-.submitDiv .buttonDiv input {
-    background-color: #F5A624 !important;
-    border: none !important;
-    border-color: transparent !important;
-    color: #000000 !important;
-    font-weight: 900 !important;
-    font-size: 17px !important;
-    padding: 14px 20px !important;
-    border-radius: 50px !important;
-    width: 100% !important;
-    cursor: pointer !important;
-    transition: all 0.2s !important;
-    box-sizing: border-box !important;
-}
+body * { font-family: 'Heebo', sans-serif !important; }
 
-.submitDiv .buttonDiv input:hover {
-    filter: brightness(1.1) !important;
-}
+/* Hide original CardCom elements we're replacing */
+.header, .productsDetails.showProductsTables, .blockDetails.OrderDetails,
+.blockDetails.customDetails, .footer, .footerIfIframe,
+h1, .blockDetails.paymentDetails, #privacy-policy-popup,
+#cookies-banner, #PopUpRTL, #PopUpLTR { display: none !important; }
 
-.submitDiv .homeLink {
-    float: none !important;
-    text-align: center !important;
-    order: 2 !important;
-}
+/* ── Page container ── */
+.pk-page { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
 
-.submitDiv .homeLink a {
-    color: rgba(255,255,255,0.35) !important;
-    font-size: 13px !important;
-    justify-content: center !important;
-}
+/* ── Top bar ── */
+.pk-top { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 20px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 20px; }
+.pk-top img { height: 36px; }
+.pk-secure { color: rgba(255,255,255,0.3); font-size: 12px; }
 
-.submitDiv .homeLink a:before {
-    filter: invert(1) opacity(0.3) !important;
-}
+/* ── Course title ── */
+.pk-course-title { text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 600; margin-bottom: 6px; }
 
-/* ── Error Messages ── */
-.errorDiv {
-    background-color: rgba(239,68,68,0.12) !important;
-    border: 1px solid rgba(239,68,68,0.25) !important;
-    border-radius: 10px !important;
-    color: #fca5a5 !important;
-    width: 100% !important;
-    max-width: 500px !important;
-    margin: 8px auto !important;
-    padding: 10px !important;
-}
+/* ── Order line ── */
+.pk-order-line { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); margin-bottom: 12px; }
+.pk-order-name { color: rgba(255,255,255,0.6); font-size: 14px; }
+.pk-order-price { color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 700; }
 
-/* ── Apple Pay ── */
-.apple-pay-button {
-    border-radius: 10px !important;
-    max-width: 500px !important;
-}
+/* ── Total ── */
+.pk-total-bar { text-align: center; margin-bottom: 24px; }
+.pk-total-label { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 4px; }
+.pk-total-amount { font-size: 36px; font-weight: 900; color: #F5A624; }
 
-/* ── Bit ── */
-#bit-payment-button {
-    border-radius: 10px !important;
-    max-width: 500px !important;
-}
+/* ── Method tabs ── */
+.pk-methods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 20px; }
+.pk-method-tab { padding: 12px 6px; border-radius: 12px; border: 1.5px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.pk-method-tab:hover { border-color: rgba(255,255,255,0.15); }
+.pk-method-tab.pk-active { border-color: #F5A624; background: rgba(245,166,36,0.06); }
+.pk-icon { height: 24px; display: flex; align-items: center; justify-content: center; }
+.pk-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); }
+.pk-method-tab.pk-active .pk-name { color: #F5A624; }
+
+/* ── Panels ── */
+.pk-panel { display: none; }
+.pk-panel.pk-active { display: block; }
+
+/* ── Form fields ── */
+.pk-field { margin-bottom: 14px; }
+.pk-field label { display: block; color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.pk-field input,
+.pk-field select { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); color: #fff; font-size: 15px; font-family: 'Heebo', sans-serif; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; box-sizing: border-box; }
+.pk-field input:focus,
+.pk-field select:focus { border-color: rgba(245,166,36,0.5); box-shadow: 0 0 0 2px rgba(245,166,36,0.12); }
+.pk-field input::placeholder { color: rgba(255,255,255,0.15); }
+.pk-field select option { background: #1a1f2e; color: #fff; }
+
+.pk-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+/* ── Submit button ── */
+.pk-submit-btn { width: 100%; padding: 16px; border: none; border-radius: 50px; background: #F5A624; color: #000; font-size: 18px; font-weight: 900; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+.pk-submit-btn:hover { filter: brightness(1.1); transform: scale(1.01); }
+
+/* ── Wallet buttons ── */
+.pk-wallet-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 16px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+.pk-wallet-btn:hover { transform: scale(1.01); filter: brightness(1.05); }
+.pk-apple { background: #fff; color: #1a1a1a; }
+.pk-bit { background: #36D8D1; color: #fff; }
+
+/* ── Error ── */
+.errorDiv { background: rgba(239,68,68,0.12) !important; border: 1px solid rgba(239,68,68,0.25) !important; border-radius: 10px !important; color: #fca5a5 !important; padding: 10px !important; margin-top: 10px !important; width: auto !important; }
+.errorDiv ul { list-style: none; padding: 0; margin: 0; }
+
+/* ── Security ── */
+.pk-security { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
+.pk-security span { color: rgba(255,255,255,0.2); font-size: 11px; }
 
 /* ── Footer ── */
-.footer, .footerIfIframe {
-    background-color: #080B16 !important;
-    border-top: 1px solid rgba(255,255,255,0.05) !important;
-    padding: 12px 0 !important;
-}
+.pk-foot { text-align: center; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); }
 
-.footer .footerIn {
-    width: 92% !important;
-    max-width: 500px !important;
-}
-
-.footer .footerIn .footer-text span,
-.footer .footerIn .footer-text span a {
-    color: rgba(255,255,255,0.3) !important;
-    font-size: 11px !important;
-}
-
-.footer .footerIn .footer-logo img {
-    filter: brightness(0.5) !important;
-}
-
-/* ── Overlay & Target ── */
-.target-element {
-    background-color: #0D1117 !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
-    border-radius: 12px !important;
-}
-
-/* ── Cookies Banner ── */
-#cookies-banner {
-    background-color: #0D1117 !important;
-    border-top: 1px solid rgba(255,255,255,0.08) !important;
-}
-
-#cookies-banner span {
-    color: rgba(255,255,255,0.5) !important;
-}
-
-#cookies-banner #btn-cookies-accept {
-    background-color: #F5A624 !important;
-    border-color: #F5A624 !important;
-    color: #000 !important;
-    border-radius: 50px !important;
-    font-weight: 700 !important;
-}
-
-/* ── Popups ── */
-.white-popup, .white-popup-rtl {
-    background-color: #0D1117 !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-    border-radius: 14px !important;
-}
-
-/* ── Loading ── */
-.loading-indicator-wrapper {
-    background: rgba(0,0,0,0.8) !important;
-}
-
-/* ── Checkbox ── */
-.blockDetailsIn .formRow .fieldInput input[type='checkbox'] {
-    width: 20px !important;
-    height: 20px !important;
-    border-radius: 4px !important;
-}
-
-.blockDetailsIn .formRow .fieldInput .checkbox,
-.blockDetailsIn .formRow .fieldInput .fieldname.checkbox {
-    color: rgba(255,255,255,0.5) !important;
-}
-
-/* ── CVV help icon ── */
-.WhatIsCvvLightBox img {
-    filter: invert(1) opacity(0.3) !important;
-}
-
-/* ── Summary total text ── */
-.fieldName.summaryTotal {
-    color: rgba(255,255,255,0.4) !important;
-}
-
-/* ── Privacy policy ── */
-#privacy-policy-container a {
-    color: rgba(245,166,36,0.7) !important;
-}
-
-/* ── Mobile ── */
-@media screen and (max-width: 480px) {
-    .header { padding: 10px 0 !important; }
-
-    .blockDetailsIn .formRow .fieldInput input,
-    .blockDetailsIn .formRow .fieldInput select {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-
-    .blockDetailsIn .formRow .fieldName {
-        padding: 0 0 4px !important;
-    }
-
-    .submitDiv .buttonDiv input {
-        width: 100% !important;
-        padding: 16px !important;
-    }
-
-    .submitDiv .buttonDiv {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-
-    .submitDiv {
-        flex-direction: column !important;
-        gap: 8px !important;
-        width: 100% !important;
-    }
-
-    .submitDiv .homeLink {
-        float: none !important;
-        text-align: center !important;
-    }
-}
+/* ── Loading overlay ── */
+.loading-indicator-wrapper { background: rgba(0,0,0,0.8) !important; }
