@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CardCom Preview 2 — פורשים כנף (CSS בלבד)</title>
+  <!-- Original CardCom v5 CSS (base) -->
+  <style>
+    body { background-color: #fff; padding: 0; margin: 0; }
+    img { border: 0; }
+    body * { font-family: Tahoma,Helvetica,sans-serif; }
+    .directionLTR { direction: ltr; }
+    h1 { text-align: center; }
+    body { text-align: right; direction: rtl; }
+    #bit-payment-button { background-image: url(/Images/Bit/bit_button.svg); background-position: center; background-size: cover; height: 40px; width: 328px; border: none; border-radius: 5px; cursor: pointer; }
+    #bit-payment-button:hover { background-image: url(/Images/Bit/bit_button_hover.svg); }
+    .paymentDetails .blockDetailsIn { background-image: none; background-repeat: no-repeat; }
+    .customDetails { background-color: #e3e3e3; }
+    .OrderDetails .blockDetailsIn { background-image: none; background-position: left; background-repeat: no-repeat; }
+    .productsTbl { background-color: #ffffff; width: 100%; table-layout: auto; }
+    .productsTbl td { color: #444; background-color: #eeeeee; text-align: center; }
+    .productsTbl td span { display: inline-block; padding: 10px 10px; }
+    .productsTbl td { font-size: 15px; }
+    .productsTbl .title th { font-size: 19px; margin: 0 0 2px; }
+    .productsTbl .odd td { background-color: #ddd; }
+    .productsTbl .even td { background-color: #ccc; }
+    .productsTbl .total { background-color: #ffffff; font-size: 19px; }
+    .productsTbl .total span { padding: 0; }
+    .productsTbl .total .num { color: #0464a0; font-size: 19px; font-weight: bold; }
+    .showProductsTabs { display: none !important; }
+    .showProductsTables { display: block !important; }
+    .header { width: 100%; display: block; background-color: #0464a0; padding: 34px 0 23px; }
+    .header .headerIn { width: 979px; margin: 0 auto; display: block; }
+    .header .headerIn .logoDiv { vertical-align: top; max-width: 700px; float: right; }
+    .header .headerIn .logoDiv img { display: block; max-width: 700px; height: auto; }
+    .header .headerIn .detailsDiv { display: inline-block; vertical-align: top; margin: 10px 0 0; color: #eeeeee; font-size: 16px; line-height: 1.4em; min-width: 250px; border-right: 1px dashed #7caecd; padding: 0 10px 0 0; float: left; }
+    .clear { clear: both; }
+    .header .headerIn .detailsDiv div.company { font-weight: bold; }
+    .productsDetails { width: 100%; display: block; padding: 30px 0 25px; }
+    .productsDetails .productsDetailsIn { display: block; margin: 0 auto; width: 979px; }
+    .totalProducts { display: block; width: 100%; text-align: right; color: #444; font-size: 16px; margin: 10px 0 0; }
+    .totalProducts .num { color: #0464a0; font-size: 19px; font-weight: bold; display: inline-block; padding: 0 4px 0 0; }
+    .blockDetails { display: block; width: 100%; padding: 23px 0 26px; }
+    .blockDetailsIn { width: 979px; margin: 0 auto; font-size: 15px; color: #444; }
+    .blockDetailsIn .title { display: block; font-size: 19px; padding-bottom: 10px; color: #0464a0; margin-right: 3px; }
+    .blockDetailsIn .formRow { display: block; margin: 0 0 4px; }
+    .blockDetailsIn .formRow .fieldName { width: 183px; display: inline-block; vertical-align: top; padding: 7px 0 0; }
+    .blockDetailsIn .formRow .fieldInput { display: inline-block; vertical-align: top; border: none; }
+    .blockDetailsIn .formRow .fieldInput select, .blockDetailsIn .formRow .fieldInput input { margin: 0 10px; color: #444; font-size: 15px; border-radius: 3px; border: 1px solid #c5c5c5; }
+    .blockDetailsIn .formRow .fieldInput select { padding: 8px 3px; width: 325px; }
+    .blockDetailsIn .formRow .fieldInput input { padding: 8px 5px; width: 313px; }
+    .validityDate { width: 345px; }
+    .blockDetailsIn .formRow .fieldInput select.mini { width: 100px; }
+    .blockDetailsIn .formRow .fieldInput select.tiny { width: 60px; }
+    .blockDetailsIn .formRow .fieldInput input[type='checkbox'] { width: 20px; margin: 12px 10px 3px 4px; }
+    .blockDetailsIn .formRow.errorRow .fieldInput select, .blockDetailsIn .formRow.errorRow .fieldInput input { border: 1px solid #e80505; color: #e80505; }
+    .blockDetailsIn .formRow.errorRow .fieldName:before { content: "*"; color: #e80505; font-weight: bold; font-size: 25px; display: inline-block; margin: -2px -28px 0px 8px; vertical-align: top; }
+    .blockDetailsIn .formRow.success .fieldName:before { content: url("https://secure.cardcom.solutions/Images/LowProfile5/check-mark.svg"); font-size: 25px; display: inline-block; margin: -7px -30px 0px 6px; padding: 3px 0px 0 0; vertical-align: top; }
+    .paypalDiv { display: flex; margin: 0 0 10px; vertical-align: top; }
+    .paypalDiv img { max-width: 328px; width: 328px; height: 40px; }
+    .errorDiv { background-color: #db0909; border-radius: 3px; color: #fff; font-size: 17px; padding: 1px 0; width: 522px; margin: 0; }
+    .errorDiv .errorDivIn { display: block; margin: 0 auto; }
+    .submitDiv { max-width: 566px; padding: 3px 3px 15px 3px; min-height: 35px; display: flex; align-items: center; justify-content: flex-end; }
+    .submitDiv .homeLink { float: right; }
+    .submitDiv .homeLink a { font-size: 14px; color: #0464a0; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 3px; }
+    .submitDiv .buttonDiv { float: left; margin-left: 48px; }
+    .submitDiv .buttonDiv input { color: #fff; width: 174px; background-color: #286090; border-color: #204d74; padding: 10px 16px; font-size: 18px; line-height: 1.333; border-radius: 6px; cursor: pointer; border: 1px solid #204d74; }
+    .footer { background-color: #cdcdcd; width: 100%; padding: 18px 0 10px; }
+    .footer .footerIn { width: 979px; margin: 0 auto; display: flex; align-items: center; }
+    .footer .footerIn .footer-text span { font-size: 14px; }
+    .footer .footerIn .footer-logo { margin-left: 10px; }
+    .paymentDetailsFlexBox { display: flex; flex-direction: column; text-align: right; }
+    .fieldName.summaryTotal { width: 250px; }
+  </style>
+  <!-- Our CSS override -->
+  <link rel="stylesheet" href="/css5.css">
+</head>
+<body>
+
+<!-- Header -->
+<div class="header user-header">
+    <div class="headerIn">
+        <div class="logoDiv">
+            <img src="/logo.png" alt="פורשים כנף" />
+        </div>
+        <div class="detailsDiv user-detailsDiv">
+            <div class="adress company"><span class="title">פורשים כנף</span></div>
+            <div class="Line1"><span class="title">חינוך פיננסי לצעירים</span></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<h1>קורס פיננסים לצעירים — פורשים כנף</h1>
+
+<!-- Products mobile -->
+<div class="productsDetails showProductsTabs">
+    <div class="productsDetailsIn">
+        <div class="totalProducts">
+            <span class="text">סה"כ לתשלום:</span>
+            <span class="num">₪390.00</span>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Details -->
+<div class="blockDetails paymentDetails">
+    <div class="blockDetailsIn">
+        <div class="title"><span>אמצעי תשלום</span></div>
+
+        <!-- Apple Pay placeholder -->
+        <div class="ApplePayDiv">
+            <div id="apple-pay-button-start" class="apple-pay apple-pay-button button-with-text button-color-black"
+                 style="height:44px;width:100%;max-width:400px;border-radius:10px;background:black;color:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;font-weight:700;gap:8px;border:none;margin-bottom:10px;">
+                <span style="font-size:20px;">&#63743;</span> רכישה באמצעות Apple Pay
+            </div>
+        </div>
+
+        <!-- Google Pay placeholder -->
+        <div class="GooglePayDiv" id="GooglePayDiv" style="margin-bottom:10px;">
+            <button style="height:44px;width:100%;max-width:400px;border-radius:10px;background:white;color:#1a1a1a;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;font-weight:700;gap:8px;border:1px solid #ddd;">
+                Buy with <b>G</b> Pay
+            </button>
+        </div>
+
+        <!-- Bit placeholder -->
+        <div id="CardcomBitDiv" style="margin-bottom:16px;">
+            <button id="bit-payment-button" type="button" style="background:#36D8D1;color:white;font-size:16px;font-weight:900;border:none;border-radius:10px;height:44px;width:100%;max-width:400px;cursor:pointer;">
+                תשלום באמצעות bit
+            </button>
+        </div>
+
+        <div class="title"><span>תשלום בכרטיס אשראי</span></div>
+
+        <!-- Card Number -->
+        <div class="formRow cardRow">
+            <label class="fieldName">מספר כרטיס</label>
+            <span class="fieldInput"><input type="text" placeholder="0000 0000 0000 0000" dir="ltr" id="txtCardNumber" /></span>
+        </div>
+
+        <!-- Expiration -->
+        <div class="formRow validityRow">
+            <label class="fieldName">תוקף</label>
+            <span class="fieldInput validityDate">
+                <select id="validityYear" class="mini">
+                    <option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option>
+                </select>
+                <select id="validityMonth" class="tiny">
+                    <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+                </select>
+            </span>
+        </div>
+
+        <!-- CVV -->
+        <div class="formRow cvvRow">
+            <span class="fieldName"><label>CVV</label></span>
+            <span class="fieldInput"><input maxlength="4" placeholder="123" dir="ltr" id="txtCvv" /></span>
+        </div>
+
+        <!-- Card Owner ID -->
+        <div class="formRow cardRow">
+            <label class="fieldName">תעודת זהות בעל הכרטיס</label>
+            <span class="fieldInput"><input type="text" placeholder="000000000" dir="ltr" maxlength="20" id="txtTZ" /></span>
+        </div>
+
+        <!-- Card Owner Name -->
+        <div class="formRow cardRow">
+            <label class="fieldName">שם בעל הכרטיס</label>
+            <span class="fieldInput"><input type="text" placeholder="ישראל ישראלי" maxlength="50" id="txtCardOwnerName" /></span>
+        </div>
+
+        <!-- Submit -->
+        <div class="submitDiv">
+            <div class="homeLink"><a href="#">חזרה לאתר</a></div>
+            <div class="buttonDiv">
+                <input type="button" value="תשלום באמצעות כרטיס אשראי" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <div class="footerIn">
+        <div class="footer-text">
+            <span>התשלום מתבצע באמצעות חברת קארדקום — סליקת אשראי לעסקים</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
