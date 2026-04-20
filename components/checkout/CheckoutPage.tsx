@@ -201,7 +201,7 @@ export default function CheckoutPage() {
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="ישראל ישראלי"
                       className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all" />
                   </div>
-                  <p className="text-white/25 text-xs mt-1.5">שנדע איך לפנות אליך</p>
+                  <p className="text-white/45 text-xs mt-1.5">שנדע איך לפנות אליך</p>
                 </div>
 
                 <div>
@@ -211,7 +211,7 @@ export default function CheckoutPage() {
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
                       className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                   </div>
-                  <p className="text-white/25 text-xs mt-1.5">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
+                  <p className="text-white/45 text-xs mt-1.5">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
                 </div>
 
                 <div>
@@ -284,7 +284,7 @@ export default function CheckoutPage() {
                   { icon: Lock, label: 'הצפנה 256-bit' },
                   { icon: ShieldCheck, label: 'PCI DSS' },
                 ].map((b, i) => (
-                  <div key={i} className="flex items-center gap-1 text-white/25 text-[11px]">
+                  <div key={i} className="flex items-center gap-1 text-white/40 text-[11px]">
                     <b.icon size={11} />
                     <span>{b.label}</span>
                   </div>
@@ -324,12 +324,12 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">קורס פיננסים לצעירים</p>
-                    <p className="text-white/30 text-xs">57 שיעורים · 3 שעות · לכל החיים</p>
+                    <p className="text-white/45 text-xs">57 שיעורים · 3 שעות · לכל החיים</p>
                   </div>
                 </div>
 
                 <div className="py-4 border-b border-white/6">
-                  <p className="text-[10px] font-semibold text-white/25 uppercase tracking-wider mb-3">מה כלול</p>
+                  <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider mb-3">מה כלול</p>
                   <div className="space-y-2">
                     {['קורס מלא — א׳ עד ת׳', 'אפליקציית ניהול תזרים', 'תעודת סיום', 'קהילה פרטית + תמיכה', 'עדכונים עתידיים — חינם'].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
@@ -342,11 +342,11 @@ export default function CheckoutPage() {
 
                 <div className="pt-4 space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-white/30 text-xs">שווי כולל</span>
-                    <span className="text-white/30 text-xs line-through">₪1,140</span>
+                    <span className="text-white/45 text-xs">שווי כולל</span>
+                    <span className="text-white/45 text-xs line-through">₪1,140</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-white/30 text-xs">הנחת השקה</span>
+                    <span className="text-white/45 text-xs">הנחת השקה</span>
                     <span className="text-[#10B981] text-xs font-medium">−₪{1140 - BASE_PRICE}</span>
                   </div>
                   {couponApplied && (
@@ -360,7 +360,7 @@ export default function CheckoutPage() {
                     <span className="text-white font-bold">סה״כ</span>
                     <span className="text-[#F5A624] font-black text-2xl">₪{finalPrice}</span>
                   </div>
-                  <p className="text-white/20 text-[10px] text-center pt-1">תשלום חד-פעמי · ללא מנוי · ללא חיובים נוספים</p>
+                  <p className="text-white/40 text-[10px] text-center pt-1">תשלום חד-פעמי · ללא מנוי · ללא חיובים נוספים</p>
                 </div>
               </div>
 

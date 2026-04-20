@@ -74,15 +74,15 @@ export default function N9Pricing() {
               className="cta-shine block w-full text-center bg-[#F5A624] text-black font-black text-lg xs:text-xl py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mb-3">
               אני מתחיל עכשיו
             </a>
-            <p className="text-center text-white/25 text-sm mb-4">🔒 תשלום מאובטח</p>
+            <p className="text-center text-white/45 text-sm mb-4">🔒 תשלום מאובטח</p>
 
-            <p className="text-center text-white/30 text-sm mb-10">
+            <p className="text-center text-white/45 text-sm mb-10">
               ברגע שתשלם — תקבל גישה מיידית.
               <br />תתחיל מהשיעור הראשון, 4 דקות שישנו איך אתה מסתכל על הכסף שלך.
             </p>
 
             <div className="mb-10">
-              <p className="text-white/30 text-xs font-semibold tracking-widest uppercase mb-4">מה מקבלים</p>
+              <p className="text-white/45 text-xs font-semibold tracking-widest uppercase mb-4">מה מקבלים</p>
               <div className="space-y-4">
                 {VALUE_ITEMS.map((item, i) => (
                   <div key={i}>
@@ -94,7 +94,7 @@ export default function N9Pricing() {
                       <span className="text-white/30 text-sm flex-shrink-0">₪{item.value}</span>
                     </div>
                     {item.desc && (
-                      <p className="text-white/30 text-sm mr-6 mt-1">{item.desc}</p>
+                      <p className="text-white/45 text-sm mr-6 mt-1">{item.desc}</p>
                     )}
                   </div>
                 ))}

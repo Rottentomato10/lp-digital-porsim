@@ -84,7 +84,7 @@ export default function N9Hero() {
         </div>
 
         <div className="text-center mb-8">
-          <p className="text-white/30 text-sm md:text-base font-medium tracking-wide mb-4">
+          <p className="text-white/45 text-sm md:text-base font-medium tracking-wide mb-4">
             הקורס המעשי לניהול פיננסי מבית ׳פורשים כנף׳
           </p>
           <h1 className="font-black text-white leading-[1.1] tracking-tight"
