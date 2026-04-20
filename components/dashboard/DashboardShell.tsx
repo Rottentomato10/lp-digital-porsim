@@ -463,6 +463,23 @@ export default function DashboardShell() {
 
   const copy = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopied(id); setTimeout(() => setCopied(''), 2000) }
 
+  const downloadCSV = (data: any[], filename: string) => {
+    if (data.length === 0) return
+    const headers = ['מס הזמנה', 'שם', 'אימייל', 'טלפון', 'סכום', 'קופון', 'סטטוס', 'תאריך יצירה', 'תאריך תשלום']
+    const rows = data.map((o: any) => [
+      o.id, o.name, o.email, o.phone, o.amount, o.coupon || '', o.status,
+      new Date(o.createdAt).toLocaleString('he-IL'),
+      o.paidAt ? new Date(o.paidAt).toLocaleString('he-IL') : ''
+    ])
+    const bom = '\uFEFF'
+    const csv = bom + [headers.join(','), ...rows.map(r => r.map((c: any) => `"${c}"`).join(','))].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url; a.download = `${filename}_${new Date().toISOString().slice(0,10)}.csv`
+    a.click(); URL.revokeObjectURL(url)
+  }
+
   if (!authed) {
     return (
       <div className="min-h-screen bg-[#0D1117] flex items-center justify-center px-4" dir="rtl">
@@ -516,7 +533,15 @@ export default function DashboardShell() {
         {tab === 'orders' && (
           <>
             <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-              <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="text-white font-bold text-lg flex-shrink-0">הזמנות</h2>
+                {orders.length > 0 && (
+                  <button onClick={() => downloadCSV(orders, 'orders')}
+                    className="text-white/30 text-xs border border-white/10 px-3 py-1 rounded-lg hover:text-white/50 hover:border-white/20 transition-colors">
+                    ↓ CSV
+                  </button>
+                )}
+              </div>
               <div className="relative flex-1 max-w-sm">
                 <input
                   type="text"
@@ -600,7 +625,15 @@ export default function DashboardShell() {
         {tab === 'leads' && (
           <>
             <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-              <h2 className="text-white font-bold text-lg flex-shrink-0">לידים (נרשמו ולא שילמו)</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="text-white font-bold text-lg flex-shrink-0">לידים (נרשמו ולא שילמו)</h2>
+                {leads.length > 0 && (
+                  <button onClick={() => downloadCSV(leads, 'leads')}
+                    className="text-white/30 text-xs border border-white/10 px-3 py-1 rounded-lg hover:text-white/50 hover:border-white/20 transition-colors">
+                    ↓ CSV
+                  </button>
+                )}
+              </div>
               <div className="relative flex-1 max-w-sm">
                 <input type="text" value={leadSearch}
                   onChange={e => { setLeadSearch(e.target.value); fetchLeads(e.target.value || undefined) }}
