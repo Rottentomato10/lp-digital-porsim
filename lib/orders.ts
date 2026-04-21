@@ -94,6 +94,14 @@ export async function updateOrder(id: string, updates: Partial<Order>): Promise<
   return all[idx]
 }
 
+export async function deleteOrder(id: string): Promise<boolean> {
+  const all = await loadOrders()
+  const filtered = all.filter(o => o.id !== id)
+  if (filtered.length === all.length) return false
+  await saveOrders(filtered)
+  return true
+}
+
 export async function searchOrders(query: string): Promise<Order[]> {
   const all = await loadOrders()
   const q = query.toLowerCase()

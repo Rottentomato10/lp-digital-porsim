@@ -462,6 +462,13 @@ export default function DashboardShell() {
     fetchData()
   }
 
+  const [confirmDeleteOrder, setConfirmDeleteOrder] = useState<string | null>(null)
+
+  const handleDeleteOrder = async (id: string) => {
+    await fetch('/api/orders', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id }) })
+    setConfirmDeleteOrder(null); fetchOrders(); fetchLeads()
+  }
+
   const copy = (text: string, id: string) => { navigator.clipboard.writeText(text); setCopied(id); setTimeout(() => setCopied(''), 2000) }
 
   const downloadCSV = (data: any[], filename: string) => {
@@ -573,6 +580,7 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">קופון</th>
                         <th className="px-3 py-3 text-right">סטטוס</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
+                        <th className="px-3 py-3 text-right w-16"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -610,6 +618,18 @@ export default function DashboardShell() {
                               {new Date(o.createdAt).toLocaleDateString('he-IL')}
                               <br />
                               <span className="text-white/15">{new Date(o.createdAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}</span>
+                            </td>
+                            <td className="px-3 py-3">
+                              {confirmDeleteOrder === o.id ? (
+                                <div className="flex items-center gap-1">
+                                  <button onClick={() => handleDeleteOrder(o.id)} className="text-red-400 text-xs font-bold">כן</button>
+                                  <button onClick={() => setConfirmDeleteOrder(null)} className="text-white/30 text-xs">לא</button>
+                                </div>
+                              ) : (
+                                <button onClick={() => setConfirmDeleteOrder(o.id)} className="text-white/20 hover:text-red-400 transition-colors">
+                                  <Trash2 size={13} />
+                                </button>
+                              )}
                             </td>
                           </tr>
                         )
@@ -660,6 +680,7 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">טלפון</th>
                         <th className="px-3 py-3 text-right">קופון</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
+                        <th className="px-3 py-3 text-right w-16"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -674,6 +695,18 @@ export default function DashboardShell() {
                             {new Date(o.createdAt).toLocaleDateString('he-IL')}
                             <br />
                             <span className="text-white/15">{new Date(o.createdAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}</span>
+                          </td>
+                          <td className="px-3 py-3">
+                            {confirmDeleteOrder === o.id ? (
+                              <div className="flex items-center gap-1">
+                                <button onClick={() => handleDeleteOrder(o.id)} className="text-red-400 text-xs font-bold">כן</button>
+                                <button onClick={() => setConfirmDeleteOrder(null)} className="text-white/30 text-xs">לא</button>
+                              </div>
+                            ) : (
+                              <button onClick={() => setConfirmDeleteOrder(o.id)} className="text-white/20 hover:text-red-400 transition-colors">
+                                <Trash2 size={13} />
+                              </button>
+                            )}
                           </td>
                         </tr>
                       ))}
