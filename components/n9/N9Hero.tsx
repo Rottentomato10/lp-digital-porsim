@@ -15,6 +15,7 @@ export default function N9Hero() {
   const [isMuted, setIsMuted] = useState(true)
   const [progress, setProgress] = useState(0)
   const [isHovering, setIsHovering] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
   const mouseX = useMotionValue(0.5)
   const mouseY = useMotionValue(0.5)
 
@@ -29,11 +30,13 @@ export default function N9Hero() {
     if (!v) return
     v.muted = true
     v.play().catch(() => {})
+    const onPlay = () => setIsPlaying(true)
+    v.addEventListener('playing', onPlay)
     const onTime = () => {
       if (v.duration) setProgress(v.currentTime / v.duration)
     }
     v.addEventListener('timeupdate', onTime)
-    return () => v.removeEventListener('timeupdate', onTime)
+    return () => { v.removeEventListener('timeupdate', onTime); v.removeEventListener('playing', onPlay) }
   }, [])
 
   const toggleMute = useCallback(() => {
@@ -148,6 +151,31 @@ export default function N9Hero() {
             maxWidth: '70vw',
             aspectRatio: '240/426',
           }}>
+          {/* "מוכנים?" cover — visible until video starts */}
+          {!isPlaying && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center"
+              style={{ background: 'radial-gradient(ellipse at center, #1a1400 0%, #080808 70%)' }}>
+              <motion.span
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="text-3xl font-black"
+                style={{
+                  background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                }}>
+                ?מוכנים
+              </motion.span>
+              <div className="mt-4 flex gap-1">
+                {[0, 1, 2].map(i => (
+                  <motion.div key={i}
+                    className="w-1.5 h-1.5 rounded-full bg-[#F5A624]/60"
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.3 }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
           <video
             ref={videoRef}
             className="absolute inset-0 w-full h-full object-cover"
@@ -155,7 +183,6 @@ export default function N9Hero() {
             loop
             muted
             preload="auto"
-            poster="/video-thumb.jpg"
             src="/video.mp4"
           />
 
