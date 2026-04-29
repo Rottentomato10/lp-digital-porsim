@@ -90,10 +90,10 @@ export default function N9Hero() {
             background: 'rgba(255,255,255,0.02)',
             backdropFilter: 'blur(20px)',
           }}>
-          <div className="relative w-full max-w-sm mx-auto" style={{ paddingBottom: 'min(177.78%, 80vh)' }}>
+          <div className="relative w-full max-w-[280px] md:max-w-[320px] mx-auto" style={{ paddingBottom: '0', aspectRatio: '9/16' }}>
             <iframe
-              src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0"
-              className="absolute inset-0 w-full h-full"
+              src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0&autoplay=1&muted=1&loop=1&background=0"
+              className="absolute inset-0 w-full h-full rounded-xl"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
