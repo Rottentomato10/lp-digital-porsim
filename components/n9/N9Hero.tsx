@@ -16,6 +16,7 @@ export default function N9Hero() {
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isHovering, setIsHovering] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
   const mouseX = useMotionValue(0.5)
   const mouseY = useMotionValue(0.5)
 
@@ -30,10 +31,11 @@ export default function N9Hero() {
     const p = new Player(iframeRef.current)
     playerRef.current = p
     p.getDuration().then(d => setDuration(d))
+    p.on('playing', () => setIsPlaying(true))
     p.on('timeupdate', (data: { seconds: number; duration: number }) => {
       setProgress(data.seconds / data.duration)
     })
-    return () => { p.off('timeupdate'); p.destroy() }
+    return () => { p.off('timeupdate'); p.off('playing'); p.destroy() }
   }, [])
 
   const toggleMute = useCallback(() => {
@@ -153,13 +155,21 @@ export default function N9Hero() {
             maxWidth: '70vw',
             aspectRatio: '240/426',
           }}>
+          {/* Thumbnail poster — shows instantly while Vimeo loads */}
+          {!isPlaying && (
+            <img
+              src="/video-thumb.jpg"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover z-10"
+            />
+          )}
           <iframe
             ref={iframeRef}
             src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0&autoplay=1&muted=1&loop=1&background=1&title=0&byline=0&portrait=0"
             className="absolute inset-0 w-full h-full"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
-            loading="lazy"
+            loading="eager"
             title="סרטון שיווקי — פורשים כנף"
           />
 
