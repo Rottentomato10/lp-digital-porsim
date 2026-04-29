@@ -47,12 +47,33 @@ export default function N9Hero() {
     }
   }, [isMuted])
 
-  const handleScrub = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!playerRef.current || !duration) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+  const scrubBarRef = useRef<HTMLDivElement>(null)
+  const isDragging = useRef(false)
+
+  const scrubTo = useCallback((clientX: number) => {
+    if (!playerRef.current || !duration || !scrubBarRef.current) return
+    const rect = scrubBarRef.current.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
     playerRef.current.setCurrentTime(pct * duration)
   }, [duration])
+
+  const handleScrubDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    isDragging.current = true
+    scrubTo(e.clientX)
+  }, [scrubTo])
+
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      if (isDragging.current) scrubTo(e.clientX)
+    }
+    const handleUp = () => { isDragging.current = false }
+    window.addEventListener('mousemove', handleMove)
+    window.addEventListener('mouseup', handleUp)
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      window.removeEventListener('mouseup', handleUp)
+    }
+  }, [scrubTo])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!heroRef.current) return
@@ -153,14 +174,16 @@ export default function N9Hero() {
             </span>
           </button>
 
-          {/* Progress bar / scrubber — visible on hover */}
+          {/* Progress bar / scrubber — visible on hover, forced LTR */}
           <div
+            ref={scrubBarRef}
+            dir="ltr"
             className="absolute bottom-0 left-0 right-0 z-20 h-6 flex items-end cursor-pointer transition-opacity duration-300"
             style={{ opacity: isHovering ? 1 : 0 }}
-            onClick={handleScrub}
+            onMouseDown={handleScrubDown}
           >
             <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
-              <div className="h-full bg-[#F5A624] rounded-full transition-[width] duration-100" style={{ width: `${progress * 100}%` }} />
+              <div className="h-full bg-[#F5A624] rounded-full" style={{ width: `${progress * 100}%` }} />
             </div>
           </div>
         </motion.div>
