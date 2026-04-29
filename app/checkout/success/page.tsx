@@ -14,6 +14,7 @@ function SuccessContent() {
   const orderId = searchParams.get('order') || ''
   const [copied, setCopied] = useState(false)
   const [showShare, setShowShare] = useState(false)
+  const [countdown, setCountdown] = useState(10)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
@@ -23,6 +24,21 @@ function SuccessContent() {
       (window as any).gtag('event', 'purchase', { transaction_id: orderId, value: 390, currency: 'ILS' })
     }
   }, [orderId])
+
+  // Auto-redirect to course after 10 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          window.location.href = 'https://course.porsimkanaf.com/login'
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   const copyOrder = () => {
     navigator.clipboard.writeText(orderId)
@@ -67,18 +83,27 @@ function SuccessContent() {
           </div>
         )}
 
-        <p className="text-white/60 text-lg leading-relaxed mb-2">
-          תוך מספר דקות תקבל מייל עם לינק גישה אישי לקורס.
-        </p>
-        <p className="text-white/40 text-base leading-relaxed mb-6">
-          בדוק גם בתיקיית הספאם למקרה הצורך.
-        </p>
+        {/* Auto redirect notice */}
+        <div className="p-5 rounded-xl bg-[#F5A624]/[0.06] border border-[#F5A624]/20 mb-6">
+          <p className="text-white/70 text-base leading-relaxed mb-3">
+            שלחנו לך מייל עם פרטי הכניסה לקורס.
+            <br />
+            <span className="text-white/40 text-sm">בדוק גם בתיקיית הספאם.</span>
+          </p>
+          <a href="https://course.porsimkanaf.com/login"
+            className="inline-block w-full bg-[#F5A624] text-black font-bold text-base py-3.5 rounded-xl hover:brightness-110 transition-all text-center mb-2">
+            כניסה לקורס
+          </a>
+          <p className="text-white/30 text-xs text-center">
+            מועבר אוטומטית תוך {countdown} שניות...
+          </p>
+        </div>
 
         {/* What now */}
         <div className="p-5 rounded-xl bg-white/5 border border-white/8 text-right mb-6">
           <p className="text-white/50 text-sm leading-relaxed">
             <span className="text-white font-bold">מה עכשיו?</span>
-            <br />תפתח את המייל, תלחץ על הלינק, ותתחיל מהשיעור הראשון — 4 דקות שישנו את הדרך בה אתה מסתכל על הכסף שלך.
+            <br />היכנס לקורס, התחבר עם האימייל והסיסמה שנשלחו אליך, ותתחיל מהשיעור הראשון — 4 דקות שישנו את הדרך בה אתה מסתכל על הכסף שלך.
           </p>
         </div>
 
