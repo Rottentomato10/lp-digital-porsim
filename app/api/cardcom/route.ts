@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { validateCoupon, BASE_PRICE } from '@/lib/pricing'
+import { BASE_PRICE } from '@/lib/pricing'
 import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
 import { createOrder } from '@/lib/orders'
 
@@ -45,12 +45,6 @@ export async function POST(req: NextRequest) {
       couponLabel = `הנחת ${affiliate.discountPercent}%`
       affiliateId = affiliate.id
       await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
-    } else {
-      const couponResult = validateCoupon(couponCode)
-      if (couponResult.valid) {
-        finalPrice = couponResult.finalPrice
-        couponLabel = couponResult.label
-      }
     }
   }
 

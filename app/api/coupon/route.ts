@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { validateCoupon, BASE_PRICE } from '@/lib/pricing'
+import { BASE_PRICE } from '@/lib/pricing'
 import { getAffiliateByCoupon } from '@/lib/affiliates'
 
 export async function POST(req: NextRequest) {
@@ -10,28 +10,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ valid: false, error: 'נא להזין קוד קופון' }, { status: 400 })
     }
 
-    // Check affiliate coupons first
+    // Only affiliate coupons are supported
     const affiliate = await getAffiliateByCoupon(code)
-    if (affiliate && affiliate.active) {
-      const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
-      return NextResponse.json({
-        valid: true,
-        code: affiliate.coupon,
-        discount: affiliate.discountPercent,
-        label: `הנחת ${affiliate.discountPercent}%`,
-        finalPrice: BASE_PRICE - savings,
-        savings,
-        affiliateId: affiliate.id,
-      })
-    }
-
-    // Then static coupons
-    const result = validateCoupon(code)
-    if (!result.valid) {
+    if (!affiliate || !affiliate.active) {
       return NextResponse.json({ valid: false, error: 'קוד קופון לא תקין' })
     }
 
-    return NextResponse.json(result)
+    const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
+    return NextResponse.json({
+      valid: true,
+      code: affiliate.coupon,
+      discount: affiliate.discountPercent,
+      label: `הנחת ${affiliate.discountPercent}%`,
+      finalPrice: BASE_PRICE - savings,
+      savings,
+      affiliateId: affiliate.id,
+    })
   } catch {
     return NextResponse.json({ valid: false, error: 'שגיאה' }, { status: 500 })
   }
