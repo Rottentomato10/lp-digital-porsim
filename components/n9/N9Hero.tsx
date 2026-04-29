@@ -84,22 +84,23 @@ export default function N9Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-2xl overflow-hidden mb-10"
+          className="relative rounded-2xl overflow-hidden mb-10 mx-auto"
           style={{
             boxShadow: '0 0 80px rgba(245,166,36,0.08), inset 0 0 0 0.5px rgba(245,166,36,0.15)',
             background: 'rgba(255,255,255,0.02)',
             backdropFilter: 'blur(20px)',
+            width: '240px',
+            maxWidth: '60vw',
+            aspectRatio: '240/426',
           }}>
-          <div className="relative w-full max-w-[280px] md:max-w-[320px] mx-auto" style={{ paddingBottom: '0', aspectRatio: '9/16' }}>
-            <iframe
-              src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0&autoplay=1&muted=1&loop=1&background=0"
-              className="absolute inset-0 w-full h-full rounded-xl"
-              frameBorder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              title="סרטון שיווקי — פורשים כנף"
-            />
-          </div>
+          <iframe
+            src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0&autoplay=1&muted=1&loop=1&background=1&title=0&byline=0&portrait=0"
+            className="absolute inset-0 w-full h-full"
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            title="סרטון שיווקי — פורשים כנף"
+          />
         </motion.div>
 
         <div className="text-center">
