@@ -1,13 +1,21 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { VolumeX, Volume2 } from 'lucide-react'
 import Image from 'next/image'
+import Player from '@vimeo/player'
 import { useCheckoutUrl } from '@/lib/content-context'
 
 export default function N9Hero() {
   const CHECKOUT_URL = useCheckoutUrl()
   const heroRef = useRef<HTMLElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const playerRef = useRef<Player | null>(null)
+  const [isMuted, setIsMuted] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [isHovering, setIsHovering] = useState(false)
   const mouseX = useMotionValue(0.5)
   const mouseY = useMotionValue(0.5)
 
@@ -16,6 +24,35 @@ export default function N9Hero() {
   const floatY = useTransform(mouseY, [0, 1], [-8, 8])
   const floatX2 = useTransform(mouseX, [0, 1], [10, -10])
   const floatY2 = useTransform(mouseY, [0, 1], [6, -6])
+
+  useEffect(() => {
+    if (!iframeRef.current) return
+    const p = new Player(iframeRef.current)
+    playerRef.current = p
+    p.getDuration().then(d => setDuration(d))
+    p.on('timeupdate', (data: { seconds: number; duration: number }) => {
+      setProgress(data.seconds / data.duration)
+    })
+    return () => { p.off('timeupdate'); p.destroy() }
+  }, [])
+
+  const toggleMute = useCallback(() => {
+    if (!playerRef.current) return
+    if (isMuted) {
+      playerRef.current.setVolume(1)
+      setIsMuted(false)
+    } else {
+      playerRef.current.setVolume(0)
+      setIsMuted(true)
+    }
+  }, [isMuted])
+
+  const handleScrub = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!playerRef.current || !duration) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    playerRef.current.setCurrentTime(pct * duration)
+  }, [duration])
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!heroRef.current) return
@@ -85,22 +122,47 @@ export default function N9Hero() {
           initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="relative rounded-2xl overflow-hidden mb-10 mx-auto"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
           style={{
             boxShadow: '0 0 80px rgba(245,166,36,0.08), inset 0 0 0 0.5px rgba(245,166,36,0.15)',
             background: 'rgba(255,255,255,0.02)',
             backdropFilter: 'blur(20px)',
-            width: '240px',
-            maxWidth: '60vw',
+            width: '300px',
+            maxWidth: '70vw',
             aspectRatio: '240/426',
           }}>
           <iframe
+            ref={iframeRef}
             src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0&autoplay=1&muted=1&loop=1&background=1&title=0&byline=0&portrait=0"
             className="absolute inset-0 w-full h-full"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
+            loading="lazy"
             title="סרטון שיווקי — פורשים כנף"
           />
+
+          {/* Mute/Unmute button */}
+          <button
+            onClick={toggleMute}
+            className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2 border border-white/15 transition-all hover:bg-black/75"
+          >
+            {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#F5A624]" />}
+            <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>
+              {isMuted ? 'לחץ לסאונד' : 'עם סאונד'}
+            </span>
+          </button>
+
+          {/* Progress bar / scrubber — visible on hover */}
+          <div
+            className="absolute bottom-0 left-0 right-0 z-20 h-6 flex items-end cursor-pointer transition-opacity duration-300"
+            style={{ opacity: isHovering ? 1 : 0 }}
+            onClick={handleScrub}
+          >
+            <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+              <div className="h-full bg-[#F5A624] rounded-full transition-[width] duration-100" style={{ width: `${progress * 100}%` }} />
+            </div>
+          </div>
         </motion.div>
 
         <div className="text-center">
