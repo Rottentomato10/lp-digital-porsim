@@ -4,19 +4,17 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { VolumeX, Volume2 } from 'lucide-react'
 import Image from 'next/image'
-import Player from '@vimeo/player'
 import { useCheckoutUrl } from '@/lib/content-context'
 
 export default function N9Hero() {
   const CHECKOUT_URL = useCheckoutUrl()
   const heroRef = useRef<HTMLElement>(null)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
-  const playerRef = useRef<Player | null>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const scrubBarRef = useRef<HTMLDivElement>(null)
+  const isDragging = useRef(false)
   const [isMuted, setIsMuted] = useState(true)
   const [progress, setProgress] = useState(0)
-  const [duration, setDuration] = useState(0)
   const [isHovering, setIsHovering] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
   const mouseX = useMotionValue(0.5)
   const mouseY = useMotionValue(0.5)
 
@@ -27,37 +25,32 @@ export default function N9Hero() {
   const floatY2 = useTransform(mouseY, [0, 1], [6, -6])
 
   useEffect(() => {
-    if (!iframeRef.current) return
-    const p = new Player(iframeRef.current)
-    playerRef.current = p
-    p.getDuration().then(d => setDuration(d))
-    p.on('playing', () => setIsPlaying(true))
-    p.on('timeupdate', (data: { seconds: number; duration: number }) => {
-      setProgress(data.seconds / data.duration)
-    })
-    return () => { p.off('timeupdate'); p.off('playing'); p.destroy() }
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    v.play().catch(() => {})
+    const onTime = () => {
+      if (v.duration) setProgress(v.currentTime / v.duration)
+    }
+    v.addEventListener('timeupdate', onTime)
+    return () => v.removeEventListener('timeupdate', onTime)
   }, [])
 
   const toggleMute = useCallback(() => {
-    if (!playerRef.current) return
-    if (isMuted) {
-      playerRef.current.setVolume(1)
-      setIsMuted(false)
-    } else {
-      playerRef.current.setVolume(0)
-      setIsMuted(true)
-    }
+    if (!videoRef.current) return
+    const next = !isMuted
+    videoRef.current.muted = next
+    setIsMuted(next)
   }, [isMuted])
 
-  const scrubBarRef = useRef<HTMLDivElement>(null)
-  const isDragging = useRef(false)
-
   const scrubTo = useCallback((clientX: number) => {
-    if (!playerRef.current || !duration || !scrubBarRef.current) return
-    const rect = scrubBarRef.current.getBoundingClientRect()
+    const v = videoRef.current
+    const bar = scrubBarRef.current
+    if (!v || !bar || !v.duration) return
+    const rect = bar.getBoundingClientRect()
     const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width))
-    playerRef.current.setCurrentTime(pct * duration)
-  }, [duration])
+    v.currentTime = pct * v.duration
+  }, [])
 
   const handleScrubDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     isDragging.current = true
@@ -155,22 +148,15 @@ export default function N9Hero() {
             maxWidth: '70vw',
             aspectRatio: '240/426',
           }}>
-          {/* Thumbnail poster — shows instantly while Vimeo loads */}
-          {!isPlaying && (
-            <img
-              src="/video-thumb.jpg"
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover z-10"
-            />
-          )}
-          <iframe
-            ref={iframeRef}
-            src="https://player.vimeo.com/video/1187807514?badge=0&autopause=0&player_id=0&autoplay=1&muted=1&loop=1&background=1&title=0&byline=0&portrait=0"
-            className="absolute inset-0 w-full h-full"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            loading="eager"
-            title="סרטון שיווקי — פורשים כנף"
+          <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            playsInline
+            loop
+            muted
+            preload="auto"
+            poster="/video-thumb.jpg"
+            src="/video.mp4"
           />
 
           {/* Mute/Unmute button */}

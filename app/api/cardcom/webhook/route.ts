@@ -14,6 +14,62 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
   }))
 }
 
+/**
+ * Provision course access after successful payment.
+ * Calls the course platform API to create user + grant access.
+ */
+async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
+  const courseApiUrl = process.env.COURSE_API_URL // e.g. https://course.porsimkanaf.co.il
+  const provisionSecret = process.env.PROVISION_API_SECRET
+
+  if (!courseApiUrl || !provisionSecret) {
+    console.log(JSON.stringify({
+      event: 'PROVISION_SKIPPED',
+      reason: 'Missing COURSE_API_URL or PROVISION_API_SECRET',
+      orderId: order.id,
+    }))
+    return
+  }
+
+  try {
+    const res = await fetch(`${courseApiUrl}/api/provision`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${provisionSecret}`,
+      },
+      body: JSON.stringify({
+        email: order.email,
+        full_name: order.name,
+        phone: order.phone,
+        cardcom_transaction_id: order.id,
+        amount_charged: order.amount,
+        affiliate_code: order.coupon || undefined,
+      }),
+    })
+
+    const data = await res.json()
+
+    console.log(JSON.stringify({
+      event: 'PROVISION_RESULT',
+      orderId: order.id,
+      email: order.email,
+      status: res.status,
+      response: data,
+      timestamp: new Date().toISOString(),
+    }))
+  } catch (err) {
+    // Don't fail the webhook if provisioning fails — log and continue
+    console.error(JSON.stringify({
+      event: 'PROVISION_ERROR',
+      orderId: order.id,
+      email: order.email,
+      error: String(err),
+      timestamp: new Date().toISOString(),
+    }))
+  }
+}
+
 async function handleWebhook(orderId: string, dealResponse: string) {
   console.log(JSON.stringify({
     event: 'WEBHOOK_RECEIVED',
@@ -31,7 +87,11 @@ async function handleWebhook(orderId: string, dealResponse: string) {
     console.log(JSON.stringify({ event: 'ORDER_UPDATED', orderId, updated: !!updated }))
 
     const order = await getOrderById(orderId)
-    if (order) await notifyPurchase(order)
+    if (order) {
+      await notifyPurchase(order)
+      // Provision course access (non-blocking — won't fail the webhook)
+      await provisionCourseAccess(order)
+    }
   }
 }
 
