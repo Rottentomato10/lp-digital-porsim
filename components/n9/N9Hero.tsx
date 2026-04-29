@@ -207,7 +207,7 @@ export default function N9Hero() {
           {/* Mute/Unmute button */}
           <button
             onClick={toggleMute}
-            className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2 border border-white/15 transition-all hover:bg-black/75"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2 border border-white/15 transition-all hover:bg-black/75"
           >
             {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#F5A624]" />}
             <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>
