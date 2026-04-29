@@ -29,14 +29,30 @@ export default function N9Hero() {
     const v = videoRef.current
     if (!v) return
     v.muted = true
+
+    const markPlaying = () => setIsPlaying(true)
+
+    // Try to play; mark playing on first timeupdate (most reliable cross-browser)
+    const onTimeFirst = () => {
+      markPlaying()
+      v.removeEventListener('timeupdate', onTimeFirst)
+    }
+    v.addEventListener('timeupdate', onTimeFirst)
+
     v.play().catch(() => {})
-    const onPlay = () => setIsPlaying(true)
-    v.addEventListener('playing', onPlay)
+
+    // Fallback: hide cover after 3s no matter what
+    const fallback = setTimeout(markPlaying, 3000)
+
     const onTime = () => {
       if (v.duration) setProgress(v.currentTime / v.duration)
     }
     v.addEventListener('timeupdate', onTime)
-    return () => { v.removeEventListener('timeupdate', onTime); v.removeEventListener('playing', onPlay) }
+    return () => {
+      clearTimeout(fallback)
+      v.removeEventListener('timeupdate', onTime)
+      v.removeEventListener('timeupdate', onTimeFirst)
+    }
   }, [])
 
   const toggleMute = useCallback(() => {
@@ -168,13 +184,13 @@ export default function N9Hero() {
               <motion.span
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                dir="ltr"
                 className="text-3xl font-black"
                 style={{
                   background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
                   WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                  unicodeBidi: 'plaintext',
                 }}>
-                מוכנים?
+                {'\u200Fמוכנים?'}
               </motion.span>
               <div className="mt-4 flex gap-1">
                 {[0, 1, 2].map(i => (
