@@ -151,19 +151,30 @@ export default function N9Hero() {
             maxWidth: '70vw',
             aspectRatio: '240/426',
           }}>
+          <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            playsInline
+            loop
+            muted
+            autoPlay
+            preload="auto"
+            src="/video.mp4"
+          />
           {/* "מוכנים?" cover — visible until video starts */}
           {!isPlaying && (
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center"
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
               style={{ background: 'radial-gradient(ellipse at center, #1a1400 0%, #080808 70%)' }}>
               <motion.span
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                dir="ltr"
                 className="text-3xl font-black"
                 style={{
                   background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
                   WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
                 }}>
-                ?מוכנים
+                מוכנים?
               </motion.span>
               <div className="mt-4 flex gap-1">
                 {[0, 1, 2].map(i => (
@@ -176,15 +187,6 @@ export default function N9Hero() {
               </div>
             </div>
           )}
-          <video
-            ref={videoRef}
-            className="absolute inset-0 w-full h-full object-cover"
-            playsInline
-            loop
-            muted
-            preload="auto"
-            src="/video.mp4"
-          />
 
           {/* Mute/Unmute button */}
           <button
