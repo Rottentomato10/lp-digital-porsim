@@ -81,6 +81,23 @@ export default function CheckoutPage() {
     setLoading(true)
     setError(null)
 
+    // Check if email already registered
+    try {
+      const checkRes = await fetch('/api/check-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      })
+      const checkData = await checkRes.json()
+      if (checkData.exists) {
+        setError('האימייל כבר רשום במערכת. ניתן להתחבר ישירות דרך course.porsimkanaf.com')
+        setLoading(false)
+        return
+      }
+    } catch {
+      // If check fails, continue with purchase
+    }
+
     // Facebook Pixel: InitiateCheckout
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'InitiateCheckout', { value: finalPrice, currency: 'ILS' })
