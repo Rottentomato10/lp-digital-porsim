@@ -14,7 +14,8 @@ function SuccessContent() {
   const orderId = searchParams.get('order') || ''
   const [copied, setCopied] = useState(false)
   const [showShare, setShowShare] = useState(false)
-  const [countdown, setCountdown] = useState(20)
+  const [countdown, setCountdown] = useState(60)
+  const [provisionStatus, setProvisionStatus] = useState<string>('')
 
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
@@ -25,7 +26,26 @@ function SuccessContent() {
     }
   }, [orderId])
 
-  // Auto-redirect to course after 10 seconds
+  // Verify payment and provision access (fallback for missing webhook)
+  useEffect(() => {
+    if (!orderId) return
+    const verify = async () => {
+      try {
+        const res = await fetch('/api/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId }),
+        })
+        const data = await res.json()
+        setProvisionStatus(data.status || 'done')
+      } catch {
+        setProvisionStatus('error')
+      }
+    }
+    verify()
+  }, [orderId])
+
+  // Auto-redirect to course after 60 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown(prev => {
