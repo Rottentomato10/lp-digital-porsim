@@ -14,7 +14,7 @@ function SuccessContent() {
   const orderId = searchParams.get('order') || ''
   const [copied, setCopied] = useState(false)
   const [showShare, setShowShare] = useState(false)
-  const [countdown, setCountdown] = useState(10)
+  const [countdown, setCountdown] = useState(20)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
