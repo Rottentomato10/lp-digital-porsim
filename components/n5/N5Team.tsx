@@ -62,7 +62,7 @@ export default function N5Team() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.65, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col items-center text-center gap-5">
-              <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-[#F5A624]/30"
+              <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-[#F5A624]/30 bg-[#8a8a8a]"
                 style={{ boxShadow: '0 0 40px rgba(245,166,36,0.15)' }}>
                 {person.image ? (
                   <Image src={person.image} alt={person.name} fill className="object-cover" />
