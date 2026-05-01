@@ -76,6 +76,9 @@ export default function CheckoutPage() {
   const finalPrice = couponApplied ? couponApplied.finalPrice : BASE_PRICE
 
   const handlePay = async () => {
+    // Save marketing consent for success page
+    localStorage.setItem('marketing_consent', String(agreedEmails))
+
     if (!name.trim() || name.trim().length < 2) { setError('נא למלא שם מלא (לפחות 2 תווים)'); return }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/

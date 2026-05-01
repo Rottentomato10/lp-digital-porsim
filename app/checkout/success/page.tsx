@@ -34,7 +34,7 @@ function SuccessContent() {
         const res = await fetch('/api/verify-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ orderId }),
+          body: JSON.stringify({ orderId, marketing_consent: localStorage.getItem('marketing_consent') !== 'false' }),
         })
         const data = await res.json()
         setProvisionStatus(data.status || 'done')
