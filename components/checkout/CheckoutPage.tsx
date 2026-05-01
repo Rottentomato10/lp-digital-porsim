@@ -294,7 +294,7 @@ export default function CheckoutPage() {
                 agreedTerms ? 'border-[#F5A624]/30 bg-[#F5A624]/[0.04]' : 'border-[#F5A624]/40 bg-[#F5A624]/[0.06] shadow-[0_0_12px_rgba(245,166,36,0.08)]'
               }`}>
                 <input type="checkbox" checked={agreedTerms} onChange={e => setAgreedTerms(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+                  className="mt-0.5 w-5 h-5 rounded border-2 border-[#F5A624]/60 bg-transparent accent-[#F5A624] flex-shrink-0" style={{ minWidth: '20px', minHeight: '20px' }} />
                 <span className="text-white/60 text-sm leading-relaxed">
                   קראתי ואני מסכים/ה ל<button type="button" onClick={() => setLegalModal('terms')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">תנאי השימוש</button> ול<button type="button" onClick={() => setLegalModal('privacy')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">מדיניות הפרטיות</button>
                   <span className="text-red-400 mr-1">*</span>
