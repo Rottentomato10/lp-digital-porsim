@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ShieldCheck, Lock, Check, X, Loader2, Sparkles, User, Mail, Phone, Tag } from 'lucide-react'
 import DFooter from '@/components/d/DFooter'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
+import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 
 const WHATSAPP_URL = 'https://wa.me/9720537282727?text=היי, יש לי שאלה לגבי הקורס'
 const BASE_PRICE = 390
@@ -20,6 +21,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false)
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [legalModal, setLegalModal] = useState<ModalType>(null)
 
   // Track affiliate checkout (stats only, no coupon auto-apply)
   useEffect(() => {
@@ -294,7 +296,10 @@ export default function CheckoutPage() {
               </button>
 
               <p className="text-white/25 text-[10px] text-center mb-3 leading-relaxed">
-                בלחיצה על הכפתור אני מאשר/ת את <a href="https://digital.porsimkanaf.com/#terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/40">תנאי השימוש</a> ו<a href="https://digital.porsimkanaf.com/#privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/40">מדיניות הפרטיות</a>
+                בלחיצה על הכפתור אני מאשר/ת את{' '}
+                <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-white/40">תנאי השימוש</button>
+                {' '}ו
+                <button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-white/40">מדיניות הפרטיות</button>
               </p>
 
               {error && <p className="text-red-400 text-sm text-center mb-3">{error}</p>}
@@ -402,6 +407,7 @@ export default function CheckoutPage() {
 
         <DFooter />
         <AccessibilityWidget />
+        <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
       </div>
     </div>
   )
