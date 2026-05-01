@@ -24,6 +24,7 @@ export interface Order {
   createdAt: string
   paidAt: string
   notes: string
+  marketingConsent?: boolean
 }
 
 function generateOrderId(): string {
@@ -58,6 +59,7 @@ export async function createOrder(data: {
   coupon?: string
   affiliateId?: string
   amount: number
+  marketingConsent?: boolean
 }): Promise<Order> {
   const all = await loadOrders()
 
@@ -78,6 +80,7 @@ export async function createOrder(data: {
     createdAt: new Date().toISOString(),
     paidAt: '',
     notes: '',
+    marketingConsent: data.marketingConsent !== false,
   }
 
   all.push(order)

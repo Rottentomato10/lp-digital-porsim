@@ -10,7 +10,7 @@ import { getOrderById, updateOrder } from '@/lib/orders'
  */
 export async function POST(req: NextRequest) {
   try {
-    const { orderId, marketing_consent } = await req.json()
+    const { orderId } = await req.json()
     if (!orderId) return NextResponse.json({ error: 'Missing orderId' }, { status: 400 })
 
     const order = await getOrderById(orderId)
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
             cardcom_transaction_id: order.id,
             amount_charged: order.amount,
             affiliate_code: order.coupon || undefined,
-            marketing_consent: marketing_consent !== false,
+            marketing_consent: order.marketingConsent !== false,
           }),
         })
 
