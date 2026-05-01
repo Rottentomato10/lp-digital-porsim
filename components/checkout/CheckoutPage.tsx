@@ -22,6 +22,8 @@ export default function CheckoutPage() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
+  const [agreedTerms, setAgreedTerms] = useState(false)
+  const [agreedEmails, setAgreedEmails] = useState(false)
 
   // Track affiliate checkout (stats only, no coupon auto-apply)
   useEffect(() => {
@@ -284,23 +286,39 @@ export default function CheckoutPage() {
               {couponError && <p className="text-red-400 text-xs mt-2">{couponError}</p>}
             </div>
 
+            {/* Consent checkboxes */}
+            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6 mb-6">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input type="checkbox" checked={agreedTerms} onChange={e => setAgreedTerms(e.target.checked)}
+                    className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+                  <span className="text-white/50 text-sm leading-relaxed">
+                    קראתי ואני מסכים/ה ל<button type="button" onClick={() => setLegalModal('terms')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">תנאי השימוש</button>,{' '}
+                    <button type="button" onClick={() => setLegalModal('privacy')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">מדיניות הפרטיות</button>{' '}
+                    ו<button type="button" onClick={() => setLegalModal('accessibility')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">הצהרת הנגישות</button>.
+                    <span className="text-red-400 mr-1">*</span>
+                  </span>
+                </label>
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input type="checkbox" checked={agreedEmails} onChange={e => setAgreedEmails(e.target.checked)}
+                    className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+                  <span className="text-white/50 text-sm leading-relaxed">
+                    אני מאשר/ת קבלת עדכונים, תוכן ומידע שיווקי מפורשים כנף באימייל. ניתן לבטל בכל עת.
+                  </span>
+                </label>
+              </div>
+            </div>
+
             {/* Pay button */}
             <div className="mb-8">
-              <button onClick={handlePay} disabled={loading}
-                className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3">
+              <button onClick={handlePay} disabled={loading || !agreedTerms}
+                className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3">
                 {loading ? (
                   <><Loader2 size={22} className="animate-spin" /><span>פותח טופס תשלום...</span></>
                 ) : (
                   <span>המשך לתשלום — ₪{finalPrice}</span>
                 )}
               </button>
-
-              <p className="text-white/25 text-[10px] text-center mb-3 leading-relaxed">
-                בלחיצה על הכפתור אני מאשר/ת את{' '}
-                <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-white/40">תנאי השימוש</button>
-                {' '}ו
-                <button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-white/40">מדיניות הפרטיות</button>
-              </p>
 
               {error && <p className="text-red-400 text-sm text-center mb-3">{error}</p>}
 
