@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ShieldCheck, Lock, Check, X, Loader2, Sparkles, User, Mail, Phone, Tag } from 'lucide-react'
 import DFooter from '@/components/d/DFooter'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
@@ -22,8 +23,8 @@ export default function CheckoutPage() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
-  const [agreedTerms, setAgreedTerms] = useState(false)
-  const [agreedEmails, setAgreedEmails] = useState(false)
+  const [agreedEmails, setAgreedEmails] = useState(true)
+  const [showConsentPopup, setShowConsentPopup] = useState(false)
 
   // Track affiliate checkout (stats only, no coupon auto-apply)
   useEffect(() => {
@@ -286,39 +287,65 @@ export default function CheckoutPage() {
               {couponError && <p className="text-red-400 text-xs mt-2">{couponError}</p>}
             </div>
 
-            {/* Consent checkboxes */}
-            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 md:p-6 mb-6">
-              <div className="space-y-4">
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <input type="checkbox" checked={agreedTerms} onChange={e => setAgreedTerms(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
-                  <span className="text-white/50 text-sm leading-relaxed">
-                    קראתי ואני מסכים/ה ל<button type="button" onClick={() => setLegalModal('terms')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">תנאי השימוש</button>,{' '}
-                    <button type="button" onClick={() => setLegalModal('privacy')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">מדיניות הפרטיות</button>{' '}
-                    ו<button type="button" onClick={() => setLegalModal('accessibility')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">הצהרת הנגישות</button>.
-                    <span className="text-red-400 mr-1">*</span>
-                  </span>
-                </label>
-                <label className="flex items-start gap-3 cursor-pointer group">
-                  <input type="checkbox" checked={agreedEmails} onChange={e => setAgreedEmails(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
-                  <span className="text-white/50 text-sm leading-relaxed">
-                    אני מאשר/ת קבלת עדכונים, תוכן ומידע שיווקי מפורשים כנף באימייל. ניתן לבטל בכל עת.
-                  </span>
-                </label>
-              </div>
-            </div>
+            {/* Email consent — small, pre-checked */}
+            <label className="flex items-center gap-2.5 cursor-pointer mb-6 mr-1">
+              <input type="checkbox" checked={agreedEmails} onChange={e => setAgreedEmails(e.target.checked)}
+                className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+              <span className="text-white/35 text-xs">אני מאשר/ת קבלת עדכונים ומידע שיווקי באימייל. ניתן לבטל בכל עת.</span>
+            </label>
 
             {/* Pay button */}
             <div className="mb-8">
-              <button onClick={handlePay} disabled={loading || !agreedTerms}
-                className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3">
+              <button onClick={() => setShowConsentPopup(true)} disabled={loading}
+                className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3">
                 {loading ? (
                   <><Loader2 size={22} className="animate-spin" /><span>פותח טופס תשלום...</span></>
                 ) : (
                   <span>המשך לתשלום — ₪{finalPrice}</span>
                 )}
               </button>
+
+              {/* Consent popup */}
+              <AnimatePresence>
+                {showConsentPopup && (
+                  <motion.div
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-5"
+                    style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+                    onClick={() => setShowConsentPopup(false)}
+                  >
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                      onClick={e => e.stopPropagation()}
+                      className="w-full max-w-sm rounded-2xl border border-[#F5A624]/20 p-6 text-center"
+                      style={{ background: '#111111' }}
+                    >
+                      <Image src="/logo.png" alt="" width={48} height={48} className="w-12 h-12 object-contain mx-auto mb-4" />
+                      <p className="text-white font-bold text-base mb-2">אישור תנאים</p>
+                      <p className="text-white/50 text-sm leading-relaxed mb-5">
+                        בלחיצה על ״אשר״ אני מאשר/ת שקראתי ואני מסכים/ה ל<button type="button" onClick={() => { setShowConsentPopup(false); setLegalModal('terms') }} className="text-[#F5A624] underline">תנאי השימוש</button> ול<button type="button" onClick={() => { setShowConsentPopup(false); setLegalModal('privacy') }} className="text-[#F5A624] underline">מדיניות הפרטיות</button>.
+                      </p>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => { setShowConsentPopup(false); handlePay() }}
+                          className="flex-1 py-3 rounded-xl bg-[#F5A624] text-black font-black text-sm hover:brightness-110 transition-all"
+                        >
+                          אשר
+                        </button>
+                        <button
+                          onClick={() => setShowConsentPopup(false)}
+                          className="flex-1 py-3 rounded-xl border border-white/10 text-white/40 font-bold text-sm hover:bg-white/5 transition-all"
+                        >
+                          סרב
+                        </button>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {error && <p className="text-red-400 text-sm text-center mb-3">{error}</p>}
 
