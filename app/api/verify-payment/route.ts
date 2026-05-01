@@ -59,8 +59,27 @@ export async function POST(req: NextRequest) {
           response: data,
         }))
 
-        return NextResponse.json({ ok: true, status: 'provisioned', email: order.email })
+        if (!res.ok) {
+          // Log failure to course DB for admin visibility
+          try {
+            await fetch(`${courseApiUrl}/api/admin/provision-failure`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provisionSecret}` },
+              body: JSON.stringify({ order_id: orderId, email: order.email, error: JSON.stringify(data), payload: { email: order.email, full_name: order.name, phone: order.phone, cardcom_transaction_id: order.id, amount_charged: order.amount } }),
+            })
+          } catch { /* */ }
+        }
+
+        return NextResponse.json({ ok: true, status: res.ok ? 'provisioned' : 'paid_no_provision', email: order.email })
       } catch (err) {
+        // Log failure
+        try {
+          await fetch(`${courseApiUrl}/api/admin/provision-failure`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${provisionSecret}` },
+            body: JSON.stringify({ order_id: orderId, email: order.email, error: String(err), payload: { email: order.email, full_name: order.name, phone: order.phone, cardcom_transaction_id: order.id, amount_charged: order.amount } }),
+          })
+        } catch { /* */ }
         console.error(JSON.stringify({ event: 'VERIFY_PAYMENT_PROVISION_ERROR', orderId, error: String(err) }))
         return NextResponse.json({ ok: true, status: 'paid_no_provision' })
       }

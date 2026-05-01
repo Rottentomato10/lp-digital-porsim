@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     customerEmail = body.email || ''
     customerPhone = body.phone || ''
     couponCode = body.coupon || ''
-    var marketingConsent = body.marketingConsent !== false
+    var marketingConsent = body.marketingConsent === true
   } catch {
     return NextResponse.json({ error: 'Missing customer details' }, { status: 400 })
   }

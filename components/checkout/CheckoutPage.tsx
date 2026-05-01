@@ -24,7 +24,7 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
   const [agreedTerms, setAgreedTerms] = useState(false)
-  const [agreedEmails, setAgreedEmails] = useState(true)
+  const [agreedEmails, setAgreedEmails] = useState(false)
   const [showConsentPopup, setShowConsentPopup] = useState(false)
 
   // Track affiliate checkout (stats only, no coupon auto-apply)
