@@ -5,7 +5,11 @@ import { BASE_PRICE } from '@/lib/pricing'
 const DASH_PASS = process.env.DASHBOARD_PASSWORD || 'Freedom1992@'
 
 function isAuthed(req: NextRequest): boolean {
-  return req.cookies.get('dash_auth')?.value === DASH_PASS
+  // Cookie auth (dashboard) or Bearer token (course API)
+  if (req.cookies.get('dash_auth')?.value === DASH_PASS) return true
+  const auth = req.headers.get('authorization')
+  if (auth === `Bearer ${process.env.PROVISION_API_SECRET}`) return true
+  return false
 }
 
 export async function GET(req: NextRequest) {
