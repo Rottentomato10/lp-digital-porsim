@@ -149,7 +149,7 @@ export default function CheckoutPage() {
   const closeModal = () => { setIframeUrl(null) }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#080B16] to-[#0D1117]" dir="rtl" style={{ fontFamily: "'Heebo', sans-serif" }}>
+    <div className="min-h-screen bg-[#080808]" dir="rtl" style={{ fontFamily: "'Heebo', sans-serif" }}>
 
       {/* CardCom Payment Modal */}
       {iframeUrl && (
@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <button onClick={() => handleCouponCheck()} disabled={couponLoading}
-                    className="px-5 py-3 rounded-xl bg-[#F5A624]/15 border border-[#F5A624]/25 text-[#F5A624]/80 font-bold text-sm hover:bg-[#F5A624]/25 transition-all disabled:opacity-50 flex-shrink-0">
+                    className="px-5 py-3 rounded-xl bg-[#F5A624]/20 border border-[#F5A624]/40 text-[#F5A624] font-bold text-sm hover:bg-[#F5A624]/30 transition-all disabled:opacity-50 flex-shrink-0">
                     {couponLoading ? <Loader2 size={16} className="animate-spin" /> : 'החל'}
                   </button>
                 </div>
