@@ -280,7 +280,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <button onClick={() => handleCouponCheck()} disabled={couponLoading}
-                    className="px-5 py-3 rounded-xl bg-white/[0.08] border border-white/10 text-white/70 font-bold text-sm hover:bg-white/[0.12] transition-all disabled:opacity-50 flex-shrink-0">
+                    className="px-5 py-3 rounded-xl bg-[#F5A624]/15 border border-[#F5A624]/25 text-[#F5A624]/80 font-bold text-sm hover:bg-[#F5A624]/25 transition-all disabled:opacity-50 flex-shrink-0">
                     {couponLoading ? <Loader2 size={16} className="animate-spin" /> : 'החל'}
                   </button>
                 </div>
