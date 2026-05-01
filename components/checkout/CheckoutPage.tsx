@@ -408,7 +408,7 @@ export default function CheckoutPage() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">קורס פיננסים לצעירים</p>
-                    <p className="text-white/45 text-xs">57 שיעורים · 3 שעות · לכל החיים</p>
+                    <p className="text-white/45 text-xs">58 שיעורים · 3 שעות · לכל החיים</p>
                   </div>
                 </div>
 
