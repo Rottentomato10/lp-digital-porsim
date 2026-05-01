@@ -23,6 +23,7 @@ export default function CheckoutPage() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
+  const [agreedTerms, setAgreedTerms] = useState(false)
   const [agreedEmails, setAgreedEmails] = useState(true)
   const [showConsentPopup, setShowConsentPopup] = useState(false)
 
@@ -287,16 +288,28 @@ export default function CheckoutPage() {
               {couponError && <p className="text-red-400 text-xs mt-2">{couponError}</p>}
             </div>
 
-            {/* Email consent — small, pre-checked */}
-            <label className="flex items-center gap-2.5 cursor-pointer mb-6 mr-1">
-              <input type="checkbox" checked={agreedEmails} onChange={e => setAgreedEmails(e.target.checked)}
-                className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
-              <span className="text-white/35 text-xs">אני מאשר/ת קבלת עדכונים ומידע שיווקי באימייל. ניתן לבטל בכל עת.</span>
-            </label>
+            {/* Terms consent + email opt-in */}
+            <div className="space-y-3 mb-6">
+              <label className={`flex items-start gap-3 cursor-pointer p-3 rounded-xl border transition-all ${
+                agreedTerms ? 'border-[#F5A624]/30 bg-[#F5A624]/[0.04]' : 'border-[#F5A624]/40 bg-[#F5A624]/[0.06] shadow-[0_0_12px_rgba(245,166,36,0.08)]'
+              }`}>
+                <input type="checkbox" checked={agreedTerms} onChange={e => setAgreedTerms(e.target.checked)}
+                  className="mt-0.5 w-4 h-4 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+                <span className="text-white/60 text-sm leading-relaxed">
+                  קראתי ואני מסכים/ה ל<button type="button" onClick={() => setLegalModal('terms')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">תנאי השימוש</button> ול<button type="button" onClick={() => setLegalModal('privacy')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">מדיניות הפרטיות</button>
+                  <span className="text-red-400 mr-1">*</span>
+                </span>
+              </label>
+              <label className="flex items-center gap-2.5 cursor-pointer mr-1">
+                <input type="checkbox" checked={agreedEmails} onChange={e => setAgreedEmails(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+                <span className="text-white/35 text-xs">אני מאשר/ת קבלת עדכונים ומידע שיווקי באימייל. ניתן לבטל בכל עת.</span>
+              </label>
+            </div>
 
             {/* Pay button */}
             <div className="mb-8">
-              <button onClick={() => setShowConsentPopup(true)} disabled={loading}
+              <button onClick={() => { if (agreedTerms) { handlePay() } else { setShowConsentPopup(true) } }} disabled={loading}
                 className="cta-shine w-full py-5 rounded-2xl bg-[#F5A624] hover:brightness-110 disabled:opacity-60 text-black font-black text-xl transition-all flex items-center justify-center gap-3 mb-3">
                 {loading ? (
                   <><Loader2 size={22} className="animate-spin" /><span>פותח טופס תשלום...</span></>
