@@ -65,7 +65,7 @@ export default function N5Team() {
               <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-[#F5A624]/30 bg-[#8a8a8a]"
                 style={{ boxShadow: '0 0 40px rgba(245,166,36,0.15)' }}>
                 {person.image ? (
-                  <Image src={person.image} alt={person.name} fill className="object-cover" />
+                  <Image src={person.image} alt={person.name} fill className="object-contain" />
                 ) : (
                   <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center">
                     <span className="text-5xl text-white/10 font-black select-none">{person.name[0]}</span>
