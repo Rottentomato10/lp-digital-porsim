@@ -300,9 +300,9 @@ export default function CheckoutPage() {
                   <span className="text-red-400 mr-1">*</span>
                 </span>
               </label>
-              <label className="flex items-center gap-2.5 cursor-pointer mr-1">
+              <label className="flex items-center gap-3 cursor-pointer pr-3">
                 <input type="checkbox" checked={agreedEmails} onChange={e => setAgreedEmails(e.target.checked)}
-                  className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" />
+                  className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 accent-[#F5A624] flex-shrink-0" style={{ marginRight: '3px' }} />
                 <span className="text-white/35 text-xs">אני מאשר/ת קבלת עדכונים ומידע שיווקי באימייל. ניתן לבטל בכל עת.</span>
               </label>
             </div>
