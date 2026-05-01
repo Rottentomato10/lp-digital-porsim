@@ -293,6 +293,10 @@ export default function CheckoutPage() {
                 )}
               </button>
 
+              <p className="text-white/25 text-[10px] text-center mb-3 leading-relaxed">
+                בלחיצה על הכפתור אני מאשר/ת את <a href="https://digital.porsimkanaf.com/#terms" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/40">תנאי השימוש</a> ו<a href="https://digital.porsimkanaf.com/#privacy" target="_blank" rel="noopener noreferrer" className="underline hover:text-white/40">מדיניות הפרטיות</a>
+              </p>
+
               {error && <p className="text-red-400 text-sm text-center mb-3">{error}</p>}
 
               <div className="flex items-center justify-center gap-5">
