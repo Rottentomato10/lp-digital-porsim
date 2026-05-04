@@ -27,7 +27,17 @@ export default function CheckoutPage() {
   const [agreedEmails, setAgreedEmails] = useState(false)
   const [showConsentPopup, setShowConsentPopup] = useState(false)
 
-  // Track affiliate checkout (stats only, no coupon auto-apply)
+  // Auto-apply coupon from URL (?coupon=CODE)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const urlCoupon = params.get('coupon')?.trim()
+    if (urlCoupon && !couponApplied) {
+      setCoupon(urlCoupon)
+      handleCouponCheck(urlCoupon)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Track affiliate checkout (stats only)
   useEffect(() => {
     const viaCookie = document.cookie.split('; ').find(c => c.startsWith('aff_via='))
     const viaCode = viaCookie?.split('=')[1]
