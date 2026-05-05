@@ -35,18 +35,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
 
-    await ensureFile()
-
     const timestamp = new Date().toISOString()
-    const safeName = sanitizeCsvField(name)
-    const safeEmail = sanitizeCsvField(email)
-    const safePhone = sanitizeCsvField(phone || '')
-    const row = `${timestamp},"${safeName}","${safeEmail}","${safePhone}"\n`
 
-    const existing = await readFile(CSV_PATH, 'utf-8')
-    await writeFile(CSV_PATH, existing + row, 'utf-8')
-
-    // Auto-enroll in drip campaign (non-blocking)
+    // Auto-enroll in drip campaign (non-blocking, runs first)
     addSubscriber({
       email,
       name,
@@ -54,7 +45,18 @@ export async function POST(req: NextRequest) {
       enrolledAt: timestamp,
       source: 'landing_page',
       coupon: '',
-    }).catch(() => {})
+    }).catch(err => console.error('Drip enroll failed:', err))
+
+    // Save to CSV (may fail on serverless — non-critical)
+    try {
+      await ensureFile()
+      const safeName = sanitizeCsvField(name)
+      const safeEmail = sanitizeCsvField(email)
+      const safePhone = sanitizeCsvField(phone || '')
+      const row = `${timestamp},"${safeName}","${safeEmail}","${safePhone}"\n`
+      const existing = await readFile(CSV_PATH, 'utf-8')
+      await writeFile(CSV_PATH, existing + row, 'utf-8')
+    } catch { /* CSV storage is best-effort on serverless */ }
 
     return NextResponse.json({ ok: true })
   } catch {
