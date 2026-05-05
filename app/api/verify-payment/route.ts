@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getOrderById, updateOrder } from '@/lib/orders'
+import { markAsPurchased } from '@/lib/drip'
 
 /**
  * POST /api/verify-payment
@@ -37,6 +38,9 @@ export async function POST(req: NextRequest) {
       status: 'paid',
       paidAt: new Date().toISOString(),
     })
+
+    // Remove from drip campaign
+    markAsPurchased(order.email).catch(() => {})
 
     // Provision course access
     const courseApiUrl = process.env.COURSE_API_URL
@@ -80,6 +84,9 @@ export async function POST(req: NextRequest) {
           } catch { /* */ }
         }
 
+        if (res.ok) {
+          await updateOrder(orderId, { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent' })
+        }
         return NextResponse.json({ ok: true, status: res.ok ? 'provisioned' : 'paid_no_provision', email: order.email })
       } catch (err) {
         try {

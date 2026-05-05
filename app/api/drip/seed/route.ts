@@ -174,14 +174,8 @@ ${CTA}`,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">הזדמנות אחרונה — 20% הנחה אישית</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">{{name}}, בשבועות האחרונים שלחנו לך 12 אימיילים עם תכנים שבדרך כלל שומרים רק למי שכבר בתוך הקורס.</p>
 
-<div style="border-radius:12px;border:1px solid rgba(245,166,36,0.25);background:rgba(245,166,36,0.04);padding:20px;margin:0 0 16px;">
-  <p style="color:#F5A624;font-size:15px;font-weight:700;margin:0 0 8px;">מי אנחנו?</p>
-  <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.8;margin:0 0 8px;"><strong style="color:#fff;">כבר למעלה מחמש שנים</strong> אנחנו פועלים בשטח — מעבירים סדנאות חינוך פיננסי בבתי ספר, יחידות צבאיות ומסגרות חינוכיות ברחבי הארץ.</p>
-  <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.8;margin:0 0 8px;">פורשים כנף הם <strong style="color:#fff;">חלק מתוכניות גפ״ן — תוכניות ההעשרה של משרד החינוך</strong>. למעלה מ-15,000 תלמידים ותלמידות עברו תחת הידיים שלנו ב-300+ כיתות.</p>
-  <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.8;margin:0;">הקורס הדיגיטלי שלנו הוא הזיקוק של כל הידע הזה — 58 שיעורים, 3 שעות, מא׳ עד ת׳.</p>
-</div>
-
-<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">ייצרנו לך <strong style="color:#fff;">קוד הנחה אישי של 20%</strong> שתקף ל-24 השעות הקרובות בלבד:</p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">עשינו את זה כי אנחנו באמת מאמינים שהידע הזה צריך להגיע לכל צעיר וצעירה. וגם כי ראינו שהתעניינת — ורצינו לתת לך טעימה אמיתית.</p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">אז הנה ההצעה שלנו: ייצרנו לך <strong style="color:#fff;">קוד הנחה אישי של 20%</strong> שתקף ל-24 השעות הקרובות בלבד:</p>
 <div style="text-align:center;margin:20px 0;padding:16px;border-radius:12px;border:1px solid rgba(245,166,36,0.3);background:rgba(245,166,36,0.06);">
   <p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0 0 4px;">הקוד האישי שלך:</p>
   <p style="color:#F5A624;font-size:28px;font-weight:900;margin:0;letter-spacing:2px;">{{coupon}}</p>

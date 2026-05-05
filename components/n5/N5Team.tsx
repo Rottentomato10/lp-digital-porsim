@@ -37,9 +37,17 @@ export default function N5Team() {
           <p className="text-white/60 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto">
             ״פורשים כנף״ נולדה מתוך תשוקה אמיתית לשינוי ומתוך הבנה שכל צעיר וצעירה בישראל הם בעצם ״מנכ״לים״ של העסק החשוב ביותר בחייהם: משק הבית שלהם.
           </p>
-          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            ב-5 השנים האחרונות אנחנו פועלים יום-יום בשטח, מעבירים סדנאות חינוך פיננסי בבתי ספר ובמסגרות חינוכיות בכל רחבי הארץ. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
-          </p>
+          <div className="max-w-2xl mx-auto rounded-2xl border border-[#F5A624]/20 bg-[#F5A624]/[0.03] p-6 md:p-8">
+            <p className="text-white font-bold text-lg md:text-xl leading-relaxed mb-3">
+              ב-5 השנים האחרונות אנחנו פועלים יום-יום בשטח.
+            </p>
+            <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-3">
+              מעבירים סדנאות חינוך פיננסי בבתי ספר, יחידות צבאיות ומסגרות חינוכיות בכל רחבי הארץ — <span className="text-white font-semibold">כחלק מתוכניות גפ״ן, תוכניות ההעשרה של משרד החינוך</span>.
+            </p>
+            <p className="text-white/60 text-lg md:text-xl leading-relaxed">
+              למעלה מ-<span className="text-[#F5A624] font-bold">15,000</span> תלמידים ותלמידות עברו תחת הידיים שלנו ב-<span className="text-[#F5A624] font-bold">300+</span> כיתות. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
+            </p>
+          </div>
           <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
             אנחנו עושים את זה כי אנחנו מאמינים שחינוך פיננסי הוא הבסיס להכל: הבסיס לחוסן האישי שלכם, הבסיס לעוצמה הכלכלית שלנו כעם, והמפתח לעתיד טוב וציוני יותר כאן בישראל.
           </p>
