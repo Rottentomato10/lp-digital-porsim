@@ -580,6 +580,8 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">סכום</th>
                         <th className="px-3 py-3 text-right">קופון</th>
                         <th className="px-3 py-3 text-right">סטטוס</th>
+                        <th className="px-3 py-3 text-right">אימייל</th>
+                        <th className="px-3 py-3 text-right">נפתח</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
                       </tr>
                     </thead>
@@ -613,6 +615,30 @@ export default function DashboardShell() {
                               <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[o.status] || 'bg-white/5 text-white/30'}`}>
                                 {statusLabels[o.status] || o.status}
                               </span>
+                            </td>
+                            <td className="px-3 py-3 text-center">
+                              {o.emailSent ? (
+                                <span className="text-[#10B981]" title={o.emailSentAt ? new Date(o.emailSentAt).toLocaleString('he-IL') : ''}>✓</span>
+                              ) : o.status !== 'pending' ? (
+                                <button onClick={async () => {
+                                  try {
+                                    const res = await fetch('/api/orders/resend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ orderId: o.id }) })
+                                    const data = await res.json()
+                                    if (data.ok) { fetchOrders() } else { alert(data.error || 'שגיאה') }
+                                  } catch { alert('שגיאה') }
+                                }} className="text-[#F5A624] text-xs hover:underline">שלח שוב</button>
+                              ) : (
+                                <span className="text-white/15">—</span>
+                              )}
+                            </td>
+                            <td className="px-3 py-3 text-center">
+                              {o.emailOpenedAt ? (
+                                <span className="text-[#10B981]" title={new Date(o.emailOpenedAt).toLocaleString('he-IL')}>✓</span>
+                              ) : o.emailSent ? (
+                                <span className="text-white/20" title="לא נפתח עדיין">✗</span>
+                              ) : (
+                                <span className="text-white/15">—</span>
+                              )}
                             </td>
                             <td className="px-3 py-3 text-white/30 text-xs">
                               {new Date(o.createdAt).toLocaleDateString('he-IL')}

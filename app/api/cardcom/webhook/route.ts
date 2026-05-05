@@ -34,8 +34,8 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
  * Provision course access after successful payment.
  * Calls the course platform API to create user + grant access.
  */
-async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
-  const courseApiUrl = process.env.COURSE_API_URL // e.g. https://course.porsimkanaf.co.il
+async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }): Promise<boolean> {
+  const courseApiUrl = process.env.COURSE_API_URL
   const provisionSecret = process.env.PROVISION_API_SECRET
 
   if (!courseApiUrl || !provisionSecret) {
@@ -44,7 +44,7 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       reason: 'Missing COURSE_API_URL or PROVISION_API_SECRET',
       orderId: order.id,
     }))
-    return
+    return false
   }
 
   try {
@@ -74,8 +74,8 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       response: data,
       timestamp: new Date().toISOString(),
     }))
+    return res.ok
   } catch (err) {
-    // Don't fail the webhook if provisioning fails — log and continue
     console.error(JSON.stringify({
       event: 'PROVISION_ERROR',
       orderId: order.id,
@@ -83,6 +83,7 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       error: String(err),
       timestamp: new Date().toISOString(),
     }))
+    return false
   }
 }
 
@@ -116,8 +117,11 @@ async function handleWebhook(orderId: string, dealResponse: string) {
     await notifyPurchase(order)
     // Remove from drip campaign (non-blocking)
     markAsPurchased(order.email).catch(() => {})
-    // Provision course access (non-blocking — won't fail the webhook)
-    await provisionCourseAccess(order)
+    // Provision course access + track email status
+    const emailSent = await provisionCourseAccess(order)
+    if (emailSent) {
+      await updateOrder(orderId, { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent' })
+    }
   }
 }
 

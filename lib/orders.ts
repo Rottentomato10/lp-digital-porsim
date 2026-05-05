@@ -25,6 +25,9 @@ export interface Order {
   paidAt: string
   notes: string
   marketingConsent?: boolean
+  emailSent?: boolean
+  emailSentAt?: string
+  emailOpenedAt?: string
 }
 
 function generateOrderId(): string {
