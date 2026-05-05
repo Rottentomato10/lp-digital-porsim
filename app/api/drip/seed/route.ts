@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { saveCampaign } from '@/lib/drip'
 import type { DripCampaign } from '@/lib/drip'
+import { createAffiliate, getAffiliateByCoupon } from '@/lib/affiliates'
 
 const CTA = `<div style="text-align:center;margin:24px 0 8px;">
   <a href="https://digital.porsimkanaf.com/checkout" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">אני רוצה להתחיל</a>
@@ -175,11 +176,11 @@ ${CTA}`,
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">אז הנה ההצעה שלנו: <strong style="color:#fff;">20% הנחה על הקורס המלא.</strong> 58 שיעורים, 3 שעות, מא׳ עד ת׳. אפליקציה, קהילה, תעודת סיום — הכל כלול.</p>
 <div style="text-align:center;margin:20px 0;padding:16px;border-radius:12px;border:1px solid rgba(245,166,36,0.3);background:rgba(245,166,36,0.06);">
   <p style="color:rgba(255,255,255,0.4);font-size:14px;margin:0 0 4px;">הקוד שלך:</p>
-  <p style="color:#F5A624;font-size:28px;font-weight:900;margin:0;letter-spacing:2px;">DRIP20</p>
+  <p style="color:#F5A624;font-size:28px;font-weight:900;margin:0;letter-spacing:2px;">EMAILLAST20</p>
 </div>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">זה האימייל האחרון שלנו בסדרה. מפה — אתה לבד מול ההחלטות הפיננסיות שלך. אנחנו מקווים שתבחר לעשות אותן מתוך ידע ולא מתוך ניחוש.</p>
 <div style="text-align:center;margin:24px 0 8px;">
-  <a href="https://digital.porsimkanaf.com/checkout?coupon=DRIP20" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">לרכישה עם 20% הנחה</a>
+  <a href="https://digital.porsimkanaf.com/checkout?coupon=EMAILLAST20" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">לרכישה עם 20% הנחה</a>
 </div>
 <p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px;">תשלום חד-פעמי · גישה לכל החיים · אחריות 7 ימים</p>`,
   },
@@ -203,5 +204,23 @@ export async function GET(req: NextRequest) {
 
   await saveCampaign(campaign)
 
-  return NextResponse.json({ ok: true, emailCount: EMAILS.length })
+  // Create "אימייל" affiliate for EMAILLAST20 coupon tracking
+  const existing = await getAffiliateByCoupon('EMAILLAST20')
+  if (!existing) {
+    await createAffiliate({
+      name: 'אימייל',
+      email: 'drip@porsimkanaf.com',
+      phone: '',
+      code: 'emaillast',
+      coupon: 'EMAILLAST20',
+      discountPercent: 20,
+      commissionPercent: 0,
+      bankName: '',
+      bankBranch: '',
+      bankAccount: '',
+      notes: 'אפיליאט אוטומטי — קופון דיוור אימייל 13',
+    })
+  }
+
+  return NextResponse.json({ ok: true, emailCount: EMAILS.length, affiliateCreated: !existing })
 }
