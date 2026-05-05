@@ -5,7 +5,7 @@ import type { DripCampaign } from '@/lib/drip'
 const CTA = `<div style="text-align:center;margin:24px 0 8px;">
   <a href="https://digital.porsimkanaf.com/checkout" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">אני רוצה להתחיל</a>
 </div>
-<p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px;">תשלום חד-פעמי · ₪390 · גישה לכל החיים</p>`
+<p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px;">תשלום חד-פעמי · גישה לכל החיים</p>`
 
 const EMAILS = [
   {

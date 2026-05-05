@@ -857,24 +857,43 @@ export default function DashboardShell() {
 interface DripEmailType { id: string; subject: string; body: string; delayDays: number; active: boolean }
 interface DripCampaignType { id: string; name: string; emails: DripEmailType[]; active: boolean; createdAt: string; updatedAt: string }
 interface DripStatsType { totalSubscribers: number; activeSubscribers: number; completedSubscribers: number; purchasedSubscribers: number; unsubscribedSubscribers: number; totalEmailsSent: number; purchaseConversions: number }
+interface DripSubType { email: string; name: string; phone: string; enrolledAt: string; currentStep: number; lastSentAt: string; status: string; source: string; sentEmails: string[] }
 
 function DripTab() {
   const [campaign, setCampaign] = useState<DripCampaignType | null>(null)
   const [stats, setStats] = useState<DripStatsType | null>(null)
+  const [subscribers, setSubscribers] = useState<DripSubType[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [sending, setSending] = useState(false)
   const [sendResult, setSendResult] = useState('')
   const [editIdx, setEditIdx] = useState<number | null>(null)
+  const [showList, setShowList] = useState<'active' | 'unsubscribed' | 'due' | null>(null)
+  const [testEmail, setTestEmail] = useState('')
+  const [testSending, setTestSending] = useState(false)
+
+  const sendTestEmail = async (idx: number) => {
+    const to = testEmail.trim() || prompt('הזן אימייל לשליחת טסט:')
+    if (!to) return
+    setTestSending(true)
+    try {
+      const res = await fetch('/api/drip/test', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: to, emailIndex: idx }) })
+      const data = await res.json()
+      setSendResult(data.ok ? `טסט נשלח ל-${to} (אימייל #${idx + 1})` : `שגיאה: ${data.error}`)
+    } catch { setSendResult('שגיאה בשליחת טסט') }
+    setTestSending(false)
+  }
 
   const fetchData = useCallback(async () => {
     try {
-      const [campRes, statsRes] = await Promise.all([
+      const [campRes, statsRes, subsRes] = await Promise.all([
         fetch('/api/drip?what=campaign'),
         fetch('/api/drip?what=stats'),
+        fetch('/api/drip?what=subscribers'),
       ])
       setCampaign(await campRes.json())
       setStats(await statsRes.json())
+      setSubscribers(await subsRes.json())
     } catch { /* ignore */ }
     setLoading(false)
   }, [])
@@ -978,6 +997,76 @@ function DripTab() {
 
       {sendResult && <div className="mb-4 p-3 rounded-lg bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 text-[#8B5CF6] text-sm">{sendResult}</div>}
 
+      {/* Subscriber lists */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+        {[
+          { key: 'active' as const, label: 'מקבלים דיוור', count: subscribers.filter(s => s.status === 'active').length, color: '#F5A624' },
+          { key: 'unsubscribed' as const, label: 'ירדו מדיוור', count: subscribers.filter(s => s.status === 'unsubscribed').length, color: '#EF4444' },
+          { key: 'due' as const, label: 'ממתינים לשליחה היום', count: campaign?.active ? subscribers.filter(s => {
+            if (s.status !== 'active' || !campaign) return false
+            const email = campaign.emails[s.currentStep]
+            if (!email?.active) return false
+            const days = (Date.now() - new Date(s.enrolledAt).getTime()) / (1000*60*60*24)
+            return days >= email.delayDays
+          }).length || 0 : 0, color: '#8B5CF6' },
+        ].map(item => (
+          <button key={item.key} onClick={() => setShowList(showList === item.key ? null : item.key)}
+            className={`rounded-xl border p-4 text-right transition-all ${showList === item.key ? 'border-[' + item.color + ']/40 bg-[' + item.color + ']/5' : 'border-white/8 bg-white/[0.02] hover:border-white/15'}`}>
+            <div className="flex items-center justify-between">
+              <span className="text-white/50 text-sm font-medium">{item.label}</span>
+              <span className="text-lg font-black" style={{ color: item.color }}>{item.count}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {showList && (
+        <div className="mb-8 rounded-xl border border-white/10 bg-[#111] overflow-hidden">
+          <div className="px-4 py-3 border-b border-white/8 flex items-center justify-between">
+            <span className="text-white text-sm font-bold">
+              {showList === 'active' && 'מקבלים דיוור'}
+              {showList === 'unsubscribed' && 'ירדו מדיוור'}
+              {showList === 'due' && 'ממתינים לשליחה היום'}
+            </span>
+            <button onClick={() => setShowList(null)} className="text-white/30 hover:text-white/60"><X size={16} /></button>
+          </div>
+          <div className="max-h-64 overflow-auto">
+            {subscribers
+              .filter(s => {
+                if (showList === 'active') return s.status === 'active'
+                if (showList === 'unsubscribed') return s.status === 'unsubscribed'
+                if (showList === 'due' && campaign?.active) {
+                  if (s.status !== 'active') return false
+                  const email = campaign.emails[s.currentStep]
+                  if (!email?.active) return false
+                  const days = (Date.now() - new Date(s.enrolledAt).getTime()) / (1000*60*60*24)
+                  return days >= email.delayDays
+                }
+                return false
+              })
+              .map((s, i) => (
+                <div key={i} className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 last:border-0">
+                  <div>
+                    <span className="text-white text-sm font-medium">{s.name || s.email}</span>
+                    <span className="text-white/30 text-xs mr-2">{s.email}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs">
+                    <span className="text-white/30">אימייל {s.currentStep + 1}/{campaign?.emails.length || '?'}</span>
+                    {s.lastSentAt && <span className="text-white/20">{new Date(s.lastSentAt).toLocaleDateString('he-IL')}</span>}
+                  </div>
+                </div>
+              ))}
+            {subscribers.filter(s => {
+              if (showList === 'active') return s.status === 'active'
+              if (showList === 'unsubscribed') return s.status === 'unsubscribed'
+              return false
+            }).length === 0 && (
+              <p className="text-white/20 text-sm text-center py-6">אין נתונים</p>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-3 mb-6">
         {campaign?.emails.map((email, idx) => (
           <div key={email.id} className={`rounded-xl border overflow-hidden transition-all ${editIdx === idx ? 'border-[#F5A624]/30 bg-[#111]' : 'border-white/8 bg-white/[0.02]'}`}>
@@ -1008,6 +1097,10 @@ function DripTab() {
                       <input type="checkbox" checked={email.active} onChange={e => updateEmail(idx, 'active', e.target.checked)} className="accent-[#F5A624]" />
                       <span className="text-white/40 text-xs">פעיל</span>
                     </label>
+                    <button onClick={() => sendTestEmail(idx)} disabled={testSending}
+                      className="text-[#8B5CF6]/60 text-xs hover:text-[#8B5CF6] flex items-center gap-1">
+                      <Send size={12} /> שלח טסט
+                    </button>
                     <button onClick={() => removeEmail(idx)} className="text-red-400/60 text-xs hover:text-red-400 flex items-center gap-1 mr-auto">
                       <Trash2 size={12} /> מחק
                     </button>
