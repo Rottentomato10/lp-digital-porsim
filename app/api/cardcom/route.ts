@@ -39,13 +39,20 @@ export async function POST(req: NextRequest) {
   let affiliateId = ''
 
   if (couponCode) {
-    const affiliate = await getAffiliateByCoupon(couponCode)
-    if (affiliate && affiliate.active) {
-      const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
+    // Drip campaign coupon
+    if (couponCode.trim().toUpperCase() === 'DRIP20') {
+      const savings = Math.round(BASE_PRICE * 20 / 100)
       finalPrice = BASE_PRICE - savings
-      couponLabel = `הנחת ${affiliate.discountPercent}%`
-      affiliateId = affiliate.id
-      await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
+      couponLabel = 'הנחת דיוור 20%'
+    } else {
+      const affiliate = await getAffiliateByCoupon(couponCode)
+      if (affiliate && affiliate.active) {
+        const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
+        finalPrice = BASE_PRICE - savings
+        couponLabel = `הנחת ${affiliate.discountPercent}%`
+        affiliateId = affiliate.id
+        await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
+      }
     }
   }
 

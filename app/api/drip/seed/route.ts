@@ -7,6 +7,9 @@ const CTA = `<div style="text-align:center;margin:24px 0 8px;">
 </div>
 <p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px;">תשלום חד-פעמי · גישה לכל החיים</p>`
 
+// Order: welcome → golden formula → brain bugs → banks → payslip →
+// compound interest → inflation → stocks → tax refunds → value →
+// mortgage → last chance → discount
 const EMAILS = [
   {
     id: 'email_1',
@@ -23,7 +26,7 @@ ${CTA}`,
   {
     id: 'email_2',
     subject: '{{name}}, למה בכלל משלמים לך? (זה לא מה שאתה חושב)',
-    delayDays: 3,
+    delayDays: 49,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">למה הבוס שלך משלם לך?</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">רוב האנשים חושבים שמשלמים להם על הזמן שלהם. "עבדתי 8 שעות — מגיע לי כסף."</p>
@@ -37,7 +40,7 @@ ${CTA}`,
   {
     id: 'email_3',
     subject: 'מה באמת הולך לך בתלוש שכר?',
-    delayDays: 7,
+    delayDays: 21,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">הברוטו שלך לא שלך</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">קיבלת אי פעם תלוש שכר ותהית לאן נעלם כל הכסף? ברוטו 8,000₪ אבל בחשבון הגיעו 6,200₪?</p>
@@ -62,7 +65,7 @@ ${CTA}`,
   {
     id: 'email_5',
     subject: 'הגנב השקט שאוכל לך את הכסף',
-    delayDays: 21,
+    delayDays: 35,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">מכירים את האינפלציה?</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">נניח ששמת 10,000₪ מתחת לבלטה. עבר שנה. הכסף עדיין שם — 10,000₪ בדיוק.</p>
@@ -87,7 +90,7 @@ ${CTA}`,
   {
     id: 'email_7',
     subject: 'מניות, מדדים, קרנות — בהסבר של בן אדם',
-    delayDays: 35,
+    delayDays: 42,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">שוק ההון הוא לא קזינו</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">הרבה אנשים שומעים "שוק ההון" וחושבים על סוחרים בחליפות שצורחים מול מסכים. אבל האמת הרבה יותר פשוטה.</p>
@@ -100,7 +103,7 @@ ${CTA}`,
   {
     id: 'email_8',
     subject: 'הנוסחה שתשנה לך את החיים (רצינו)',
-    delayDays: 42,
+    delayDays: 3,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">נוסחת הזהב לניהול כסף</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">יש נוסחה אחת פשוטה שאם תיישם — היא תשנה לך את המצב הכלכלי תוך חודשים:</p>
@@ -114,7 +117,7 @@ ${CTA}`,
   {
     id: 'email_9',
     subject: 'הכסף ששוכב על הרצפה ומחכה לך',
-    delayDays: 49,
+    delayDays: 45,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">יש לך כסף שאתה לא יודע עליו</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">ידעת שכל שנה אלפי ישראלים מפספסים <strong style="color:#F5A624;">החזרי מס</strong> שמגיעים להם? פשוט כי הם לא יודעים לבקש.</p>
@@ -126,7 +129,7 @@ ${CTA}`,
   {
     id: 'email_10',
     subject: 'המוח שלך עובד נגדך (בכל מה שקשור לכסף)',
-    delayDays: 56,
+    delayDays: 7,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">הבאגים של המוח</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">המוח שלך לא מתוכנת לניהול כסף. הוא מתוכנת להישרדות. ויש לו באגים שעולים לך ביוקר:</p>
@@ -138,7 +141,7 @@ ${CTA}`,
   {
     id: 'email_11',
     subject: 'משכנתא — מה שחייבים לדעת לפני שחותמים',
-    delayDays: 63,
+    delayDays: 56,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">נדל"ן זה לא רק "לקנות דירה"</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">כולם אומרים "תקנה דירה, זו ההשקעה הכי טובה". אבל אף אחד לא מסביר מה זה באמת אומר.</p>
@@ -151,15 +154,34 @@ ${CTA}`,
   {
     id: 'email_12',
     subject: '{{name}}, הגיע הזמן להפסיק לנחש',
-    delayDays: 70,
+    delayDays: 63,
     active: true,
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">12 שבועות. 12 אימיילים. עכשיו הכדור אצלך.</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">{{name}}, בשבועות האחרונים שלחנו לך טעימות מעולם הכסף — שכר, מיסים, בנקים, השקעות, פסיכולוגיה, נדל"ן.</p>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">אבל טעימות זה לא ארוחה. וכסף זה לא משהו שאפשר להבין "בערך".</p>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">הקורס שלנו הוא 58 שיעורים, 3 שעות, מא׳ עד ת׳. בסופו תבין כסף יותר טוב מ-97% מהאנשים סביבך. וזה לא הבטחה — זה מה ש-15,000 תלמידים כבר חוו.</p>
-<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;"><strong style="color:#F5A624;">₪390. תשלום חד-פעמי. גישה לכל החיים. אחריות מלאה 7 ימים.</strong></p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;"><strong style="color:#F5A624;">תשלום חד-פעמי. גישה לכל החיים. אחריות מלאה 7 ימים.</strong></p>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">מפסיקים לנחש. מתחילים לשלוט.</p>
 ${CTA}`,
+  },
+  {
+    id: 'email_13',
+    subject: '{{name}}, יש לנו מתנה קטנה בשבילך (24 שעות בלבד)',
+    delayDays: 70,
+    active: true,
+    body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">הזדמנות אחרונה — 20% הנחה</h2>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">{{name}}, בשבועות האחרונים שלחנו לך 12 אימיילים עם תכנים שבדרך כלל שומרים רק למי שכבר בתוך הקורס.</p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">עשינו את זה כי אנחנו באמת מאמינים שהידע הזה צריך להגיע לכל צעיר וצעירה. וגם כי ראינו שהתעניינת — ורצינו לתת לך טעימה אמיתית.</p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">אז הנה ההצעה שלנו: <strong style="color:#fff;">20% הנחה על הקורס המלא.</strong> 58 שיעורים, 3 שעות, מא׳ עד ת׳. אפליקציה, קהילה, תעודת סיום — הכל כלול.</p>
+<div style="text-align:center;margin:20px 0;padding:16px;border-radius:12px;border:1px solid rgba(245,166,36,0.3);background:rgba(245,166,36,0.06);">
+  <p style="color:rgba(255,255,255,0.4);font-size:14px;margin:0 0 4px;">הקוד שלך:</p>
+  <p style="color:#F5A624;font-size:28px;font-weight:900;margin:0;letter-spacing:2px;">DRIP20</p>
+</div>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">זה האימייל האחרון שלנו בסדרה. מפה — אתה לבד מול ההחלטות הפיננסיות שלך. אנחנו מקווים שתבחר לעשות אותן מתוך ידע ולא מתוך ניחוש.</p>
+<div style="text-align:center;margin:24px 0 8px;">
+  <a href="https://digital.porsimkanaf.com/checkout?coupon=DRIP20" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">לרכישה עם 20% הנחה</a>
+</div>
+<p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px;">תשלום חד-פעמי · גישה לכל החיים · אחריות 7 ימים</p>`,
   },
 ]
 

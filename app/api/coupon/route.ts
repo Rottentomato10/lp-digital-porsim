@@ -10,7 +10,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ valid: false, error: 'נא להזין קוד קופון' }, { status: 400 })
     }
 
-    // Only affiliate coupons are supported
+    // Drip campaign coupon
+    const normalized = code.trim().toUpperCase()
+    if (normalized === 'DRIP20') {
+      const savings = Math.round(BASE_PRICE * 20 / 100)
+      return NextResponse.json({
+        valid: true,
+        code: 'DRIP20',
+        discount: 20,
+        label: 'הנחת דיוור 20%',
+        finalPrice: BASE_PRICE - savings,
+        savings,
+      })
+    }
+
+    // Affiliate coupons
     const affiliate = await getAffiliateByCoupon(code)
     if (!affiliate || !affiliate.active) {
       return NextResponse.json({ valid: false, error: 'קוד קופון לא תקין' })

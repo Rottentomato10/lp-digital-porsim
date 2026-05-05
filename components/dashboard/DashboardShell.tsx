@@ -873,13 +873,12 @@ function DripTab() {
   const [testSending, setTestSending] = useState(false)
 
   const sendTestEmail = async (idx: number) => {
-    const to = testEmail.trim() || prompt('הזן אימייל לשליחת טסט:')
-    if (!to) return
+    if (!testEmail.trim()) { setSendResult('הזן אימייל בשדה למטה קודם'); return }
     setTestSending(true)
     try {
-      const res = await fetch('/api/drip/test', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: to, emailIndex: idx }) })
+      const res = await fetch('/api/drip/test', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: testEmail.trim(), emailIndex: idx }) })
       const data = await res.json()
-      setSendResult(data.ok ? `טסט נשלח ל-${to} (אימייל #${idx + 1})` : `שגיאה: ${data.error}`)
+      setSendResult(data.ok ? `טסט נשלח ל-${testEmail.trim()} (אימייל #${idx + 1})` : `שגיאה: ${data.error}`)
     } catch { setSendResult('שגיאה בשליחת טסט') }
     setTestSending(false)
   }
@@ -983,7 +982,9 @@ function DripTab() {
             {campaign?.active ? <><Play size={12} /> פעיל</> : <><Pause size={12} /> מושהה</>}
           </button>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <input type="email" value={testEmail} onChange={e => setTestEmail(e.target.value)} placeholder="אימייל לטסט" dir="ltr"
+            className="px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-xs w-48 focus:outline-none focus:border-[#8B5CF6]/50" />
           <button onClick={triggerSend} disabled={sending || !campaign?.active}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30 text-xs font-bold hover:bg-[#8B5CF6]/25 transition-all disabled:opacity-40">
             <Send size={12} /> {sending ? 'שולח...' : 'שלח עכשיו'}
