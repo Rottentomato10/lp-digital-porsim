@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, sendBrevoEmail, wrapInTemplate } from '@/lib/drip'
+import { isAuthed } from '@/lib/auth'
 
 // Send a test email to verify design and delivery
 export async function POST(req: NextRequest) {
-  const dashCookie = req.cookies.get('dash_auth')?.value
-  if (dashCookie !== process.env.DASHBOARD_PASSWORD) {
+  if (!isAuthed(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

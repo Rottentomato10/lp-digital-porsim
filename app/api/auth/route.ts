@@ -1,19 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { createAuthResponse } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
   try {
     const { password } = await req.json()
-    const correctPassword = process.env.DASHBOARD_PASSWORD || 'Freedom1992@'
+    const correctPassword = process.env.DASHBOARD_PASSWORD
+
+    if (!correctPassword) {
+      return NextResponse.json({ ok: false, error: 'Server misconfigured' }, { status: 500 })
+    }
 
     if (password === correctPassword) {
-      const res = NextResponse.json({ ok: true })
-      res.cookies.set('dash_auth', correctPassword, {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 30,
-        sameSite: 'lax',
-        httpOnly: true,
-      })
-      return res
+      return createAuthResponse()
     }
 
     return NextResponse.json({ ok: false, error: 'סיסמה שגויה' }, { status: 401 })

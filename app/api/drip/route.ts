@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, saveCampaign, createDefaultCampaign, getAllSubscribers, getDripStats, getSendLogs } from '@/lib/drip'
-
-function isAuthed(req: NextRequest): boolean {
-  const cookie = req.cookies.get('dash_auth')?.value
-  return cookie === process.env.DASHBOARD_PASSWORD
-}
+import { isAuthed } from '@/lib/auth'
 
 // GET — get campaign, subscribers, stats
 export async function GET(req: NextRequest) {

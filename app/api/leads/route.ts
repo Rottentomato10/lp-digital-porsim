@@ -6,6 +6,18 @@ import { addSubscriber } from '@/lib/drip'
 const CSV_PATH = join(process.cwd(), 'data', 'leads.csv')
 const CSV_HEADER = 'timestamp,name,email,phone\n'
 
+/**
+ * Sanitize a string for CSV to prevent formula injection.
+ * Strips leading characters that spreadsheet apps interpret as formulas.
+ */
+function sanitizeCsvField(value: string): string {
+  // Remove control characters
+  let clean = value.replace(/[\t\r\n]/g, ' ')
+  // Strip leading formula-trigger characters
+  clean = clean.replace(/^[=+\-@]+/, '')
+  return clean
+}
+
 async function ensureFile() {
   try {
     await mkdir(join(process.cwd(), 'data'), { recursive: true })
@@ -26,7 +38,10 @@ export async function POST(req: NextRequest) {
     await ensureFile()
 
     const timestamp = new Date().toISOString()
-    const row = `${timestamp},"${name}","${email}","${phone || ''}"\n`
+    const safeName = sanitizeCsvField(name)
+    const safeEmail = sanitizeCsvField(email)
+    const safePhone = sanitizeCsvField(phone || '')
+    const row = `${timestamp},"${safeName}","${safeEmail}","${safePhone}"\n`
 
     const existing = await readFile(CSV_PATH, 'utf-8')
     await writeFile(CSV_PATH, existing + row, 'utf-8')

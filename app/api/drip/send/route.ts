@@ -1,19 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, getSubscribersDueForEmail, updateSubscriber, addSendLog, sendBrevoEmail, wrapInTemplate } from '@/lib/drip'
 import { getAllOrders } from '@/lib/orders'
+import { isAuthedOrCron } from '@/lib/auth'
 
 // This endpoint is called by Vercel Cron (daily) or manually from dashboard
 // It sends all pending drip emails
 
 export async function GET(req: NextRequest) {
-  // Auth: either cron secret or dashboard cookie
-  const authHeader = req.headers.get('authorization')
-  const cronSecret = process.env.CRON_SECRET
-  const dashCookie = req.cookies.get('dash_auth')?.value
-  const isAuthed = (cronSecret && authHeader === `Bearer ${cronSecret}`) ||
-                   dashCookie === process.env.DASHBOARD_PASSWORD
-
-  if (!isAuthed) {
+  if (!isAuthedOrCron(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

@@ -6,19 +6,30 @@ import { getOrderById, updateOrder } from '@/lib/orders'
  *
  * Called from the success page to verify payment and trigger provisioning.
  * This is a fallback for when Cardcom webhook doesn't arrive.
- * If order exists and is still pending, we mark it paid and provision.
+ * Requires both orderId and the email that was used to create the order (as proof of ownership).
  */
 export async function POST(req: NextRequest) {
   try {
-    const { orderId } = await req.json()
+    const { orderId, email } = await req.json()
     if (!orderId) return NextResponse.json({ error: 'Missing orderId' }, { status: 400 })
+    if (!email) return NextResponse.json({ error: 'Missing email' }, { status: 400 })
 
     const order = await getOrderById(orderId)
     if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 })
 
+    // Verify email matches the order (proof of ownership)
+    if (order.email.toLowerCase() !== email.trim().toLowerCase()) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     // Already processed
     if (order.status === 'paid') {
       return NextResponse.json({ ok: true, status: 'already_paid' })
+    }
+
+    // Only allow transitioning from pending
+    if (order.status !== 'pending') {
+      return NextResponse.json({ ok: true, status: order.status })
     }
 
     // Mark as paid
@@ -60,7 +71,6 @@ export async function POST(req: NextRequest) {
         }))
 
         if (!res.ok) {
-          // Log failure to course DB for admin visibility
           try {
             await fetch(`${courseApiUrl}/api/admin/provision-failure`, {
               method: 'POST',
@@ -72,7 +82,6 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ ok: true, status: res.ok ? 'provisioned' : 'paid_no_provision', email: order.email })
       } catch (err) {
-        // Log failure
         try {
           await fetch(`${courseApiUrl}/api/admin/provision-failure`, {
             method: 'POST',

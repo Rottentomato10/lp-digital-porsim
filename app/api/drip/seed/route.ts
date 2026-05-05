@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { saveCampaign } from '@/lib/drip'
 import type { DripCampaign } from '@/lib/drip'
 import { createAffiliate, getAffiliateByCoupon } from '@/lib/affiliates'
+import { isAuthed } from '@/lib/auth'
 
 const CTA = `<div style="text-align:center;margin:24px 0 8px;">
   <a href="https://digital.porsimkanaf.com/checkout" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">אני רוצה להתחיל</a>
@@ -188,8 +189,7 @@ ${CTA}`,
 
 // Seed endpoint — run once to populate campaign
 export async function GET(req: NextRequest) {
-  const dashCookie = req.cookies.get('dash_auth')?.value
-  if (dashCookie !== process.env.DASHBOARD_PASSWORD) {
+  if (!isAuthed(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

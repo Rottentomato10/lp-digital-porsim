@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllOrders, updateOrder, searchOrders, deleteOrder } from '@/lib/orders'
-
-const DASH_PASS = process.env.DASHBOARD_PASSWORD || 'Freedom1992@'
-
-function isAuthed(req: NextRequest): boolean {
-  return req.cookies.get('dash_auth')?.value === DASH_PASS
-}
+import { isAuthed } from '@/lib/auth'
 
 export async function GET(req: NextRequest) {
   if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

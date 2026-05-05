@@ -1,19 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllAffiliates, createAffiliate, updateAffiliate, deleteAffiliate, getAffiliateByCode, getAffiliateByCoupon, getStatsForAffiliate } from '@/lib/affiliates'
 import { BASE_PRICE } from '@/lib/pricing'
-
-const DASH_PASS = process.env.DASHBOARD_PASSWORD || 'Freedom1992@'
-
-function isAuthed(req: NextRequest): boolean {
-  // Cookie auth (dashboard) or Bearer token (course API)
-  if (req.cookies.get('dash_auth')?.value === DASH_PASS) return true
-  const auth = req.headers.get('authorization')
-  if (auth === `Bearer ${process.env.PROVISION_API_SECRET}`) return true
-  return false
-}
+import { isAuthedOrBearer } from '@/lib/auth'
 
 export async function GET(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const allAffs = await getAllAffiliates()
   const affiliates = await Promise.all(allAffs.map(async aff => ({
@@ -34,7 +25,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
     const body = await req.json()
@@ -61,7 +52,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
     const body = await req.json()
@@ -78,7 +69,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
     const { id } = await req.json()

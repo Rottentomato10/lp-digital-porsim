@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from 'next/server'
 import { updateOrder, getOrderById } from '@/lib/orders'
 import { markAsPurchased } from '@/lib/drip'
 
+/**
+ * Verify the webhook secret token in the URL query parameter.
+ * The webhook URL configured in CardCom should include ?secret=WEBHOOK_SECRET
+ */
+function verifyWebhookSecret(req: NextRequest): boolean {
+  const secret = process.env.WEBHOOK_SECRET
+  if (!secret) {
+    // If no secret configured, allow (backward compat during migration)
+    console.log(JSON.stringify({ event: 'WEBHOOK_NO_SECRET_CONFIGURED', warning: 'WEBHOOK_SECRET env var not set' }))
+    return true
+  }
+  const provided = req.nextUrl.searchParams.get('secret')
+  return provided === secret
+}
+
 async function notifyPurchase(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
   console.log(JSON.stringify({
     event: 'PURCHASE_NOTIFICATION',
@@ -81,25 +96,38 @@ async function handleWebhook(orderId: string, dealResponse: string) {
 
   // DealResponse 0 = success
   if (orderId && dealResponse === '0') {
+    // Verify the order exists and is in pending status before marking as paid
+    const order = await getOrderById(orderId)
+    if (!order) {
+      console.log(JSON.stringify({ event: 'WEBHOOK_ORDER_NOT_FOUND', orderId }))
+      return
+    }
+    if (order.status !== 'pending') {
+      console.log(JSON.stringify({ event: 'WEBHOOK_ORDER_ALREADY_PROCESSED', orderId, status: order.status }))
+      return
+    }
+
     const updated = await updateOrder(orderId, {
       status: 'paid',
       paidAt: new Date().toISOString(),
     })
     console.log(JSON.stringify({ event: 'ORDER_UPDATED', orderId, updated: !!updated }))
 
-    const order = await getOrderById(orderId)
-    if (order) {
-      await notifyPurchase(order)
-      // Remove from drip campaign (non-blocking)
-      markAsPurchased(order.email).catch(() => {})
-      // Provision course access (non-blocking — won't fail the webhook)
-      await provisionCourseAccess(order)
-    }
+    await notifyPurchase(order)
+    // Remove from drip campaign (non-blocking)
+    markAsPurchased(order.email).catch(() => {})
+    // Provision course access (non-blocking — won't fail the webhook)
+    await provisionCourseAccess(order)
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
+    if (!verifyWebhookSecret(req)) {
+      console.log(JSON.stringify({ event: 'WEBHOOK_SECRET_MISMATCH', timestamp: new Date().toISOString() }))
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
     const contentType = req.headers.get('content-type') || ''
     let orderId = ''
     let dealResponse = ''
@@ -129,6 +157,11 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
+    if (!verifyWebhookSecret(req)) {
+      console.log(JSON.stringify({ event: 'WEBHOOK_GET_SECRET_MISMATCH', timestamp: new Date().toISOString() }))
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
     const orderId = req.nextUrl.searchParams.get('ReturnValue') || ''
     const dealResponse = req.nextUrl.searchParams.get('DealResponse') || ''
     console.log(JSON.stringify({ event: 'WEBHOOK_GET', params: Object.fromEntries(req.nextUrl.searchParams) }))

@@ -12,6 +12,7 @@ const SHARE_URL = 'https://digital.porsimkanaf.com/course'
 function SuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order') || ''
+  const email = searchParams.get('email') || ''
   const [copied, setCopied] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [countdown, setCountdown] = useState(60)
@@ -28,13 +29,13 @@ function SuccessContent() {
 
   // Verify payment and provision access (fallback for missing webhook)
   useEffect(() => {
-    if (!orderId) return
+    if (!orderId || !email) return
     const verify = async () => {
       try {
         const res = await fetch('/api/verify-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ orderId }),
+          body: JSON.stringify({ orderId, email }),
         })
         const data = await res.json()
         setProvisionStatus(data.status || 'done')
@@ -43,7 +44,7 @@ function SuccessContent() {
       }
     }
     verify()
-  }, [orderId])
+  }, [orderId, email])
 
   // Auto-redirect to course after 60 seconds
   useEffect(() => {
