@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { readFile, writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
+import { addSubscriber } from '@/lib/drip'
 
 const CSV_PATH = join(process.cwd(), 'data', 'leads.csv')
 const CSV_HEADER = 'timestamp,name,email,phone\n'
@@ -29,6 +30,16 @@ export async function POST(req: NextRequest) {
 
     const existing = await readFile(CSV_PATH, 'utf-8')
     await writeFile(CSV_PATH, existing + row, 'utf-8')
+
+    // Auto-enroll in drip campaign (non-blocking)
+    addSubscriber({
+      email,
+      name,
+      phone: phone || '',
+      enrolledAt: timestamp,
+      source: 'landing_page',
+      coupon: '',
+    }).catch(() => {})
 
     return NextResponse.json({ ok: true })
   } catch {

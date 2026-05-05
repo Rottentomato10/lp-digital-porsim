@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { updateOrder, getOrderById } from '@/lib/orders'
+import { markAsPurchased } from '@/lib/drip'
 
 async function notifyPurchase(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
   console.log(JSON.stringify({
@@ -89,6 +90,8 @@ async function handleWebhook(orderId: string, dealResponse: string) {
     const order = await getOrderById(orderId)
     if (order) {
       await notifyPurchase(order)
+      // Remove from drip campaign (non-blocking)
+      markAsPurchased(order.email).catch(() => {})
       // Provision course access (non-blocking — won't fail the webhook)
       await provisionCourseAccess(order)
     }

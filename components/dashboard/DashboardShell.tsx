@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Plus, Users, Eye, ShoppingCart, DollarSign, Copy, Check, Trash2, Pencil, X, ArrowUpDown, ChevronUp, ChevronDown } from 'lucide-react'
+import { Plus, Users, Eye, ShoppingCart, DollarSign, Copy, Check, Trash2, Pencil, X, ArrowUpDown, ChevronUp, ChevronDown, Mail, Play, Pause, Save, Send } from 'lucide-react'
 
 const BASE_PRICE = 390
 const DOMAIN = 'https://digital.porsimkanaf.com'
@@ -394,7 +394,7 @@ export default function DashboardShell() {
   const [editingId, setEditingId] = useState<string | null>(null)
   const [copied, setCopied] = useState('')
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
-  const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders' | 'leads'>('affiliates')
+  const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders' | 'leads' | 'drip'>('affiliates')
   const [orders, setOrders] = useState<any[]>([])
   const [leads, setLeads] = useState<any[]>([])
   const [orderSearch, setOrderSearch] = useState('')
@@ -523,6 +523,7 @@ export default function DashboardShell() {
             { key: 'orders' as const, label: 'הזמנות', icon: ShoppingCart },
             { key: 'leads' as const, label: 'לידים', icon: Eye },
             { key: 'stats' as const, label: 'סטטיסטיקות', icon: ArrowUpDown },
+            { key: 'drip' as const, label: 'דיוור', icon: Mail },
           ].map(t => (
             <button key={t.key} onClick={() => setTab(t.key)}
               className={`flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 transition-colors ${
@@ -842,7 +843,195 @@ export default function DashboardShell() {
             )}
           </>
         )}
+
+        {/* ── Drip Campaign Tab ── */}
+        {tab === 'drip' && <DripTab />}
+
       </div>
     </div>
+  )
+}
+
+// ====== DRIP CAMPAIGN TAB ======
+
+interface DripEmailType { id: string; subject: string; body: string; delayDays: number; active: boolean }
+interface DripCampaignType { id: string; name: string; emails: DripEmailType[]; active: boolean; createdAt: string; updatedAt: string }
+interface DripStatsType { totalSubscribers: number; activeSubscribers: number; completedSubscribers: number; purchasedSubscribers: number; unsubscribedSubscribers: number; totalEmailsSent: number; purchaseConversions: number }
+
+function DripTab() {
+  const [campaign, setCampaign] = useState<DripCampaignType | null>(null)
+  const [stats, setStats] = useState<DripStatsType | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendResult, setSendResult] = useState('')
+  const [editIdx, setEditIdx] = useState<number | null>(null)
+
+  const fetchData = useCallback(async () => {
+    try {
+      const [campRes, statsRes] = await Promise.all([
+        fetch('/api/drip?what=campaign'),
+        fetch('/api/drip?what=stats'),
+      ])
+      setCampaign(await campRes.json())
+      setStats(await statsRes.json())
+    } catch { /* ignore */ }
+    setLoading(false)
+  }, [])
+
+  useEffect(() => { fetchData() }, [fetchData])
+
+  const saveCampaign = async () => {
+    if (!campaign) return
+    setSaving(true)
+    await fetch('/api/drip', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(campaign) })
+    setSaving(false)
+  }
+
+  const toggleActive = async () => {
+    if (!campaign) return
+    const updated = { ...campaign, active: !campaign.active }
+    setCampaign(updated)
+    await fetch('/api/drip', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updated) })
+  }
+
+  const addEmail = () => {
+    if (!campaign) return
+    const newEmail: DripEmailType = {
+      id: `email_${Date.now()}`,
+      subject: '',
+      body: '<h2 style="color:#F5A624;font-size:20px;margin:0 0 16px;">כותרת</h2>\n<p style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.7;">תוכן האימייל...</p>',
+      delayDays: campaign.emails.length === 0 ? 1 : (campaign.emails[campaign.emails.length - 1]?.delayDays || 0) + 7,
+      active: true,
+    }
+    setCampaign({ ...campaign, emails: [...campaign.emails, newEmail] })
+    setEditIdx(campaign.emails.length)
+  }
+
+  const updateEmail = (idx: number, field: keyof DripEmailType, value: string | number | boolean) => {
+    if (!campaign) return
+    const emails = [...campaign.emails]
+    emails[idx] = { ...emails[idx], [field]: value }
+    setCampaign({ ...campaign, emails })
+  }
+
+  const removeEmail = (idx: number) => {
+    if (!campaign) return
+    setCampaign({ ...campaign, emails: campaign.emails.filter((_, i) => i !== idx) })
+    setEditIdx(null)
+  }
+
+  const triggerSend = async () => {
+    setSending(true); setSendResult('')
+    try {
+      const res = await fetch('/api/drip/send')
+      const data = await res.json()
+      setSendResult(`נשלחו: ${data.sent} | דולגו (רכשו): ${data.skipped} | שגיאות: ${data.errors}`)
+      fetchData()
+    } catch { setSendResult('שגיאה בשליחה') }
+    setSending(false)
+  }
+
+  if (loading) return <p className="text-white/30 text-center py-20">טוען...</p>
+  const inp = 'w-full px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#F5A624]/50 transition-all'
+
+  return (
+    <>
+      {stats && (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
+          {[
+            { label: 'נרשמים', val: stats.totalSubscribers, color: '#fff' },
+            { label: 'פעילים', val: stats.activeSubscribers, color: '#F5A624' },
+            { label: 'רכשו', val: stats.purchasedSubscribers, color: '#10B981' },
+            { label: 'ביטלו', val: stats.unsubscribedSubscribers, color: '#EF4444' },
+            { label: 'נשלחו', val: stats.totalEmailsSent, color: '#8B5CF6' },
+          ].map((s, i) => (
+            <div key={i} className="rounded-xl border border-white/8 bg-white/[0.02] p-4 text-center">
+              <p className="text-2xl font-black" style={{ color: s.color }}>{s.val}</p>
+              <p className="text-white/30 text-xs mt-1">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+        <div className="flex items-center gap-3">
+          <h2 className="text-white font-bold text-lg">סדרת אימיילים</h2>
+          <button onClick={toggleActive}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+              campaign?.active ? 'bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30' : 'bg-white/5 text-white/30 border border-white/10'
+            }`}>
+            {campaign?.active ? <><Play size={12} /> פעיל</> : <><Pause size={12} /> מושהה</>}
+          </button>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={triggerSend} disabled={sending || !campaign?.active}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#8B5CF6]/15 text-[#8B5CF6] border border-[#8B5CF6]/30 text-xs font-bold hover:bg-[#8B5CF6]/25 transition-all disabled:opacity-40">
+            <Send size={12} /> {sending ? 'שולח...' : 'שלח עכשיו'}
+          </button>
+          <button onClick={saveCampaign} disabled={saving}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F5A624]/15 text-[#F5A624] border border-[#F5A624]/30 text-xs font-bold hover:bg-[#F5A624]/25 transition-all disabled:opacity-40">
+            <Save size={12} /> {saving ? 'שומר...' : 'שמור'}
+          </button>
+        </div>
+      </div>
+
+      {sendResult && <div className="mb-4 p-3 rounded-lg bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 text-[#8B5CF6] text-sm">{sendResult}</div>}
+
+      <div className="space-y-3 mb-6">
+        {campaign?.emails.map((email, idx) => (
+          <div key={email.id} className={`rounded-xl border overflow-hidden transition-all ${editIdx === idx ? 'border-[#F5A624]/30 bg-[#111]' : 'border-white/8 bg-white/[0.02]'}`}>
+            <div className="flex items-center justify-between p-4 cursor-pointer" onClick={() => setEditIdx(editIdx === idx ? null : idx)}>
+              <div className="flex items-center gap-3">
+                <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black ${email.active ? 'bg-[#F5A624]/15 text-[#F5A624]' : 'bg-white/5 text-white/20'}`}>{idx + 1}</span>
+                <div>
+                  <p className="text-white text-sm font-bold">{email.subject || '(ללא נושא)'}</p>
+                  <p className="text-white/30 text-xs">יום {email.delayDays} · {email.active ? 'פעיל' : 'מושהה'}</p>
+                </div>
+              </div>
+              <ChevronDown size={16} className={`text-white/30 transition-transform ${editIdx === idx ? 'rotate-180' : ''}`} />
+            </div>
+
+            {editIdx === idx && (
+              <div className="px-4 pb-4 space-y-3 border-t border-white/6 pt-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="md:col-span-1">
+                    <label className="block text-white/40 text-xs mb-1">נושא</label>
+                    <input type="text" value={email.subject} onChange={e => updateEmail(idx, 'subject', e.target.value)} placeholder="היי {{name}}..." className={inp} />
+                  </div>
+                  <div>
+                    <label className="block text-white/40 text-xs mb-1">שליחה ביום</label>
+                    <input type="number" value={email.delayDays} onChange={e => updateEmail(idx, 'delayDays', Number(e.target.value))} min="1" className={inp} />
+                  </div>
+                  <div className="flex items-end gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" checked={email.active} onChange={e => updateEmail(idx, 'active', e.target.checked)} className="accent-[#F5A624]" />
+                      <span className="text-white/40 text-xs">פעיל</span>
+                    </label>
+                    <button onClick={() => removeEmail(idx)} className="text-red-400/60 text-xs hover:text-red-400 flex items-center gap-1 mr-auto">
+                      <Trash2 size={12} /> מחק
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-white/40 text-xs mb-1">תוכן HTML · משתנים: {'{{name}}'}, {'{{email}}'}</label>
+                  <textarea value={email.body} onChange={e => updateEmail(idx, 'body', e.target.value)} rows={8} className={`${inp} font-mono text-xs leading-relaxed`} dir="ltr" />
+                </div>
+                <div>
+                  <p className="text-white/40 text-xs mb-1">תצוגה מקדימה</p>
+                  <div className="rounded-lg border border-white/8 bg-[#080808] p-4 max-h-52 overflow-auto"
+                    dangerouslySetInnerHTML={{ __html: email.body.replace(/\{\{name\}\}/g, 'ישראל').replace(/\{\{email\}\}/g, 'test@example.com') }} />
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <button onClick={addEmail}
+        className="w-full py-3 rounded-xl border border-dashed border-white/15 text-white/30 text-sm font-bold hover:border-[#F5A624]/30 hover:text-[#F5A624]/60 transition-all flex items-center justify-center gap-2">
+        <Plus size={16} /> הוסף אימייל לסדרה
+      </button>
+    </>
   )
 }
