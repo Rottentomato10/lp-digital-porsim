@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { BASE_PRICE } from '@/lib/pricing'
 import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
+import { validatePersonalCoupon } from '@/lib/drip'
 import { createOrder } from '@/lib/orders'
 
 export async function POST(req: NextRequest) {
@@ -39,13 +40,29 @@ export async function POST(req: NextRequest) {
   let affiliateId = ''
 
   if (couponCode) {
-    const affiliate = await getAffiliateByCoupon(couponCode)
-    if (affiliate && affiliate.active) {
-      const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
-      finalPrice = BASE_PRICE - savings
-      couponLabel = `הנחת ${affiliate.discountPercent}%`
-      affiliateId = affiliate.id
-      await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
+    // Personal drip coupon (PK prefix)
+    if (couponCode.trim().toUpperCase().startsWith('PK')) {
+      const personal = await validatePersonalCoupon(couponCode)
+      if (personal.valid) {
+        const savings = Math.round(BASE_PRICE * personal.discount / 100)
+        finalPrice = BASE_PRICE - savings
+        couponLabel = 'הנחה אישית 20%'
+        // Track via "אימייל" affiliate for stats
+        const emailAff = await getAffiliateByCoupon('EMAILLAST20')
+        if (emailAff) {
+          affiliateId = emailAff.id
+          await trackEvent({ affiliateId: emailAff.id, type: 'purchase', timestamp: new Date().toISOString() })
+        }
+      }
+    } else {
+      const affiliate = await getAffiliateByCoupon(couponCode)
+      if (affiliate && affiliate.active) {
+        const savings = Math.round(BASE_PRICE * affiliate.discountPercent / 100)
+        finalPrice = BASE_PRICE - savings
+        couponLabel = `הנחת ${affiliate.discountPercent}%`
+        affiliateId = affiliate.id
+        await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
+      }
     }
   }
 

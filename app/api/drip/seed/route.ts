@@ -168,20 +168,28 @@ ${CTA}`,
   },
   {
     id: 'email_13',
-    subject: '{{name}}, יש לנו מתנה קטנה בשבילך (24 שעות בלבד)',
+    subject: '{{name}}, יש לנו מתנה אישית בשבילך (24 שעות בלבד)',
     delayDays: 70,
     active: true,
-    body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">הזדמנות אחרונה — 20% הנחה</h2>
+    body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">הזדמנות אחרונה — 20% הנחה אישית</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">{{name}}, בשבועות האחרונים שלחנו לך 12 אימיילים עם תכנים שבדרך כלל שומרים רק למי שכבר בתוך הקורס.</p>
-<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">עשינו את זה כי אנחנו באמת מאמינים שהידע הזה צריך להגיע לכל צעיר וצעירה. וגם כי ראינו שהתעניינת — ורצינו לתת לך טעימה אמיתית.</p>
-<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">אז הנה ההצעה שלנו: <strong style="color:#fff;">20% הנחה על הקורס המלא.</strong> 58 שיעורים, 3 שעות, מא׳ עד ת׳. אפליקציה, קהילה, תעודת סיום — הכל כלול.</p>
+
+<div style="border-radius:12px;border:1px solid rgba(245,166,36,0.25);background:rgba(245,166,36,0.04);padding:20px;margin:0 0 16px;">
+  <p style="color:#F5A624;font-size:15px;font-weight:700;margin:0 0 8px;">מי אנחנו?</p>
+  <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.8;margin:0 0 8px;"><strong style="color:#fff;">כבר למעלה מחמש שנים</strong> אנחנו פועלים בשטח — מעבירים סדנאות חינוך פיננסי בבתי ספר, יחידות צבאיות ומסגרות חינוכיות ברחבי הארץ.</p>
+  <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.8;margin:0 0 8px;">פורשים כנף הם <strong style="color:#fff;">חלק מתוכניות גפ״ן — תוכניות ההעשרה של משרד החינוך</strong>. למעלה מ-15,000 תלמידים ותלמידות עברו תחת הידיים שלנו ב-300+ כיתות.</p>
+  <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.8;margin:0;">הקורס הדיגיטלי שלנו הוא הזיקוק של כל הידע הזה — 58 שיעורים, 3 שעות, מא׳ עד ת׳.</p>
+</div>
+
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">ייצרנו לך <strong style="color:#fff;">קוד הנחה אישי של 20%</strong> שתקף ל-24 השעות הקרובות בלבד:</p>
 <div style="text-align:center;margin:20px 0;padding:16px;border-radius:12px;border:1px solid rgba(245,166,36,0.3);background:rgba(245,166,36,0.06);">
-  <p style="color:rgba(255,255,255,0.4);font-size:14px;margin:0 0 4px;">הקוד שלך:</p>
-  <p style="color:#F5A624;font-size:28px;font-weight:900;margin:0;letter-spacing:2px;">EMAILLAST20</p>
+  <p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0 0 4px;">הקוד האישי שלך:</p>
+  <p style="color:#F5A624;font-size:28px;font-weight:900;margin:0;letter-spacing:2px;">{{coupon}}</p>
+  <p style="color:rgba(255,255,255,0.25);font-size:11px;margin:6px 0 0;">תקף ל-24 שעות בלבד</p>
 </div>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">זה האימייל האחרון שלנו בסדרה. מפה — אתה לבד מול ההחלטות הפיננסיות שלך. אנחנו מקווים שתבחר לעשות אותן מתוך ידע ולא מתוך ניחוש.</p>
 <div style="text-align:center;margin:24px 0 8px;">
-  <a href="https://digital.porsimkanaf.com/checkout?coupon=EMAILLAST20" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">לרכישה עם 20% הנחה</a>
+  <a href="https://digital.porsimkanaf.com/checkout?coupon={{coupon}}" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 32px;border-radius:50px;text-decoration:none;">לרכישה עם 20% הנחה</a>
 </div>
 <p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin-top:8px;">תשלום חד-פעמי · גישה לכל החיים · אחריות 7 ימים</p>`,
   },

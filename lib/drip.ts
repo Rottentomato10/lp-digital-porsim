@@ -39,6 +39,8 @@ export interface DripSubscriber {
   source: string          // e.g. 'landing_page', 'checkout'
   coupon: string          // coupon used (if any)
   sentEmails: string[]    // IDs of emails already sent
+  personalCoupon?: string          // unique coupon for email 13
+  personalCouponCreatedAt?: string // when coupon was generated
 }
 
 export interface DripSendLog {
@@ -132,6 +134,33 @@ export async function updateSubscriber(email: string, updates: Partial<DripSubsc
 
 export async function markAsPurchased(email: string): Promise<void> {
   await updateSubscriber(email, { status: 'purchased' })
+}
+
+// --- Personal Coupons ---
+
+export function generatePersonalCoupon(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  let code = 'PK'
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)]
+  return code
+}
+
+export async function validatePersonalCoupon(code: string): Promise<{ valid: boolean; discount: number; email?: string }> {
+  const subs = await getAllSubscribers()
+  const normalized = code.trim().toUpperCase()
+  const sub = subs.find(s => s.personalCoupon === normalized)
+  if (!sub) return { valid: false, discount: 0 }
+
+  // Check 24-hour expiry
+  if (sub.personalCouponCreatedAt) {
+    const created = new Date(sub.personalCouponCreatedAt).getTime()
+    const now = Date.now()
+    if (now - created > 24 * 60 * 60 * 1000) {
+      return { valid: false, discount: 0 } // expired
+    }
+  }
+
+  return { valid: true, discount: 20, email: sub.email }
 }
 
 // --- Unsubscribe ---

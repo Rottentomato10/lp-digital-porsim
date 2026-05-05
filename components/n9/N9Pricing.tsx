@@ -34,8 +34,6 @@ export default function N9Pricing() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
-  const [agreedTerms, setAgreedTerms] = useState(false)
-  const [showConsentPopup, setShowConsentPopup] = useState(false)
 
   // Auto-apply coupon from URL (?coupon=CODE)
   useEffect(() => {
@@ -196,48 +194,6 @@ export default function N9Pricing() {
         </div>
       )}
 
-      {/* Consent popup */}
-      <AnimatePresence>
-        {showConsentPopup && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center p-5"
-            style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
-            onClick={() => setShowConsentPopup(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              onClick={e => e.stopPropagation()}
-              className="w-full max-w-sm rounded-2xl border border-[#F5A624]/20 p-6 text-center"
-              style={{ background: '#111111' }}
-            >
-              <Image src="/logo.png" alt="" width={48} height={48} className="w-12 h-12 object-contain mx-auto mb-4" />
-              <p className="text-white font-bold text-base mb-2">אישור תנאים</p>
-              <p className="text-white/50 text-sm leading-relaxed mb-5">
-                בלחיצה על ״אשר״ אני מאשר/ת שקראתי ואני מסכים/ה ל<button type="button" onClick={() => { setShowConsentPopup(false); setLegalModal('terms') }} className="text-[#F5A624] underline">תנאי השימוש</button> ול<button type="button" onClick={() => { setShowConsentPopup(false); setLegalModal('privacy') }} className="text-[#F5A624] underline">מדיניות הפרטיות</button>, כולל קבלת עדכונים ומידע שיווקי באימייל.
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => { setShowConsentPopup(false); handlePay() }}
-                  className="flex-1 py-3 rounded-xl bg-[#F5A624] text-black font-black text-sm hover:brightness-110 transition-all"
-                >
-                  אשר
-                </button>
-                <button
-                  onClick={() => setShowConsentPopup(false)}
-                  className="flex-1 py-3 rounded-xl border border-white/10 text-white/40 font-bold text-sm hover:bg-white/5 transition-all"
-                >
-                  סרב
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
 
       <div id="pricing" style={{ position: 'relative', top: '-200px' }} />
@@ -344,20 +300,8 @@ export default function N9Pricing() {
                 </div>
               </div>
 
-              {/* Terms checkbox */}
-              <label className={`flex items-start gap-3 cursor-pointer p-3 rounded-xl border transition-all mb-4 ${
-                agreedTerms ? 'border-[#F5A624]/30 bg-[#F5A624]/[0.04]' : 'border-[#F5A624]/40 bg-[#F5A624]/[0.06] shadow-[0_0_12px_rgba(245,166,36,0.08)]'
-              }`}>
-                <input type="checkbox" checked={agreedTerms} onChange={e => setAgreedTerms(e.target.checked)}
-                  className="mt-0.5 w-5 h-5 rounded border-2 border-[#F5A624]/60 bg-transparent accent-[#F5A624] flex-shrink-0" style={{ minWidth: '20px', minHeight: '20px' }} />
-                <span className="text-white/60 text-sm leading-relaxed">
-                  קראתי ואני מסכים/ה ל<button type="button" onClick={() => setLegalModal('terms')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">תנאי השימוש</button> ול<button type="button" onClick={() => setLegalModal('privacy')} className="text-[#F5A624] underline hover:text-[#F5A624]/80">מדיניות הפרטיות</button>, כולל קבלת עדכונים באימייל
-                  <span className="text-red-400 mr-1">*</span>
-                </span>
-              </label>
-
               {/* CTA */}
-              <button onClick={() => { if (agreedTerms) { handlePay() } else { setShowConsentPopup(true) } }} disabled={loading}
+              <button onClick={handlePay} disabled={loading}
                 className="cta-shine block w-full text-center bg-[#F5A624] text-black font-black text-lg xs:text-xl py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 disabled:opacity-60 mb-3">
                 {loading ? (
                   <span className="flex items-center justify-center gap-2"><Loader2 size={22} className="animate-spin" />פותח טופס תשלום...</span>
@@ -366,6 +310,12 @@ export default function N9Pricing() {
                 )}
               </button>
 
+              <p className="text-center text-white/25 text-[10px] mb-2 leading-relaxed">
+                בלחיצה על הכפתור אני מאשר/ת את{' '}
+                <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-white/40">תנאי השימוש</button>
+                {' '}ו<button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-white/40">מדיניות הפרטיות</button>
+                {' '}וקבלת עדכונים באימייל
+              </p>
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="flex items-center gap-1 text-white/40 text-[11px]"><Lock size={11} /><span>SSL מאובטח</span></div>
                 <div className="flex items-center gap-1 text-white/40 text-[11px]"><ShieldCheck size={11} /><span>PCI DSS</span></div>
