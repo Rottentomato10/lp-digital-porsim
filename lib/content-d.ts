@@ -1,4 +1,4 @@
-export const CHECKOUT_URL = '/checkout'
+export const CHECKOUT_URL = '#pricing'
 
 export const contentD = {
 

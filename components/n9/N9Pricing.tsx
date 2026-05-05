@@ -122,7 +122,7 @@ export default function N9Pricing() {
       })
       const checkData = await checkRes.json()
       if (checkData.exists) {
-        setError('האימייל כבר רשום במערכת. ניתן להתחבר ישירות דרך course.porsimkanaf.com')
+        setError('EMAIL_EXISTS')
         setLoading(false)
         return
       }
@@ -302,21 +302,23 @@ export default function N9Pricing() {
                   <div>
                     <div className="relative">
                       <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                      <input type="text" value={name} onChange={(e) => { setName(e.target.value); trackCheckout() }} placeholder="שם מלא *"
+                      <input type="text" value={name} onChange={(e) => { setName(e.target.value); trackCheckout() }} placeholder="ישראל ישראלי"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all" />
                     </div>
+                    <p className="text-white/30 text-xs mt-1 mr-1">שנדע איך לפנות אליך</p>
                   </div>
                   <div>
                     <div className="relative">
                       <Mail size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="אימייל *" dir="ltr"
+                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
+                    <p className="text-white/30 text-xs mt-1 mr-1">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
                   </div>
                   <div>
                     <div className="relative">
                       <Phone size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                      <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="טלפון (לא חובה)" dir="ltr"
+                      <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} placeholder="050-0000000" dir="ltr"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
                   </div>
@@ -368,7 +370,18 @@ export default function N9Pricing() {
                 <div className="flex items-center gap-1 text-white/40 text-[11px]"><ShieldCheck size={11} /><span>PCI DSS</span></div>
               </div>
 
-              {error && <p className="text-red-400 text-sm text-center mb-4">{error}</p>}
+              {error && (
+                <div className="text-red-400 text-sm text-center mb-4">
+                  {error === 'EMAIL_EXISTS' ? (
+                    <p>האימייל כבר רשום במערכת. ניתן להתחבר ישירות דרך{' '}
+                      <a href="https://course.porsimkanaf.com" target="_blank" rel="noopener noreferrer"
+                        className="underline font-bold hover:text-red-300">course.porsimkanaf.com</a>
+                    </p>
+                  ) : (
+                    <p>{error}</p>
+                  )}
+                </div>
+              )}
 
               <p className="text-center text-white/45 text-sm mb-10">
                 ברגע שתשלם — תקבל גישה מיידית.
