@@ -53,8 +53,8 @@ export default function N9PageShell({ content, checkoutUrl }: { content: Content
         <N9Solution />
         <N2Decision />
         <N9MiniClose />
-        <N5Reviews />
         <N9Pricing />
+        <N5Reviews />
         <N2FAQ />
         <N5Team />
         <N9FinalCta />

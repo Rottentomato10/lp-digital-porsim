@@ -12,7 +12,7 @@ export default function N9Mindshift() {
       <div className="pointer-events-none absolute inset-0"
         style={{ background: 'radial-gradient(ellipse 70% 80% at 50% 50%, rgba(245,166,36,0.08) 0%, transparent 65%)' }} />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-5 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-5 text-center">
         {/* Crossed-out "before" state */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

@@ -40,7 +40,7 @@ const STAGES = [
 ]
 
 function SyllabusAccordion({ stage, inView }: { stage: typeof STAGES[0]; inView: boolean }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
     <div className="rounded-2xl overflow-hidden border transition-colors duration-300"
@@ -96,7 +96,7 @@ export default function N9Solution() {
 
   return (
     <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
-      <div className="max-w-3xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="text-center mb-14">
           <h2 className="font-black text-white leading-tight" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)' }}>

@@ -87,7 +87,7 @@ export default function N2FAQ() {
 
   return (
     <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
-      <div className="max-w-3xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="text-center mb-12">
           <span className="text-[#F5A624] font-semibold text-sm tracking-widest uppercase">שאלות ותשובות</span>

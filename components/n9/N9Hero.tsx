@@ -137,11 +137,11 @@ export default function N9Hero() {
           </p>
           <h1 className="font-black text-white leading-[1.1] tracking-tight"
             style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)' }}>
-            להבין כסף באמת —
+            כסף זה לא מסובך —
             <br /><span style={{
               background: 'linear-gradient(135deg, #F5A624 0%, #FFCD6B 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>במקום להמשיך לנחש מאיפה להתחיל.</span>
+            }}>פשוט אף אחד לא הסביר לך.</span>
           </h1>
         </div>
 
@@ -207,7 +207,7 @@ export default function N9Hero() {
           {/* Mute/Unmute button */}
           <button
             onClick={toggleMute}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2 border border-white/15 transition-all hover:bg-black/75"
+            className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-3 py-1.5 border border-white/15 transition-all hover:bg-black/75"
           >
             {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#F5A624]" />}
             <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>

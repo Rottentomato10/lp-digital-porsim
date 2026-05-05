@@ -24,7 +24,7 @@ export default function N9Pricing() {
       <div className="pointer-events-none absolute inset-0"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245,166,36,0.06) 0%, transparent 65%)' }} />
 
-      <div className="relative z-10 max-w-2xl mx-auto px-5">
+      <div className="relative z-10 max-w-3xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="text-center mb-12">

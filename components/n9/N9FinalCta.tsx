@@ -11,7 +11,7 @@ export default function N9FinalCta() {
 
   return (
     <section ref={ref} className="py-20 md:py-28 bg-[#080808]">
-      <div className="max-w-3xl mx-auto px-5 text-center">
+      <div className="max-w-4xl mx-auto px-5 text-center">
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}>
           <p className="text-white/40 text-xl md:text-2xl mb-4">

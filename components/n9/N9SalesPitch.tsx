@@ -9,7 +9,7 @@ export default function N9SalesPitch() {
 
   return (
     <section ref={ref} className="pb-8 md:pb-10 pt-16 md:pt-24 bg-[#080808]">
-      <div className="max-w-3xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-5">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="space-y-8">
 

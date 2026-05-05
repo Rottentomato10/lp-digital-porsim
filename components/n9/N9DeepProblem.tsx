@@ -44,7 +44,7 @@ const PROBLEMS = [
 ]
 
 function ProblemCard({ problem, index, inView }: { problem: typeof PROBLEMS[0]; index: number; inView: boolean }) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const Icon = problem.icon
 
   return (
@@ -102,7 +102,7 @@ export default function N9DeepProblem() {
 
   return (
     <section ref={ref} className="pb-16 md:pb-24 pt-8 md:pt-10 bg-[#080808]">
-      <div className="max-w-3xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-5">
 
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} className="mb-12">
           <span className="text-[#F5A624] font-semibold text-base md:text-lg tracking-widest uppercase">אולי זה מוכר לך</span>

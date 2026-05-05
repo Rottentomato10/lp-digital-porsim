@@ -9,7 +9,7 @@ export default function N2Decision() {
 
   return (
     <section ref={ref} className="py-14 md:py-20 bg-[#080808]">
-      <div className="max-w-3xl mx-auto px-5">
+      <div className="max-w-4xl mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
