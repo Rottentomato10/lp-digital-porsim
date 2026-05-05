@@ -240,7 +240,8 @@ export default function N9Pricing() {
 
       <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
 
-      <section id="pricing" ref={ref} className="relative py-20 md:py-28 bg-[#080808] overflow-hidden">
+      <div id="pricing" style={{ position: 'relative', top: '-80px' }} />
+      <section ref={ref} className="relative py-20 md:py-28 bg-[#080808] overflow-hidden">
         <div className="pointer-events-none absolute inset-0"
           style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245,166,36,0.06) 0%, transparent 65%)' }} />
 
@@ -256,7 +257,7 @@ export default function N9Pricing() {
 
           <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="rounded-3xl border border-[#F5A624]/30 bg-[#0D0B00] overflow-hidden"
+            className="rounded-3xl border border-[#F5A624]/30 bg-[#0C0C0C] overflow-hidden"
             style={{ boxShadow: '0 0 60px rgba(245,166,36,0.08)' }}>
 
             <div className="h-0.5 bg-gradient-to-r from-transparent via-[#F5A624] to-transparent" />
@@ -297,13 +298,13 @@ export default function N9Pricing() {
               </div>
 
               {/* ====== INLINE CHECKOUT FORM ====== */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6 mb-6">
+              <div className="rounded-2xl border border-white/8 bg-[#111111] p-5 md:p-6 mb-6">
                 <div className="space-y-3">
                   <div>
                     <div className="relative">
                       <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
                       <input type="text" value={name} onChange={(e) => { setName(e.target.value); trackCheckout() }} placeholder="ישראל ישראלי"
-                        className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all" />
+                        className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all" />
                     </div>
                     <p className="text-white/30 text-xs mt-1 mr-1">שנדע איך לפנות אליך</p>
                   </div>
@@ -311,7 +312,7 @@ export default function N9Pricing() {
                     <div className="relative">
                       <Mail size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
                       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
-                        className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
+                        className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
                     <p className="text-white/30 text-xs mt-1 mr-1">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
                   </div>
@@ -319,7 +320,7 @@ export default function N9Pricing() {
                     <div className="relative">
                       <Phone size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
                       <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} placeholder="050-0000000" dir="ltr"
-                        className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
+                        className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
                   </div>
 
@@ -331,7 +332,7 @@ export default function N9Pricing() {
                         <input type="text" value={coupon} onChange={(e) => setCoupon(e.target.value.toUpperCase())}
                           onKeyDown={e => e.key === 'Enter' && handleCouponCheck()}
                           placeholder="קוד קופון" dir="ltr"
-                          className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white text-sm placeholder:text-white/25 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
+                          className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                       </div>
                       <button onClick={() => handleCouponCheck()} disabled={couponLoading}
                         className="px-4 py-3 rounded-xl bg-[#F5A624]/20 border border-[#F5A624]/40 text-[#F5A624] font-bold text-sm hover:bg-[#F5A624]/30 transition-all disabled:opacity-50 flex-shrink-0">
