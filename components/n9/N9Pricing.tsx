@@ -240,7 +240,7 @@ export default function N9Pricing() {
 
       <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
 
-      <div id="pricing" style={{ position: 'relative', top: '-80px' }} />
+      <div id="pricing" style={{ position: 'relative', top: '-200px' }} />
       <section ref={ref} className="relative py-20 md:py-28 bg-[#080808] overflow-hidden">
         <div className="pointer-events-none absolute inset-0"
           style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245,166,36,0.06) 0%, transparent 65%)' }} />
@@ -386,6 +386,7 @@ export default function N9Pricing() {
 
               <p className="text-center text-white/45 text-sm mb-10">
                 ברגע שתשלם — תקבל גישה מיידית.
+                <br />אימייל עם סיסמה אישית יישלח אליך ותוכל להיכנס לקורס מיד.
                 <br />תתחיל מהשיעור הראשון, 4 דקות שישנו איך אתה מסתכל על הכסף שלך.
               </p>
 
