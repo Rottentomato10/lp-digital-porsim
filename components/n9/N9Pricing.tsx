@@ -225,6 +225,7 @@ export default function N9Pricing() {
 
             <div className="p-5 xs:p-8 md:p-12">
 
+              <div id="pricing" style={{ scrollMarginTop: '16px' }} />
               <div className="text-center mb-6">
                 <div className="flex items-baseline justify-center gap-3 mb-2">
                   <span className="text-white/30 line-through text-2xl font-bold">₪{contentD.pricing.price_original}</span>
@@ -252,7 +253,6 @@ export default function N9Pricing() {
                 <span className="text-[#F5A624]/60">✔ כן בשבילך אם אתה רוצה להבין כסף באמת</span>
               </div>
 
-              <div id="pricing" style={{ scrollMarginTop: '24px' }} />
               {/* ====== INLINE CHECKOUT FORM ====== */}
               <div className="rounded-2xl border border-white/8 bg-[#111111] p-5 md:p-6 mb-6">
                 <div className="space-y-3">
