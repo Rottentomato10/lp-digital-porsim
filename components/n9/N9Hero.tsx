@@ -222,19 +222,6 @@ export default function N9Hero() {
             </span>
           </button>
 
-          {/* Fullscreen button — opens video container (not native controls) */}
-          <button onClick={(e) => {
-              e.stopPropagation()
-              const container = videoRef.current?.parentElement
-              if (!container) return
-              if (container.requestFullscreen) container.requestFullscreen()
-              else if ((container as any).webkitRequestFullscreen) (container as any).webkitRequestFullscreen()
-            }}
-            className="absolute bottom-3 right-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/50 hover:text-white transition-all"
-            aria-label="מסך מלא">
-            <Maximize2 size={14} />
-          </button>
-
           {/* Progress bar / scrubber — visible on hover, forced LTR */}
           <div
             ref={scrubBarRef}
