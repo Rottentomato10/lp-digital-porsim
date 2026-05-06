@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCampaign, sendBrevoEmail, wrapInTemplate } from '@/lib/drip'
+import { getCampaign, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon } from '@/lib/drip'
 import { isAuthed } from '@/lib/auth'
 
 // Send a test email to verify design and delivery
@@ -24,9 +24,13 @@ export async function POST(req: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://digital.porsimkanaf.com'
     const unsubUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}`
 
+    // Generate test coupon for email_13
+    const testCoupon = dripEmail.id === 'email_13' ? generatePersonalCoupon() : ''
+
     const body = dripEmail.body
       .replace(/\{\{name\}\}/g, 'דקל')
       .replace(/\{\{email\}\}/g, email)
+      .replace(/\{\{coupon\}\}/g, testCoupon)
 
     const html = wrapInTemplate(body, unsubUrl)
     const subject = dripEmail.subject.replace(/\{\{name\}\}/g, 'דקל')
