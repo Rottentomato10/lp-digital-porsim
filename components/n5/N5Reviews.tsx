@@ -58,67 +58,39 @@ function WaCarousel() {
   const prev = () => setActive(a => (a - 1 + total) % total)
   const next = () => setActive(a => (a + 1) % total)
 
-  // positions relative to active: -1 = left peek, 0 = center, 1 = right peek
-  const getPos = (i: number) => {
-    const diff = (i - active + total) % total
-    if (diff === 0) return 0
-    if (diff === 1) return 1
-    if (diff === total - 1) return -1
-    return 2 // hidden
-  }
-
   return (
-    <div className="relative max-w-md mx-auto" style={{ margin: '0 auto' }}>
-      {/* Cards */}
-      <div className="relative h-[200px] xs:h-[240px] md:h-[280px]">
-        {WA_SCREENSHOTS.map((img, i) => {
-          const pos = getPos(i)
-          const isCenter = pos === 0
-          const isLeft = pos === -1
-          const isRight = pos === 1
-          const isHidden = pos === 2
-
-          return (
-            <motion.div
-              key={i}
-              animate={{
-                x: isCenter ? '0%' : isLeft ? '-65%' : isRight ? '65%' : '100%',
-                scale: isCenter ? 1 : 0.75,
-                opacity: isHidden ? 0 : isCenter ? 1 : 0.4,
-                rotateY: isLeft ? 12 : isRight ? -12 : 0,
-                zIndex: isCenter ? 10 : 1,
-              }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-[75%] xs:w-[70%] md:w-[65%] cursor-pointer"
-              style={{ perspective: '800px' }}
-              onClick={() => { if (isLeft) prev(); if (isRight) next() }}
-            >
-              <div className={`rounded-2xl overflow-hidden border-2 transition-colors ${
-                isCenter ? 'border-[#25D366]/40 shadow-[0_0_30px_rgba(37,211,102,0.15)]' : 'border-white/10'
-              }`}>
-                <Image src={img.src} alt={img.alt} width={600} height={300}
-                  className="w-full h-auto" priority={i === 0} />
-              </div>
-            </motion.div>
-          )
-        })}
-      </div>
+    <div dir="ltr" style={{ maxWidth: '560px', margin: '0 auto', position: 'relative' }}>
+      {/* Main image */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={active}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -30 }}
+          transition={{ duration: 0.3 }}
+          className="rounded-2xl overflow-hidden border-2 border-[#25D366]/30"
+          style={{ boxShadow: '0 0 40px rgba(37,211,102,0.12)' }}
+        >
+          <Image src={WA_SCREENSHOTS[active].src} alt={WA_SCREENSHOTS[active].alt}
+            width={600} height={300} className="w-full h-auto" priority />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Arrows */}
       <button onClick={prev}
-        className="absolute top-1/2 -translate-y-1/2 right-0 md:-right-6 z-20 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
-        <ChevronRight size={20} />
+        className="absolute top-1/2 -translate-y-1/2 -left-5 md:-left-12 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
+        <ChevronLeft size={20} />
       </button>
       <button onClick={next}
-        className="absolute top-1/2 -translate-y-1/2 left-0 md:-left-6 z-20 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
-        <ChevronLeft size={20} />
+        className="absolute top-1/2 -translate-y-1/2 -right-5 md:-right-12 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
+        <ChevronRight size={20} />
       </button>
 
       {/* Dots */}
       <div className="flex items-center justify-center gap-2 mt-4">
         {WA_SCREENSHOTS.map((_, i) => (
           <button key={i} onClick={() => setActive(i)}
-            className={`w-2 h-2 rounded-full transition-all ${i === active ? 'bg-[#25D366] w-6' : 'bg-white/15'}`} />
+            className={`h-2 rounded-full transition-all ${i === active ? 'bg-[#25D366] w-6' : 'bg-white/15 w-2'}`} />
         ))}
       </div>
     </div>
@@ -136,8 +108,7 @@ export default function N5Reviews() {
         {/* WhatsApp screenshots carousel */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="mb-14">
-          <p className="text-center text-[#F5A624] text-sm font-semibold tracking-wide mb-2">טעימה מהביקורות</p>
-          <p className="text-center text-[#25D366] text-xs font-medium mb-6">הודעות מלקוחות בוואטסאפ</p>
+          <p className="text-center text-[#F5A624] text-sm font-semibold tracking-wide mb-6">קצת ממה שאומרים עלינו</p>
           <WaCarousel />
         </motion.div>
 
