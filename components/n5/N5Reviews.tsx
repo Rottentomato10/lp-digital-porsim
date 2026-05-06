@@ -60,15 +60,17 @@ function WaCarousel() {
 
   return (
     <div dir="ltr" style={{ maxWidth: '560px', margin: '0 auto', position: 'relative' }}>
-      {/* All images stacked — only active visible */}
+      {/* All images stacked — crossfade transition */}
       <div className="relative rounded-2xl overflow-hidden border-2 border-[#25D366]/30"
         style={{ boxShadow: '0 0 40px rgba(37,211,102,0.12)' }}>
         {WA_SCREENSHOTS.map((img, i) => (
-          <div key={i} style={{
-            display: i === active ? 'block' : 'none',
+          <div key={i} className="transition-opacity duration-300" style={{
+            opacity: i === active ? 1 : 0,
+            position: i === 0 ? 'relative' : 'absolute',
+            inset: i === 0 ? undefined : 0,
           }}>
             <Image src={img.src} alt={img.alt} width={600} height={300}
-              className="w-full h-auto" priority={i === 0} />
+              className="w-full h-auto" priority />
           </div>
         ))}
       </div>
@@ -82,14 +84,6 @@ function WaCarousel() {
         className="absolute top-1/2 -translate-y-1/2 -right-5 md:-right-12 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
         <ChevronRight size={20} />
       </button>
-
-      {/* Dots — no count indicator */}
-      <div className="flex items-center justify-center gap-1.5 mt-4">
-        {WA_SCREENSHOTS.map((_, i) => (
-          <button key={i} onClick={() => setActive(i)}
-            className={`w-1.5 h-1.5 rounded-full transition-all ${i === active ? 'bg-[#25D366]' : 'bg-white/15'}`} />
-        ))}
-      </div>
     </div>
   )
 }
