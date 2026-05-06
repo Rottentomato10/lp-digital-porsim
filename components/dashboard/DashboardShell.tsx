@@ -579,9 +579,9 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">טלפון</th>
                         <th className="px-3 py-3 text-right">סכום</th>
                         <th className="px-3 py-3 text-right">קופון</th>
-                        <th className="px-3 py-3 text-right">סטטוס</th>
-                        <th className="px-3 py-3 text-right">אימייל</th>
-                        <th className="px-3 py-3 text-right">נפתח</th>
+                        <th className="px-3 py-3 text-right">תשלום</th>
+                        <th className="px-3 py-3 text-right">מייל נשלח</th>
+                        <th className="px-3 py-3 text-right">נכנס לקורס</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
                       </tr>
                     </thead>
@@ -590,15 +590,15 @@ export default function DashboardShell() {
                         const statusColors: Record<string, string> = {
                           pending: 'bg-yellow-500/15 text-yellow-400',
                           paid: 'bg-[#10B981]/15 text-[#10B981]',
-                          email_sent: 'bg-blue-500/15 text-blue-400',
-                          accessed: 'bg-purple-500/15 text-purple-400',
+                          email_sent: 'bg-[#10B981]/15 text-[#10B981]',
+                          accessed: 'bg-[#10B981]/15 text-[#10B981]',
                           refunded: 'bg-red-500/15 text-red-400',
                         }
                         const statusLabels: Record<string, string> = {
                           pending: 'ממתין לתשלום',
                           paid: 'שולם',
-                          email_sent: 'נשלח מייל',
-                          accessed: 'נכנס לקורס',
+                          email_sent: 'שולם',
+                          accessed: 'שולם',
                           refunded: 'הוחזר',
                         }
                         return (
