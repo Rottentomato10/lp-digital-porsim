@@ -60,21 +60,18 @@ function WaCarousel() {
 
   return (
     <div dir="ltr" style={{ maxWidth: '560px', margin: '0 auto', position: 'relative' }}>
-      {/* Main image */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active}
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -30 }}
-          transition={{ duration: 0.3 }}
-          className="rounded-2xl overflow-hidden border-2 border-[#25D366]/30"
-          style={{ boxShadow: '0 0 40px rgba(37,211,102,0.12)' }}
-        >
-          <Image src={WA_SCREENSHOTS[active].src} alt={WA_SCREENSHOTS[active].alt}
-            width={600} height={300} className="w-full h-auto" priority />
-        </motion.div>
-      </AnimatePresence>
+      {/* All images stacked — only active visible */}
+      <div className="relative rounded-2xl overflow-hidden border-2 border-[#25D366]/30"
+        style={{ boxShadow: '0 0 40px rgba(37,211,102,0.12)' }}>
+        {WA_SCREENSHOTS.map((img, i) => (
+          <div key={i} style={{
+            display: i === active ? 'block' : 'none',
+          }}>
+            <Image src={img.src} alt={img.alt} width={600} height={300}
+              className="w-full h-auto" priority={i === 0} />
+          </div>
+        ))}
+      </div>
 
       {/* Arrows */}
       <button onClick={prev}
@@ -86,11 +83,11 @@ function WaCarousel() {
         <ChevronRight size={20} />
       </button>
 
-      {/* Dots */}
-      <div className="flex items-center justify-center gap-2 mt-4">
+      {/* Dots — no count indicator */}
+      <div className="flex items-center justify-center gap-1.5 mt-4">
         {WA_SCREENSHOTS.map((_, i) => (
           <button key={i} onClick={() => setActive(i)}
-            className={`h-2 rounded-full transition-all ${i === active ? 'bg-[#25D366] w-6' : 'bg-white/15 w-2'}`} />
+            className={`w-1.5 h-1.5 rounded-full transition-all ${i === active ? 'bg-[#25D366]' : 'bg-white/15'}`} />
         ))}
       </div>
     </div>
