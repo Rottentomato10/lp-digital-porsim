@@ -1,14 +1,15 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { ChevronRight, ChevronLeft } from 'lucide-react'
 
 const WA_SCREENSHOTS = [
-  { src: '/review1.jpg', alt: 'ביקורת וואטסאפ — סגרתם לי דברים שלא חשבתי שאני יכולה ללמוד' },
-  { src: '/review2.jpg', alt: 'ביקורת וואטסאפ — הקורס פשוט מעולה, סגר לי כל כך הרבה פינות' },
-  { src: '/review3.jpg', alt: 'ביקורת וואטסאפ — וואו איזה קורס מטורף, מדברים בגובה העיניים' },
-  { src: '/review4.jpg', alt: 'ביקורת וואטסאפ — הקורס פשוט מעולה, התחלתי כבר להשקיע' },
+  { src: '/review1.jpg', alt: 'סגרתם לי דברים שלא חשבתי שאני יכולה ללמוד' },
+  { src: '/review2.jpg', alt: 'הקורס פשוט מעולה, סגר לי כל כך הרבה פינות' },
+  { src: '/review3.jpg', alt: 'וואו איזה קורס מטורף, מדברים בגובה העיניים' },
+  { src: '/review4.jpg', alt: 'הקורס פשוט מעולה, התחלתי כבר להשקיע' },
 ]
 
 const AVATAR_COLORS = ['#F5A624', '#5EEAD4', '#A78BFA', '#F472B6', '#60A5FA', '#34D399', '#FB923C', '#E879F9']
@@ -50,6 +51,80 @@ function Avatar({ name, color }: { name: string; color: string }) {
 
 
 
+function WaCarousel() {
+  const [active, setActive] = useState(0)
+  const total = WA_SCREENSHOTS.length
+
+  const prev = () => setActive(a => (a - 1 + total) % total)
+  const next = () => setActive(a => (a + 1) % total)
+
+  // positions relative to active: -1 = left peek, 0 = center, 1 = right peek
+  const getPos = (i: number) => {
+    const diff = (i - active + total) % total
+    if (diff === 0) return 0
+    if (diff === 1) return 1
+    if (diff === total - 1) return -1
+    return 2 // hidden
+  }
+
+  return (
+    <div className="relative max-w-lg mx-auto">
+      {/* Cards */}
+      <div className="relative h-[200px] xs:h-[240px] md:h-[280px]">
+        {WA_SCREENSHOTS.map((img, i) => {
+          const pos = getPos(i)
+          const isCenter = pos === 0
+          const isLeft = pos === -1
+          const isRight = pos === 1
+          const isHidden = pos === 2
+
+          return (
+            <motion.div
+              key={i}
+              animate={{
+                x: isCenter ? '0%' : isLeft ? '-65%' : isRight ? '65%' : '100%',
+                scale: isCenter ? 1 : 0.75,
+                opacity: isHidden ? 0 : isCenter ? 1 : 0.4,
+                rotateY: isLeft ? 12 : isRight ? -12 : 0,
+                zIndex: isCenter ? 10 : 1,
+              }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute top-0 left-1/2 -translate-x-1/2 w-[75%] xs:w-[70%] md:w-[65%] cursor-pointer"
+              style={{ perspective: '800px' }}
+              onClick={() => { if (isLeft) prev(); if (isRight) next() }}
+            >
+              <div className={`rounded-2xl overflow-hidden border-2 transition-colors ${
+                isCenter ? 'border-[#25D366]/40 shadow-[0_0_30px_rgba(37,211,102,0.15)]' : 'border-white/10'
+              }`}>
+                <Image src={img.src} alt={img.alt} width={600} height={300}
+                  className="w-full h-auto" priority={i === 0} />
+              </div>
+            </motion.div>
+          )
+        })}
+      </div>
+
+      {/* Arrows */}
+      <button onClick={prev}
+        className="absolute top-1/2 -translate-y-1/2 right-0 md:-right-6 z-20 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
+        <ChevronRight size={20} />
+      </button>
+      <button onClick={next}
+        className="absolute top-1/2 -translate-y-1/2 left-0 md:-left-6 z-20 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
+        <ChevronLeft size={20} />
+      </button>
+
+      {/* Dots */}
+      <div className="flex items-center justify-center gap-2 mt-4">
+        {WA_SCREENSHOTS.map((_, i) => (
+          <button key={i} onClick={() => setActive(i)}
+            className={`w-2 h-2 rounded-full transition-all ${i === active ? 'bg-[#25D366] w-6' : 'bg-white/15'}`} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function N5Reviews() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
@@ -58,23 +133,17 @@ export default function N5Reviews() {
     <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
       <div className="max-w-4xl mx-auto px-5">
 
-        {/* WhatsApp screenshots */}
+        {/* WhatsApp screenshots carousel */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }} className="mb-10">
-          <p className="text-center text-[#25D366] text-sm font-semibold tracking-wide mb-6">מה אומרים עלינו בוואטסאפ</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {WA_SCREENSHOTS.map((img, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
-                className="rounded-xl overflow-hidden border border-white/10 hover:border-[#25D366]/30 transition-all">
-                <Image src={img.src} alt={img.alt} width={400} height={200}
-                  className="w-full h-auto" />
-              </motion.div>
-            ))}
-          </div>
+          transition={{ duration: 0.6 }} className="mb-14">
+          <p className="text-center text-[#F5A624] text-sm font-semibold tracking-wide mb-2">טעימה מהביקורות</p>
+          <p className="text-center text-[#25D366] text-xs font-medium mb-6">הודעות אמיתיות מלקוחות בוואטסאפ</p>
+          <WaCarousel />
         </motion.div>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-white/8 to-transparent mb-14" />
+
+        <p className="text-center text-white/30 text-sm font-semibold tracking-wide mb-8">עוד ביקורות מתלמידים</p>
 
         {/* Featured review */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
