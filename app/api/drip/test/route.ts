@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCampaign, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon } from '@/lib/drip'
+import { getCampaign, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon, updateSubscriber, getSubscriberByEmail, addSubscriber } from '@/lib/drip'
 import { isAuthed } from '@/lib/auth'
 
 // Send a test email to verify design and delivery
@@ -24,8 +24,25 @@ export async function POST(req: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://digital.porsimkanaf.com'
     const unsubUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}`
 
-    // Generate test coupon for email_13
-    const testCoupon = dripEmail.id === 'email_13' ? generatePersonalCoupon() : ''
+    // Generate real coupon for email_13 and save to Redis so it works in checkout
+    let testCoupon = ''
+    if (dripEmail.id === 'email_13') {
+      testCoupon = generatePersonalCoupon()
+      // Ensure subscriber exists in Redis (create temp one if needed)
+      const existing = await getSubscriberByEmail(email)
+      if (existing) {
+        await updateSubscriber(email, {
+          personalCoupon: testCoupon,
+          personalCouponCreatedAt: new Date().toISOString(),
+        })
+      } else {
+        await addSubscriber({ email, name: 'טסט', enrolledAt: new Date().toISOString() })
+        await updateSubscriber(email, {
+          personalCoupon: testCoupon,
+          personalCouponCreatedAt: new Date().toISOString(),
+        })
+      }
+    }
 
     const body = dripEmail.body
       .replace(/\{\{name\}\}/g, 'דקל')
