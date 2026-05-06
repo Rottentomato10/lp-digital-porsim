@@ -54,34 +54,55 @@ function Avatar({ name, color }: { name: string; color: string }) {
 function WaCarousel() {
   const [active, setActive] = useState(0)
   const total = WA_SCREENSHOTS.length
-
   const prev = () => setActive(a => (a - 1 + total) % total)
   const next = () => setActive(a => (a + 1) % total)
 
+  const getOffset = (i: number) => {
+    const diff = ((i - active) % total + total) % total
+    if (diff === 0) return 0    // center
+    if (diff === 1) return 1    // right
+    if (diff === total - 1) return -1 // left
+    return 2                     // hidden
+  }
+
   return (
-    <div dir="ltr" style={{ maxWidth: '560px', margin: '0 auto', position: 'relative' }}>
-      {/* All images stacked — crossfade transition */}
-      <div className="relative rounded-2xl overflow-hidden border-2 border-[#25D366]/30"
-        style={{ boxShadow: '0 0 40px rgba(37,211,102,0.12)' }}>
-        {WA_SCREENSHOTS.map((img, i) => (
-          <div key={i} className="transition-opacity duration-300" style={{
-            opacity: i === active ? 1 : 0,
-            position: i === 0 ? 'relative' : 'absolute',
-            inset: i === 0 ? undefined : 0,
-          }}>
-            <Image src={img.src} alt={img.alt} width={600} height={300}
-              className="w-full h-auto" priority />
-          </div>
-        ))}
+    <div dir="ltr" className="relative" style={{ maxWidth: '700px', margin: '0 auto' }}>
+      <div className="relative flex items-center justify-center" style={{ height: '260px' }}>
+        {WA_SCREENSHOTS.map((img, i) => {
+          const pos = getOffset(i)
+          const isCenter = pos === 0
+          const isHidden = Math.abs(pos) > 1
+
+          return (
+            <div key={i}
+              className="absolute transition-all duration-500 ease-out cursor-pointer"
+              onClick={() => { if (pos === -1) prev(); if (pos === 1) next() }}
+              style={{
+                width: '55%',
+                transform: `translateX(${pos * 75}%) scale(${isCenter ? 1 : 0.8})`,
+                opacity: isHidden ? 0 : 1,
+                filter: isCenter ? 'none' : 'blur(3px) brightness(0.5)',
+                zIndex: isCenter ? 10 : 1,
+                pointerEvents: isHidden ? 'none' : 'auto',
+              }}
+            >
+              <div className={`rounded-2xl overflow-hidden border-2 ${isCenter ? 'border-[#25D366]/40' : 'border-white/10'}`}
+                style={isCenter ? { boxShadow: '0 0 40px rgba(37,211,102,0.15)' } : {}}>
+                <Image src={img.src} alt={img.alt} width={600} height={300}
+                  className="w-full h-auto" priority />
+              </div>
+            </div>
+          )
+        })}
       </div>
 
       {/* Arrows */}
       <button onClick={prev}
-        className="absolute top-1/2 -translate-y-1/2 -left-5 md:-left-12 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
+        className="absolute top-1/2 -translate-y-1/2 left-0 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
         <ChevronLeft size={20} />
       </button>
       <button onClick={next}
-        className="absolute top-1/2 -translate-y-1/2 -right-5 md:-right-12 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
+        className="absolute top-1/2 -translate-y-1/2 right-0 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
         <ChevronRight size={20} />
       </button>
     </div>
