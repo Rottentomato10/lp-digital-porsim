@@ -68,7 +68,7 @@ function WaCarousel() {
   }
 
   return (
-    <div className="relative max-w-lg mx-auto">
+    <div className="relative max-w-md mx-auto" style={{ margin: '0 auto' }}>
       {/* Cards */}
       <div className="relative h-[200px] xs:h-[240px] md:h-[280px]">
         {WA_SCREENSHOTS.map((img, i) => {
@@ -137,7 +137,7 @@ export default function N5Reviews() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }} className="mb-14">
           <p className="text-center text-[#F5A624] text-sm font-semibold tracking-wide mb-2">טעימה מהביקורות</p>
-          <p className="text-center text-[#25D366] text-xs font-medium mb-6">הודעות אמיתיות מלקוחות בוואטסאפ</p>
+          <p className="text-center text-[#25D366] text-xs font-medium mb-6">הודעות מלקוחות בוואטסאפ</p>
           <WaCarousel />
         </motion.div>
 
