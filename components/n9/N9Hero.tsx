@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
-import { VolumeX, Volume2 } from 'lucide-react'
+import { VolumeX, Volume2, Maximize2 } from 'lucide-react'
 import Image from 'next/image'
 import { useCheckoutUrl } from '@/lib/content-context'
 
@@ -220,6 +220,19 @@ export default function N9Hero() {
             <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>
               {isMuted ? 'לחץ לסאונד' : 'עם סאונד'}
             </span>
+          </button>
+
+          {/* Fullscreen button */}
+          <button onClick={(e) => {
+              e.stopPropagation()
+              const v = videoRef.current
+              if (!v) return
+              if (v.requestFullscreen) v.requestFullscreen()
+              else if ((v as any).webkitEnterFullscreen) (v as any).webkitEnterFullscreen()
+            }}
+            className="absolute bottom-3 left-3 z-20 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/15 flex items-center justify-center text-white/50 hover:text-white transition-all"
+            aria-label="מסך מלא">
+            <Maximize2 size={14} />
           </button>
 
           {/* Progress bar / scrubber — visible on hover, forced LTR */}
