@@ -2,6 +2,14 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
+
+const WA_SCREENSHOTS = [
+  { src: '/review1.jpg', alt: 'ביקורת וואטסאפ — סגרתם לי דברים שלא חשבתי שאני יכולה ללמוד' },
+  { src: '/review2.jpg', alt: 'ביקורת וואטסאפ — הקורס פשוט מעולה, סגר לי כל כך הרבה פינות' },
+  { src: '/review3.jpg', alt: 'ביקורת וואטסאפ — וואו איזה קורס מטורף, מדברים בגובה העיניים' },
+  { src: '/review4.jpg', alt: 'ביקורת וואטסאפ — הקורס פשוט מעולה, התחלתי כבר להשקיע' },
+]
 
 const AVATAR_COLORS = ['#F5A624', '#5EEAD4', '#A78BFA', '#F472B6', '#60A5FA', '#34D399', '#FB923C', '#E879F9']
 
@@ -49,6 +57,24 @@ export default function N5Reviews() {
   return (
     <section ref={ref} className="py-16 md:py-24 bg-[#080808]">
       <div className="max-w-4xl mx-auto px-5">
+
+        {/* WhatsApp screenshots */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }} className="mb-10">
+          <p className="text-center text-[#25D366] text-sm font-semibold tracking-wide mb-6">מה אומרים עלינו בוואטסאפ</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {WA_SCREENSHOTS.map((img, i) => (
+              <motion.div key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+                className="rounded-xl overflow-hidden border border-white/10 hover:border-[#25D366]/30 transition-all">
+                <Image src={img.src} alt={img.alt} width={400} height={200}
+                  className="w-full h-auto" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Featured review */}
         <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
