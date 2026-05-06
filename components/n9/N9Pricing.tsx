@@ -225,7 +225,7 @@ export default function N9Pricing() {
 
             <div className="p-5 xs:p-8 md:p-12">
 
-              <div id="pricing" style={{ scrollMarginTop: '16px' }} />
+              <div id="pricing" />
               <div className="text-center mb-6">
                 <div className="flex items-baseline justify-center gap-3 mb-2">
                   <span className="text-white/30 line-through text-2xl font-bold">₪{contentD.pricing.price_original}</span>
