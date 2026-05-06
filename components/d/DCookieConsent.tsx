@@ -32,7 +32,7 @@ export default function DCookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-4 inset-x-4 md:inset-x-auto md:left-4 md:right-auto md:max-w-md z-[999]"
+          className="fixed bottom-16 inset-x-4 md:inset-x-auto md:left-4 md:right-auto md:max-w-md z-[999]"
         >
           <div
             className="rounded-2xl border border-white/10 p-5"

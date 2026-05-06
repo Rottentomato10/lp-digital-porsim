@@ -96,15 +96,17 @@ function WaCarousel() {
         })}
       </div>
 
-      {/* Arrows */}
-      <button onClick={prev}
-        className="absolute top-1/2 -translate-y-1/2 left-0 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
-        <ChevronLeft size={20} />
-      </button>
-      <button onClick={next}
-        className="absolute top-1/2 -translate-y-1/2 right-0 z-20 w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 transition-all">
-        <ChevronRight size={20} />
-      </button>
+      {/* Arrows below */}
+      <div className="flex items-center justify-center gap-4 mt-5">
+        <button onClick={prev}
+          className="w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 hover:border-[#F5A624]/30 transition-all">
+          <ChevronLeft size={18} />
+        </button>
+        <button onClick={next}
+          className="w-10 h-10 rounded-full bg-white/8 border border-white/15 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/15 hover:border-[#F5A624]/30 transition-all">
+          <ChevronRight size={18} />
+        </button>
+      </div>
     </div>
   )
 }

@@ -80,12 +80,19 @@ export default function N9Hero() {
     const handleMove = (e: MouseEvent) => {
       if (isDragging.current) scrubTo(e.clientX)
     }
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isDragging.current) scrubTo(e.touches[0].clientX)
+    }
     const handleUp = () => { isDragging.current = false }
     window.addEventListener('mousemove', handleMove)
     window.addEventListener('mouseup', handleUp)
+    window.addEventListener('touchmove', handleTouchMove)
+    window.addEventListener('touchend', handleUp)
     return () => {
       window.removeEventListener('mousemove', handleMove)
       window.removeEventListener('mouseup', handleUp)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleUp)
     }
   }, [scrubTo])
 
@@ -122,12 +129,12 @@ export default function N9Hero() {
 
         {/* Stats with success green for numbers */}
         <div className="flex items-center justify-center mb-5 px-4">
-          <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
-            <span className="text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידים</span></span>
+          <div className="flex flex-wrap items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
+            <span className="text-xs xs:text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידים</span></span>
             <span className="text-white/15">·</span>
-            <span className="text-sm font-semibold"><span className="text-[#34D399]">300+</span> <span className="text-white/50">כיתות</span></span>
+            <span className="text-xs xs:text-sm font-semibold"><span className="text-[#34D399]">300+</span> <span className="text-white/50">כיתות</span></span>
             <span className="text-white/15">·</span>
-            <span className="text-sm font-semibold"><span className="text-[#34D399]">5+</span> <span className="text-white/50">שנות פעילות</span></span>
+            <span className="text-xs xs:text-sm font-semibold"><span className="text-[#34D399]">5+</span> <span className="text-white/50">שנות פעילות</span></span>
           </div>
         </div>
 
@@ -207,7 +214,7 @@ export default function N9Hero() {
           {/* Mute/Unmute button */}
           <button
             onClick={toggleMute}
-            className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-3 py-1.5 border border-white/15 transition-all hover:bg-black/75"
+            className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2.5 min-h-[44px] border border-white/15 transition-all hover:bg-black/75"
           >
             {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#F5A624]" />}
             <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>
@@ -220,8 +227,12 @@ export default function N9Hero() {
             ref={scrubBarRef}
             dir="ltr"
             className="absolute bottom-0 left-0 right-0 z-20 h-6 flex items-end cursor-pointer transition-opacity duration-300"
-            style={{ opacity: isHovering ? 1 : 0 }}
+            style={{ opacity: isHovering ? 1 : 0.5 }}
             onMouseDown={handleScrubDown}
+            onTouchStart={(e) => {
+              isDragging.current = true
+              scrubTo(e.touches[0].clientX)
+            }}
           >
             <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
               <div className="h-full bg-[#F5A624] rounded-full" style={{ width: `${progress * 100}%` }} />

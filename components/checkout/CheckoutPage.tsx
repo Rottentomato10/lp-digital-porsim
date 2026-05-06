@@ -172,7 +172,7 @@ export default function CheckoutPage() {
                 <Lock size={13} className="text-green-500" />
                 <span className="text-gray-500 text-sm">תשלום מאובטח</span>
               </div>
-              <button onClick={closeModal} className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+              <button onClick={closeModal} className="w-11 h-11 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
                 <X size={18} className="text-gray-400" />
               </button>
             </div>
@@ -272,7 +272,7 @@ export default function CheckoutPage() {
                       <p className="text-[#10B981]/60 text-xs">חיסכון של ₪{BASE_PRICE - couponApplied.finalPrice}</p>
                     </div>
                   </div>
-                  <button onClick={removeCoupon} className="text-white/30 hover:text-white/60 transition-colors">
+                  <button onClick={removeCoupon} className="p-2 text-white/30 hover:text-white/60 transition-colors">
                     <X size={16} />
                   </button>
                 </div>

@@ -22,7 +22,7 @@ export default function DFooter() {
               {i > 0 && <span className="text-white/15">·</span>}
               <button
                 onClick={() => setModal(key as ModalType)}
-                className="t-caption text-white/50 hover:text-[#F5A624] transition-colors"
+                className="t-caption text-white/50 hover:text-[#F5A624] transition-colors py-2"
               >
                 {label}
               </button>

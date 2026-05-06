@@ -517,7 +517,7 @@ export default function DashboardShell() {
 
       {/* Tabs */}
       <div className="border-b border-white/5">
-        <div className="max-w-6xl mx-auto px-4 flex gap-0">
+        <div className="max-w-6xl mx-auto px-4 flex gap-0 overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
           {[
             { key: 'affiliates' as const, label: 'אפיליאייטים', icon: Users },
             { key: 'orders' as const, label: 'הזמנות', icon: ShoppingCart },

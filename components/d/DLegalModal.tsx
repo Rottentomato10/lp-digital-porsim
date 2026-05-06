@@ -299,7 +299,7 @@ export function LegalModal({ type, onClose }: Props) {
             <div className="flex items-center justify-between px-6 py-5 border-b border-white/7 flex-shrink-0">
               <h2 className="text-white font-black text-lg">{content.title}</h2>
               <button onClick={onClose}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-white/30 hover:text-white hover:bg-white/8 transition-all">
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/30 hover:text-white hover:bg-white/8 transition-all">
                 <X size={16} />
               </button>
             </div>
