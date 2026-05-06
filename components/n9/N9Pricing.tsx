@@ -196,7 +196,6 @@ export default function N9Pricing() {
 
       <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
 
-      <div id="pricing" style={{ position: 'relative', top: '-200px' }} />
       <section ref={ref} className="relative py-20 md:py-28 bg-[#080808] overflow-hidden">
         <div className="pointer-events-none absolute inset-0"
           style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(245,166,36,0.06) 0%, transparent 65%)' }} />
@@ -253,6 +252,7 @@ export default function N9Pricing() {
                 <span className="text-[#F5A624]/60">✔ כן בשבילך אם אתה רוצה להבין כסף באמת</span>
               </div>
 
+              <div id="pricing" style={{ scrollMarginTop: '24px' }} />
               {/* ====== INLINE CHECKOUT FORM ====== */}
               <div className="rounded-2xl border border-white/8 bg-[#111111] p-5 md:p-6 mb-6">
                 <div className="space-y-3">

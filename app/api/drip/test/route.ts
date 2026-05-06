@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
           personalCouponCreatedAt: new Date().toISOString(),
         })
       } else {
-        await addSubscriber({ email, name: 'טסט', enrolledAt: new Date().toISOString() })
+        await addSubscriber({ email, name: 'טסט', phone: '', enrolledAt: new Date().toISOString(), source: 'test', coupon: '' })
         await updateSubscriber(email, {
           personalCoupon: testCoupon,
           personalCouponCreatedAt: new Date().toISOString(),
