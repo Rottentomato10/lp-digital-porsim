@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
         Language: 'he',
         ISOCoinId: 1,
         ReturnValue: order.id,
-        SuccessRedirectUrl: `${baseUrl}/checkout/success?order=${order.id}&email=${encodeURIComponent(customerEmail)}`,
+        SuccessRedirectUrl: `${baseUrl}/checkout/success?order=${order.id}&email=${encodeURIComponent(customerEmail)}&amount=${finalPrice}`,
         FailedRedirectUrl: `${baseUrl}/checkout/failed?order=${order.id}`,
         WebHookUrl: process.env.WEBHOOK_SECRET
           ? `${baseUrl}/api/cardcom/webhook?secret=${process.env.WEBHOOK_SECRET}`

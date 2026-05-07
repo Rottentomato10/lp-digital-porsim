@@ -13,6 +13,7 @@ function SuccessContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get('order') || ''
   const email = searchParams.get('email') || ''
+  const amount = Number(searchParams.get('amount')) || 390
   const [copied, setCopied] = useState(false)
   const [showShare, setShowShare] = useState(false)
   const [countdown, setCountdown] = useState(60)
@@ -20,10 +21,10 @@ function SuccessContent() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', 'Purchase', { value: 390, currency: 'ILS', content_name: 'קורס פיננסים לצעירים' })
+      (window as any).fbq('track', 'Purchase', { value: amount, currency: 'ILS', content_name: 'קורס פיננסים לצעירים' })
     }
     if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'purchase', { transaction_id: orderId, value: 390, currency: 'ILS' })
+      (window as any).gtag('event', 'purchase', { transaction_id: orderId, value: amount, currency: 'ILS' })
     }
   }, [orderId])
 
