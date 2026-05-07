@@ -132,6 +132,12 @@ export async function updateSubscriber(email: string, updates: Partial<DripSubsc
   await redis.set(SUBSCRIBERS_KEY, subs)
 }
 
+export async function removeSubscriber(email: string): Promise<void> {
+  const subs = await getAllSubscribers()
+  const filtered = subs.filter(s => s.email.toLowerCase() !== email.toLowerCase())
+  await redis.set(SUBSCRIBERS_KEY, filtered)
+}
+
 export async function markAsPurchased(email: string): Promise<void> {
   await updateSubscriber(email, { status: 'purchased' })
 }

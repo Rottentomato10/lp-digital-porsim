@@ -1080,6 +1080,22 @@ function DripTab() {
                   <div className="flex items-center gap-3 text-xs">
                     <span className="text-white/30">אימייל {s.currentStep + 1}/{campaign?.emails.length || '?'}</span>
                     {s.lastSentAt && <span className="text-white/20">{new Date(s.lastSentAt).toLocaleDateString('he-IL')}</span>}
+                    <button
+                      onClick={async (e) => {
+                        e.stopPropagation()
+                        if (!confirm(`למחוק את ${s.email} מרשימת הדיוור?`)) return
+                        await fetch('/api/drip', {
+                          method: 'DELETE',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ email: s.email }),
+                        })
+                        fetchData()
+                      }}
+                      className="text-red-400/50 hover:text-red-400 transition-colors p-1"
+                      title="מחק מרשימת דיוור"
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   </div>
                 </div>
               ))}
