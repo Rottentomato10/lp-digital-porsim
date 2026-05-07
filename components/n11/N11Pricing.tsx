@@ -59,7 +59,7 @@ export default function N11Pricing() {
             {/* What you get — visual list */}
             <div className="space-y-3 mb-8">
               {[
-                { label: 'קורס מלא — 57 שיעורים', value: '₪490' },
+                { label: 'קורס מלא — 58 שיעורים', value: '₪490' },
                 { label: 'אפליקציית ניהול תזרים', value: '₪200' },
                 { label: 'תעודת סיום', value: '₪150' },
                 { label: 'קהילה פרטית + תמיכה', value: '₪300' },

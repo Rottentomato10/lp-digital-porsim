@@ -102,7 +102,7 @@ export default function N2Solution() {
           className="mt-12 text-center"
         >
           <p className="text-white font-bold text-2xl md:text-3xl mb-3">
-            3 שעות. 57 שיעורים. גישה לכל החיים.
+            3 שעות. 58 שיעורים. גישה לכל החיים.
           </p>
           <p className="text-white/50 text-xl md:text-2xl">
             בלי חפירות. בלי בזבוז זמן.

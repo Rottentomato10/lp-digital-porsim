@@ -41,7 +41,7 @@ export default function N12Price() {
 
             {/* Items */}
             <div className="space-y-2 mb-5">
-              {['קורס מלא — 57 שיעורים', 'אפליקציית ניהול תזרים', 'תעודת סיום', 'קהילה פרטית + תמיכה', 'עדכונים עתידיים — חינם'].map((item, i) => (
+              {['קורס מלא — 58 שיעורים', 'אפליקציית ניהול תזרים', 'תעודת סיום', 'קהילה פרטית + תמיכה', 'עדכונים עתידיים — חינם'].map((item, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <Check size={13} className="text-[#10B981] flex-shrink-0" />
                   <span className="text-white/50 text-sm">{item}</span>

@@ -57,7 +57,7 @@ export default function DWhatYouGet() {
             className="mt-4 font-black text-white text-center"
             style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.2rem)' }}
           >
-            3 חלקים · 57 שיעורים · כ־3 שעות
+            3 חלקים · 58 שיעורים · כ־3 שעות
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}

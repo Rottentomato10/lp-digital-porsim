@@ -54,7 +54,7 @@ export default function N12Method() {
             די לאלתורים.
             <br />מתודולוגיה אחת. ברורה.
           </h2>
-          <p className="text-white/30 text-sm">3 שעות · 57 שיעורים · גישה לכל החיים</p>
+          <p className="text-white/30 text-sm">3 שעות · 58 שיעורים · גישה לכל החיים</p>
         </motion.div>
 
         <div className="space-y-2.5 mb-8">

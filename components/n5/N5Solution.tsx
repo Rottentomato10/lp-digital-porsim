@@ -81,7 +81,7 @@ export default function N5Solution() {
         {/* Syllabus */}
         <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}
           className="text-center mb-10">
-          <h3 className="font-bold text-white text-2xl md:text-3xl mb-2">3 שעות. 57 שיעורים. גישה לכל החיים.</h3>
+          <h3 className="font-bold text-white text-2xl md:text-3xl mb-2">3 שעות. 58 שיעורים. גישה לכל החיים.</h3>
           <p className="text-white/40 text-lg">שיעורים קצרים של 2–5 דקות. מושלם לצפייה בדרך לעבודה או ללימודים.</p>
         </motion.div>
 

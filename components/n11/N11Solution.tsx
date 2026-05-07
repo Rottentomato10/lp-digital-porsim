@@ -113,7 +113,7 @@ export default function N11Solution() {
           className="text-center mb-14">
           <h2 className="font-black text-white leading-tight mb-4"
             style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>
-            3 שעות. 57 שיעורים.
+            3 שעות. 58 שיעורים.
             <br />מסלול אחד ברור.
           </h2>
           <p className="text-white/40 text-lg">שיעורים של 2-5 דקות. מושלם לצפייה מכל מקום.</p>
@@ -131,7 +131,7 @@ export default function N11Solution() {
           transition={{ delay: 0.3 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-14">
           {[
-            { label: 'קורס מלא', sub: '57 שיעורים' },
+            { label: 'קורס מלא', sub: '58 שיעורים' },
             { label: 'אפליקציה', sub: 'ניהול תזרים' },
             { label: 'תעודת סיום', sub: 'פורשים כנף' },
             { label: 'קהילה', sub: 'תמיכה בזמן אמת' },
