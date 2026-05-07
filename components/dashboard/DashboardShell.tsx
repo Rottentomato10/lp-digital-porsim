@@ -1111,47 +1111,50 @@ function DripTab() {
       )}
 
       <div className="space-y-3 mb-6">
-        {campaign?.emails.map((email, idx) => (
-          <div key={email.id} className={`rounded-xl border overflow-hidden transition-all ${editIdx === idx ? 'border-[#F5A624]/30 bg-[#111]' : 'border-white/8 bg-white/[0.02]'}`}>
-            <div className="flex items-center justify-between p-4 cursor-pointer" onClick={() => setEditIdx(editIdx === idx ? null : idx)}>
+        {campaign?.emails
+          .map((email, idx) => ({ email, originalIdx: idx }))
+          .sort((a, b) => a.email.delayDays - b.email.delayDays)
+          .map(({ email, originalIdx }, sortedIdx) => (
+          <div key={email.id} className={`rounded-xl border overflow-hidden transition-all ${editIdx === originalIdx ? 'border-[#F5A624]/30 bg-[#111]' : 'border-white/8 bg-white/[0.02]'}`}>
+            <div className="flex items-center justify-between p-4 cursor-pointer" onClick={() => setEditIdx(editIdx === originalIdx ? null : originalIdx)}>
               <div className="flex items-center gap-3">
-                <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black ${email.active ? 'bg-[#F5A624]/15 text-[#F5A624]' : 'bg-white/5 text-white/20'}`}>{idx + 1}</span>
+                <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black ${email.active ? 'bg-[#F5A624]/15 text-[#F5A624]' : 'bg-white/5 text-white/20'}`}>{sortedIdx + 1}</span>
                 <div>
                   <p className="text-white text-sm font-bold">{email.subject || '(ללא נושא)'}</p>
                   <p className="text-white/30 text-xs">יום {email.delayDays} · {email.active ? 'פעיל' : 'מושהה'}</p>
                 </div>
               </div>
-              <ChevronDown size={16} className={`text-white/30 transition-transform ${editIdx === idx ? 'rotate-180' : ''}`} />
+              <ChevronDown size={16} className={`text-white/30 transition-transform ${editIdx === originalIdx ? 'rotate-180' : ''}`} />
             </div>
 
-            {editIdx === idx && (
+            {editIdx === originalIdx && (
               <div className="px-4 pb-4 space-y-3 border-t border-white/6 pt-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div className="md:col-span-1">
                     <label className="block text-white/40 text-xs mb-1">נושא</label>
-                    <input type="text" value={email.subject} onChange={e => updateEmail(idx, 'subject', e.target.value)} placeholder="היי {{name}}..." className={inp} />
+                    <input type="text" value={email.subject} onChange={e => updateEmail(originalIdx, 'subject', e.target.value)} placeholder="היי {{name}}..." className={inp} />
                   </div>
                   <div>
                     <label className="block text-white/40 text-xs mb-1">שליחה ביום</label>
-                    <input type="number" value={email.delayDays} onChange={e => updateEmail(idx, 'delayDays', Number(e.target.value))} min="1" className={inp} />
+                    <input type="number" value={email.delayDays} onChange={e => updateEmail(originalIdx, 'delayDays', Number(e.target.value))} min="1" className={inp} />
                   </div>
                   <div className="flex items-end gap-4">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" checked={email.active} onChange={e => updateEmail(idx, 'active', e.target.checked)} className="accent-[#F5A624]" />
+                      <input type="checkbox" checked={email.active} onChange={e => updateEmail(originalIdx, 'active', e.target.checked)} className="accent-[#F5A624]" />
                       <span className="text-white/40 text-xs">פעיל</span>
                     </label>
-                    <button onClick={() => sendTestEmail(idx)} disabled={testSending}
+                    <button onClick={() => sendTestEmail(originalIdx)} disabled={testSending}
                       className="text-[#8B5CF6]/60 text-xs hover:text-[#8B5CF6] flex items-center gap-1">
                       <Send size={12} /> שלח טסט
                     </button>
-                    <button onClick={() => removeEmail(idx)} className="text-red-400/60 text-xs hover:text-red-400 flex items-center gap-1 mr-auto">
+                    <button onClick={() => removeEmail(originalIdx)} className="text-red-400/60 text-xs hover:text-red-400 flex items-center gap-1 mr-auto">
                       <Trash2 size={12} /> מחק
                     </button>
                   </div>
                 </div>
                 <div>
                   <label className="block text-white/40 text-xs mb-1">תוכן HTML · משתנים: {'{{name}}'}, {'{{email}}'}</label>
-                  <textarea value={email.body} onChange={e => updateEmail(idx, 'body', e.target.value)} rows={8} className={`${inp} font-mono text-xs leading-relaxed`} dir="ltr" />
+                  <textarea value={email.body} onChange={e => updateEmail(originalIdx, 'body', e.target.value)} rows={8} className={`${inp} font-mono text-xs leading-relaxed`} dir="ltr" />
                 </div>
                 <div>
                   <p className="text-white/40 text-xs mb-1">תצוגה מקדימה</p>
