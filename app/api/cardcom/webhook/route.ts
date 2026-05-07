@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { updateOrder, getOrderById } from '@/lib/orders'
 import { markAsPurchased } from '@/lib/drip'
+import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
 
 /**
  * Verify the webhook secret token in the URL query parameter.
@@ -117,6 +118,15 @@ async function handleWebhook(orderId: string, dealResponse: string) {
     await notifyPurchase(order)
     // Remove from drip campaign (non-blocking)
     markAsPurchased(order.email).catch(() => {})
+    // Track affiliate purchase (only after confirmed payment)
+    if (order.coupon) {
+      try {
+        const aff = await getAffiliateByCoupon(order.coupon)
+        if (aff) {
+          await trackEvent({ affiliateId: aff.id, type: 'purchase', timestamp: new Date().toISOString() })
+        }
+      } catch { /* non-blocking */ }
+    }
     // Provision course access + track email status
     const emailSent = await provisionCourseAccess(order)
     if (emailSent) {

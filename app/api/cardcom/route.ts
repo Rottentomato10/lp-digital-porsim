@@ -47,11 +47,10 @@ export async function POST(req: NextRequest) {
         const savings = Math.round(BASE_PRICE * personal.discount / 100)
         finalPrice = BASE_PRICE - savings
         couponLabel = 'הנחה אישית 20%'
-        // Track via "אימייל" affiliate for stats
+        // Track via "אימייל" affiliate for stats (purchase tracked in webhook after payment)
         const emailAff = await getAffiliateByCoupon('EMAILLAST20')
         if (emailAff) {
           affiliateId = emailAff.id
-          await trackEvent({ affiliateId: emailAff.id, type: 'purchase', timestamp: new Date().toISOString() })
         }
       }
     } else {
@@ -61,7 +60,6 @@ export async function POST(req: NextRequest) {
         finalPrice = BASE_PRICE - savings
         couponLabel = `הנחת ${affiliate.discountPercent}%`
         affiliateId = affiliate.id
-        await trackEvent({ affiliateId: affiliate.id, type: 'purchase', timestamp: new Date().toISOString() })
       }
     }
   }
