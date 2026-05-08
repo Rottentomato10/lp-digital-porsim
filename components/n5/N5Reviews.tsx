@@ -49,10 +49,10 @@ function WaCarousel() {
   const [screenshots, setScreenshots] = useState<{ src: string; alt: string }[]>([])
 
   useEffect(() => {
-    fetch('/api/review-images')
+    fetch('/review-list.json')
       .then(r => r.json())
-      .then(data => {
-        setScreenshots((data.images || []).map((src: string) => ({ src, alt: 'ביקורת תלמיד' })))
+      .then((images: string[]) => {
+        setScreenshots(images.map(src => ({ src, alt: 'ביקורת תלמיד' })))
       })
       .catch(() => {})
   }, [])
