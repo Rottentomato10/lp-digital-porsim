@@ -61,6 +61,15 @@ export function AccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [settings, setSettings] = useState<AccessibilitySettings>(defaultSettings)
   const [readingGuideY, setReadingGuideY] = useState(0)
+  const [isLight, setIsLight] = useState(false)
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('lp-theme')
+    if (savedTheme === 'light') {
+      document.documentElement.classList.add('light-mode')
+      setIsLight(true)
+    }
+  }, [])
 
   useEffect(() => {
     const saved = localStorage.getItem('accessibility-settings')
@@ -142,6 +151,37 @@ export function AccessibilityWidget() {
 
   return (
     <>
+      {/* Theme toggle button */}
+      <button
+        onClick={() => {
+          const next = !isLight
+          setIsLight(next)
+          document.documentElement.classList.toggle('light-mode', next)
+          localStorage.setItem('lp-theme', next ? 'light' : 'dark')
+        }}
+        aria-label="החלף מצב תצוגה"
+        style={{
+          position: 'fixed',
+          bottom: '108px',
+          left: '12px',
+          zIndex: 998,
+          width: '44px',
+          height: '44px',
+          background: isLight ? 'rgba(255,255,255,0.9)' : 'rgba(20,15,35,0.9)',
+          border: isLight ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '50%',
+          color: '#F5A624',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+          transition: 'all 0.2s',
+        }}
+      >
+        {isLight ? <Moon size={20} strokeWidth={1.5} /> : <Sun size={20} strokeWidth={1.5} />}
+      </button>
+
       {/* Accessibility Button — pinned right, above sticky bar */}
       <button
         onClick={() => setIsOpen(true)}
@@ -153,8 +193,8 @@ export function AccessibilityWidget() {
           zIndex: 998,
           width: '44px',
           height: '44px',
-          background: 'rgba(20,15,35,0.9)',
-          border: '1px solid rgba(255,255,255,0.15)',
+          background: isLight ? 'rgba(255,255,255,0.9)' : 'rgba(20,15,35,0.9)',
+          border: isLight ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
           borderRadius: '50%',
           color: '#b586ff',
           cursor: 'pointer',
@@ -168,7 +208,7 @@ export function AccessibilityWidget() {
           e.currentTarget.style.borderColor = '#b586ff'
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)'
+          e.currentTarget.style.borderColor = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.15)'
         }}
       >
         <Accessibility size={22} strokeWidth={1.5} />

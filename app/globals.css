@@ -71,6 +71,113 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ═══════════════════════════════════════════
+   LIGHT MODE
+   ═══════════════════════════════════════════ */
+html.light-mode body {
+  background: #f5f5f0 !important;
+  color: #1a1a1a !important;
+}
+
+html.light-mode .grain-overlay { opacity: 0; }
+html.light-mode ::-webkit-scrollbar-track { background: #f5f5f0; }
+html.light-mode ::-webkit-scrollbar-thumb { background: #d4a454; }
+
+/* Text overrides */
+html.light-mode .text-white { color: #1a1a1a !important; }
+html.light-mode .text-white\/80 { color: rgba(26,26,26,0.9) !important; }
+html.light-mode .text-white\/70 { color: rgba(26,26,26,0.85) !important; }
+html.light-mode .text-white\/65 { color: rgba(26,26,26,0.8) !important; }
+html.light-mode .text-white\/60 { color: rgba(26,26,26,0.75) !important; }
+html.light-mode .text-white\/55 { color: rgba(26,26,26,0.7) !important; }
+html.light-mode .text-white\/50 { color: rgba(26,26,26,0.65) !important; }
+html.light-mode .text-white\/45 { color: rgba(26,26,26,0.6) !important; }
+html.light-mode .text-white\/40 { color: rgba(26,26,26,0.55) !important; }
+html.light-mode .text-white\/35 { color: rgba(26,26,26,0.5) !important; }
+html.light-mode .text-white\/30 { color: rgba(26,26,26,0.45) !important; }
+html.light-mode .text-white\/25 { color: rgba(26,26,26,0.4) !important; }
+html.light-mode .text-white\/20 { color: rgba(26,26,26,0.35) !important; }
+html.light-mode .text-white\/15 { color: rgba(26,26,26,0.25) !important; }
+html.light-mode .text-white\/10 { color: rgba(26,26,26,0.15) !important; }
+
+/* Border overrides */
+html.light-mode [class*="border-white/"],
+html.light-mode [class*="border-white\/"] {
+  border-color: rgba(0,0,0,0.1) !important;
+}
+
+/* Background overrides */
+html.light-mode [class*="bg-white/"],
+html.light-mode [class*="bg-white\/"] {
+  background-color: rgba(0,0,0,0.04) !important;
+}
+
+/* Dark backgrounds → light */
+html.light-mode [class*="bg-[#080808]"],
+html.light-mode [class*="bg-[#0a0a0a]"],
+html.light-mode [class*="bg-[#0F0F0F]"],
+html.light-mode [class*="bg-[#111]"],
+html.light-mode [class*="bg-[#141414]"],
+html.light-mode [class*="bg-brand-bg"] {
+  background-color: #f5f5f0 !important;
+}
+
+/* Section backgrounds — alternate slightly */
+html.light-mode section {
+  background-color: transparent !important;
+}
+html.light-mode section:nth-child(even) {
+  background-color: rgba(0,0,0,0.02) !important;
+}
+
+/* Typography classes */
+html.light-mode .t-eyebrow { color: #c4841a !important; }
+html.light-mode .t-body { color: rgba(26,26,26,0.75) !important; }
+html.light-mode .t-body-lg { color: rgba(26,26,26,0.75) !important; }
+html.light-mode .t-muted { color: rgba(26,26,26,0.6) !important; }
+html.light-mode .t-caption { color: rgba(26,26,26,0.5) !important; }
+
+/* Inputs */
+html.light-mode input, html.light-mode textarea, html.light-mode select {
+  background-color: #fff !important;
+  border-color: rgba(0,0,0,0.15) !important;
+  color: #1a1a1a !important;
+}
+html.light-mode input::placeholder, html.light-mode textarea::placeholder {
+  color: rgba(26,26,26,0.35) !important;
+}
+
+/* Cards and containers */
+html.light-mode .rounded-xl, html.light-mode .rounded-2xl, html.light-mode .rounded-3xl {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* Footer */
+html.light-mode footer {
+  background-color: #eaeae3 !important;
+}
+
+/* Sticky bar / black backgrounds */
+html.light-mode [class*="bg-black/"] {
+  background-color: rgba(255,255,255,0.95) !important;
+}
+
+/* Cookie consent */
+html.light-mode .bg-black\/90 {
+  background-color: rgba(255,255,255,0.95) !important;
+}
+
+/* Legal modal */
+html.light-mode [style*="background: rgba(14,10,28"] {
+  background-color: #fafaf5 !important;
+}
+
+/* Checkout page */
+html.light-mode [class*="bg-[#060A13]"],
+html.light-mode .bg-\[\#080808\] {
+  background-color: #f5f5f0 !important;
+}
+
 /* Grain overlay */
 .grain-overlay {
   position: fixed;
