@@ -8,7 +8,7 @@ import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 
 const BASE_PRICE = 390
-const ACCENT = "#F5A624"
+const ACCENT = "#39FF14" // Neon green
 
 function FadeSection({ children, className = '', id, delay = 0, style }: { children: React.ReactNode; className?: string; id?: string; delay?: number; style?: React.CSSProperties }) {
   const ref = useRef(null)
@@ -92,15 +92,15 @@ export default function LP2Page() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0C12] text-[#E2E8F0] overflow-x-hidden" dir="rtl" style={{ fontFamily: "'Heebo', sans-serif" }}>
+    <div className="min-h-screen bg-[#0B0114] text-white overflow-x-hidden" dir="rtl" style={{ fontFamily: "'Heebo', sans-serif" }}>
 
       {/* CardCom Modal */}
       {iframeUrl && (
         <div className="fixed inset-0 z-[100] flex items-end md:items-center md:justify-center md:p-6" style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(12px)' }}>
           <div className="relative w-full md:max-w-2xl bg-[#0B0114] md:rounded-2xl overflow-hidden shadow-2xl h-[100dvh] md:h-auto md:max-h-[92vh]">
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-[#0B0114] sticky top-0 z-10">
-              <div className="flex items-center gap-2"><Lock size={13} className="text-green-500" /><span className="text-white/60 text-sm">תשלום מאובטח</span></div>
-              <button onClick={() => setIframeUrl(null)} className="w-11 h-11 rounded-full hover:bg-gray-100 flex items-center justify-center"><X size={18} className="text-white/50" /></button>
+              <div className="flex items-center gap-2"><Lock size={13} className="text-green-500" /><span className="text-[#A294FD]/60 text-sm">תשלום מאובטח</span></div>
+              <button onClick={() => setIframeUrl(null)} className="w-11 h-11 rounded-full hover:bg-gray-100 flex items-center justify-center"><X size={18} className="text-[#A294FD]/50" /></button>
             </div>
             <iframe src={iframeUrl} className="w-full border-0" style={{ height: 'calc(100dvh - 52px)', minHeight: '500px' }} allow="payment" />
           </div>
@@ -109,14 +109,14 @@ export default function LP2Page() {
       <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden" style={{ background: "#0F1117" }}>
+      <section className="relative overflow-hidden" style={{ background: "linear-gradient(180deg, #0B0114 0%, #120520 100%)" }}>
         {/* Animated gradient orbs */}
         <motion.div animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }} transition={{ duration: 8, repeat: Infinity }}
           className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full opacity-[0.07]"
           style={{ background: `radial-gradient(circle, ${ACCENT}, transparent 70%)` }} />
         <motion.div animate={{ scale: [1, 1.15, 1], y: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity, delay: 2 }}
           className="absolute bottom-[-30%] left-[-15%] w-[600px] h-[600px] rounded-full opacity-[0.05]"
-          style={{ background: 'radial-gradient(circle, #F5A624, transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle, #00D4FF, transparent 70%)' }} />
 
         <div className="relative z-10 max-w-5xl mx-auto px-5 pt-10 pb-16 md:pt-16 md:pb-24">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}
@@ -126,7 +126,7 @@ export default function LP2Page() {
 
           <div className="text-center max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-              <p className="inline-flex items-center gap-2 bg-[#F5A624]/8 border border-[#F5A624]/15 rounded-full px-5 py-2 text-white/50 text-base md:text-lg font-bold mb-6">
+              <p className="inline-flex items-center gap-2 bg-[#00D4FF]/8 border border-[#00D4FF]/15 rounded-full px-5 py-2 text-[#00D4FF] text-base md:text-lg font-bold mb-6">
                 <Sparkles size={16} />
                 הכנסנו חינוך פיננסי למערכת החינוך — ועכשיו אנחנו כאן בשבילך
               </p>
@@ -136,26 +136,26 @@ export default function LP2Page() {
               className="font-black text-white leading-[1.08] mb-6" style={{ fontSize: 'clamp(2.2rem, 6vw, 3.8rem)' }}>
               הקורס שמשנה את הדרך
               <br /><span className="relative">
-                <span className="text-white/50">שבה צעירים מבינים כסף</span>
+                <span className="text-[#00D4FF]">שבה צעירים מבינים כסף</span>
                 <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1, duration: 0.5 }}
-                  className="absolute -bottom-1 left-0 right-0 h-1 bg-[#F5A624]/20 rounded-full origin-right" />
+                  className="absolute -bottom-1 left-0 right-0 h-1 bg-[#00D4FF]/20 rounded-full origin-right" />
               </span>
             </motion.h1>
 
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-white text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
+              className="text-[#A294FD] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
               3 שעות. 58 שיעורים. מא׳ עד ת׳.
               <br />בסוף הקורס תבין כסף יותר טוב מ-97% מהאנשים סביבך.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
-              <p className="text-white/30 text-sm mb-4">שתי דקות שישנו לך את הראש ↓</p>
               <LP2Video />
+              <p className="text-[#00D4FF] text-sm font-medium mb-6 animate-pulse">👆 שווה לצפות עד הסוף — יש שם משהו שישנה לך את הדרך שבה אתה מסתכל על כסף</p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.1 }}>
               <a href="#checkout"
-                className="inline-flex items-center gap-2 bg-[#F5A624] text-black font-black text-lg px-10 py-4 rounded-full hover:brightness-110 hover:scale-105 active:scale-95 transition-all shadow-[0_4px_20px_rgba(245,166,36,0.25)]">
+                className="inline-flex items-center gap-2 bg-[#39FF14] text-black font-black text-lg px-10 py-4 rounded-full hover:brightness-110 hover:scale-105 active:scale-95 transition-all shadow-[0_4px_25px_rgba(57,255,20,0.3)]">
                 אני רוצה להתחיל
               </a>
             </motion.div>
@@ -170,7 +170,7 @@ export default function LP2Page() {
             className="font-black text-white text-2xl md:text-4xl leading-snug mb-8">
             אם הגעת לדף הזה...
           </motion.h2>
-          <div className="space-y-5 text-white text-lg md:text-xl leading-relaxed">
+          <div className="space-y-5 text-[#A294FD] text-lg md:text-xl leading-relaxed">
             <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
               אתה עובד, מרוויח, אולי אפילו חוסך קצת — אבל <strong className="text-white">עמוק בפנים אתה יודע שאתה לא באמת שולט</strong>.
             </motion.p>
@@ -181,12 +181,12 @@ export default function LP2Page() {
               אולי ניסית ללמוד מיוטיוב. אבל אחרי 20 סרטונים אתה עדיין באותו מקום.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
-              className="bg-[#F5A624]/5 border-r-4 border-[#F5A624] rounded-xl p-6 my-6">
+              className="bg-[#00D4FF]/5 border-r-4 border-[#00D4FF] rounded-xl p-6 my-6">
               <p className="text-white font-black text-xl md:text-2xl mb-2">וזה לא אשמתך.</p>
-              <p className="text-white">12 שנה במערכת החינוך. אף שיעור אחד על כסף. המערכת פשוט שכחה את הפרק הכי חשוב בחיים שלך.</p>
+              <p className="text-[#A294FD]">12 שנה במערכת החינוך. אף שיעור אחד על כסף. המערכת פשוט שכחה את הפרק הכי חשוב בחיים שלך.</p>
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
-              className="text-white/50 font-bold text-lg">
+              className="text-[#00D4FF] font-bold text-lg">
               אנחנו לא עוד קורס באינטרנט. אנחנו כאן כדי לתקן את מה שהמערכת שכחה.
             </motion.p>
           </div>
@@ -194,25 +194,25 @@ export default function LP2Page() {
       </FadeSection>
 
       {/* ═══════════ WHO WE ARE ═══════════ */}
-      <FadeSection className="py-16 md:py-24" style={{ background: "#12141C" }}>
+      <FadeSection className="py-16 md:py-24" style={{ background: "linear-gradient(135deg, #120520 0%, #1A0B2E 100%)" }}>
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-12">
             <Image src="/logo.png" alt="" width={60} height={60} className="w-12 h-12 object-contain mx-auto mb-4" />
-            <p className="text-white/50 font-bold text-sm mb-3">מי עומדים מאחורי זה</p>
+            <p className="text-[#00D4FF] font-bold text-sm mb-3">מי עומדים מאחורי זה</p>
             <h2 className="font-black text-white text-2xl md:text-4xl leading-snug">
               תיקנו את מה שהמערכת שכחה.
-              <br />עכשיו אנחנו כאן בשביל <span className="text-white/50">כל מי שלא עבר את זה</span>.
+              <br />עכשיו אנחנו כאן בשביל <span className="text-[#00D4FF]">כל מי שלא עבר את זה</span>.
             </h2>
           </div>
 
           <div className="max-w-3xl mx-auto text-center mb-10">
-            <p className="text-white text-lg leading-relaxed mb-4">
+            <p className="text-[#A294FD] text-lg leading-relaxed mb-4">
               כל מה שאותך לא לימדו — עכשיו קיים במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. <strong className="text-white">בזכותנו</strong>. כחלק מ<strong className="text-white">תוכניות גפ״ן — תוכניות ההעשרה של משרד החינוך</strong>.
             </p>
-            <p className="text-white text-lg leading-relaxed mb-4">
+            <p className="text-[#A294FD] text-lg leading-relaxed mb-4">
               העברנו את הסדנה ל-15,000 תלמידים ותלמידות. הפידבק היה מטורף. הבנו שאנחנו חייבים להפיץ את הבשורה ולהגיע לכולם — גם למי שלא עבר את זה דרך בית הספר.
             </p>
-            <p className="text-white text-lg leading-relaxed font-medium">
+            <p className="text-[#A294FD] text-lg leading-relaxed font-medium">
               אז בנינו את הקורס הדיגיטלי. 58 שיעורים שמזקקים שנים של ניסיון בשטח לתוך 3 שעות.
             </p>
           </div>
@@ -226,8 +226,8 @@ export default function LP2Page() {
             ].map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }} className="text-center">
-                <p className="text-white/50 font-black text-3xl md:text-4xl"><CountUp target={s.num} suffix={s.suffix} /></p>
-                <p className="text-white/60 text-sm mt-1">{s.label}</p>
+                <p className="text-[#00D4FF] font-black text-3xl md:text-4xl"><CountUp target={s.num} suffix={s.suffix} /></p>
+                <p className="text-[#A294FD]/60 text-sm mt-1">{s.label}</p>
               </motion.div>
             ))}
           </div>
@@ -246,8 +246,8 @@ export default function LP2Page() {
                 </div>
                 <div>
                   <p className="font-bold text-white text-base">{p.name}</p>
-                  <p className="text-white/50 text-sm font-medium mb-1">{p.role} · פורשים כנף</p>
-                  <p className="text-white text-sm leading-relaxed">{p.bio}</p>
+                  <p className="text-[#00D4FF] text-sm font-medium mb-1">{p.role} · פורשים כנף</p>
+                  <p className="text-[#A294FD] text-sm leading-relaxed">{p.bio}</p>
                 </div>
               </motion.div>
             ))}
@@ -259,11 +259,11 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24 bg-[#0B0114]">
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-12">
-            <p className="text-white/50 font-bold text-sm mb-3">שיטת פורשים כנף</p>
+            <p className="text-[#00D4FF] font-bold text-sm mb-3">שיטת פורשים כנף</p>
             <h2 className="font-black text-white text-2xl md:text-4xl mb-3">
-              איך הפכנו חומר יבש ל<span className="text-white/50">מערכת הפעלה פשוטה</span>
+              איך הפכנו חומר יבש ל<span className="text-[#00D4FF]">מערכת הפעלה פשוטה</span>
             </h2>
-            <p className="text-white text-base max-w-xl mx-auto">לא עוד קורס תיאורטי. מערכת שלמה שנותנת לך שליטה אמיתית על הכסף שלך.</p>
+            <p className="text-[#A294FD] text-base max-w-xl mx-auto">לא עוד קורס תיאורטי. מערכת שלמה שנותנת לך שליטה אמיתית על הכסף שלך.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
@@ -276,12 +276,12 @@ export default function LP2Page() {
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20, scale: 0.95 }} whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                className="p-5 rounded-2xl border border-white/5 bg-[rgba(255,255,255,0.04)]/50 hover:border-[#F5A624]/30 hover:shadow-[0_0_20px_rgba(0,212,255,0.1)] transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-[#F5A624]/10 flex items-center justify-center mb-3 group-hover:bg-[#F5A624]/20 transition-colors">
+                className="p-5 rounded-2xl border border-white/5 bg-[#1A0B2E]/50 hover:border-[#00D4FF]/30 hover:shadow-[0_0_20px_rgba(0,212,255,0.1)] transition-all group">
+                <div className="w-10 h-10 rounded-xl bg-[#F5A624]/10 flex items-center justify-center mb-3 group-hover:bg-[#39FF14]/20 transition-colors">
                   <item.icon size={20} className="text-[#F5A624]" />
                 </div>
                 <h3 className="font-bold text-white text-base mb-1">{item.title}</h3>
-                <p className="text-white text-sm leading-relaxed">{item.desc}</p>
+                <p className="text-[#A294FD] text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -289,11 +289,11 @@ export default function LP2Page() {
       </FadeSection>
 
       {/* ═══════════ CURRICULUM ═══════════ */}
-      <FadeSection className="py-16 md:py-24" style={{ background: "linear-gradient(180deg, #0B0114, rgba(255,255,255,0.04))" }}>
+      <FadeSection className="py-16 md:py-24" style={{ background: "linear-gradient(180deg, #0B0114, #1A0B2E)" }}>
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-12">
-            <p className="text-white/50 font-bold text-sm mb-3">תוכנית הלימודים</p>
-            <h2 className="font-black text-white text-2xl md:text-4xl">3 שלבים. 58 שיעורים. <span className="text-white/50">שליטה מלאה.</span></h2>
+            <p className="text-[#00D4FF] font-bold text-sm mb-3">תוכנית הלימודים</p>
+            <h2 className="font-black text-white text-2xl md:text-4xl">3 שלבים. 58 שיעורים. <span className="text-[#00D4FF]">שליטה מלאה.</span></h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -318,13 +318,13 @@ export default function LP2Page() {
                   </div>
                   <span className="text-xs font-black px-3 py-1 rounded-full text-white" style={{ background: stage.color }}>שלב {stage.num}</span>
                   <h3 className="font-black text-white text-lg mt-2">{stage.title}</h3>
-                  <p className="text-white/60 text-sm">{stage.subtitle}</p>
+                  <p className="text-[#A294FD]/60 text-sm">{stage.subtitle}</p>
                 </div>
                 <div className="p-5 space-y-3">
                   {stage.lessons.map((l, j) => (
                     <div key={j} className="flex items-start gap-2.5">
                       <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0 mt-0.5" style={{ background: stage.color }}>{j+1}</span>
-                      <span className="text-white text-sm leading-snug">{l}</span>
+                      <span className="text-[#A294FD] text-sm leading-snug">{l}</span>
                     </div>
                   ))}
                   {/* Outcome */}
@@ -342,7 +342,7 @@ export default function LP2Page() {
       {/* ═══════════ WHATSAPP REVIEWS ═══════════ */}
       <FadeSection className="py-16 md:py-24 bg-[#0B0114]">
         <div className="max-w-4xl mx-auto px-5">
-          <p className="text-center text-white/50 font-bold text-sm mb-8">קצת ממה שאומרים עלינו</p>
+          <p className="text-center text-[#00D4FF] font-bold text-sm mb-8">קצת ממה שאומרים עלינו</p>
           <WaCarouselLight />
         </div>
       </FadeSection>
@@ -355,28 +355,28 @@ export default function LP2Page() {
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              className="p-6 rounded-2xl border border-red-500/15 bg-red-500/5">
+              className="p-6 rounded-2xl border border-red-500/20 bg-red-500/5">
               <p className="font-bold text-red-500 text-sm mb-4">✗ לא בשבילך אם:</p>
-              <ul className="space-y-3 text-white text-base">
+              <ul className="space-y-3 text-[#A294FD] text-base">
                 <li className="flex gap-2"><span className="text-red-400">•</span>אתה מחפש להתעשר מהר</li>
                 <li className="flex gap-2"><span className="text-red-400">•</span>אתה לא מוכן להשקיע 3 שעות בעצמך</li>
                 <li className="flex gap-2"><span className="text-red-400">•</span>אתה חושב שכסף זה עניין של מזל</li>
               </ul>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              className="p-6 rounded-2xl border border-[#F5A624]/20 bg-[#F5A624]/5">
-              <p className="font-bold text-[#F5A624] text-sm mb-4">✓ כן בשבילך אם:</p>
-              <ul className="space-y-3 text-white text-base">
-                <li className="flex gap-2"><span className="text-[#F5A624]">•</span>אתה רוצה להבין כסף באמת ולא לנחש</li>
-                <li className="flex gap-2"><span className="text-[#F5A624]">•</span>אתה מוכן לקחת אחריות על העתיד שלך</li>
-                <li className="flex gap-2"><span className="text-[#F5A624]">•</span>אתה מבין שאי-ידע עולה יותר מידע</li>
+              className="p-6 rounded-2xl border border-[#39FF14]/20 bg-[#39FF14]/5">
+              <p className="font-bold text-[#39FF14] text-sm mb-4">✓ כן בשבילך אם:</p>
+              <ul className="space-y-3 text-[#A294FD] text-base">
+                <li className="flex gap-2"><span className="text-[#39FF14]">•</span>אתה רוצה להבין כסף באמת ולא לנחש</li>
+                <li className="flex gap-2"><span className="text-[#39FF14]">•</span>אתה מוכן לקחת אחריות על העתיד שלך</li>
+                <li className="flex gap-2"><span className="text-[#39FF14]">•</span>אתה מבין שאי-ידע עולה יותר מידע</li>
               </ul>
             </motion.div>
           </div>
           <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
             className="text-center mt-10">
             <a href="#checkout"
-              className="inline-flex items-center gap-2 bg-[#F5A624] text-black font-black text-lg px-10 py-4 rounded-full hover:brightness-110 hover:scale-105 active:scale-95 transition-all shadow-[0_4px_20px_rgba(245,166,36,0.25)]">
+              className="inline-flex items-center gap-2 bg-[#39FF14] text-black font-black text-lg px-10 py-4 rounded-full hover:brightness-110 hover:scale-105 active:scale-95 transition-all shadow-[0_4px_25px_rgba(57,255,20,0.3)]">
               זה בדיוק בשבילי
             </a>
           </motion.div>
@@ -388,38 +388,38 @@ export default function LP2Page() {
         <div className="max-w-xl mx-auto px-5">
           <div className="text-center mb-8">
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              className="text-white/50 font-bold text-sm mb-2">הצעד הבא שלך</motion.p>
+              className="text-[#00D4FF] font-bold text-sm mb-2">הצעד הבא שלך</motion.p>
             <h2 className="font-black text-white text-2xl md:text-3xl mb-2">מוכן להתחיל?</h2>
-            <p className="text-white text-base">מלא את הפרטים ותקבל גישה מיידית לקורס.</p>
+            <p className="text-[#A294FD] text-base">מלא את הפרטים ותקבל גישה מיידית לקורס.</p>
           </div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="rounded-2xl border border-white/10 bg-[rgba(255,255,255,0.04)]/50 p-6 md:p-8 shadow-sm">
+            className="rounded-2xl border border-white/10 bg-[#1A0B2E]/50 p-6 md:p-8 shadow-sm">
             <div className="text-center mb-6">
-              <span className="text-white/60 line-through text-xl">₪490</span>
-              <span className="text-[#F5A624] font-black text-4xl mx-3">₪{finalPrice}</span>
+              <span className="text-[#A294FD]/60 line-through text-xl">₪490</span>
+              <span className="text-[#39FF14] font-black text-4xl mx-3">₪{finalPrice}</span>
               {couponApplied && (
                 <div className="flex items-center justify-center gap-2 mt-2">
-                  <span className="text-[#F5A624] text-sm font-bold">{couponApplied.code} — {couponApplied.label}</span>
-                  <button onClick={() => { setCouponApplied(null); setCoupon('') }} className="text-white/50 hover:text-gray-600"><X size={14} /></button>
+                  <span className="text-[#39FF14] text-sm font-bold">{couponApplied.code} — {couponApplied.label}</span>
+                  <button onClick={() => { setCouponApplied(null); setCoupon('') }} className="text-[#A294FD]/50 hover:text-gray-600"><X size={14} /></button>
                 </div>
               )}
-              <p className="text-white/60 text-sm mt-1">תשלום חד-פעמי · גישה לכל החיים</p>
+              <p className="text-[#A294FD]/60 text-sm mt-1">תשלום חד-פעמי · גישה לכל החיים</p>
             </div>
 
             <div className="space-y-3 mb-4">
               <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="ישראל ישראלי"
-                className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#0A0C12] text-[#E2E8F0] text-base placeholder:text-white/30 focus:outline-none focus:border-[#F5A624] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all" />
+                className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#0B0114] text-white text-base placeholder:text-[#A294FD]/30 focus:outline-none focus:border-[#00D4FF] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all" />
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
-                className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#0A0C12] text-[#E2E8F0] text-base placeholder:text-white/30 focus:outline-none focus:border-[#F5A624] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all text-left" />
+                className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#0B0114] text-white text-base placeholder:text-[#A294FD]/30 focus:outline-none focus:border-[#00D4FF] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all text-left" />
               <input type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} placeholder="050-0000000" dir="ltr"
-                className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#0A0C12] text-[#E2E8F0] text-base placeholder:text-white/30 focus:outline-none focus:border-[#F5A624] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all text-left" />
+                className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#0B0114] text-white text-base placeholder:text-[#A294FD]/30 focus:outline-none focus:border-[#00D4FF] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all text-left" />
               {!couponApplied && (
                 <div className="flex gap-2">
                   <input type="text" value={coupon} onChange={e => setCoupon(e.target.value.toUpperCase())} onKeyDown={e => e.key === 'Enter' && handleCouponCheck()} placeholder="קוד קופון" dir="ltr"
-                    className="flex-1 px-4 py-3 rounded-xl border border-white/10 bg-[#0B0114] text-sm placeholder:text-white/30 focus:outline-none focus:border-[#F5A624] transition-all text-left" />
+                    className="flex-1 px-4 py-3 rounded-xl border border-white/10 bg-[#0B0114] text-sm placeholder:text-[#A294FD]/30 focus:outline-none focus:border-[#00D4FF] transition-all text-left" />
                   <button onClick={() => handleCouponCheck()} disabled={couponLoading}
-                    className="px-5 py-3 rounded-xl bg-[#F5A624]/10 border border-[#F5A624]/30 text-[#F5A624] font-bold text-sm hover:bg-[#F5A624]/20 transition-all">
+                    className="px-5 py-3 rounded-xl bg-[#39FF14]/10 border border-[#39FF14]/30 text-[#39FF14] font-bold text-sm hover:bg-[#39FF14]/20 transition-all">
                     {couponLoading ? <Loader2 size={16} className="animate-spin" /> : 'החל'}
                   </button>
                 </div>
@@ -428,18 +428,18 @@ export default function LP2Page() {
             </div>
 
             <button onClick={handlePay} disabled={loading}
-              className="w-full py-4 rounded-xl bg-[#F5A624] text-black font-black text-lg hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-60 shadow-[0_4px_20px_rgba(245,166,36,0.25)] mb-3">
+              className="w-full py-4 rounded-xl bg-[#39FF14] text-black font-black text-lg hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-60 shadow-[0_4px_25px_rgba(57,255,20,0.3)] mb-3">
               {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />רגע...</span> : `לתשלום מאובטח — ₪${finalPrice}`}
             </button>
 
-            <p className="text-center text-white/50 text-[10px] leading-relaxed mb-2">
+            <p className="text-center text-[#A294FD]/50 text-[10px] leading-relaxed mb-2">
               בלחיצה אני מאשר/ת את{' '}
-              <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-white/60">תנאי השימוש</button>
-              {' '}ו<button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-white/60">מדיניות הפרטיות</button> וקבלת עדכונים באימייל
+              <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-[#A294FD]/60">תנאי השימוש</button>
+              {' '}ו<button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-[#A294FD]/60">מדיניות הפרטיות</button> וקבלת עדכונים באימייל
             </p>
             <div className="flex items-center justify-center gap-4">
-              <div className="flex items-center gap-1 text-white/50 text-[11px]"><Lock size={11} /><span>SSL מאובטח</span></div>
-              <div className="flex items-center gap-1 text-white/50 text-[11px]"><ShieldCheck size={11} /><span>PCI DSS</span></div>
+              <div className="flex items-center gap-1 text-[#A294FD]/50 text-[11px]"><Lock size={11} /><span>SSL מאובטח</span></div>
+              <div className="flex items-center gap-1 text-[#A294FD]/50 text-[11px]"><ShieldCheck size={11} /><span>PCI DSS</span></div>
             </div>
 
             {error && (
@@ -448,12 +448,12 @@ export default function LP2Page() {
               </div>
             )}
 
-            <div className="mt-6 p-4 rounded-xl border border-[#F5A624]/20 bg-[#F5A624]/5">
+            <div className="mt-6 p-4 rounded-xl border border-[#39FF14]/20 bg-[#39FF14]/5">
               <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck size={18} className="text-[#F5A624]" />
-                <span className="text-[#F5A624] font-bold text-sm">אחריות מלאה — 7 ימים</span>
+                <ShieldCheck size={18} className="text-[#39FF14]" />
+                <span className="text-[#39FF14] font-bold text-sm">אחריות מלאה — 7 ימים</span>
               </div>
-              <p className="text-white text-sm leading-relaxed">לא הרגשת ערך — החזר מלא. בלי שאלות. בלי אותיות קטנות.</p>
+              <p className="text-[#A294FD] text-sm leading-relaxed">לא הרגשת ערך — החזר מלא. בלי שאלות. בלי אותיות קטנות.</p>
             </div>
           </motion.div>
         </div>
@@ -488,9 +488,9 @@ export default function LP2Page() {
           style={{ background: `radial-gradient(circle, ${ACCENT}, transparent 70%)` }} />
         <div className="relative z-10 max-w-2xl mx-auto px-5">
           <h2 className="font-black text-white text-2xl md:text-4xl mb-4">קח אותי לשלב הבא</h2>
-          <p className="text-white text-lg mb-8">3 שעות שיחסכו לך עשור של טעויות.</p>
+          <p className="text-[#A294FD] text-lg mb-8">3 שעות שיחסכו לך עשור של טעויות.</p>
           <a href="#checkout"
-            className="inline-flex items-center gap-2 bg-[#F5A624] text-black font-black text-xl px-12 py-5 rounded-full hover:brightness-110 hover:scale-105 active:scale-95 transition-all shadow-[0_4px_25px_rgba(245,166,36,0.3)]">
+            className="inline-flex items-center gap-2 bg-[#39FF14] text-black font-black text-xl px-12 py-5 rounded-full hover:brightness-110 hover:scale-105 active:scale-95 transition-all shadow-[0_4px_30px_rgba(57,255,20,0.35)]">
             אני מתחיל עכשיו
           </a>
         </div>
@@ -500,19 +500,26 @@ export default function LP2Page() {
       <footer className="border-t border-white/5 py-6 text-center bg-[#0B0114]">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Image src="/logo.png" alt="" width={20} height={20} className="w-5 h-5 object-contain" />
-          <span className="text-white/50 text-sm">פורשים כנף</span>
+          <span className="text-[#A294FD]/50 text-sm">פורשים כנף</span>
         </div>
         <div className="flex items-center justify-center gap-3 mb-2">
-          <button onClick={() => setLegalModal('terms')} className="text-white/50 text-xs hover:text-white/60">תנאי שימוש</button>
+          <button onClick={() => setLegalModal('terms')} className="text-[#A294FD]/50 text-xs hover:text-[#A294FD]/60">תנאי שימוש</button>
           <span className="text-gray-200">·</span>
-          <button onClick={() => setLegalModal('privacy')} className="text-white/50 text-xs hover:text-white/60">מדיניות פרטיות</button>
+          <button onClick={() => setLegalModal('privacy')} className="text-[#A294FD]/50 text-xs hover:text-[#A294FD]/60">מדיניות פרטיות</button>
           <span className="text-gray-200">·</span>
-          <button onClick={() => setLegalModal('accessibility')} className="text-white/50 text-xs hover:text-white/60">נגישות</button>
+          <button onClick={() => setLegalModal('accessibility')} className="text-[#A294FD]/50 text-xs hover:text-[#A294FD]/60">נגישות</button>
         </div>
-        <p className="text-white/30 text-xs">© 2026 כל הזכויות שמורות</p>
+        <p className="text-[#A294FD]/30 text-xs">© 2026 כל הזכויות שמורות</p>
       </footer>
 
-      <A11yWidget onOpenStatement={() => setLegalModal('accessibility')} />
+      {/* Accessibility icon — links to accessibility statement */}
+      <button onClick={() => setLegalModal('accessibility')}
+        className="fixed bottom-4 left-4 z-50 w-11 h-11 rounded-full bg-[#00D4FF] text-black flex items-center justify-center shadow-lg hover:brightness-110 transition-all"
+        aria-label="הצהרת נגישות">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="4.5" r="2.5" /><path d="m4.2 9.2 5.3 2.3v4l-2.2 5" /><path d="m19.8 9.2-5.3 2.3v4l2.2 5" /><path d="M7.5 9.2h9" />
+        </svg>
+      </button>
       <LightCookieConsent />
     </div>
   )
@@ -533,7 +540,7 @@ function LP2Video() {
   }, [])
   return (
     <div className="mx-auto mb-8" style={{ maxWidth: '280px' }}>
-      <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: "2px solid rgba(245,166,36,0.2)" }}>
+      <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: "2px solid rgba(0,212,255,0.3)" }}>
         <video ref={videoRef} playsInline loop muted autoPlay preload="auto" className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
         <button onClick={() => { if (videoRef.current) { videoRef.current.muted = !isMuted; setIsMuted(!isMuted) } }}
           className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2.5 min-h-[44px] border border-white/15 transition-all hover:bg-black/75 active:scale-95">
@@ -571,8 +578,8 @@ function WaCarouselLight() {
         })}
       </div>
       <div className="flex items-center justify-center gap-4 mt-4">
-        <button onClick={prev} className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-[#F5A624] hover:border-[#F5A624]/30 transition-all"><ChevronLeft size={18} /></button>
-        <button onClick={next} className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-[#F5A624] hover:border-[#F5A624]/30 transition-all"><ChevronRight size={18} /></button>
+        <button onClick={prev} className="w-10 h-10 rounded-full bg-gray-100 border border-white/10 flex items-center justify-center text-[#A294FD]/50 hover:text-[#F5A624] hover:border-[#00D4FF]/30 transition-all"><ChevronLeft size={18} /></button>
+        <button onClick={next} className="w-10 h-10 rounded-full bg-gray-100 border border-white/10 flex items-center justify-center text-[#A294FD]/50 hover:text-[#F5A624] hover:border-[#00D4FF]/30 transition-all"><ChevronRight size={18} /></button>
       </div>
     </div>
   )
@@ -589,10 +596,10 @@ function LightCookieConsent() {
         className="fixed bottom-4 inset-x-4 md:inset-x-auto md:left-4 md:right-auto md:max-w-md z-[999]">
         <div className="rounded-2xl border border-white/10 p-5 bg-[#0B0114] shadow-xl">
           <p className="text-white text-sm font-bold mb-2">🍪 מדיניות עוגיות</p>
-          <p className="text-white text-sm leading-relaxed mb-3">אתר זה משתמש בעוגיות לשיפור חוויית הגלישה, ניתוח תנועה ולצרכי שיווק.</p>
+          <p className="text-[#A294FD] text-sm leading-relaxed mb-3">אתר זה משתמש בעוגיות לשיפור חוויית הגלישה, ניתוח תנועה ולצרכי שיווק.</p>
           <div className="flex items-center gap-2">
-            <button onClick={() => { localStorage.setItem('pk_cookie_consent', 'all'); setShow(false) }} className="flex-1 bg-[#F5A624] text-black font-black text-sm py-2.5 rounded-xl hover:brightness-110 transition-all">מאשר הכל ✓</button>
-            <button onClick={() => { localStorage.setItem('pk_cookie_consent', 'essential'); setShow(false) }} className="text-white/50 text-xs hover:text-gray-600 px-3 py-2.5">הכרחיות בלבד</button>
+            <button onClick={() => { localStorage.setItem('pk_cookie_consent', 'all'); setShow(false) }} className="flex-1 bg-[#39FF14] text-black font-black text-sm py-2.5 rounded-xl hover:brightness-110 transition-all">מאשר הכל ✓</button>
+            <button onClick={() => { localStorage.setItem('pk_cookie_consent', 'essential'); setShow(false) }} className="text-[#A294FD]/50 text-xs hover:text-gray-600 px-3 py-2.5">הכרחיות בלבד</button>
           </div>
         </div>
       </motion.div>
@@ -608,85 +615,15 @@ function FaqItem({ q, a }: { q: string; a: string }) {
       className="rounded-xl border border-white/10 bg-[#0B0114] overflow-hidden hover:border-[#F5A624]/20 transition-colors">
       <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-5 py-4 text-right gap-3">
         <span className="font-bold text-white text-base">{q}</span>
-        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}><ChevronDown size={18} className="text-white/50" /></motion.span>
+        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}><ChevronDown size={18} className="text-[#A294FD]/50" /></motion.span>
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
-            <p className="text-white text-base leading-relaxed px-5 pb-4">{a}</p>
+            <p className="text-[#A294FD] text-base leading-relaxed px-5 pb-4">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
-  )
-}
-
-// ═══════ ACCESSIBILITY WIDGET ═══════
-function A11yWidget({ onOpenStatement }: { onOpenStatement: () => void }) {
-  const [open, setOpen] = useState(false)
-  const [fontSize, setFontSize] = useState(100)
-  const [highContrast, setHighContrast] = useState(false)
-  const [grayscale, setGrayscale] = useState(false)
-  const [linkHighlight, setLinkHighlight] = useState(false)
-
-  useEffect(() => {
-    document.documentElement.style.fontSize = `${fontSize}%`
-    document.documentElement.classList.toggle('a11y-high-contrast', highContrast)
-    document.documentElement.classList.toggle('a11y-grayscale', grayscale)
-    document.documentElement.classList.toggle('a11y-links', linkHighlight)
-  }, [fontSize, highContrast, grayscale, linkHighlight])
-
-  const reset = () => { setFontSize(100); setHighContrast(false); setGrayscale(false); setLinkHighlight(false) }
-
-  return (
-    <>
-      <button onClick={() => setOpen(!open)} aria-label="תפריט נגישות"
-        className="fixed bottom-4 left-4 z-[998] w-12 h-12 rounded-full bg-[#F5A624] text-black flex items-center justify-center shadow-lg hover:scale-110 transition-all">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="4.5" r="2.5" /><path d="m4.2 9.2 5.3 2.3v4l-2.2 5" /><path d="m19.8 9.2-5.3 2.3v4l2.2 5" /><path d="M7.5 9.2h9" />
-        </svg>
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-20 left-4 z-[999] w-64 rounded-2xl border border-white/10 p-4 shadow-2xl"
-            style={{ background: '#1A1D27' }}>
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-white font-bold text-sm">נגישות</span>
-              <button onClick={() => setOpen(false)} className="text-white/30 hover:text-white"><X size={16} /></button>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-white/50 text-xs">גודל טקסט</span>
-                <div className="flex items-center gap-1">
-                  <button onClick={() => setFontSize(f => Math.max(80, f - 10))} className="w-7 h-7 rounded bg-white/10 text-white text-sm font-bold hover:bg-white/20">−</button>
-                  <span className="text-white/50 text-xs w-8 text-center">{fontSize}%</span>
-                  <button onClick={() => setFontSize(f => Math.min(150, f + 10))} className="w-7 h-7 rounded bg-white/10 text-white text-sm font-bold hover:bg-white/20">+</button>
-                </div>
-              </div>
-
-              {[
-                { label: 'ניגודיות גבוהה', active: highContrast, toggle: () => setHighContrast(!highContrast) },
-                { label: 'גווני אפור', active: grayscale, toggle: () => setGrayscale(!grayscale) },
-                { label: 'הדגשת קישורים', active: linkHighlight, toggle: () => setLinkHighlight(!linkHighlight) },
-              ].map((item, i) => (
-                <button key={i} onClick={item.toggle}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-all ${item.active ? 'bg-[#F5A624]/15 text-[#F5A624]' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}>
-                  {item.label}
-                  <span className="text-[10px]">{item.active ? '✓' : ''}</span>
-                </button>
-              ))}
-
-              <div className="flex gap-2 pt-1">
-                <button onClick={reset} className="flex-1 text-xs py-2 rounded-lg bg-white/5 text-white/30 hover:bg-white/10">איפוס</button>
-                <button onClick={() => { onOpenStatement(); setOpen(false) }} className="flex-1 text-xs py-2 rounded-lg bg-white/5 text-white/30 hover:bg-white/10">הצהרת נגישות</button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
   )
 }
