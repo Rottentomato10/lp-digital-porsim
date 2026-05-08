@@ -20,12 +20,12 @@ export default function N9SalesPitch() {
             הבעיה היא לא אצלך.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            היא במערכת שמעולם לא ציידה אותך בספר החוקים הנכון.
+            הבעיה היא במערכת שמעולם לא ציידה אותך בספר החוקים הנכון.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
             12 שנים של לימודים — ואפס שעות על כסף.
             <br />ואז יום אחד אתה מתחיל לעבוד, מקבל משכורת,
-            <br />ומצפים ממך לדעת מה לעשות איתה.
+            <br />ומצפים ממך לדעת מה לעשות עם הכסף.
           </p>
 
           <div className="h-px bg-gradient-to-r from-transparent via-[#F5A624]/30 to-transparent my-4" />

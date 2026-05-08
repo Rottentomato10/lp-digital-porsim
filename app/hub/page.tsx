@@ -6,6 +6,28 @@ interface E { from:string;to:string }
 
 const C={brand:'#F5A624',sales:'#F97316',course:'#10B981',women:'#EC4899',manage:'#8B5CF6',infra:'#06B6D4',traffic:'#3B82F6',analytics:'#6366F1'}
 
+// Layout 1: Radial (original)
+const L1:Record<string,{x:number,y:number}>={
+  pk:{x:440,y:295},lp1:{x:210,y:210},lp2:{x:430,y:195},course:{x:690,y:210},admin:{x:910,y:275},app:{x:910,y:360},
+  dash:{x:170,y:395},os:{x:20,y:305},wix:{x:390,y:415},porsot:{x:580,y:420},
+  brevo:{x:20,y:170},upstash:{x:15,y:430},cardcom:{x:20,y:510},supabase:{x:910,y:170},vimeo:{x:910,y:115},vercel:{x:910,y:445},wixp:{x:395,y:495},
+  pixel:{x:280,y:565},ga:{x:460,y:565},clarity:{x:635,y:565},meta:{x:320,y:645},con:{x:540,y:645},
+}
+
+// Layout 2: Building (infra bottom, products middle, brand top)
+const L2:Record<string,{x:number,y:number}>={
+  // Floor 1 (top) — Brand
+  pk:{x:420,y:40},
+  // Floor 2 — Products (what users see)
+  lp1:{x:120,y:160},lp2:{x:340,y:160},course:{x:580,y:160},porsot:{x:820,y:160},wix:{x:120,y:250},
+  // Floor 3 — Management & tools
+  dash:{x:120,y:340},os:{x:340,y:340},admin:{x:580,y:340},app:{x:820,y:340},
+  // Floor 4 — Traffic & Analytics
+  meta:{x:180,y:440},con:{x:420,y:440},pixel:{x:640,y:440},ga:{x:830,y:440},clarity:{x:180,y:530},
+  // Floor 5 (bottom) — Infrastructure
+  cardcom:{x:80,y:620},brevo:{x:270,y:620},upstash:{x:450,y:620},supabase:{x:630,y:620},vimeo:{x:790,y:620},vercel:{x:420,y:530},wixp:{x:630,y:530},
+}
+
 const NN:N[]=[
   {id:'pk',label:'פורשים כנף',desc:'חינוך פיננסי · הארגון המרכזי',url:'https://www.porsimkanaf.com',x:440,y:295,w:210,h:80,color:C.brand},
   {id:'lp1',label:'דף נחיתה ראשי',desc:'דף מכירה כהה · טופס · וידאו',url:'https://digital.porsimkanaf.com',x:210,y:210,w:195,h:60,color:C.sales},
@@ -62,13 +84,19 @@ function getConn(id:string){const s=new Set([id]);EE.forEach(e=>{if(e.from===id)
 export default function Hub(){
   const cvRef=useRef<HTMLCanvasElement>(null)
   const [h,sH]=useState<string|null>(null)
+  const [layout,setLayout]=useState<'radial'|'building'>('radial')
+  const layouts={radial:L1,building:L2}
+  const pos=layouts[layout]
+
+  // Apply layout positions
+  const nodes=NN.map(n=>({...n,x:pos[n.id]?.x??n.x,y:pos[n.id]?.y??n.y}))
 
   useEffect(()=>{
     const cv=cvRef.current;if(!cv)return;const ctx=cv.getContext('2d');if(!ctx)return
     const d=window.devicePixelRatio||1;cv.width=1100*d;cv.height=740*d;ctx.scale(d,d);ctx.clearRect(0,0,1100,740)
     const c=h?getConn(h):null
     EE.forEach(e=>{
-      const f=NN.find(n=>n.id===e.from),t=NN.find(n=>n.id===e.to);if(!f||!t)return
+      const f=nodes.find(n=>n.id===e.from),t=nodes.find(n=>n.id===e.to);if(!f||!t)return
       const fc=ctr(f),tc=ctr(t)
       const a=edgePoint(f,tc.x,tc.y),b=edgePoint(t,fc.x,fc.y)
       const act=c&&c.has(e.from)&&c.has(e.to),dim=c&&!act
