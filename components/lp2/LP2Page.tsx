@@ -187,7 +187,7 @@ export default function LP2Page() {
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
               className="text-[#2563EB] font-bold text-lg">
-              אנחנו כאן כדי לתקן את זה.
+              אנחנו לא עוד קורס באינטרנט. אנחנו כאן כדי לתקן את מה שהמערכת שכחה.
             </motion.p>
           </div>
         </div>
@@ -200,8 +200,8 @@ export default function LP2Page() {
             <Image src="/logo.png" alt="" width={60} height={60} className="w-12 h-12 object-contain mx-auto mb-4" />
             <p className="text-[#2563EB] font-bold text-sm mb-3">מי עומדים מאחורי זה</p>
             <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl leading-snug">
-              הכנסנו חינוך פיננסי לבתי ספר בישראל.
-              <br />עכשיו אנחנו מביאים את זה <span className="text-[#2563EB]">אליך</span>.
+              תיקנו את מה שהמערכת שכחה.
+              <br />עכשיו אנחנו כאן בשביל <span className="text-[#2563EB]">כל מי שלא עבר את זה</span>.
             </h2>
           </div>
 
@@ -473,6 +473,7 @@ export default function LP2Page() {
               { q: 'כמה זמן הקורס?', a: '3 שעות. 58 שיעורים קצרים. אפשר לסיים ביום אחד או בקצב שלך.' },
               { q: 'צריך רקע כלשהו?', a: 'אפס. מתחילים מ"מה זה כסף" ובונים משם. אם היה לך את הידע — לא היית צריך אותנו.' },
               { q: 'מה ההבדל בינכם ליועץ פיננסי?', a: 'יועץ אומר לך מה לעשות. אנחנו מלמדים אותך להבין למה. כשאתה מבין — אתה לא צריך לשלם למישהו שיגיד לך מה לעשות עם הכסף שלך.' },
+              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו מחנכים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח — 15,000 תלמידים ב-300 כיתות, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים — יש פה כלים אמיתיים לחיים האמיתיים.' },
             ].map((item, i) => (
               <FaqItem key={i} q={item.q} a={item.a} />
             ))}
@@ -511,7 +512,14 @@ export default function LP2Page() {
         <p className="text-gray-300 text-xs">© 2026 כל הזכויות שמורות</p>
       </footer>
 
-      {/* Removed: light page, no dark mode toggle needed */}
+      {/* Accessibility icon — links to accessibility statement */}
+      <button onClick={() => setLegalModal('accessibility')}
+        className="fixed bottom-4 left-4 z-50 w-11 h-11 rounded-full bg-[#2563EB] text-white flex items-center justify-center shadow-lg hover:brightness-110 transition-all"
+        aria-label="הצהרת נגישות">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="4.5" r="2.5" /><path d="m4.2 9.2 5.3 2.3v4l-2.2 5" /><path d="m19.8 9.2-5.3 2.3v4l2.2 5" /><path d="M7.5 9.2h9" />
+        </svg>
+      </button>
       <LightCookieConsent />
     </div>
   )
