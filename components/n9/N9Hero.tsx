@@ -39,7 +39,18 @@ export default function N9Hero() {
     }
     v.addEventListener('timeupdate', onTimeFirst)
 
-    v.play().catch(() => {})
+    // Multiple play attempts for in-app browsers (Facebook/Instagram WebView)
+    const tryPlay = () => v.play().catch(() => {})
+    tryPlay()
+    // Retry after a short delay (in-app browsers sometimes need it)
+    setTimeout(tryPlay, 500)
+    setTimeout(tryPlay, 1500)
+    // Also try on user interaction (tap anywhere)
+    const playOnTouch = () => {
+      tryPlay()
+      document.removeEventListener('touchstart', playOnTouch)
+    }
+    document.addEventListener('touchstart', playOnTouch, { once: true })
 
     // Fallback: hide cover after 3s no matter what
     const fallback = setTimeout(markPlaying, 3000)
@@ -129,12 +140,12 @@ export default function N9Hero() {
 
         {/* Stats with success green for numbers */}
         <div className="flex items-center justify-center mb-5 px-4">
-          <div className="flex flex-wrap items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
-            <span className="text-xs xs:text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידים</span></span>
+          <div className="flex items-center justify-center gap-2 xs:gap-4 px-4 xs:px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03] whitespace-nowrap">
+            <span className="text-[11px] xs:text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידים</span></span>
             <span className="text-white/15">·</span>
-            <span className="text-xs xs:text-sm font-semibold"><span className="text-[#34D399]">300+</span> <span className="text-white/50">כיתות</span></span>
+            <span className="text-[11px] xs:text-sm font-semibold"><span className="text-[#34D399]">300+</span> <span className="text-white/50">כיתות</span></span>
             <span className="text-white/15">·</span>
-            <span className="text-xs xs:text-sm font-semibold"><span className="text-[#34D399]">5+</span> <span className="text-white/50">שנות פעילות</span></span>
+            <span className="text-[11px] xs:text-sm font-semibold"><span className="text-[#34D399]">5+</span> <span className="text-white/50">שנות פעילות</span></span>
           </div>
         </div>
 
@@ -181,9 +192,11 @@ export default function N9Hero() {
             loop
             muted
             autoPlay
-            preload="auto"
-            src="/video.mp4"
-          />
+            preload="metadata"
+            poster="/video-poster.jpg"
+          >
+            <source src="/video.mp4" type="video/mp4" />
+          </video>
           {/* "מוכנים?" cover — visible until video starts */}
           {!isPlaying && (
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
