@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Check, ChevronDown, ShieldCheck, Lock, Loader2, User, Mail, Phone, Tag, X, Play, VolumeX, Volume2 } from 'lucide-react'
+import { Check, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Lock, Loader2, User, Mail, Phone, Tag, X, Play, VolumeX, Volume2 } from 'lucide-react'
 import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 import DCookieConsent from '@/components/d/DCookieConsent'
@@ -159,14 +159,19 @@ export default function LP2Page() {
                 אנחנו שינינו את הדרך שבה מערכת החינוך מלמדת כסף
               </h2>
               <p className="text-[#4B5563] text-base leading-relaxed mb-3">
-                אנחנו דקל ואביתר, המייסדים של <strong>פורשים כנף</strong>. ב-5 השנים האחרונות העברנו סדנאות חינוך פיננסי ב-300+ כיתות ברחבי הארץ — <strong>כחלק מתוכניות גפ״ן של משרד החינוך</strong>.
+                אנחנו דקל ואביתר, המייסדים של <strong>פורשים כנף</strong>. ב-5 השנים האחרונות העברנו סדנאות חינוך פיננסי ב-300+ כיתות ברחבי הארץ — <strong>כחלק מתוכניות גפ״ן, תוכניות ההעשרה של משרד החינוך</strong>.
               </p>
               <p className="text-[#4B5563] text-base leading-relaxed mb-3">
-                ראינו מקרוב איך צעירים מבריקים יוצאים לעולם בלי הכלים הכי בסיסיים. אז בנינו את הקורס הדיגיטלי — כדי שכל אחד יוכל ללמוד, מכל מקום, בכל זמן.
+                נכנסנו לבתי ספר, ליחידות צבאיות, למכינות ולמסגרות חינוכיות — וראינו מקרוב איך צעירים מבריקים יוצאים לעולם בלי הכלים הכי בסיסיים. אנחנו באים מבחוץ למערכת החינוך, ובנינו משהו שמשלים את מה שהיא לא נותנת.
               </p>
-              <p className="text-[#4B5563] text-base leading-relaxed font-medium">
-                למעלה מ-15,000 תלמידים ותלמידות כבר עברו את הדרך הזו. עכשיו התור שלך.
+              <p className="text-[#4B5563] text-base leading-relaxed mb-4">
+                הקורס הדיגיטלי הוא הזיקוק של כל מה שלמדנו בשטח — 58 שיעורים שמלווים אותך מאפס ועד שליטה מלאה. כל מקום, כל זמן.
               </p>
+              <div className="flex gap-6">
+                <div><span className="text-[#F5A624] font-black text-2xl">15,000+</span><p className="text-[#9CA3AF] text-xs">תלמידים</p></div>
+                <div><span className="text-[#F5A624] font-black text-2xl">300+</span><p className="text-[#9CA3AF] text-xs">כיתות</p></div>
+                <div><span className="text-[#F5A624] font-black text-2xl">5+</span><p className="text-[#9CA3AF] text-xs">שנים בשטח</p></div>
+              </div>
             </div>
           </div>
         </div>
@@ -204,6 +209,46 @@ export default function LP2Page() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </Section>
+
+      {/* ========== CURRICULUM ========== */}
+      <Section className="py-16 md:py-24 bg-[#faf9f6]">
+        <div className="max-w-4xl mx-auto px-5">
+          <div className="text-center mb-12">
+            <p className="text-[#F5A624] font-bold text-sm mb-3">תוכנית הלימודים</p>
+            <h2 className="font-black text-[#1a1a1a] text-2xl md:text-3xl">3 שלבים. 58 שיעורים. שליטה מלאה.</h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              { stage: 'שלב 1', title: 'היסודות — להבין את שפת הכסף', color: '#F5A624', lessons: ['מה זה כסף ולמה משלמים לך', 'כל זכויות העובד שלך', 'לאן נעלם הכסף בתלוש השכר', 'איך הבנק באמת מרוויח ממך', 'אינפלציה, ריבית ומה שאף אחד לא מסביר'] },
+              { stage: 'שלב 2', title: 'הצמיחה — עוברים להתקפה', color: '#10B981', lessons: ['השקעות, תשואה וריבית דריבית', 'מניות, אג"ח, מדדים וקרנות סל', 'איך משקיעים בפועל: DCA ופיזור', 'נדל"ן, משכנתא ומלכודות'] },
+              { stage: 'שלב 3', title: 'המנכ"לים — בונים מערכת', color: '#8B5CF6', lessons: ['ניהול תזרים ונוסחת הזהב', 'פנסיה, קרן השתלמות והטבות מס', 'בניית מערכת הפעלה שנתית', 'פסיכולוגיה של כסף — הבאגים של המוח'] },
+            ].map((s, i) => (
+              <div key={i} className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
+                <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
+                  <span className="text-xs font-black px-3 py-1 rounded-full text-white" style={{ background: s.color }}>{s.stage}</span>
+                  <h3 className="font-bold text-[#1a1a1a] text-base md:text-lg">{s.title}</h3>
+                </div>
+                <div className="px-5 py-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {s.lessons.map((l, j) => (
+                    <div key={j} className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0" style={{ background: s.color }}>{j+1}</span>
+                      <span className="text-[#4B5563] text-sm">{l}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* ========== WHATSAPP REVIEWS ========== */}
+      <Section className="py-16 md:py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-5">
+          <p className="text-center text-[#F5A624] font-bold text-sm mb-8">קצת ממה שאומרים עלינו</p>
+          <WaCarouselLight />
         </div>
       </Section>
 
@@ -384,6 +429,7 @@ function LP2Video() {
       videoRef.current.muted = true
       videoRef.current.play().catch(() => {})
       setTimeout(() => videoRef.current?.play().catch(() => {}), 500)
+      setTimeout(() => videoRef.current?.play().catch(() => {}), 1500)
     }
     const playOnTouch = () => { videoRef.current?.play().catch(() => {}) }
     document.addEventListener('touchstart', playOnTouch, { once: true })
@@ -397,19 +443,74 @@ function LP2Video() {
   }
 
   return (
-    <div className="max-w-sm mx-auto mb-8">
-      <div className="relative rounded-2xl overflow-hidden border border-gray-200 shadow-lg"
-        style={{ aspectRatio: '240/426' }}>
+    <div className="mx-auto mb-8" style={{ maxWidth: '280px' }}>
+      <div className="relative rounded-2xl overflow-hidden shadow-xl"
+        style={{ aspectRatio: '240/426', border: '3px solid rgba(245,166,36,0.2)' }}>
         <video ref={videoRef} playsInline loop muted autoPlay preload="auto"
           className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
 
-        {/* Sound button — large, clear, mobile-friendly */}
         <button onClick={toggleMute}
           className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2.5 min-h-[44px] border border-white/15 transition-all hover:bg-black/75 active:scale-95">
           {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#F5A624]" />}
           <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>
             {isMuted ? 'לחץ לסאונד' : 'עם סאונד'}
           </span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function WaCarouselLight() {
+  const [active, setActive] = useState(0)
+  const screenshots = [
+    { src: '/review1.jpg', alt: 'ביקורת' },
+    { src: '/review2.jpg', alt: 'ביקורת' },
+    { src: '/review3.jpg', alt: 'ביקורת' },
+    { src: '/review4.jpg', alt: 'ביקורת' },
+    { src: '/review5.jpg', alt: 'ביקורת' },
+    { src: '/review6.jpg', alt: 'ביקורת' },
+  ]
+  const total = screenshots.length
+  const prev = () => setActive(a => (a - 1 + total) % total)
+  const next = () => setActive(a => (a + 1) % total)
+
+  const getOffset = (i: number) => {
+    const diff = ((i - active) % total + total) % total
+    if (diff === 0) return 0
+    if (diff === 1) return 1
+    if (diff === total - 1) return -1
+    return 2
+  }
+
+  return (
+    <div dir="ltr" className="relative" style={{ maxWidth: '700px', margin: '0 auto' }}>
+      <div className="relative flex items-center justify-center" style={{ height: '220px' }}>
+        {screenshots.map((img, i) => {
+          const pos = getOffset(i)
+          const isCenter = pos === 0
+          const isHidden = Math.abs(pos) > 1
+          return (
+            <div key={i} className="absolute transition-all duration-500 ease-out cursor-pointer"
+              onClick={() => { if (pos === -1) prev(); if (pos === 1) next() }}
+              style={{
+                width: '55%', transform: `translateX(${pos * 75}%) scale(${isCenter ? 1 : 0.8})`,
+                opacity: isHidden ? 0 : 1, filter: isCenter ? 'none' : 'blur(3px) brightness(0.6)',
+                zIndex: isCenter ? 10 : 1, pointerEvents: isHidden ? 'none' : 'auto',
+              }}>
+              <div className={`rounded-2xl overflow-hidden border-2 ${isCenter ? 'border-[#F5A624]/40 shadow-lg' : 'border-gray-200'}`}>
+                <Image src={img.src} alt={img.alt} width={600} height={300} className="w-full h-auto" priority />
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="flex items-center justify-center gap-4 mt-4">
+        <button onClick={prev} className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#F5A624] hover:border-[#F5A624]/30 transition-all">
+          <ChevronLeft size={18} />
+        </button>
+        <button onClick={next} className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 hover:text-[#F5A624] hover:border-[#F5A624]/30 transition-all">
+          <ChevronRight size={18} />
         </button>
       </div>
     </div>
