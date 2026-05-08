@@ -554,9 +554,16 @@ function LP2Video() {
       <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: '2px solid rgba(212,168,67,0.25)' }}>
         <video ref={videoRef} playsInline loop muted autoPlay preload="metadata" className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
 
-        {/* Cover until video starts */}
+        {/* Cover until video starts — tap to play on in-app browsers */}
         {!isPlaying && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, #0A1628 0%, #071020 70%)' }}>
+          <div
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer"
+            style={{ background: 'radial-gradient(ellipse at center, #0A1628 0%, #071020 70%)' }}
+            onClick={() => {
+              const v = videoRef.current
+              if (v) { v.muted = true; v.play().then(() => setIsPlaying(true)).catch(() => {}) }
+            }}
+          >
             <motion.span animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4A843] text-2xl font-black">▶ צפה עכשיו</motion.span>
           </div>
         )}

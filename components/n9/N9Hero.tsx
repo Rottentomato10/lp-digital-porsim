@@ -197,10 +197,14 @@ export default function N9Hero() {
           >
             <source src="/video.mp4" type="video/mp4" />
           </video>
-          {/* "מוכנים?" cover — visible until video starts */}
+          {/* "מוכנים?" cover — tap to play on in-app browsers */}
           {!isPlaying && (
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at center, #1a1400 0%, #080808 70%)' }}>
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center cursor-pointer"
+              style={{ background: 'radial-gradient(ellipse at center, #1a1400 0%, #080808 70%)' }}
+              onClick={() => {
+                const v = videoRef.current
+                if (v) { v.muted = true; v.play().then(() => setIsPlaying(true)).catch(() => {}) }
+              }}>
               <motion.span
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
