@@ -21,8 +21,16 @@ const EMAILS = [
     body: `<h2 style="color:#F5A624;font-size:22px;margin:0 0 16px;">היי {{name}}, שמחים שהגעת אלינו</h2>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">אנחנו דקל ואביתר מ״פורשים כנף״. ב-5 השנים האחרונות לימדנו יותר מ-15,000 צעירים וצעירות איך כסף באמת עובד — בבתי ספר, ביחידות צבאיות, ובקורס הדיגיטלי שלנו.</p>
 <p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">ראינו מקרוב את הפער: אנשים מבריקים שיוצאים לעולם בלי הכלים הכי בסיסיים בניהול כספים. אף אחד לא לימד אותם לקרוא תלוש שכר, לעמוד מול הבנק, או לבנות עתיד כלכלי.</p>
-<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">בשבועות הקרובים נשלח לך תכנים קצרים שיתנו לך טעימה ממה שאנחנו מלמדים. דברים שאפשר ליישם מיד.</p>
-<p style="color:rgba(255,255,255,0.5);font-size:15px;line-height:1.7;margin:0 0 14px;">ואם תרגיש שאתה רוצה את התמונה המלאה — הקורס שלנו מחכה לך:</p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">רצינו להציע לך טעימה — סדרת תכנים קצרים ומעשיים שנשלח לך בשבועות הקרובים, בחינם. דברים שאפשר ליישם מהיום הראשון.</p>
+<p style="color:rgba(255,255,255,0.65);font-size:16px;line-height:1.8;margin:0 0 14px;">כדי שנדע שאתה מעוניין — לחץ על הכפתור למטה ותתחיל לקבל את התכנים:</p>
+
+<div style="text-align:center;margin:24px 0;">
+  <a href="{{confirmUrl}}" style="display:inline-block;background:#F5A624;color:#000;font-weight:900;font-size:16px;padding:14px 36px;border-radius:50px;text-decoration:none;">כן, אני רוצה לקבל תכנים</a>
+</div>
+<p style="text-align:center;color:rgba(255,255,255,0.3);font-size:12px;margin:0 0 20px;">בלחיצה על הכפתור אני מאשר/ת קבלת תכנים ועדכונים מפורשים כנף באימייל. ניתן לבטל בכל עת.</p>
+
+<div style="height:1px;background:rgba(255,255,255,0.08);margin:20px 0;"></div>
+<p style="color:rgba(255,255,255,0.5);font-size:15px;line-height:1.7;margin:0 0 14px;">ואם אתה כבר מוכן לתמונה המלאה — הקורס שלנו מחכה לך:</p>
 ${CTA}`,
   },
   {

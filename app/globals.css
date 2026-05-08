@@ -112,14 +112,72 @@ html.light-mode [class*="bg-white\/"] {
   background-color: rgba(0,0,0,0.04) !important;
 }
 
-/* Dark backgrounds → light */
+/* Dark backgrounds → light (Tailwind classes) */
+html.light-mode [class*="bg-[#060606]"],
+html.light-mode [class*="bg-[#060A13]"],
+html.light-mode [class*="bg-[#070707]"],
 html.light-mode [class*="bg-[#080808]"],
+html.light-mode [class*="bg-[#080B16]"],
 html.light-mode [class*="bg-[#0a0a0a]"],
+html.light-mode [class*="bg-[#0A0F1A]"],
+html.light-mode [class*="bg-[#0C0C0C]"],
+html.light-mode [class*="bg-[#0D0B00]"],
+html.light-mode [class*="bg-[#0D0D0D]"],
+html.light-mode [class*="bg-[#0D1117]"],
+html.light-mode [class*="bg-[#0e0e0e]"],
 html.light-mode [class*="bg-[#0F0F0F]"],
+html.light-mode [class*="bg-[#0f0f0f]"],
+html.light-mode [class*="bg-[#0F1520]"],
+html.light-mode [class*="bg-[#101010]"],
 html.light-mode [class*="bg-[#111]"],
+html.light-mode [class*="bg-[#111111]"],
+html.light-mode [class*="bg-[#120E00]"],
 html.light-mode [class*="bg-[#141414]"],
+html.light-mode [class*="bg-[#141E2B]"],
+html.light-mode [class*="bg-[#1a1700]"],
+html.light-mode [class*="bg-[#1A1200]"],
+html.light-mode [class*="bg-[#1a1a1a]"],
+html.light-mode [class*="bg-[#1A1A1A]"],
+html.light-mode [class*="bg-[#1a1f2e]"],
+html.light-mode [class*="bg-[#1A2333]"],
 html.light-mode [class*="bg-brand-bg"] {
-  background-color: #f5f5f0 !important;
+  background-color: #f0f0ea !important;
+}
+
+/* Inline dark backgrounds (React style={{ background: ... }}) */
+html.light-mode [style*="background: #0"],
+html.light-mode [style*="background: #1"],
+html.light-mode [style*="background:#0"],
+html.light-mode [style*="background:#1"],
+html.light-mode [style*="background-color: #0"],
+html.light-mode [style*="background-color: #1"],
+html.light-mode [style*="background-color:#0"],
+html.light-mode [style*="background-color:#1"] {
+  background-color: #f0f0ea !important;
+  background: #f0f0ea !important;
+}
+
+/* Inline dark gradients on containers (not text spans) */
+html.light-mode div[style*="radial-gradient(ellipse"],
+html.light-mode div[style*="radial-gradient(circle"],
+html.light-mode section[style*="radial-gradient"],
+html.light-mode div[style*="linear-gradient"][style*="#0"],
+html.light-mode div[style*="linear-gradient"][style*="#1"] {
+  background: #f0f0ea !important;
+}
+
+/* Inline rgba(0,0,0) overlays → light equivalents */
+html.light-mode [style*="background: rgba(0,0,0,0.8)"],
+html.light-mode [style*="background: rgba(0,0,0,0.7)"],
+html.light-mode [style*="background: rgba(0,0,0,0.75)"] {
+  background: rgba(255,255,255,0.92) !important;
+}
+
+/* Accordion/card inline gradient backgrounds */
+html.light-mode [style*="linear-gradient(135deg"],
+html.light-mode [style*="linear-gradient(160deg"],
+html.light-mode [style*="linear-gradient(180deg"] {
+  background: #f0f0ea !important;
 }
 
 /* Section backgrounds — alternate slightly */
@@ -167,15 +225,11 @@ html.light-mode .bg-black\/90 {
   background-color: rgba(255,255,255,0.95) !important;
 }
 
-/* Legal modal */
+/* Legal modal + Accessibility panel */
 html.light-mode [style*="background: rgba(14,10,28"] {
-  background-color: #fafaf5 !important;
-}
-
-/* Checkout page */
-html.light-mode [class*="bg-[#060A13]"],
-html.light-mode .bg-\[\#080808\] {
-  background-color: #f5f5f0 !important;
+  background: #fafaf5 !important;
+  border-color: rgba(0,0,0,0.1) !important;
+  color: #1a1a1a !important;
 }
 
 /* Grain overlay */

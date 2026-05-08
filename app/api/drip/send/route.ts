@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCampaign, getSubscribersDueForEmail, updateSubscriber, addSendLog, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon } from '@/lib/drip'
+import { getCampaign, getSubscribersDueForEmail, updateSubscriber, addSendLog, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon, generateConfirmToken } from '@/lib/drip'
 import { getAllOrders } from '@/lib/orders'
 import { isAuthedOrCron } from '@/lib/auth'
 
@@ -38,6 +38,12 @@ export async function GET(req: NextRequest) {
       continue
     }
 
+    // Emails 2+ require confirmed opt-in (double opt-in)
+    if (email.id !== 'email_1' && !subscriber.dripConfirmed) {
+      skipped++
+      continue
+    }
+
     const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(subscriber.email)}`
 
     // Generate personal coupon for the last email (email_13)
@@ -50,11 +56,16 @@ export async function GET(req: NextRequest) {
       })
     }
 
+    // Generate confirm URL for email 1
+    const confirmToken = generateConfirmToken(subscriber.email)
+    const confirmUrl = `${baseUrl}/drip/confirm?email=${encodeURIComponent(subscriber.email)}&token=${confirmToken}`
+
     // Replace placeholders in email body
     let htmlBody = email.body
       .replace(/\{\{name\}\}/g, subscriber.name || 'שם')
       .replace(/\{\{email\}\}/g, subscriber.email)
       .replace(/\{\{coupon\}\}/g, personalCoupon)
+      .replace(/\{\{confirmUrl\}\}/g, confirmUrl)
 
     const fullHtml = wrapInTemplate(htmlBody, unsubscribeUrl)
 

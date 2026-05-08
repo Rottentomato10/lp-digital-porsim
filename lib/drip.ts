@@ -3,6 +3,7 @@
 // ============================================
 
 import { Redis } from '@upstash/redis'
+import { createHmac } from 'crypto'
 
 const redis = new Redis({
   url: process.env.KV_REST_API_URL!,
@@ -41,6 +42,9 @@ export interface DripSubscriber {
   sentEmails: string[]    // IDs of emails already sent
   personalCoupon?: string          // unique coupon for email 13
   personalCouponCreatedAt?: string // when coupon was generated
+  dripConfirmed?: boolean          // opted in to receive emails 2+
+  dripConfirmedAt?: string         // timestamp of opt-in (legal proof)
+  dripConfirmedIp?: string         // IP at time of opt-in (legal proof)
 }
 
 export interface DripSendLog {
@@ -167,6 +171,31 @@ export async function validatePersonalCoupon(code: string): Promise<{ valid: boo
   }
 
   return { valid: true, discount: 20, email: sub.email }
+}
+
+// --- Drip Confirmation (Double Opt-In) ---
+
+const CONFIRM_SECRET = 'porsim_drip_confirm_2026'
+
+export function generateConfirmToken(email: string): string {
+  return createHmac('sha256', CONFIRM_SECRET).update(email.toLowerCase()).digest('hex').slice(0, 24)
+}
+
+export function verifyConfirmToken(email: string, token: string): boolean {
+  return generateConfirmToken(email) === token
+}
+
+export async function confirmDripSubscription(email: string, ip: string): Promise<boolean> {
+  const sub = await getSubscriberByEmail(email)
+  if (!sub) return false
+  if (sub.dripConfirmed) return true // already confirmed
+
+  await updateSubscriber(email, {
+    dripConfirmed: true,
+    dripConfirmedAt: new Date().toISOString(),
+    dripConfirmedIp: ip,
+  })
+  return true
 }
 
 // --- Unsubscribe ---

@@ -63,13 +63,7 @@ export function AccessibilityWidget() {
   const [readingGuideY, setReadingGuideY] = useState(0)
   const [isLight, setIsLight] = useState(false)
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('lp-theme')
-    if (savedTheme === 'light') {
-      document.documentElement.classList.add('light-mode')
-      setIsLight(true)
-    }
-  }, [])
+  // No localStorage persistence — theme resets on page load
 
   useEffect(() => {
     const saved = localStorage.getItem('accessibility-settings')
@@ -157,7 +151,6 @@ export function AccessibilityWidget() {
           const next = !isLight
           setIsLight(next)
           document.documentElement.classList.toggle('light-mode', next)
-          localStorage.setItem('lp-theme', next ? 'light' : 'dark')
         }}
         aria-label="החלף מצב תצוגה"
         style={{

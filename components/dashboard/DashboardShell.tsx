@@ -1027,7 +1027,7 @@ function DripTab() {
       {/* Subscriber lists */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
         {[
-          { key: 'active' as const, label: 'מקבלים דיוור', count: subscribers.filter(s => s.status === 'active').length, color: '#F5A624' },
+          { key: 'active' as const, label: 'אישרו דיוור', count: subscribers.filter((s: any) => s.status === 'active' && s.dripConfirmed).length, color: '#F5A624' },
           { key: 'unsubscribed' as const, label: 'ירדו מדיוור', count: subscribers.filter(s => s.status === 'unsubscribed').length, color: '#EF4444' },
           { key: 'due' as const, label: 'ממתינים לשליחה היום', count: campaign?.active ? subscribers.filter(s => {
             if (s.status !== 'active' || !campaign) return false
@@ -1051,7 +1051,7 @@ function DripTab() {
         <div className="mb-8 rounded-xl border border-white/10 bg-[#111] overflow-hidden">
           <div className="px-4 py-3 border-b border-white/8 flex items-center justify-between">
             <span className="text-white text-sm font-bold">
-              {showList === 'active' && 'מקבלים דיוור'}
+              {showList === 'active' && 'אישרו דיוור'}
               {showList === 'unsubscribed' && 'ירדו מדיוור'}
               {showList === 'due' && 'ממתינים לשליחה היום'}
             </span>
