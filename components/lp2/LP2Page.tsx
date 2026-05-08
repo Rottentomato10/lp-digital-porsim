@@ -127,7 +127,7 @@ export default function LP2Page() {
           <div className="text-center max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
               <p className="text-[#D4A843] text-base md:text-lg font-bold mb-8">
-                הכנסנו חינוך פיננסי למערכת החינוך — ועכשיו אנחנו כאן בשבילך
+                הכנסנו חינוך פיננסי למערכת החינוך - ועכשיו אנחנו כאן בשבילך
               </p>
             </motion.div>
 
@@ -149,7 +149,7 @@ export default function LP2Page() {
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
-              <p className="text-white/80 text-lg md:text-xl font-bold mb-5">שתי דקות שישנו לך את הראש — צפה עד הסוף ↓</p>
+              <p className="text-white/80 text-lg md:text-xl font-bold mb-5">שתי דקות שישנו לך את הראש - צפה עד הסוף ↓</p>
               <LP2Video />
             </motion.div>
 
@@ -186,8 +186,8 @@ export default function LP2Page() {
               <p className="text-white/80 text-lg md:text-xl">12 שנה במערכת החינוך. אף שיעור אחד על כסף.<br />המערכת פשוט שכחה את הפרק הכי חשוב בחיים שלך.</p>
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
-              className="text-white/70 font-bold text-lg">
-              אנחנו לא עוד קורס באינטרנט. אנחנו מתקנים את מה שהמערכת הזניחה.
+              className="text-[#D4A843] font-bold text-lg md:text-xl text-center">
+              זה לא עוד קורס באינטרנט. זה תיקון של מה שהמערכת הזניחה.
             </motion.p>
           </div>
         </div>
@@ -206,10 +206,10 @@ export default function LP2Page() {
 
           <div className="max-w-3xl mx-auto text-center mb-10">
             <p className="text-white text-lg leading-relaxed mb-4">
-              כל מה שאותך לא לימדו — עכשיו קיים, בין השאר, במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. <strong className="text-white">בזכותנו</strong>. כחלק מ<strong className="text-white">תוכניות גפ״ן — תוכניות ההעשרה של משרד החינוך</strong>.
+              כל מה שאותך לא לימדו - עכשיו קיים במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. בין השאר - <strong className="text-white">בזכותנו</strong>. כחלק מ<strong className="text-white">תוכניות גפ״ן - תוכניות ההעשרה של משרד החינוך</strong>.
             </p>
             <p className="text-white text-lg leading-relaxed mb-4">
-              העברנו את הסדנה ל-15,000 תלמידים ותלמידות. הפידבק היה מטורף. הבנו שאנחנו חייבים להפיץ את הבשורה ולהגיע לכולם — גם למי שלא עבר את זה דרך בית הספר.
+              העברנו את הסדנה ל-15,000 תלמידים ותלמידות. הפידבק היה מטורף. הבנו שאנחנו חייבים להפיץ את הבשורה ולהגיע לכולם - גם למי שלא עבר את זה דרך בית הספר.
             </p>
             <p className="text-white text-lg leading-relaxed font-medium">
               אז בנינו את הקורס הדיגיטלי. 58 שיעורים שמזקקים שנים של ניסיון בשטח לתוך 3 שעות.
@@ -241,7 +241,7 @@ export default function LP2Page() {
                 transition={{ delay: 0.2 + i * 0.15 }}
                 className="flex gap-4 p-5 rounded-2xl border border-[#D4A843]/15 bg-[#071020] shadow-sm">
                 <div className="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-[#D4A843]/20">
-                  <Image src={p.image} alt={p.name} width={100} height={100} className="w-full h-full object-cover" />
+                  <Image src={p.image} alt={p.name} width={200} height={200} className={`w-full h-full object-cover ${p.image === '/evyatar.jpg' ? 'object-[65%_center]' : ''}`} />
                 </div>
                 <div>
                   <p className="font-bold text-white text-base">{p.name}</p>
@@ -266,7 +266,7 @@ export default function LP2Page() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               { icon: GraduationCap, title: '58 שיעורים מצולמים', desc: '3 שעות. קצר, ממוקד, בלי חפירות.' },
-              { icon: TrendingUp, title: 'אפליקציית ניהול תזרים', desc: 'כלי מעשי — תדע בדיוק לאן הולך כל שקל.' },
+              { icon: TrendingUp, title: 'אפליקציית ניהול תזרים', desc: 'כלי מעשי - תדע בדיוק לאן הולך כל שקל.' },
               { icon: Users, title: 'קהילה + ליווי צמוד', desc: 'קבוצת וואטסאפ. שאלות, עדכונים, אנחנו זמינים.' },
               { icon: Sparkles, title: 'תעודת מנכ"ל פיננסי', desc: 'כי הידע הזה שווה הכרה.' },
               { icon: Brain, title: 'מורה דרך לחיים', desc: 'מתלוש שכר ועד תיק השקעות. הכל.' },
@@ -301,14 +301,14 @@ export default function LP2Page() {
                 outcome: 'תדע לקרוא תלוש שכר, לעמוד מול הבנק, ולהבין לאן כל שקל הולך.' },
               { num: '2', title: 'הצמיחה', subtitle: 'עוברים להתקפה', color: '#D4A843', icon: TrendingUp,
                 lessons: ['השקעות וריבית דריבית', 'מניות, מדדים, קרנות סל', 'איך משקיעים בפועל', 'נדל"ן ומשכנתא'],
-                outcome: 'תדע להשקיע בעצמך — בלי צורך באף אחד ובלי לפחד.' },
+                outcome: 'תדע להשקיע בעצמך - בלי צורך באף אחד ובלי לפחד.' },
               { num: '3', title: 'המנכ"לים', subtitle: 'בונים מערכת', color: '#8B5CF6', icon: Brain,
                 lessons: ['ניהול תזרים ותקציב', 'פנסיה, קה"ש והטבות מס', 'מערכת הפעלה שנתית', 'פסיכולוגיה של כסף'],
                 outcome: 'תצא עם תוכנית פעולה שנתית ומערכת שתרוץ לבד.' },
             ].map((stage, i) => (
               <motion.div key={i} 
                 
-                className="rounded-2xl border-2 bg-[#071020] overflow-hidden hover:shadow-lg transition-all"
+                className="rounded-2xl border-2 bg-[#071020] overflow-hidden hover:shadow-lg transition-all flex flex-col"
                 style={{ borderColor: `${stage.color}30` }}>
                 <div className="p-5 text-center border-b" style={{ borderColor: `${stage.color}15`, background: `${stage.color}08` }}>
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3" style={{ background: `${stage.color}15` }}>
@@ -318,17 +318,16 @@ export default function LP2Page() {
                   <h3 className="font-black text-white text-lg mt-2">{stage.title}</h3>
                   <p className="text-white/80 text-sm">{stage.subtitle}</p>
                 </div>
-                <div className="p-5 space-y-3">
+                <div className="p-5 space-y-3 flex flex-col flex-1">
                   {stage.lessons.map((l, j) => (
                     <div key={j} className="flex items-start gap-2.5">
                       <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black text-white flex-shrink-0 mt-0.5" style={{ background: stage.color }}>{j+1}</span>
                       <span className="text-white text-sm leading-snug">{l}</span>
                     </div>
                   ))}
-                  {/* Outcome */}
-                  <div className="mt-4 pt-4 border-t" style={{ borderColor: `${stage.color}15` }}>
-                    <p className="text-xs font-bold mb-1" style={{ color: stage.color }}>בסוף השלב:</p>
-                    <p className="text-white text-sm font-medium leading-relaxed">{stage.outcome}</p>
+                  {/* Outcome — fixed at bottom */}
+                  <div className="mt-auto pt-4 border-t" style={{ borderColor: `${stage.color}15` }}>
+                    <p className="text-white/70 text-sm font-medium leading-relaxed">{stage.outcome}</p>
                   </div>
                 </div>
               </motion.div>
@@ -340,7 +339,6 @@ export default function LP2Page() {
       {/* ═══════════ WHATSAPP REVIEWS ═══════════ */}
       <FadeSection className="py-16 md:py-24 bg-[#071020]">
         <div className="max-w-4xl mx-auto px-5">
-          <p className="text-center text-[#D4A843] font-bold text-sm mb-8">קצת ממה שאומרים עלינו</p>
           <WaCarouselLight />
         </div>
       </FadeSection>
@@ -398,7 +396,7 @@ export default function LP2Page() {
               <span className="text-[#D4A843] font-black text-4xl mx-3">₪{finalPrice}</span>
               {couponApplied && (
                 <div className="flex items-center justify-center gap-2 mt-2">
-                  <span className="text-[#D4A843] text-sm font-bold">{couponApplied.code} — {couponApplied.label}</span>
+                  <span className="text-[#D4A843] text-sm font-bold">{couponApplied.code} - {couponApplied.label}</span>
                   <button onClick={() => { setCouponApplied(null); setCoupon('') }} className="text-white/70 hover:text-gray-600"><X size={14} /></button>
                 </div>
               )}
@@ -432,7 +430,7 @@ export default function LP2Page() {
 
             <button onClick={handlePay} disabled={loading}
               className="w-full py-4 rounded-xl bg-[#10B981] text-white font-black text-lg hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-60 shadow-[0_4px_20px_rgba(16,185,129,0.3)] mb-3">
-              {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />רגע...</span> : `לתשלום מאובטח — ₪${finalPrice}`}
+              {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />רגע...</span> : `לתשלום מאובטח - ₪${finalPrice}`}
             </button>
 
             <p className="text-center text-white/70 text-[10px] leading-relaxed mb-2">
@@ -454,9 +452,9 @@ export default function LP2Page() {
             <div className="mt-6 p-4 rounded-xl border border-[#10B981]/20 bg-[#10B981]/5">
               <div className="flex items-center gap-2 mb-2">
                 <ShieldCheck size={18} className="text-[#D4A843]" />
-                <span className="text-[#D4A843] font-bold text-sm">אחריות מלאה — 7 ימים</span>
+                <span className="text-[#D4A843] font-bold text-sm">אחריות מלאה - 7 ימים</span>
               </div>
-              <p className="text-white text-sm leading-relaxed">לא הרגשת ערך — החזר מלא. בלי שאלות. בלי אותיות קטנות.</p>
+              <p className="text-white text-sm leading-relaxed">לא הרגשת ערך - החזר מלא. בלי שאלות. בלי אותיות קטנות.</p>
             </div>
           </motion.div>
         </div>
@@ -468,17 +466,17 @@ export default function LP2Page() {
           <h2 className="font-black text-white text-2xl md:text-3xl text-center mb-10">שאלות ותשובות</h2>
           <div className="space-y-3">
             {[
-              { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך — עולה אלפי שקלים בשנה. הקורס עולה פחות מארוחה זוגית ונשאר איתך לכל החיים.' },
-              { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה — מא׳ עד ת׳ — שבנויה לתת לך תוצאות.' },
-              { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך — החזר מלא. בלי שאלות. אין לך מה להפסיד.' },
-              { q: 'אתם לא עוד קורס שמבטיח להתעשר?', a: 'ממש לא. ומי שמבטיח לך את זה — תברח. אנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי — אבל זה מה שבאמת משנה.' },
-              { q: 'אין לי הרבה כסף — זה רלוונטי?', a: 'דווקא בגלל זה. מי שלומד לנהל 3,000₪ בחודש — ידע לנהל 30,000₪ כשהם יגיעו.' },
+              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו מחנכים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידים ב-300 כיתות, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
+              { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הקורס עולה פחות מארוחה זוגית ונשאר איתך לכל החיים.' },
+              { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה - מא׳ עד ת׳ - שבנויה לתת לך תוצאות.' },
+              { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך - החזר מלא. בלי שאלות. אין לך מה להפסיד.' },
+              { q: 'אתם לא עוד קורס שמבטיח להתעשר?', a: 'ממש לא. ומי שמבטיח לך את זה - תברח. אנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי - אבל זה מה שבאמת משנה.' },
+              { q: 'אין לי הרבה כסף - זה רלוונטי?', a: 'דווקא בגלל זה. מי שלומד לנהל 3,000₪ בחודש - ידע לנהל 30,000₪ כשהם יגיעו.' },
               { q: 'כמה זמן הקורס?', a: '3 שעות. 58 שיעורים קצרים. אפשר לסיים ביום אחד או בקצב שלך.' },
-              { q: 'צריך רקע כלשהו?', a: 'אפס. מתחילים מ"מה זה כסף" ובונים משם. אם היה לך את הידע — לא היית צריך אותנו.' },
-              { q: 'מה ההבדל בינכם ליועץ פיננסי?', a: 'יועץ אומר לך מה לעשות. אנחנו מלמדים אותך להבין למה. כשאתה מבין — אתה לא צריך לשלם למישהו שיגיד לך מה לעשות עם הכסף שלך.' },
-              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו מחנכים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח — 15,000 תלמידים ב-300 כיתות, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים — יש פה כלים אמיתיים לחיים האמיתיים.' },
+              { q: 'צריך רקע כלשהו?', a: 'אפס. מתחילים מ"מה זה כסף" ובונים משם. אם היה לך את הידע - לא היית צריך אותנו.' },
+              { q: 'מה ההבדל בינכם ליועץ פיננסי?', a: 'יועץ אומר לך מה לעשות. אנחנו מלמדים אותך להבין למה. כשאתה מבין - אתה לא צריך לשלם למישהו שיגיד לך מה לעשות עם הכסף שלך.' },
             ].map((item, i) => (
-              <FaqItem key={i} q={item.q} a={item.a} />
+              <FaqItem key={i} q={item.q} a={item.a} defaultOpen={(item as any).open} />
             ))}
           </div>
         </div>
@@ -604,8 +602,8 @@ function LightCookieConsent() {
 }
 
 // ═══════ FAQ ITEM ═══════
-function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false)
+function FaqItem({ q, a, defaultOpen }: { q: string; a: string; defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen || false)
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="rounded-xl border border-white/10 bg-[#071020] overflow-hidden hover:border-[#D4A843]/20 transition-colors">
