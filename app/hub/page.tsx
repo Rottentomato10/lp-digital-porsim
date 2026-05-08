@@ -106,7 +106,7 @@ export default function Hub(){
       else{ctx.strokeStyle=t.color+'25';ctx.lineWidth=1.5}
       ctx.stroke();ctx.shadowBlur=0
     })
-  },[h])
+  },[h,layout]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const c=h?getConn(h):null
 
@@ -114,9 +114,15 @@ export default function Hub(){
     <div className="min-h-screen bg-[#0A0C12] text-white overflow-auto" dir="rtl" style={{fontFamily:"'Heebo',sans-serif"}}>
       <div className="px-5 py-6">
         <div className="max-w-5xl mx-auto mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-2xl">⚡</span>
-            <h1 className="text-white font-black text-xl">מפת המערכת — פורשים כנף</h1>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">⚡</span>
+              <h1 className="text-white font-black text-xl">מפת המערכת — פורשים כנף</h1>
+            </div>
+            <button onClick={()=>setLayout(l=>l==='radial'?'building':'radial')}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/15 text-white/60 text-sm font-bold hover:bg-white/10 hover:text-white transition-all">
+              {layout==='radial'?'🏢 תצוגת בניין':'🌐 תצוגה רדיאלית'}
+            </button>
           </div>
           <div className="flex items-center gap-4 flex-wrap p-3 rounded-xl bg-white/[0.04] border border-white/10">
             <span className="text-white/50 text-sm font-bold ml-2">מקרא:</span>
@@ -131,7 +137,7 @@ export default function Hub(){
         <div className="flex justify-center">
           <div className="relative" style={{width:'1100px',height:'740px'}}>
             <canvas ref={cvRef} className="absolute inset-0" style={{width:'1100px',height:'740px'}}/>
-            {NN.map(n=>{
+            {nodes.map(n=>{
               const dim=c&&!c.has(n.id),isCtr=n.id==='pk'
               return(
                 <a key={n.id} href={n.url} target="_blank" rel="noopener noreferrer"
