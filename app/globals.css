@@ -219,6 +219,7 @@ html.light-mode .rounded-xl, html.light-mode .rounded-2xl, html.light-mode .roun
 }
 
 /* Footer */
+html.light-mode { --footer-bg: #eaeae3; }
 html.light-mode footer,
 html.light-mode .lp-footer {
   background-color: #eaeae3 !important;

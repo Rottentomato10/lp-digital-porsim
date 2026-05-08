@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { LegalModal, ModalType } from './DLegalModal'
 
 const LINKS = [
@@ -14,7 +14,7 @@ export default function DFooter() {
 
   return (
     <>
-      <footer className="bg-[#060606] border-t border-white/8 text-center lp-footer">
+      <footer style={{ backgroundColor: 'var(--footer-bg, #060606)' }} className="border-t border-white/8 text-center lp-footer">
         {/* Legal links row */}
         <div className="py-5 flex items-center justify-center gap-4 flex-wrap px-5">
           {LINKS.map(({ key, label }, i) => (
