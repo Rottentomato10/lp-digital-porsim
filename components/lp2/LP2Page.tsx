@@ -120,14 +120,13 @@ export default function LP2Page() {
 
         <div className="relative z-10 max-w-5xl mx-auto px-5 pt-10 pb-16 md:pt-16 md:pb-24">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }}
-            className="flex justify-center mb-6">
-            <Image src="/logo.png" alt="פורשים כנף" width={80} height={80} className="w-16 h-16 md:w-20 md:h-20 object-contain" priority />
+            className="flex justify-center mb-3">
+            <Image src="/logo.png" alt="פורשים כנף" width={100} height={100} className="w-24 h-24 md:w-28 md:h-28 object-contain drop-shadow-[0_0_40px_rgba(212,168,67,0.3)]" priority />
           </motion.div>
 
           <div className="text-center max-w-3xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-              <p className="inline-flex items-center gap-2 bg-[#D4A843]/8 border border-[#D4A843]/15 rounded-full px-5 py-2 text-white/70 text-base md:text-lg font-bold mb-6">
-                <Sparkles size={16} />
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
+              <p className="text-[#D4A843] text-base md:text-lg font-bold mb-8">
                 הכנסנו חינוך פיננסי למערכת החינוך — ועכשיו אנחנו כאן בשבילך
               </p>
             </motion.div>
@@ -136,15 +135,16 @@ export default function LP2Page() {
               className="font-black text-white leading-[1.08] mb-6" style={{ fontSize: 'clamp(2.2rem, 6vw, 3.8rem)' }}>
               הקורס שמשנה את הדרך
               <br /><span className="relative">
-                <span className="text-white/70">שבה צעירים מבינים כסף</span>
+                <span className="text-[#D4A843]">שבה צעירים מבינים כסף</span>
                 <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1, duration: 0.5 }}
                   className="absolute -bottom-1 left-0 right-0 h-1 bg-[#D4A843]/20 rounded-full origin-right" />
               </span>
             </motion.h1>
 
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-white text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
-              3 שעות. 58 שיעורים. מא׳ עד ת׳.
+              className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
+              שינינו את זה שאין חינוך פיננסי במערכת החינוך.
+              <br />עכשיו - יש חינוך פיננסי גם אונליין.
               <br />בסוף הקורס תבין כסף יותר טוב מ-97% מהאנשים סביבך.
             </motion.p>
 
@@ -172,22 +172,22 @@ export default function LP2Page() {
           </motion.h2>
           <div className="space-y-5 text-white text-lg md:text-xl leading-relaxed">
             <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-              אתה עובד, מרוויח, אולי אפילו חוסך קצת — אבל <strong className="text-white">עמוק בפנים אתה יודע שאתה לא באמת שולט</strong>.
+              אתה עובד, מרוויח - אולי אפילו חוסך קצת - אבל <strong className="text-white">עמוק בפנים אתה יודע שאתה לא באמת שולט</strong>.
             </motion.p>
             <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-              כולם מסביבך מדברים על השקעות, פנסיה, מיסים — ואתה מנהן בראש כאילו אתה מבין. <strong className="text-white">אבל מרגיש שהולך לאיבוד.</strong>
+              כולם מסביבך מדברים על השקעות, פנסיה, מיסים - ואתה מנהן בראש כאילו אתה מבין. <strong className="text-white">אבל מרגיש שהולך לאיבוד.</strong>
             </motion.p>
             <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
               אולי ניסית ללמוד מיוטיוב. אבל אחרי 20 סרטונים אתה עדיין באותו מקום.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
-              className="bg-[#D4A843]/5 border-r-4 border-[#D4A843] rounded-xl p-6 my-6">
-              <p className="text-white font-black text-xl md:text-2xl mb-2">וזה לא אשמתך.</p>
-              <p className="text-white">12 שנה במערכת החינוך. אף שיעור אחד על כסף. המערכת פשוט שכחה את הפרק הכי חשוב בחיים שלך.</p>
+              className="bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl p-8 md:p-10 my-8 text-center">
+              <p className="text-[#D4A843] font-black mb-3" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}>וזה לא אשמתך.</p>
+              <p className="text-white/80 text-lg md:text-xl">12 שנה במערכת החינוך. אף שיעור אחד על כסף.<br />המערכת פשוט שכחה את הפרק הכי חשוב בחיים שלך.</p>
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
               className="text-white/70 font-bold text-lg">
-              אנחנו לא עוד קורס באינטרנט. אנחנו כאן כדי לתקן את מה שהמערכת שכחה.
+              אנחנו לא עוד קורס באינטרנט. אנחנו מתקנים את מה שהמערכת הזניחה.
             </motion.p>
           </div>
         </div>
@@ -197,17 +197,16 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24" style={{ background: "#112240" }}>
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-12">
-            <Image src="/logo.png" alt="" width={60} height={60} className="w-20 h-20 object-contain mx-auto mb-5 drop-shadow-\[0_0_30px_rgba(212,168,67,0.3)\]" />
-            <p className="text-[#D4A843] font-bold text-sm mb-3">מי עומדים מאחורי זה</p>
+            <Image src="/logo.png" alt="" width={100} height={100} className="w-24 h-24 md:w-28 md:h-28 object-contain mx-auto mb-5 drop-shadow-[0_0_40px_rgba(212,168,67,0.25)]" />
             <h2 className="font-black text-white text-2xl md:text-4xl leading-snug">
               תיקנו את מה שהמערכת שכחה.
-              <br />עכשיו אנחנו כאן בשביל <span className="text-white/70">כל מי שלא עבר את זה</span>.
+              <br />עכשיו אנחנו כאן בשביל <span className="text-[#D4A843]">כל מי שלא עבר את זה</span>.
             </h2>
           </div>
 
           <div className="max-w-3xl mx-auto text-center mb-10">
             <p className="text-white text-lg leading-relaxed mb-4">
-              כל מה שאותך לא לימדו — עכשיו קיים במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. <strong className="text-white">בזכותנו</strong>. כחלק מ<strong className="text-white">תוכניות גפ״ן — תוכניות ההעשרה של משרד החינוך</strong>.
+              כל מה שאותך לא לימדו — עכשיו קיים, בין השאר, במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. <strong className="text-white">בזכותנו</strong>. כחלק מ<strong className="text-white">תוכניות גפ״ן — תוכניות ההעשרה של משרד החינוך</strong>.
             </p>
             <p className="text-white text-lg leading-relaxed mb-4">
               העברנו את הסדנה ל-15,000 תלמידים ותלמידות. הפידבק היה מטורף. הבנו שאנחנו חייבים להפיץ את הבשורה ולהגיע לכולם — גם למי שלא עבר את זה דרך בית הספר.
@@ -241,7 +240,7 @@ export default function LP2Page() {
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: 0.2 + i * 0.15 }}
                 className="flex gap-4 p-5 rounded-2xl border border-[#D4A843]/15 bg-[#071020] shadow-sm">
-                <div className="w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-[#D4A843]/20">
+                <div className="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-[#D4A843]/20">
                   <Image src={p.image} alt={p.name} width={100} height={100} className="w-full h-full object-cover" />
                 </div>
                 <div>
@@ -259,7 +258,6 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24 bg-[#071020]">
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-12">
-            <p className="text-[#D4A843] font-bold text-sm mb-3">שיטת פורשים כנף</p>
             <h2 className="font-black text-white text-2xl md:text-4xl mb-3">
               איך הפכנו חומר יבש ל<span className="text-white/70">מערכת הפעלה פשוטה</span>
             </h2>
@@ -301,9 +299,9 @@ export default function LP2Page() {
               { num: '1', title: 'היסודות', subtitle: 'להבין את שפת הכסף', color: '#F5A624', icon: PiggyBank,
                 lessons: ['מה זה כסף ולמה משלמים לך', 'כל זכויות העובד שלך', 'לאן נעלם הכסף בתלוש', 'איך הבנק מרוויח ממך', 'אינפלציה וריבית'],
                 outcome: 'תדע לקרוא תלוש שכר, לעמוד מול הבנק, ולהבין לאן כל שקל הולך.' },
-              { num: '2', title: 'הצמיחה', subtitle: 'עוברים להתקפה', color: '#10B981', icon: TrendingUp,
+              { num: '2', title: 'הצמיחה', subtitle: 'עוברים להתקפה', color: '#D4A843', icon: TrendingUp,
                 lessons: ['השקעות וריבית דריבית', 'מניות, מדדים, קרנות סל', 'איך משקיעים בפועל', 'נדל"ן ומשכנתא'],
-                outcome: 'תדע להשקיע בעצמך — בלי לסמוך על אף אחד ובלי לפחד.' },
+                outcome: 'תדע להשקיע בעצמך — בלי צורך באף אחד ובלי לפחד.' },
               { num: '3', title: 'המנכ"לים', subtitle: 'בונים מערכת', color: '#8B5CF6', icon: Brain,
                 lessons: ['ניהול תזרים ותקציב', 'פנסיה, קה"ש והטבות מס', 'מערכת הפעלה שנתית', 'פסיכולוגיה של כסף'],
                 outcome: 'תצא עם תוכנית פעולה שנתית ומערכת שתרוץ לבד.' },
@@ -427,6 +425,11 @@ export default function LP2Page() {
               {couponError && <p className="text-red-500 text-xs">{couponError}</p>}
             </div>
 
+            <label className="flex items-center gap-2.5 cursor-pointer mb-4">
+              <input type="checkbox" defaultChecked className="w-3.5 h-3.5 accent-[#10B981]" />
+              <span className="text-white/40 text-xs">אני מאשר/ת קבלת עדכונים ותכנים שיווקיים באימייל. ניתן לבטל בכל עת.</span>
+            </label>
+
             <button onClick={handlePay} disabled={loading}
               className="w-full py-4 rounded-xl bg-[#10B981] text-white font-black text-lg hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-60 shadow-[0_4px_20px_rgba(16,185,129,0.3)] mb-3">
               {loading ? <span className="flex items-center justify-center gap-2"><Loader2 size={20} className="animate-spin" />רגע...</span> : `לתשלום מאובטח — ₪${finalPrice}`}
@@ -548,7 +551,7 @@ function LP2Video() {
 // ═══════ WHATSAPP CAROUSEL ═══════
 function WaCarouselLight() {
   const [active, setActive] = useState(0)
-  const imgs = ['/review1.jpg','/review2.jpg','/review3.jpg','/review4.jpg','/review5.jpg','/review6.jpg']
+  const imgs = ['/review1.jpg','/review2.jpg','/review3.jpg','/review4.jpg','/review5.jpg','/review6.jpg','/review7.jpg','/review8.jpg','/review9.jpg']
   const total = imgs.length
   const prev = () => setActive(a => (a - 1 + total) % total)
   const next = () => setActive(a => (a + 1) % total)
