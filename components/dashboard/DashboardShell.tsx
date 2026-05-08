@@ -1078,6 +1078,7 @@ function DripTab() {
                     <span className="text-white/30 text-xs mr-2">{s.email}</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs">
+                    <span className={`text-xs px-1.5 py-0.5 rounded ${(s as any).dripConfirmed ? 'text-[#10B981]' : 'text-white/20'}`}>{(s as any).dripConfirmed ? '✓ אישר' : 'לא אישר'}</span>
                     <span className="text-white/30">אימייל {s.currentStep + 1}/{campaign?.emails.length || '?'}</span>
                     {s.lastSentAt && <span className="text-white/20">{new Date(s.lastSentAt).toLocaleDateString('he-IL')}</span>}
                     <button
