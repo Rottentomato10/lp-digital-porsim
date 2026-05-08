@@ -14,18 +14,18 @@ const L1:Record<string,{x:number,y:number}>={
   pixel:{x:280,y:565},ga:{x:460,y:565},clarity:{x:635,y:565},meta:{x:320,y:645},con:{x:540,y:645},
 }
 
-// Layout 2: Building (infra bottom, products middle, brand top)
+// Layout 2: Building (infra bottom → traffic → management → products → brand top)
 const L2:Record<string,{x:number,y:number}>={
-  // Floor 1 (top) — Brand
-  pk:{x:420,y:40},
-  // Floor 2 — Products (what users see)
-  lp1:{x:120,y:160},lp2:{x:340,y:160},course:{x:580,y:160},porsot:{x:820,y:160},wix:{x:120,y:250},
-  // Floor 3 — Management & tools
-  dash:{x:120,y:340},os:{x:340,y:340},admin:{x:580,y:340},app:{x:820,y:340},
+  // Floor 1 (top) — Brand + What we do
+  pk:{x:420,y:30},os:{x:150,y:40},porsot:{x:720,y:40},wix:{x:900,y:40},
+  // Floor 2 — Products (what users interact with)
+  lp1:{x:150,y:150},lp2:{x:380,y:150},course:{x:620,y:150},app:{x:860,y:150},
+  // Floor 3 — Management (dashboards)
+  dash:{x:150,y:260},admin:{x:420,y:260},
   // Floor 4 — Traffic & Analytics
-  meta:{x:180,y:440},con:{x:420,y:440},pixel:{x:640,y:440},ga:{x:830,y:440},clarity:{x:180,y:530},
+  meta:{x:120,y:370},con:{x:360,y:370},pixel:{x:580,y:370},ga:{x:770,y:370},clarity:{x:920,y:370},
   // Floor 5 (bottom) — Infrastructure
-  cardcom:{x:80,y:620},brevo:{x:270,y:620},upstash:{x:450,y:620},supabase:{x:630,y:620},vimeo:{x:790,y:620},vercel:{x:420,y:530},wixp:{x:630,y:530},
+  cardcom:{x:60,y:490},brevo:{x:240,y:490},upstash:{x:420,y:490},supabase:{x:600,y:490},vimeo:{x:760,y:490},vercel:{x:380,y:580},wixp:{x:580,y:580},
 }
 
 const NN:N[]=[
