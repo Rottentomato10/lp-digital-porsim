@@ -89,7 +89,7 @@ export default function DCookieConsent() {
                     </div>
 
                     {/* Rights */}
-                    <div className="p-3 rounded-xl bg-white/[0.03] border border-[#F5A624]/10">
+                    <div className="p-3 rounded-xl bg-black/[0.03] border border-[#F5A624]/10">
                       <p className="text-black/70 font-bold mb-1">הזכויות שלך</p>
                       <p className="text-black/45">
                         בהתאם לחוק הגנת הפרטיות, תשמ״א-1981, עומדות לך הזכויות הבאות: זכות עיון במידע, תיקונו או מחיקתו. לבקשות ניתן לפנות אלינו בכתובת porsim.info@gmail.com או בטלפון 053-728-2727.
