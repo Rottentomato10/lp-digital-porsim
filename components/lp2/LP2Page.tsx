@@ -127,7 +127,7 @@ export default function LP2Page() {
           <div className="text-center max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
               <p className="text-[#D4A843] text-base md:text-lg font-bold mb-8">
-                הכנסנו חינוך פיננסי למערכת החינוך - ועכשיו אנחנו כאן בשבילך
+                הכנסנו חינוך פיננסי למערכת החינוך - ועכשיו אנחנו גם כאן בשבילך
               </p>
             </motion.div>
 
@@ -145,7 +145,7 @@ export default function LP2Page() {
               className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
               שינינו את זה שאין חינוך פיננסי במערכת החינוך.
               <br />עכשיו - יש חינוך פיננסי גם אונליין.
-              <br />בסוף הקורס תבין כסף יותר טוב מ-97% מהאנשים סביבך.
+              <br />בסוף הקורס תבין כסף יותר טוב מרוב האנשים סביבך.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
@@ -175,10 +175,10 @@ export default function LP2Page() {
               אתה עובד, מרוויח - אולי אפילו חוסך קצת - אבל <strong className="text-white">עמוק בפנים אתה יודע שאתה לא באמת שולט</strong>.
             </motion.p>
             <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-              כולם מסביבך מדברים על השקעות, פנסיה, מיסים - ואתה מנהן בראש כאילו אתה מבין. <strong className="text-white">אבל מרגיש שהולך לאיבוד.</strong>
+              כולם מסביבך מדברים על השקעות, פנסיה, מיסים - ואתה מנהן בראש כאילו אתה מבין, <strong className="text-white">אבל מרגיש שהולך לאיבוד.</strong>
             </motion.p>
             <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
-              אולי ניסית ללמוד מיוטיוב. אבל אחרי 20 סרטונים אתה עדיין באותו מקום.
+              אולי ניסית ללמוד מיוטיוב, אבל אחרי 20 סרטונים אתה עדיין באותו מקום.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
               className="bg-[#D4A843]/5 border border-[#D4A843]/20 rounded-2xl p-8 md:p-10 my-8 text-center">
@@ -206,10 +206,10 @@ export default function LP2Page() {
 
           <div className="max-w-3xl mx-auto text-center mb-10">
             <p className="text-white text-lg leading-relaxed mb-4">
-              כל מה שאותך לא לימדו - עכשיו קיים במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. בין השאר - <strong className="text-white">בזכותנו</strong>. כחלק מ<strong className="text-white">תוכניות גפ״ן - תוכניות ההעשרה של משרד החינוך</strong>.
+              כל מה שאותך לא לימדו - עכשיו קיים במאות בתי ספר, יחידות צבאיות ומכינות ברחבי הארץ. בין השאר - <strong className="text-white">בזכותנו</strong>.
             </p>
             <p className="text-white text-lg leading-relaxed mb-4">
-              העברנו את הסדנה ל-15,000 תלמידים ותלמידות. הפידבק היה מטורף. הבנו שאנחנו חייבים להפיץ את הבשורה ולהגיע לכולם - גם למי שלא עבר את זה דרך בית הספר.
+              כחלק מ<strong className="text-white">תוכניות גפ״ן - תוכניות ההעשרה של משרד החינוך</strong>, העברנו את הסדנה ל-15,000 תלמידים ותלמידות. הפידבק היה מטורף. הבנו שאנחנו חייבים להפיץ את הבשורה ולהגיע לכולם - גם למי שלא עבר את זה דרך בית הספר.
             </p>
             <p className="text-white text-lg leading-relaxed font-medium">
               אז בנינו את הקורס הדיגיטלי. 58 שיעורים שמזקקים שנים של ניסיון בשטח לתוך 3 שעות.
@@ -229,6 +229,12 @@ export default function LP2Page() {
                 <p className="text-white/80 text-sm mt-1">{s.label}</p>
               </motion.div>
             ))}
+          </div>
+
+          <div className="text-center mb-12">
+            <a href="#pricing" className="cta-shine inline-flex items-center bg-[#D4A843] text-black font-black text-lg px-8 py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200 mt-6">
+              אני רוצה להתחיל
+            </a>
           </div>
 
           {/* Founders */}
@@ -269,8 +275,8 @@ export default function LP2Page() {
               { icon: TrendingUp, title: 'אפליקציית ניהול תזרים', desc: 'כלי מעשי - תדע בדיוק לאן הולך כל שקל.' },
               { icon: Users, title: 'קהילה + ליווי צמוד', desc: 'קבוצת וואטסאפ. שאלות, עדכונים, אנחנו זמינים.' },
               { icon: Sparkles, title: 'תעודת מנכ"ל פיננסי', desc: 'כי הידע הזה שווה הכרה.' },
-              { icon: Brain, title: 'מורה דרך לחיים', desc: 'מתלוש שכר ועד תיק השקעות. הכל.' },
-              { icon: Lock, title: 'גישה לכל החיים', desc: 'תשלום אחד. בלי מנוי. כולל עדכונים.' },
+              { icon: Brain, title: 'ידע לכל החיים', desc: 'מתלוש שכר ועד תיק השקעות. הכל.' },
+              { icon: Lock, title: 'גישה לצמיתות', desc: 'תשלום אחד. בלי מנוי. כולל עדכונים.' },
             ].map((item, i) => (
               <motion.div key={i} 
                 
@@ -365,7 +371,7 @@ export default function LP2Page() {
               <ul className="space-y-3 text-white text-base">
                 <li className="flex gap-2"><span className="text-[#D4A843]">•</span>אתה רוצה להבין כסף באמת ולא לנחש</li>
                 <li className="flex gap-2"><span className="text-[#D4A843]">•</span>אתה מוכן לקחת אחריות על העתיד שלך</li>
-                <li className="flex gap-2"><span className="text-[#D4A843]">•</span>אתה מבין שאי-ידע עולה יותר מידע</li>
+                <li className="flex gap-2"><span className="text-[#D4A843]">•</span>אתה מבין שלא לדעת עולה יותר מלדעת</li>
               </ul>
             </motion.div>
           </div>
@@ -400,7 +406,7 @@ export default function LP2Page() {
                   <button onClick={() => { setCouponApplied(null); setCoupon('') }} className="text-white/70 hover:text-gray-600"><X size={14} /></button>
                 </div>
               )}
-              <p className="text-white/80 text-sm mt-1">תשלום חד-פעמי · גישה לכל החיים</p>
+              <p className="text-white/80 text-sm mt-1">תשלום חד-פעמי · גישה לצמיתות</p>
             </div>
 
             <div className="space-y-3 mb-4">
@@ -470,8 +476,8 @@ export default function LP2Page() {
               { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הקורס עולה פחות מארוחה זוגית ונשאר איתך לכל החיים.' },
               { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה - מא׳ עד ת׳ - שבנויה לתת לך תוצאות.' },
               { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך - החזר מלא. בלי שאלות. אין לך מה להפסיד.' },
-              { q: 'אתם לא עוד קורס שמבטיח להתעשר?', a: 'ממש לא. ומי שמבטיח לך את זה - תברח. אנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי - אבל זה מה שבאמת משנה.' },
-              { q: 'אין לי הרבה כסף - זה רלוונטי?', a: 'דווקא בגלל זה. מי שלומד לנהל 3,000₪ בחודש - ידע לנהל 30,000₪ כשהם יגיעו.' },
+              { q: 'אתם לא עוד קורס שמבטיח להתעשר?', a: 'ממש לא. ואם מישהו מבטיח לך את זה — אולי כדאי לברוח.\nאנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי — אבל זה מה שבאמת גורם לך לחשוב אחרת.' },
+              { q: 'אין לי הרבה כסף - זה רלוונטי?', a: 'דווקא בגלל זה. הרבה פעמים כשההכנסה גדלה, ההוצאות גדלות איתה — ואתה נשאר באותו מקום. הקורס מלמד אותך לנהל כסף נכון מלכתחילה, ככה שגם כשתרוויח יותר — תרגיש את ההבדל.' },
               { q: 'כמה זמן הקורס?', a: '3 שעות. 58 שיעורים קצרים. אפשר לסיים ביום אחד או בקצב שלך.' },
               { q: 'צריך רקע כלשהו?', a: 'אפס. מתחילים מ"מה זה כסף" ובונים משם. אם היה לך את הידע - לא היית צריך אותנו.' },
               { q: 'מה ההבדל בינכם ליועץ פיננסי?', a: 'יועץ אומר לך מה לעשות. אנחנו מלמדים אותך להבין למה. כשאתה מבין - אתה לא צריך לשלם למישהו שיגיד לך מה לעשות עם הכסף שלך.' },
