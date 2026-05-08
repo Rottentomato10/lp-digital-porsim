@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getCampaign, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon, updateSubscriber, getSubscriberByEmail, addSubscriber } from '@/lib/drip'
+import { getCampaign, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon, generateConfirmToken, updateSubscriber, getSubscriberByEmail, addSubscriber } from '@/lib/drip'
 import { isAuthed } from '@/lib/auth'
 
 // Send a test email to verify design and delivery
@@ -44,10 +44,14 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    const confirmToken = generateConfirmToken(email)
+    const confirmUrl = `${baseUrl}/api/drip/confirm?email=${encodeURIComponent(email)}&token=${confirmToken}`
+
     const body = dripEmail.body
       .replace(/\{\{name\}\}/g, 'דקל')
       .replace(/\{\{email\}\}/g, email)
       .replace(/\{\{coupon\}\}/g, testCoupon)
+      .replace(/\{\{confirmUrl\}\}/g, confirmUrl)
 
     const html = wrapInTemplate(body, unsubUrl)
     const subject = dripEmail.subject.replace(/\{\{name\}\}/g, 'דקל')

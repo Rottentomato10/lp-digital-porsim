@@ -982,10 +982,11 @@ function DripTab() {
   return (
     <>
       {stats && (
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3 mb-8">
           {[
-            { label: 'נרשמים', val: stats.totalSubscribers, color: '#fff' },
-            { label: 'פעילים', val: stats.activeSubscribers, color: '#F5A624' },
+            { label: 'קיבלו אימייל 1', val: stats.totalSubscribers, color: '#fff' },
+            { label: 'אישרו דיוור', val: subscribers.filter((s: any) => s.dripConfirmed).length, color: '#F5A624' },
+            { label: 'פעילים', val: stats.activeSubscribers, color: '#60A5FA' },
             { label: 'רכשו', val: stats.purchasedSubscribers, color: '#10B981' },
             { label: 'ביטלו', val: stats.unsubscribedSubscribers, color: '#EF4444' },
             { label: 'נשלחו', val: stats.totalEmailsSent, color: '#8B5CF6' },
