@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { Check, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Lock, Loader2, User, Mail, Phone, Tag, X, Play, VolumeX, Volume2 } from 'lucide-react'
 import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
-import DCookieConsent from '@/components/d/DCookieConsent'
 
 const BASE_PRICE = 390
 
@@ -415,7 +414,7 @@ export default function LP2Page() {
       </footer>
 
       <AccessibilityWidget />
-      <DCookieConsent />
+      <LightCookieConsent />
     </div>
   )
 }
@@ -514,6 +513,32 @@ function WaCarouselLight() {
         </button>
       </div>
     </div>
+  )
+}
+
+function LightCookieConsent() {
+  const [show, setShow] = useState(false)
+  useEffect(() => { if (!localStorage.getItem('pk_cookie_consent')) setShow(true) }, [])
+  const accept = () => { localStorage.setItem('pk_cookie_consent', 'all'); setShow(false) }
+  const acceptEssential = () => { localStorage.setItem('pk_cookie_consent', 'essential'); setShow(false) }
+
+  if (!show) return null
+  return (
+    <AnimatePresence>
+      <motion.div initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 80, opacity: 0 }}
+        className="fixed bottom-4 inset-x-4 md:inset-x-auto md:left-4 md:right-auto md:max-w-md z-[999]">
+        <div className="rounded-2xl border border-gray-200 p-5 bg-white shadow-xl">
+          <p className="text-[#1a1a1a] text-sm font-bold mb-2">🍪 מדיניות עוגיות</p>
+          <p className="text-[#4B5563] text-sm leading-relaxed mb-3">
+            אתר זה משתמש בעוגיות לשיפור חוויית הגלישה, ניתוח תנועה ולצרכי שיווק.
+          </p>
+          <div className="flex items-center gap-2">
+            <button onClick={accept} className="flex-1 bg-[#F5A624] text-white font-black text-sm py-2.5 rounded-xl hover:brightness-110 transition-all">מאשר הכל ✓</button>
+            <button onClick={acceptEssential} className="text-gray-400 text-xs hover:text-gray-600 px-3 py-2.5">הכרחיות בלבד</button>
+          </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 
