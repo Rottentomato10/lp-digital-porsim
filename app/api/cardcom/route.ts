@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     customerPhone = body.phone || ''
     couponCode = body.coupon || ''
     var marketingConsent = body.marketingConsent === true
+    var source = body.source || '/'
   } catch {
     return NextResponse.json({ error: 'Missing customer details' }, { status: 400 })
   }
@@ -73,6 +74,7 @@ export async function POST(req: NextRequest) {
     affiliateId,
     amount: finalPrice,
     marketingConsent,
+    source,
   })
 
   try {

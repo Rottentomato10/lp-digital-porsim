@@ -126,7 +126,7 @@ export default function CheckoutPage() {
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '' }),
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '', source: window.location.pathname }),
     }).catch(() => {})
 
     try {
@@ -139,6 +139,7 @@ export default function CheckoutPage() {
           phone: phone.trim(),
           coupon: couponApplied?.code || '',
           marketingConsent: agreedEmails,
+          source: window.location.pathname,
         }),
       })
       const data = await res.json()

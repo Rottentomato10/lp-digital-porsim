@@ -4,7 +4,7 @@ import { join } from 'path'
 import { addSubscriber } from '@/lib/drip'
 
 const CSV_PATH = join(process.cwd(), 'data', 'leads.csv')
-const CSV_HEADER = 'timestamp,name,email,phone\n'
+const CSV_HEADER = 'timestamp,name,email,phone,source\n'
 
 /**
  * Sanitize a string for CSV to prevent formula injection.
@@ -30,7 +30,7 @@ async function ensureFile() {
 // POST — save a new lead
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, dripConsent } = await req.json()
+    const { name, email, phone, dripConsent, source } = await req.json()
     if (!name || !email) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
       name,
       phone: phone || '',
       enrolledAt: timestamp,
-      source: 'landing_page',
+      source: source || '/',
       coupon: '',
       dripConfirmed: dripConsent || false,
     }).catch(err => console.error('Drip enroll failed:', err))
@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
       const safeName = sanitizeCsvField(name)
       const safeEmail = sanitizeCsvField(email)
       const safePhone = sanitizeCsvField(phone || '')
-      const row = `${timestamp},"${safeName}","${safeEmail}","${safePhone}"\n`
+      const safeSource = sanitizeCsvField(source || '/')
+      const row = `${timestamp},"${safeName}","${safeEmail}","${safePhone}","${safeSource}"\n`
       const existing = await readFile(CSV_PATH, 'utf-8')
       await writeFile(CSV_PATH, existing + row, 'utf-8')
     } catch { /* CSV storage is best-effort on serverless */ }

@@ -473,9 +473,9 @@ export default function DashboardShell() {
 
   const downloadCSV = (data: any[], filename: string) => {
     if (data.length === 0) return
-    const headers = ['מס הזמנה', 'שם', 'אימייל', 'טלפון', 'סכום', 'קופון', 'סטטוס', 'תאריך יצירה', 'תאריך תשלום']
+    const headers = ['מס הזמנה', 'שם', 'אימייל', 'טלפון', 'סכום', 'קופון', 'סטטוס', 'מקור', 'תאריך יצירה', 'תאריך תשלום']
     const rows = data.map((o: any) => [
-      o.id, o.name, o.email, o.phone, o.amount, o.coupon || '', o.status,
+      o.id, o.name, o.email, o.phone, o.amount, o.coupon || '', o.status, o.source || '/',
       new Date(o.createdAt).toLocaleString('he-IL'),
       o.paidAt ? new Date(o.paidAt).toLocaleString('he-IL') : ''
     ])
@@ -582,6 +582,7 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">תשלום</th>
                         <th className="px-3 py-3 text-right">מייל נשלח</th>
                         <th className="px-3 py-3 text-right">נכנס לקורס</th>
+                        <th className="px-3 py-3 text-right">מקור</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
                       </tr>
                     </thead>
@@ -641,6 +642,9 @@ export default function DashboardShell() {
                               )}
                             </td>
                             <td className="px-3 py-3 text-white/30 text-xs">
+                              {{ '/': 'ראשי', '/o': 'מואר', '/join': 'join' }[o.source as string] || o.source || '/'}
+                            </td>
+                            <td className="px-3 py-3 text-white/30 text-xs">
                               {new Date(o.createdAt).toLocaleDateString('he-IL')}
                               <br />
                               <span className="text-white/15">{new Date(o.createdAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}</span>
@@ -693,6 +697,7 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">אימייל</th>
                         <th className="px-3 py-3 text-right">טלפון</th>
                         <th className="px-3 py-3 text-right">קופון</th>
+                        <th className="px-3 py-3 text-right">מקור</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
                         <th className="px-3 py-3 text-right w-16"></th>
                       </tr>
@@ -705,6 +710,9 @@ export default function DashboardShell() {
                           <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.email}</td>
                           <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.phone}</td>
                           <td className="px-3 py-3 text-white/30 text-xs">{o.coupon || '—'}</td>
+                          <td className="px-3 py-3 text-white/30 text-xs">
+                            {{ '/': 'ראשי', '/o': 'מואר', '/join': 'join' }[o.source as string] || o.source || '/'}
+                          </td>
                           <td className="px-3 py-3 text-white/30 text-xs">
                             {new Date(o.createdAt).toLocaleDateString('he-IL')}
                             <br />

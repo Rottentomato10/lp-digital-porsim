@@ -142,7 +142,7 @@ export default function N9Pricing() {
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '', dripConsent }),
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '', dripConsent, source: window.location.pathname }),
     }).catch(() => {})
 
     // Create CardCom payment
@@ -156,6 +156,7 @@ export default function N9Pricing() {
           phone: phone.trim() || '0500000000',
           coupon: couponApplied?.code || '',
           marketingConsent: dripConsent,
+          source: window.location.pathname,
         }),
       })
       const data = await res.json()
