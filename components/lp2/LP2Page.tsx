@@ -466,7 +466,7 @@ export default function LP2Page() {
           <h2 className="font-black text-white text-2xl md:text-3xl text-center mb-10">שאלות ותשובות</h2>
           <div className="space-y-3">
             {[
-              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו מחנכים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידים ב-300 כיתות, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
+              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו יזמים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידים ב-300 כיתות, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
               { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הקורס עולה פחות מארוחה זוגית ונשאר איתך לכל החיים.' },
               { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה - מא׳ עד ת׳ - שבנויה לתת לך תוצאות.' },
               { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך - החזר מלא. בלי שאלות. אין לך מה להפסיד.' },
@@ -523,19 +523,45 @@ export default function LP2Page() {
 function LP2Video() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isMuted, setIsMuted] = useState(true)
+  const [isPlaying, setIsPlaying] = useState(false)
+
   useEffect(() => {
     const v = videoRef.current; if (!v) return
-    v.muted = true; v.play().catch(() => {})
-    setTimeout(() => v.play().catch(() => {}), 500)
-    setTimeout(() => v.play().catch(() => {}), 1500)
-    const t = () => { v.play().catch(() => {}) }
-    document.addEventListener('touchstart', t, { once: true })
-    return () => document.removeEventListener('touchstart', t)
+    v.muted = true
+
+    const markPlaying = () => setIsPlaying(true)
+    const onTimeFirst = () => { markPlaying(); v.removeEventListener('timeupdate', onTimeFirst) }
+    v.addEventListener('timeupdate', onTimeFirst)
+
+    // Multiple play attempts for in-app browsers (Instagram/Facebook WebView)
+    const tryPlay = () => v.play().catch(() => {})
+    tryPlay()
+    setTimeout(tryPlay, 500)
+    setTimeout(tryPlay, 1500)
+
+    // Tap anywhere to play (in-app browsers require user gesture)
+    const playOnTouch = () => { tryPlay(); document.removeEventListener('touchstart', playOnTouch) }
+    document.addEventListener('touchstart', playOnTouch, { once: true })
+
+    // Fallback: hide cover after 3s
+    const fallback = setTimeout(markPlaying, 3000)
+
+    return () => { clearTimeout(fallback); v.removeEventListener('timeupdate', onTimeFirst); document.removeEventListener('touchstart', playOnTouch) }
   }, [])
+
   return (
     <div className="mx-auto mb-8" style={{ maxWidth: '280px' }}>
-      <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: "2px solid rgba(212,168,67,0.25)" }}>
-        <video ref={videoRef} playsInline loop muted autoPlay preload="auto" className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
+      <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: '2px solid rgba(212,168,67,0.25)' }}>
+        <video ref={videoRef} playsInline loop muted autoPlay preload="metadata" className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
+
+        {/* Cover until video starts */}
+        {!isPlaying && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, #0A1628 0%, #071020 70%)' }}>
+            <motion.span animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4A843] text-2xl font-black">▶ צפה עכשיו</motion.span>
+          </div>
+        )}
+
+        {/* Sound button */}
         <button onClick={() => { if (videoRef.current) { videoRef.current.muted = !isMuted; setIsMuted(!isMuted) } }}
           className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2.5 min-h-[44px] border border-white/15 transition-all hover:bg-black/75 active:scale-95">
           {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#D4A843]" />}
