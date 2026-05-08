@@ -100,6 +100,14 @@ html.light-mode .text-white\/20 { color: rgba(26,26,26,0.35) !important; }
 html.light-mode .text-white\/15 { color: rgba(26,26,26,0.25) !important; }
 html.light-mode .text-white\/10 { color: rgba(26,26,26,0.15) !important; }
 
+/* Gradient text — make visible on light background */
+html.light-mode [style*="-webkit-text-fill-color: transparent"],
+html.light-mode [style*="-webkit-text-fill-color:transparent"] {
+  -webkit-text-fill-color: #c4841a !important;
+  color: #c4841a !important;
+  background: none !important;
+}
+
 /* Border overrides */
 html.light-mode [class*="border-white/"],
 html.light-mode [class*="border-white\/"] {
