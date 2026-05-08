@@ -8,7 +8,7 @@ interface Node {
 }
 interface Edge { from: string; to: string }
 
-const CX = 550, CY = 360
+const CX = 550, CY = 390
 
 function posFromAngle(a: number, d: number) {
   const r = (a * Math.PI) / 180
@@ -28,16 +28,16 @@ const NODES: Node[] = [
   { id:'drip', label:'מערכת דיוור', desc:'13 אימיילים אוטומטיים · קופון אישי', angle:220, distance:320, w:180, h:60, color:C.manage },
   { id:'admin', label:'ניהול קורס', desc:'תלמידים · תכנים · הרשאות', url:'https://course.porsimkanaf.com/admin', angle:350, distance:305, w:170, h:60, color:C.course },
   { id:'app', label:'אפליקציית תזרים', desc:'כלי ניהול תזרים לתלמידים', url:'https://app.porsimkanaf.com', angle:10, distance:310, w:180, h:60, color:C.course },
-  { id:'cardcom', label:'CardCom', desc:'תשלומים · חשבוניות', url:'https://secure.cardcom.solutions/Interface/BillGold498Login.aspx', angle:255, distance:440, w:155, h:56, color:C.infra, size:'sm' },
-  { id:'brevo', label:'Brevo', desc:'אימיילים · welcome · דיוור', url:'https://app.brevo.com', angle:200, distance:450, w:150, h:56, color:C.infra, size:'sm' },
-  { id:'upstash', label:'Upstash Redis', desc:'DB · הזמנות · אפיליאטים', url:'https://console.upstash.com', angle:165, distance:440, w:165, h:56, color:C.infra, size:'sm' },
+  { id:"cardcom", label:"CardCom", desc:"תשלומים · חשבוניות", url:"https://secure.cardcom.solutions/Interface/BillGold498Login.aspx", angle:235, distance:450, w:155, h:56, color:C.infra, size:'sm' },
+  { id:'brevo', label:'Brevo', desc:'אימיילים · welcome · דיוור', url:'https://app.brevo.com', angle:195, distance:460, w:150, h:56, color:C.infra, size:'sm' },
+  { id:'upstash', label:'Upstash Redis', desc:'DB · הזמנות · אפיליאטים', url:'https://console.upstash.com', angle:160, distance:450, w:165, h:56, color:C.infra, size:'sm' },
   { id:'supabase', label:'Supabase', desc:'DB + Auth · קורס', url:'https://supabase.com/dashboard', angle:315, distance:440, w:155, h:56, color:C.infra, size:'sm' },
   { id:'vimeo', label:'Vimeo', desc:'סרטוני שיעורים', url:'https://vimeo.com/manage/videos', angle:345, distance:445, w:145, h:54, color:C.infra, size:'sm' },
   { id:'vercel', label:'Vercel', desc:'Hosting · Deploy', url:'https://vercel.com/deks-projects-11b160e2', angle:25, distance:440, w:145, h:54, color:C.infra, size:'sm' },
   { id:'meta', label:'Meta Ads Manager', desc:'קמפיינים · FB + IG · תקציב', url:'https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=2847776732229765', angle:55, distance:315, w:195, h:64, color:C.traffic },
-  { id:'ga', label:'Google Analytics', desc:'תנועה · המרות', url:'https://analytics.google.com', angle:80, distance:440, w:170, h:54, color:C.analytics, size:'sm' },
-  { id:'clarity', label:'Microsoft Clarity', desc:'הקלטות · heatmaps', url:'https://clarity.microsoft.com', angle:105, distance:440, w:175, h:54, color:C.analytics, size:'sm' },
-  { id:'pixel', label:'Facebook Pixel', desc:'המרות · רימרקטינג', url:'https://business.facebook.com/events_manager2', angle:140, distance:445, w:165, h:54, color:C.analytics, size:'sm' },
+  { id:'ga', label:'Google Analytics', desc:'תנועה · המרות', url:'https://analytics.google.com', angle:75, distance:430, w:170, h:54, color:C.analytics, size:'sm' },
+  { id:'clarity', label:'Microsoft Clarity', desc:'הקלטות · heatmaps', url:'https://clarity.microsoft.com', angle:100, distance:435, w:175, h:54, color:C.analytics, size:'sm' },
+  { id:'pixel', label:'Facebook Pixel', desc:'המרות · רימרקטינג', url:'https://business.facebook.com/events_manager2', angle:130, distance:440, w:165, h:54, color:C.analytics, size:'sm' },
 ]
 
 const EDGES: Edge[] = [
@@ -158,7 +158,7 @@ export default function Hub() {
           </div>
         </div>
 
-        <p className="text-white/10 text-xs text-center mt-6">פורשים כנף © 2026</p>
+        <p className="text-white/10 text-xs text-center mt-10 pb-10">פורשים כנף © 2026</p>
       </div>
     </div>
   )
