@@ -23,15 +23,15 @@ export default function DFooter() {
 
   return (
     <>
-      <footer className={`border-t text-center ${isLight ? 'bg-[#eaeae3] border-black/8' : 'bg-[#060606] border-white/8'}`}>
+      <footer className="border-t text-center bg-[#eaeae3] border-black/8">
         {/* Legal links row */}
         <div className="py-5 flex items-center justify-center gap-4 flex-wrap px-5">
           {LINKS.map(({ key, label }, i) => (
             <span key={key} className="flex items-center gap-4">
-              {i > 0 && <span className={isLight ? 'text-black/15' : 'text-white/15'}>·</span>}
+              {i > 0 && <span className="text-black/15">·</span>}
               <button
                 onClick={() => setModal(key as ModalType)}
-                className={`t-caption hover:text-[#F5A624] transition-colors py-2 ${isLight ? 'text-black/50' : 'text-white/50'}`}
+                className="t-caption hover:text-[#F5A624] transition-colors py-2 text-black/50"
               >
                 {label}
               </button>
@@ -40,8 +40,8 @@ export default function DFooter() {
         </div>
 
         {/* Copyright row */}
-        <div className={`border-t py-4 flex justify-center ${isLight ? 'border-black/5' : 'border-white/5'}`}>
-          <p className={`t-caption ${isLight ? 'text-black/40' : ''}`}>© 2026 פורשים כנף · כל הזכויות שמורות</p>
+        <div className="border-t border-black/5 py-4 flex justify-center">
+          <p className="t-caption text-black/40">© 2026 פורשים כנף · כל הזכויות שמורות</p>
         </div>
       </footer>
 
