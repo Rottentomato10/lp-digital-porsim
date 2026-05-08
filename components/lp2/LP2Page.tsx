@@ -150,6 +150,7 @@ export default function LP2Page() {
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
               <LP2Video />
+              <p className="text-[#2563EB] text-sm font-medium mb-6 animate-pulse">👆 שווה לצפות עד הסוף — יש שם משהו שישנה לך את הדרך שבה אתה מסתכל על כסף</p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.1 }}>
@@ -258,10 +259,11 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24 bg-white">
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-12">
-            <p className="text-[#2563EB] font-bold text-sm mb-3">מה בפנים</p>
-            <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl">
-              לא סתם קורס — <span className="text-[#2563EB]">מערכת שלמה</span>
+            <p className="text-[#2563EB] font-bold text-sm mb-3">שיטת פורשים כנף</p>
+            <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl mb-3">
+              איך הפכנו חומר יבש ל<span className="text-[#2563EB]">מערכת הפעלה פשוטה</span>
             </h2>
+            <p className="text-[#4B5563] text-base max-w-xl mx-auto">לא עוד קורס תיאורטי. מערכת שלמה שנותנת לך שליטה אמיתית על הכסף שלך.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
@@ -296,9 +298,15 @@ export default function LP2Page() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { num: '1', title: 'היסודות', subtitle: 'להבין את שפת הכסף', color: '#F5A624', icon: PiggyBank, lessons: ['מה זה כסף ולמה משלמים לך', 'כל זכויות העובד שלך', 'לאן נעלם הכסף בתלוש', 'איך הבנק מרוויח ממך', 'אינפלציה וריבית'] },
-              { num: '2', title: 'הצמיחה', subtitle: 'עוברים להתקפה', color: '#10B981', icon: TrendingUp, lessons: ['השקעות וריבית דריבית', 'מניות, מדדים, קרנות סל', 'איך משקיעים בפועל', 'נדל"ן ומשכנתא'] },
-              { num: '3', title: 'המנכ"לים', subtitle: 'בונים מערכת', color: '#8B5CF6', icon: Brain, lessons: ['ניהול תזרים ותקציב', 'פנסיה, קה"ש והטבות מס', 'מערכת הפעלה שנתית', 'פסיכולוגיה של כסף'] },
+              { num: '1', title: 'היסודות', subtitle: 'להבין את שפת הכסף', color: '#F5A624', icon: PiggyBank,
+                lessons: ['מה זה כסף ולמה משלמים לך', 'כל זכויות העובד שלך', 'לאן נעלם הכסף בתלוש', 'איך הבנק מרוויח ממך', 'אינפלציה וריבית'],
+                outcome: 'תדע לקרוא תלוש שכר, לעמוד מול הבנק, ולהבין לאן כל שקל הולך.' },
+              { num: '2', title: 'הצמיחה', subtitle: 'עוברים להתקפה', color: '#10B981', icon: TrendingUp,
+                lessons: ['השקעות וריבית דריבית', 'מניות, מדדים, קרנות סל', 'איך משקיעים בפועל', 'נדל"ן ומשכנתא'],
+                outcome: 'תדע להשקיע בעצמך — בלי לסמוך על אף אחד ובלי לפחד.' },
+              { num: '3', title: 'המנכ"לים', subtitle: 'בונים מערכת', color: '#8B5CF6', icon: Brain,
+                lessons: ['ניהול תזרים ותקציב', 'פנסיה, קה"ש והטבות מס', 'מערכת הפעלה שנתית', 'פסיכולוגיה של כסף'],
+                outcome: 'תצא עם תוכנית פעולה שנתית ומערכת שתרוץ לבד.' },
             ].map((stage, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }}
@@ -319,6 +327,11 @@ export default function LP2Page() {
                       <span className="text-[#4B5563] text-sm leading-snug">{l}</span>
                     </div>
                   ))}
+                  {/* Outcome */}
+                  <div className="mt-4 pt-4 border-t" style={{ borderColor: `${stage.color}15` }}>
+                    <p className="text-xs font-bold mb-1" style={{ color: stage.color }}>בסוף השלב:</p>
+                    <p className="text-[#1a1a1a] text-sm font-medium leading-relaxed">{stage.outcome}</p>
+                  </div>
                 </div>
               </motion.div>
             ))}
