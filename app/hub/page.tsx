@@ -66,6 +66,31 @@ const EE:E[]=[
   {from:'pixel',to:'meta'},{from:'meta',to:'con'},{from:'meta',to:'lp1'},{from:'meta',to:'lp2'},
 ]
 
+const DETAILS:Record<string,string[]>={
+  pk:['ארגון חינוך פיננסי','5+ שנים בשטח','15,000+ תלמידים','300+ כיתות','חלק מתוכניות גפ״ן — משרד החינוך','קורס דיגיטלי + סדנאות פרונטליות'],
+  lp1:['דף מכירה כהה (Dark theme)','טופס תשלום inline — בלי עמוד checkout נפרד','סרטון שיווקי portrait','קרוסל ביקורות וואטסאפ','תוכנית לימודים מפורטת','שאלות ותשובות','מעקב: GA4, Pixel, Clarity','אפיליאטים + קופונים'],
+  lp2:['דף מכירה Navy + Gold','A/B testing מול הדף הראשי','אותו backend בדיוק — תשלום, קופונים, דיוור','עיצוב שונה, אותו פאנל'],
+  course:['58 שיעורי וידאו (Vimeo)','מערכת התחברות + סיסמאות','תעודת סיום','מחברת הערות אישית','מעקב התקדמות','קהילת וואטסאפ','NPS tracking','ניהול admin'],
+  admin:['ניהול תלמידים ומשתמשים','ניהול תכנים ושיעורים','הרשאות וגישה','מעקב provision','סטטיסטיקות כניסות'],
+  app:['ניהול תזרים אישי','הכנסות והוצאות','תקציב חודשי','גישה חינמית לתלמידי הקורס'],
+  dash:['טאב הזמנות — כל מי ששילם + סטטוס אימייל','טאב לידים — מי שהשאיר פרטים ולא שילם','טאב אפיליאטים — שותפים, קופונים, עמלות, סטטיסטיקות','טאב סטטיסטיקות — ביצועי אפיליאטים','טאב דיוור — 13 אימיילים, מנויים, opt-in, שליחה ידנית','ייצוא CSV','שלח שוב אימייל welcome'],
+  os:['ניהול סדנאות פרונטליות','מעקב מדריכים','ניהול לידים ועסקאות','מעקב פיננסי ורווחיות','ניהול תשלומים','ניהול בתי ספר ומוסדות','משימות ולוח שנה'],
+  wix:['אתר החברה הראשי','מידע על פורשים כנף','טפסי יצירת קשר','דפי נחיתה לפורשות כנף'],
+  porsot:['סדנאות פיננסיות לנשים','קבוצה אחת בחודש','12 משתתפות בקבוצה','2 מסלולים: פורשות (מתחילות) + כנף (מתקדמות)','3 מפגשים פרונטליים, שעתיים כל אחד','רישום דרך וואטסאפ'],
+  brevo:['שליחת אימייל welcome עם סיסמה','דיוור אוטומטי (13 אימיילים)','שליחת טסט מהדשבורד','SPF + DKIM מוגדרים','280 אימיילים/יום (free)'],
+  upstash:['Redis בענן','אחסון הזמנות','אחסון אפיליאטים ואירועים','אחסון מנויי דיוור','אחסון קמפיין דיוור'],
+  cardcom:['שער תשלומים ישראלי','חשבוניות אוטומטיות','webhook לאישור תשלום','תמיכה בקופונים','iframe תשלום מאובטח'],
+  supabase:['PostgreSQL בענן','מערכת Auth לתלמידים','טבלאות: profiles, enrollments, progress','RPC functions','Row Level Security'],
+  vimeo:['אחסון כל סרטוני הקורס','Streaming איכותי','Player מותאם','API לניהול סרטונים'],
+  vercel:['Hosting של LP + Course','Auto-deploy מ-GitHub','SSL אוטומטי','Cron jobs (דיוור יומי)','Edge network — מהיר'],
+  wixp:['אחסון אתר החברה','דומיין porsimkanaf.com','עורך ויזואלי','טפסים ודפי נחיתה'],
+  pixel:['מעקב המרות מפרסום','בניית קהלים דומים (Lookalike)','רימרקטינג למבקרים','מותקן ב-LP + אתר החברה'],
+  ga:['מעקב תנועה לדפי נחיתה','ניתוח המרות','התנהגות משתמשים','דוחות מפורטים','GA4 — G-3JL82KJZXN'],
+  clarity:['הקלטות סשנים של משתמשים','מפות חום (Heatmaps)','ניתוח UX','חינמי ללא הגבלה'],
+  meta:['ניהול קמפיינים Facebook + Instagram','הגדרת קהלי יעד','ניהול תקציב','מעקב ביצועים','חשבון: act_2847776732229765'],
+  con:['דשבורד ניתוח קמפיינים','AI לניתוח ביצועים (Claude)','סנכרון נתונים מ-Meta','המלצות אופטימיזציה'],
+}
+
 function ctr(n:N){return{x:n.x+n.w/2,y:n.y+n.h/2}}
 
 // Calculate point on rectangle edge where line from center toward target exits
@@ -84,6 +109,7 @@ function getConn(id:string){const s=new Set([id]);EE.forEach(e=>{if(e.from===id)
 export default function Hub(){
   const cvRef=useRef<HTMLCanvasElement>(null)
   const [h,sH]=useState<string|null>(null)
+  const [selected,setSelected]=useState<string|null>(null)
   const [layout,setLayout]=useState<'radial'|'building'>('radial')
   const layouts={radial:L1,building:L2}
   const pos=layouts[layout]
@@ -140,8 +166,8 @@ export default function Hub(){
             {nodes.map(n=>{
               const dim=c&&!c.has(n.id),isCtr=n.id==='pk'
               return(
-                <a key={n.id} href={n.url} target="_blank" rel="noopener noreferrer"
-                  className="absolute transition-all duration-300 hover:scale-105 hover:z-20"
+                <div key={n.id} onClick={(e)=>{e.preventDefault();setSelected(n.id)}}
+                  className="absolute transition-all duration-300 hover:scale-105 hover:z-20 cursor-pointer"
                   style={{left:n.x,top:n.y,width:n.w,height:n.h,opacity:dim?0.12:1,filter:dim?'grayscale(1) blur(1px)':'none'}}
                   onMouseEnter={()=>sH(n.id)} onMouseLeave={()=>sH(null)}>
                   <div className="w-full h-full rounded-xl border-2 flex flex-col items-center justify-center text-center px-2 transition-all duration-300"
@@ -149,11 +175,75 @@ export default function Hub(){
                     <p className={`font-bold leading-tight ${n.sm?'text-sm':'text-base'}`} style={{color:n.color}}>{n.label}</p>
                     <p className={`leading-tight mt-1 text-white/60 ${n.sm?'text-[10px]':'text-xs'}`}>{n.desc}</p>
                   </div>
-                </a>
+                </div>
               )
             })}
           </div>
         </div>
+        {/* Detail Modal */}
+        {selected && (()=>{
+          const node = nodes.find(n=>n.id===selected)
+          if(!node) return null
+          const features = DETAILS[selected] || []
+          const connected = Array.from(getConn(selected)).filter(id=>id!==selected).map(id=>nodes.find(n=>n.id===id)).filter(Boolean)
+          return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-5" style={{background:'rgba(0,0,0,0.75)',backdropFilter:'blur(8px)'}} onClick={()=>setSelected(null)}>
+              <div className="w-full max-w-md rounded-2xl border-2 overflow-hidden" style={{background:'#111318',borderColor:`${node.color}50`}} onClick={e=>e.stopPropagation()}>
+                {/* Header */}
+                <div className="p-5 border-b" style={{borderColor:`${node.color}20`,background:`${node.color}10`}}>
+                  <div className="flex items-center justify-between">
+                    <h2 className="font-black text-lg" style={{color:node.color}}>{node.label}</h2>
+                    <button onClick={()=>setSelected(null)} className="text-white/30 hover:text-white text-xl leading-none">✕</button>
+                  </div>
+                  <p className="text-white/50 text-sm mt-1">{node.desc}</p>
+                </div>
+
+                {/* Features */}
+                {features.length > 0 && (
+                  <div className="p-5 border-b border-white/5">
+                    <p className="text-white/40 text-xs font-bold mb-3">מה יש כאן:</p>
+                    <div className="space-y-2">
+                      {features.map((f,i)=>(
+                        <div key={i} className="flex items-start gap-2">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{background:node.color}}/>
+                          <span className="text-white/70 text-sm">{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Connected */}
+                {connected.length > 0 && (
+                  <div className="p-5 border-b border-white/5">
+                    <p className="text-white/40 text-xs font-bold mb-3">מחובר ל:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {connected.map((cn:any)=>(
+                        <button key={cn.id} onClick={()=>setSelected(cn.id)}
+                          className="text-xs px-3 py-1.5 rounded-lg border transition-all hover:scale-105"
+                          style={{borderColor:`${cn.color}40`,color:cn.color,background:`${cn.color}10`}}>
+                          {cn.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Action */}
+                {node.url && (
+                  <div className="p-5">
+                    <a href={node.url} target="_blank" rel="noopener noreferrer"
+                      className="block w-full text-center py-3 rounded-xl font-bold text-sm transition-all hover:brightness-110"
+                      style={{background:`${node.color}25`,color:node.color,border:`1px solid ${node.color}40`}}>
+                      עבור ל-{node.label} →
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })()}
+
         <p className="text-white/10 text-xs text-center mt-40 pb-16">פורשים כנף © 2026</p>
       </div>
     </div>
