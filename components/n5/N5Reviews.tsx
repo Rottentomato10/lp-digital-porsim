@@ -44,28 +44,17 @@ function Avatar({ name, color }: { name: string; color: string }) {
 
 
 
+const WA_IMAGES = [
+  '/review1.jpg', '/review2.jpg', '/review3.jpg',
+  '/review4.jpg', '/review5.jpg', '/review6.jpg',
+  '/review7.jpg', '/review8.jpg', '/review9.jpg',
+]
+
 function WaCarousel() {
   const [active, setActive] = useState(0)
-  const [screenshots, setScreenshots] = useState<{ src: string; alt: string }[]>([])
-
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetch('/review-list.json')
-      .then(r => r.json())
-      .then((images: string[]) => {
-        setScreenshots(images.map(src => ({ src: encodeURI(src), alt: 'ביקורת תלמיד' })))
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false))
-  }, [])
-
-  const total = screenshots.length
-  const prev = () => total > 0 && setActive(a => (a - 1 + total) % total)
-  const next = () => total > 0 && setActive(a => (a + 1) % total)
-
-  if (loading) return <div style={{ height: '260px' }} />
-  if (total === 0) return null
+  const total = WA_IMAGES.length
+  const prev = () => setActive(a => (a - 1 + total) % total)
+  const next = () => setActive(a => (a + 1) % total)
 
   const getOffset = (i: number) => {
     const diff = ((i - active) % total + total) % total
@@ -78,7 +67,7 @@ function WaCarousel() {
   return (
     <div dir="ltr" className="relative" style={{ maxWidth: '700px', margin: '0 auto' }}>
       <div className="relative flex items-center justify-center" style={{ height: '260px' }}>
-        {screenshots.map((img, i) => {
+        {WA_IMAGES.map((src, i) => {
           const pos = getOffset(i)
           const isCenter = pos === 0
           const isHidden = Math.abs(pos) > 1
@@ -98,7 +87,7 @@ function WaCarousel() {
             >
               <div className={`rounded-2xl overflow-hidden border-2 ${isCenter ? 'border-[#25D366]/40' : 'border-white/10'}`}
                 style={isCenter ? { boxShadow: '0 0 40px rgba(37,211,102,0.15)' } : {}}>
-                <img src={img.src} alt={img.alt}
+                <img src={src} alt="ביקורת תלמיד"
                   className="w-full h-auto" loading="eager" />
               </div>
             </div>
