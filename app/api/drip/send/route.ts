@@ -38,6 +38,16 @@ export async function GET(req: NextRequest) {
       continue
     }
 
+    // If user confirmed drip on landing page, skip email_1 (confirmation) and start from email_2
+    if (subscriber.dripConfirmed && subscriber.currentStep === 0 && email.id === campaign.emails[0]?.id) {
+      await updateSubscriber(subscriber.email, {
+        currentStep: 1,
+        sentEmails: [...subscriber.sentEmails, 'skipped_confirmation'],
+      })
+      skipped++
+      continue
+    }
+
     // Emails 2+ require confirmed opt-in (double opt-in)
     if (email.id !== 'email_1' && !subscriber.dripConfirmed) {
       skipped++

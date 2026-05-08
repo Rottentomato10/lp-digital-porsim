@@ -34,6 +34,7 @@ export default function N9Pricing() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
+  const [dripConsent, setDripConsent] = useState(false)
 
   // Auto-apply coupon from URL (?coupon=CODE)
   useEffect(() => {
@@ -141,7 +142,7 @@ export default function N9Pricing() {
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '' }),
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '', dripConsent }),
     }).catch(() => {})
 
     // Create CardCom payment
@@ -154,7 +155,7 @@ export default function N9Pricing() {
           email: email.trim(),
           phone: phone.trim() || '0500000000',
           coupon: couponApplied?.code || '',
-          marketingConsent: true,
+          marketingConsent: dripConsent,
         }),
       })
       const data = await res.json()
@@ -298,6 +299,20 @@ export default function N9Pricing() {
                   )}
                   {couponError && <p className="text-red-400 text-xs">{couponError}</p>}
                 </div>
+
+                {/* Marketing consent */}
+                <label className="flex items-start gap-2.5 cursor-pointer px-1 mt-1 mb-4">
+                  <input
+                    type="checkbox"
+                    checked={dripConsent}
+                    onChange={e => setDripConsent(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded accent-[#F5A624] shrink-0"
+                  />
+                  <span className="text-white/40 text-xs leading-relaxed">
+                    אשמח לקבל טיפים ותכנים בנושא כסף והשקעות
+                    <span className="text-white/20 mr-1">· לא נעביר לצד שלישי, ואפשר לבטל בכל עת</span>
+                  </span>
+                </label>
               </div>
 
               {/* CTA */}

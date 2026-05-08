@@ -30,7 +30,7 @@ async function ensureFile() {
 // POST — save a new lead
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone } = await req.json()
+    const { name, email, phone, dripConsent } = await req.json()
     if (!name || !email) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
       enrolledAt: timestamp,
       source: 'landing_page',
       coupon: '',
+      dripConfirmed: dripConsent || false,
     }).catch(err => console.error('Drip enroll failed:', err))
 
     // Save to CSV (may fail on serverless — non-critical)

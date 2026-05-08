@@ -124,6 +124,7 @@ export async function addSubscriber(sub: Omit<DripSubscriber, 'currentStep' | 'l
     lastSentAt: '',
     status: 'active',
     sentEmails: [],
+    dripConfirmed: sub.dripConfirmed || false,
   })
   await redis.set(SUBSCRIBERS_KEY, subs)
 }
