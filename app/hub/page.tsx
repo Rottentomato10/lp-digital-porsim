@@ -28,7 +28,7 @@ const NODES: Node[] = [
   { id:'drip', label:'מערכת דיוור', desc:'13 אימיילים אוטומטיים · קופון אישי', angle:220, distance:320, w:180, h:60, color:C.manage },
   { id:'admin', label:'ניהול קורס', desc:'תלמידים · תכנים · הרשאות', url:'https://course.porsimkanaf.com/admin', angle:350, distance:305, w:170, h:60, color:C.course },
   { id:'app', label:'אפליקציית תזרים', desc:'כלי ניהול תזרים לתלמידים', url:'https://app.porsimkanaf.com', angle:10, distance:310, w:180, h:60, color:C.course },
-  { id:"cardcom", label:"CardCom", desc:"תשלומים · חשבוניות", url:"https://secure.cardcom.solutions/Interface/BillGold498Login.aspx", angle:240, distance:455, w:155, h:56, color:C.infra, size:'sm' },
+  { id:"cardcom", label:"CardCom", desc:"תשלומים · חשבוניות", url:"https://secure.cardcom.solutions", angle:240, distance:455, w:155, h:56, color:C.infra, size:'sm' },
   { id:'brevo', label:'Brevo', desc:'אימיילים · welcome · דיוור', url:'https://app.brevo.com', angle:210, distance:460, w:150, h:56, color:C.infra, size:'sm' },
   { id:'upstash', label:'Upstash Redis', desc:'DB · הזמנות · אפיליאטים', url:'https://console.upstash.com', angle:155, distance:455, w:165, h:56, color:C.infra, size:'sm' },
   { id:'supabase', label:'Supabase', desc:'DB + Auth · קורס', url:'https://supabase.com/dashboard', angle:315, distance:440, w:155, h:56, color:C.infra, size:'sm' },
@@ -38,8 +38,8 @@ const NODES: Node[] = [
   { id:'ga', label:'Google Analytics', desc:'תנועה · המרות', url:'https://analytics.google.com', angle:70, distance:440, w:170, h:54, color:C.analytics, size:'sm' },
   { id:'clarity', label:'Microsoft Clarity', desc:'הקלטות · heatmaps', url:'https://clarity.microsoft.com', angle:95, distance:445, w:175, h:54, color:C.analytics, size:'sm' },
   { id:'pixel', label:'Facebook Pixel', desc:'המרות · רימרקטינג', url:'https://business.facebook.com/events_manager2', angle:125, distance:450, w:165, h:54, color:C.analytics, size:'sm' },
-  { id:"os", label:"ניהול העסק (OS)", desc:"סדנאות · מדריכים · לידים · פיננסי", url:"https://github.com/Rottentomato10/porshim-kanaf-os", angle:185, distance:440, w:175, h:60, color:C.manage },
-  { id:"con", label:"ניהול קמפיינים", desc:"Meta דשבורד · AI · ניתוח ביצועים", url:"https://github.com/Rottentomato10/meta-ads-dashboard", angle:45, distance:440, w:170, h:54, color:C.traffic, size:"sm" },
+  { id:"os", label:"ניהול העסק (OS)", desc:"סדנאות · מדריכים · לידים · פיננסי", url:"https://mad.porsimkanaf.com", angle:185, distance:440, w:175, h:60, color:C.manage },
+  { id:"con", label:"ניהול קמפיינים", desc:"Meta דשבורד · AI · ניתוח ביצועים", url:"https://con.porsimkanaf.com", angle:45, distance:440, w:170, h:54, color:C.traffic, size:"sm" },
 ]
 
 const EDGES: Edge[] = [
