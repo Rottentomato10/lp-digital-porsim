@@ -8,7 +8,7 @@ interface Node {
 }
 interface Edge { from: string; to: string }
 
-const CX = 550, CY = 390
+const CX = 550, CY = 370
 
 function posFromAngle(a: number, d: number) {
   const r = (a * Math.PI) / 180
@@ -28,18 +28,18 @@ const NODES: Node[] = [
   { id:'drip', label:'מערכת דיוור', desc:'13 אימיילים אוטומטיים · קופון אישי', angle:220, distance:320, w:180, h:60, color:C.manage },
   { id:'admin', label:'ניהול קורס', desc:'תלמידים · תכנים · הרשאות', url:'https://course.porsimkanaf.com/admin', angle:350, distance:305, w:170, h:60, color:C.course },
   { id:'app', label:'אפליקציית תזרים', desc:'כלי ניהול תזרים לתלמידים', url:'https://app.porsimkanaf.com', angle:10, distance:310, w:180, h:60, color:C.course },
-  { id:"cardcom", label:"CardCom", desc:"תשלומים · חשבוניות", url:"https://secure.cardcom.solutions", angle:240, distance:455, w:155, h:56, color:C.infra, size:'sm' },
-  { id:'brevo', label:'Brevo', desc:'אימיילים · welcome · דיוור', url:'https://app.brevo.com', angle:210, distance:460, w:150, h:56, color:C.infra, size:'sm' },
-  { id:'upstash', label:'Upstash Redis', desc:'DB · הזמנות · אפיליאטים', url:'https://console.upstash.com', angle:155, distance:455, w:165, h:56, color:C.infra, size:'sm' },
-  { id:'supabase', label:'Supabase', desc:'DB + Auth · קורס', url:'https://supabase.com/dashboard', angle:315, distance:440, w:155, h:56, color:C.infra, size:'sm' },
-  { id:'vimeo', label:'Vimeo', desc:'סרטוני שיעורים', url:'https://vimeo.com/manage/videos', angle:345, distance:445, w:145, h:54, color:C.infra, size:'sm' },
-  { id:'vercel', label:'Vercel', desc:'Hosting · Deploy', url:'https://vercel.com/deks-projects-11b160e2', angle:25, distance:440, w:145, h:54, color:C.infra, size:'sm' },
-  { id:'meta', label:'Meta Ads Manager', desc:'קמפיינים · FB + IG · תקציב', url:'https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=2847776732229765', angle:55, distance:300, w:195, h:64, color:C.traffic },
-  { id:'ga', label:'Google Analytics', desc:'תנועה · המרות', url:'https://analytics.google.com', angle:70, distance:440, w:170, h:54, color:C.analytics, size:'sm' },
-  { id:'clarity', label:'Microsoft Clarity', desc:'הקלטות · heatmaps', url:'https://clarity.microsoft.com', angle:95, distance:445, w:175, h:54, color:C.analytics, size:'sm' },
-  { id:'pixel', label:'Facebook Pixel', desc:'המרות · רימרקטינג', url:'https://business.facebook.com/events_manager2', angle:125, distance:450, w:165, h:54, color:C.analytics, size:'sm' },
-  { id:"os", label:"ניהול העסק (OS)", desc:"סדנאות · מדריכים · לידים · פיננסי", url:"https://mad.porsimkanaf.com", angle:185, distance:440, w:175, h:60, color:C.manage },
-  { id:"con", label:"ניהול קמפיינים", desc:"Meta דשבורד · AI · ניתוח ביצועים", url:"https://con.porsimkanaf.com", angle:45, distance:440, w:170, h:54, color:C.traffic, size:"sm" },
+  { id:"cardcom", label:"CardCom", desc:"תשלומים · חשבוניות", url:"https://secure.cardcom.solutions", angle:245, distance:420, w:155, h:56, color:C.infra, size:'sm' },
+  { id:'brevo', label:'Brevo', desc:'אימיילים · welcome · דיוור', url:'https://app.brevo.com', angle:215, distance:430, w:150, h:56, color:C.infra, size:'sm' },
+  { id:'upstash', label:'Upstash Redis', desc:'DB · הזמנות · אפיליאטים', url:'https://console.upstash.com', angle:168, distance:430, w:165, h:56, color:C.infra, size:'sm' },
+  { id:'supabase', label:'Supabase', desc:'DB + Auth · קורס', url:'https://supabase.com/dashboard', angle:320, distance:415, w:155, h:56, color:C.infra, size:'sm' },
+  { id:'vimeo', label:'Vimeo', desc:'סרטוני שיעורים', url:'https://vimeo.com/manage/videos', angle:340, distance:410, w:145, h:54, color:C.infra, size:'sm' },
+  { id:'vercel', label:'Vercel', desc:'Hosting · Deploy', url:'https://vercel.com/deks-projects-11b160e2', angle:20, distance:420, w:145, h:54, color:C.infra, size:'sm' },
+  { id:'meta', label:'Meta Ads Manager', desc:'קמפיינים · FB + IG · תקציב', url:'https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=2847776732229765', angle:50, distance:285, w:195, h:64, color:C.traffic },
+  { id:'ga', label:'Google Analytics', desc:'תנועה · המרות', url:'https://analytics.google.com', angle:75, distance:420, w:170, h:54, color:C.analytics, size:'sm' },
+  { id:'clarity', label:'Microsoft Clarity', desc:'הקלטות · heatmaps', url:'https://clarity.microsoft.com', angle:95, distance:425, w:175, h:54, color:C.analytics, size:'sm' },
+  { id:'pixel', label:'Facebook Pixel', desc:'המרות · רימרקטינג', url:'https://business.facebook.com/events_manager2', angle:118, distance:430, w:165, h:54, color:C.analytics, size:'sm' },
+  { id:"os", label:"ניהול העסק (OS)", desc:"סדנאות · מדריכים · לידים · פיננסי", url:"https://mad.porsimkanaf.com", angle:190, distance:380, w:175, h:60, color:C.manage },
+  { id:"con", label:"ניהול קמפיינים", desc:"Meta דשבורד · AI · ניתוח ביצועים", url:"https://con.porsimkanaf.com", angle:35, distance:400, w:170, h:54, color:C.traffic, size:"sm" },
 ]
 
 const EDGES: Edge[] = [
@@ -51,6 +51,7 @@ const EDGES: Edge[] = [
   {from:'lp1',to:'vercel'},{from:'course',to:'vercel'},
   {from:'meta',to:'lp1'},{from:'meta',to:'lp2'},
   {from:'lp1',to:'ga'},{from:'lp1',to:'clarity'},{from:'lp1',to:'pixel'},{from:'pixel',to:'meta'},
+  {from:"wix",to:"wixplatform"},
   {from:"pk",to:"os"},{from:"meta",to:"con"},{from:"con",to:"ga"},
 ]
 
@@ -68,7 +69,7 @@ export default function Hub() {
     const dpr = window.devicePixelRatio||1
     cv.width=1100*dpr; cv.height=720*dpr; ctx.scale(dpr,dpr); ctx.clearRect(0,0,1100,720)
 
-    ;[170,310,440].forEach(r=>{ctx.beginPath();ctx.arc(CX,CY,r,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,0.025)';ctx.lineWidth=1;ctx.stroke()})
+    ;[170,310,420].forEach(r=>{ctx.beginPath();ctx.arc(CX,CY,r,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,0.025)';ctx.lineWidth=1;ctx.stroke()})
 
     const conn = hov ? getConnected(hov) : null
 
