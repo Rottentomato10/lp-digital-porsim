@@ -8,7 +8,7 @@ interface Node {
 }
 interface Edge { from: string; to: string }
 
-const CX = 550, CY = 370
+const CX = 550, CY = 350
 
 function posFromAngle(a: number, d: number) {
   const r = (a * Math.PI) / 180
@@ -39,7 +39,7 @@ const NODES: Node[] = [
   { id:'clarity', label:'Microsoft Clarity', desc:'הקלטות · heatmaps', url:'https://clarity.microsoft.com', angle:95, distance:425, w:175, h:54, color:C.analytics, size:'sm' },
   { id:'pixel', label:'Facebook Pixel', desc:'המרות · רימרקטינג', url:'https://business.facebook.com/events_manager2', angle:118, distance:430, w:165, h:54, color:C.analytics, size:'sm' },
   { id:"os", label:"ניהול העסק (OS)", desc:"סדנאות · מדריכים · לידים · פיננסי", url:"https://mad.porsimkanaf.com", angle:190, distance:380, w:175, h:60, color:C.manage },
-  { id:"con", label:"ניהול קמפיינים", desc:"Meta דשבורד · AI · ניתוח ביצועים", url:"https://con.porsimkanaf.com", angle:35, distance:400, w:170, h:54, color:C.traffic, size:"sm" },
+  { id:"con", label:"ניהול קמפיינים", desc:"Meta דשבורד · AI · ניתוח ביצועים", url:"https://con.porsimkanaf.com", angle:125, distance:435, w:170, h:54, color:C.traffic, size:"sm" },
 ]
 
 const EDGES: Edge[] = [
@@ -52,7 +52,7 @@ const EDGES: Edge[] = [
   {from:'meta',to:'lp1'},{from:'meta',to:'lp2'},
   {from:'lp1',to:'ga'},{from:'lp1',to:'clarity'},{from:'lp1',to:'pixel'},{from:'pixel',to:'meta'},
   {from:"wix",to:"wixplatform"},
-  {from:"pk",to:"os"},{from:"meta",to:"con"},{from:"con",to:"ga"},
+  {from:"pk",to:"os"},
 ]
 
 function getPos(n: Node) { if (!n.distance) return {x:CX-n.w/2,y:CY-n.h/2}; const p=posFromAngle(n.angle,n.distance); return {x:p.x-n.w/2,y:p.y-n.h/2} }
@@ -162,7 +162,7 @@ export default function Hub() {
           </div>
         </div>
 
-        <p className="text-white/10 text-xs text-center mt-20 pb-16">פורשים כנף © 2026</p>
+        <p className="text-white/10 text-xs text-center mt-28 pb-20">פורשים כנף © 2026</p>
       </div>
     </div>
   )
