@@ -45,6 +45,18 @@ const EE:E[]=[
 ]
 
 function ctr(n:N){return{x:n.x+n.w/2,y:n.y+n.h/2}}
+
+// Calculate point on rectangle edge where line from center toward target exits
+function edgePoint(node:N, targetX:number, targetY:number):{x:number,y:number}{
+  const cx=node.x+node.w/2, cy=node.y+node.h/2
+  const dx=targetX-cx, dy=targetY-cy
+  if(dx===0&&dy===0) return {x:cx,y:cy}
+  const hw=node.w/2, hh=node.h/2
+  const sx=dx!==0?hw/Math.abs(dx):Infinity
+  const sy=dy!==0?hh/Math.abs(dy):Infinity
+  const s=Math.min(sx,sy)
+  return {x:cx+dx*s, y:cy+dy*s}
+}
 function getConn(id:string){const s=new Set([id]);EE.forEach(e=>{if(e.from===id)s.add(e.to);if(e.to===id)s.add(e.from)});return s}
 
 export default function Hub(){
@@ -57,7 +69,9 @@ export default function Hub(){
     const c=h?getConn(h):null
     EE.forEach(e=>{
       const f=NN.find(n=>n.id===e.from),t=NN.find(n=>n.id===e.to);if(!f||!t)return
-      const a=ctr(f),b=ctr(t),act=c&&c.has(e.from)&&c.has(e.to),dim=c&&!act
+      const fc=ctr(f),tc=ctr(t)
+      const a=edgePoint(f,tc.x,tc.y),b=edgePoint(t,fc.x,fc.y)
+      const act=c&&c.has(e.from)&&c.has(e.to),dim=c&&!act
       ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.shadowBlur=0
       if(act){ctx.strokeStyle=t.color+'BB';ctx.lineWidth=3;ctx.shadowColor=t.color;ctx.shadowBlur=10}
       else if(dim){ctx.strokeStyle='rgba(255,255,255,0.02)';ctx.lineWidth=1}
