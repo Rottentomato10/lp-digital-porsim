@@ -3,8 +3,10 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Check, ChevronDown, ShieldCheck, Lock, Loader2, User, Mail, Phone, Tag, X, Play } from 'lucide-react'
+import { Check, ChevronDown, ShieldCheck, Lock, Loader2, User, Mail, Phone, Tag, X, Play, VolumeX, Volume2 } from 'lucide-react'
 import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
+import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
+import DCookieConsent from '@/components/d/DCookieConsent'
 
 const BASE_PRICE = 390
 
@@ -112,12 +114,8 @@ export default function LP2Page() {
               <br />בסוף הקורס תבין כסף יותר טוב מ-97% מהאנשים סביבך — ותדע בדיוק מה לעשות עם כל שקל.
             </p>
 
-            {/* Video */}
-            <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden border border-gray-200 shadow-lg mb-8">
-              <div className="relative" style={{ aspectRatio: '240/426', maxWidth: '300px', margin: '0 auto' }}>
-                <video playsInline loop muted autoPlay preload="auto" className="w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
-              </div>
-            </div>
+            {/* Video with sound toggle */}
+            <LP2Video />
 
             <a href="#checkout"
               className="inline-flex items-center gap-2 bg-[#F5A624] text-white font-black text-lg px-10 py-4 rounded-full hover:brightness-110 active:scale-95 transition-all shadow-lg">
@@ -295,7 +293,7 @@ export default function LP2Page() {
             <p className="text-center text-gray-400 text-[10px] leading-relaxed mb-2">
               בלחיצה אני מאשר/ת את{' '}
               <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-gray-500">תנאי השימוש</button>
-              {' '}ו<button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-gray-500">מדיניות הפרטיות</button>
+              {' '}ו<button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-gray-500">מדיניות הפרטיות</button> וקבלת עדכונים באימייל
             </p>
 
             <div className="flex items-center justify-center gap-4">
@@ -370,6 +368,50 @@ export default function LP2Page() {
         </div>
         <p className="text-gray-300 text-xs">© 2026 כל הזכויות שמורות</p>
       </footer>
+
+      <AccessibilityWidget />
+      <DCookieConsent />
+    </div>
+  )
+}
+
+function LP2Video() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isMuted, setIsMuted] = useState(true)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true
+      videoRef.current.play().catch(() => {})
+      setTimeout(() => videoRef.current?.play().catch(() => {}), 500)
+    }
+    const playOnTouch = () => { videoRef.current?.play().catch(() => {}) }
+    document.addEventListener('touchstart', playOnTouch, { once: true })
+    return () => document.removeEventListener('touchstart', playOnTouch)
+  }, [])
+
+  const toggleMute = () => {
+    if (!videoRef.current) return
+    videoRef.current.muted = !isMuted
+    setIsMuted(!isMuted)
+  }
+
+  return (
+    <div className="max-w-sm mx-auto mb-8">
+      <div className="relative rounded-2xl overflow-hidden border border-gray-200 shadow-lg"
+        style={{ aspectRatio: '240/426' }}>
+        <video ref={videoRef} playsInline loop muted autoPlay preload="auto"
+          className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
+
+        {/* Sound button — large, clear, mobile-friendly */}
+        <button onClick={toggleMute}
+          className="absolute top-3 right-3 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md rounded-full px-4 py-2.5 min-h-[44px] border border-white/15 transition-all hover:bg-black/75 active:scale-95">
+          {isMuted ? <VolumeX size={16} className="text-white/80" /> : <Volume2 size={16} className="text-[#F5A624]" />}
+          <span className={`text-xs font-semibold ${isMuted ? 'text-white/80' : 'text-[#F5A624]'}`}>
+            {isMuted ? 'לחץ לסאונד' : 'עם סאונד'}
+          </span>
+        </button>
+      </div>
     </div>
   )
 }
