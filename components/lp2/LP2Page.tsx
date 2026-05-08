@@ -498,7 +498,7 @@ export default function LP2Page() {
         <p className="text-gray-300 text-xs">© 2026 כל הזכויות שמורות</p>
       </footer>
 
-      <AccessibilityWidget />
+      {/* Removed: light page, no dark mode toggle needed */}
       <LightCookieConsent />
     </div>
   )
