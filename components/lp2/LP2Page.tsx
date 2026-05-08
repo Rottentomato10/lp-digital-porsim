@@ -8,7 +8,7 @@ import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 
 const BASE_PRICE = 390
-const ACCENT = '#F5A624'
+const ACCENT = '#2563EB' // Deep blue accent (orange kept for CTAs only)
 
 function FadeSection({ children, className = '', id, delay = 0, style }: { children: React.ReactNode; className?: string; id?: string; delay?: number; style?: React.CSSProperties }) {
   const ref = useRef(null)
@@ -109,7 +109,7 @@ export default function LP2Page() {
       <LegalModal type={legalModal} onClose={() => setLegalModal(null)} light />
 
       {/* ═══════════ HERO ═══════════ */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #FFF8EE 0%, #FDFCFA 100%)' }}>
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #EFF6FF 0%, #FDFCFA 100%)' }}>
         {/* Animated gradient orbs */}
         <motion.div animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }} transition={{ duration: 8, repeat: Infinity }}
           className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full opacity-[0.07]"
@@ -126,21 +126,20 @@ export default function LP2Page() {
 
           <div className="text-center max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-              <p className="inline-flex items-center gap-2 bg-[#F5A624]/10 border border-[#F5A624]/20 rounded-full px-4 py-1.5 text-[#F5A624] text-sm font-bold mb-6">
-                <Sparkles size={14} />
+              <p className="inline-flex items-center gap-2 bg-[#2563EB]/8 border border-[#2563EB]/15 rounded-full px-5 py-2 text-[#2563EB] text-base md:text-lg font-bold mb-6">
+                <Sparkles size={16} />
                 הכנסנו חינוך פיננסי למערכת החינוך — ועכשיו אנחנו כאן בשבילך
               </p>
             </motion.div>
 
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.7 }}
               className="font-black text-[#1a1a1a] leading-[1.08] mb-6" style={{ fontSize: 'clamp(2.2rem, 6vw, 3.8rem)' }}>
-              הקורס שלימד
+              הקורס שמשנה את הדרך
               <br /><span className="relative">
-                <span className="text-[#F5A624]">15,000 צעירים</span>
+                <span className="text-[#2563EB]">שבה צעירים מבינים כסף</span>
                 <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1, duration: 0.5 }}
-                  className="absolute -bottom-1 left-0 right-0 h-1 bg-[#F5A624]/20 rounded-full origin-right" />
+                  className="absolute -bottom-1 left-0 right-0 h-1 bg-[#2563EB]/20 rounded-full origin-right" />
               </span>
-              <br />להפסיק לנחש ולהתחיל לשלוט
             </motion.h1>
 
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6, duration: 0.6 }}
@@ -181,12 +180,12 @@ export default function LP2Page() {
               אולי ניסית ללמוד מיוטיוב. אבל אחרי 20 סרטונים אתה עדיין באותו מקום.
             </motion.p>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
-              className="bg-[#F5A624]/5 border-r-4 border-[#F5A624] rounded-xl p-6 my-6">
+              className="bg-[#2563EB]/5 border-r-4 border-[#2563EB] rounded-xl p-6 my-6">
               <p className="text-[#1a1a1a] font-black text-xl md:text-2xl mb-2">וזה לא אשמתך.</p>
               <p className="text-[#4B5563]">12 שנה במערכת החינוך. אף שיעור אחד על כסף. המערכת פשוט שכחה את הפרק הכי חשוב בחיים שלך.</p>
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
-              className="text-[#F5A624] font-bold text-lg">
+              className="text-[#2563EB] font-bold text-lg">
               אנחנו כאן כדי לתקן את זה.
             </motion.p>
           </div>
@@ -194,14 +193,14 @@ export default function LP2Page() {
       </FadeSection>
 
       {/* ═══════════ WHO WE ARE ═══════════ */}
-      <FadeSection className="py-16 md:py-24" style={{ background: 'linear-gradient(135deg, #FFF8EE 0%, #FDF6EC 100%)' }}>
+      <FadeSection className="py-16 md:py-24" style={{ background: 'linear-gradient(135deg, #EFF6FF 0%, #F0F4FF 100%)' }}>
         <div className="max-w-5xl mx-auto px-5">
           <div className="text-center mb-12">
             <Image src="/logo.png" alt="" width={60} height={60} className="w-12 h-12 object-contain mx-auto mb-4" />
-            <p className="text-[#F5A624] font-bold text-sm mb-3">מי עומדים מאחורי זה</p>
+            <p className="text-[#2563EB] font-bold text-sm mb-3">מי עומדים מאחורי זה</p>
             <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl leading-snug">
               הכנסנו חינוך פיננסי לבתי ספר בישראל.
-              <br />עכשיו אנחנו מביאים את זה <span className="text-[#F5A624]">אליך</span>.
+              <br />עכשיו אנחנו מביאים את זה <span className="text-[#2563EB]">אליך</span>.
             </h2>
           </div>
 
@@ -226,7 +225,7 @@ export default function LP2Page() {
             ].map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: i * 0.15 }} className="text-center">
-                <p className="text-[#F5A624] font-black text-3xl md:text-4xl"><CountUp target={s.num} suffix={s.suffix} /></p>
+                <p className="text-[#2563EB] font-black text-3xl md:text-4xl"><CountUp target={s.num} suffix={s.suffix} /></p>
                 <p className="text-[#9CA3AF] text-sm mt-1">{s.label}</p>
               </motion.div>
             ))}
@@ -246,7 +245,7 @@ export default function LP2Page() {
                 </div>
                 <div>
                   <p className="font-bold text-[#1a1a1a] text-base">{p.name}</p>
-                  <p className="text-[#F5A624] text-sm font-medium mb-1">{p.role} · פורשים כנף</p>
+                  <p className="text-[#2563EB] text-sm font-medium mb-1">{p.role} · פורשים כנף</p>
                   <p className="text-[#4B5563] text-sm leading-relaxed">{p.bio}</p>
                 </div>
               </motion.div>
@@ -259,9 +258,9 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24 bg-white">
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-12">
-            <p className="text-[#F5A624] font-bold text-sm mb-3">מה בפנים</p>
+            <p className="text-[#2563EB] font-bold text-sm mb-3">מה בפנים</p>
             <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl">
-              לא סתם קורס — <span className="text-[#F5A624]">מערכת שלמה</span>
+              לא סתם קורס — <span className="text-[#2563EB]">מערכת שלמה</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -291,8 +290,8 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24" style={{ background: 'linear-gradient(180deg, #FDFCFA, #FFF8EE)' }}>
         <div className="max-w-4xl mx-auto px-5">
           <div className="text-center mb-12">
-            <p className="text-[#F5A624] font-bold text-sm mb-3">תוכנית הלימודים</p>
-            <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl">3 שלבים. 58 שיעורים. <span className="text-[#F5A624]">שליטה מלאה.</span></h2>
+            <p className="text-[#2563EB] font-bold text-sm mb-3">תוכנית הלימודים</p>
+            <h2 className="font-black text-[#1a1a1a] text-2xl md:text-4xl">3 שלבים. 58 שיעורים. <span className="text-[#2563EB]">שליטה מלאה.</span></h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -330,7 +329,7 @@ export default function LP2Page() {
       {/* ═══════════ WHATSAPP REVIEWS ═══════════ */}
       <FadeSection className="py-16 md:py-24 bg-white">
         <div className="max-w-4xl mx-auto px-5">
-          <p className="text-center text-[#F5A624] font-bold text-sm mb-8">קצת ממה שאומרים עלינו</p>
+          <p className="text-center text-[#2563EB] font-bold text-sm mb-8">קצת ממה שאומרים עלינו</p>
           <WaCarouselLight />
         </div>
       </FadeSection>
@@ -339,7 +338,7 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24" style={{ background: '#FDFCFA' }}>
         <div className="max-w-3xl mx-auto px-5">
           <h2 className="font-black text-[#1a1a1a] text-2xl md:text-3xl leading-snug mb-8 text-center">
-            הקורס הזה <span className="text-[#F5A624]">לא</span> בשביל כולם
+            הקורס הזה <span className="text-[#EF4444]">לא</span> בשביל כולם
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
@@ -376,7 +375,7 @@ export default function LP2Page() {
         <div className="max-w-xl mx-auto px-5">
           <div className="text-center mb-8">
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
-              className="text-[#F5A624] font-bold text-sm mb-2">הצעד הבא שלך</motion.p>
+              className="text-[#2563EB] font-bold text-sm mb-2">הצעד הבא שלך</motion.p>
             <h2 className="font-black text-[#1a1a1a] text-2xl md:text-3xl mb-2">מוכן להתחיל?</h2>
             <p className="text-[#4B5563] text-base">מלא את הפרטים ותקבל גישה מיידית לקורס.</p>
           </div>
