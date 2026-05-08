@@ -45,7 +45,7 @@ export default function DFooter() {
         </div>
       </footer>
 
-      <LegalModal type={modal} onClose={() => setModal(null)} />
+      <LegalModal type={modal} onClose={() => setModal(null)} light />
     </>
   )
 }
