@@ -42,36 +42,36 @@ const C = {
 
 const NODES: Node[] = [
   // Center
-  { id: 'pk', label: 'פורשים כנף', desc: 'חינוך פיננסי · הארגון המרכזי', url: 'https://www.porsimkanaf.com', angle: 0, distance: 0, w: 200, h: 80, color: C.brand, size: 'lg' },
+  { id: "pk", label: "פורשים כנף", desc: "חינוך פיננסי · הארגון המרכזי", url: "https://www.porsimkanaf.com", angle: 0, distance: 0, w: 210, h: 85, color: C.brand, size: 'lg' },
 
   // Ring 1 — Products
-  { id: 'lp1', label: 'דף נחיתה ראשי', desc: 'דף מכירה כהה · טופס תשלום · וידאו', url: 'https://digital.porsimkanaf.com', angle: 200, distance: 170, w: 185, h: 60, color: C.sales },
-  { id: 'lp2', label: 'דף /join', desc: 'דף מכירה חלופי · Navy · A/B test', url: 'https://digital.porsimkanaf.com/join', angle: 245, distance: 175, w: 170, h: 58, color: C.sales },
-  { id: 'course', label: 'פלטפורמת הקורס', desc: '58 שיעורים · וידאו · תעודות · התחברות', url: 'https://course.porsimkanaf.com', angle: 330, distance: 175, w: 195, h: 60, color: C.course },
-  { id: 'porsot', label: 'פורשות כנף', desc: 'סדנאות פרונטליות לנשים · 12 משתתפות', url: 'https://www.porsimkanaf.com/start', angle: 90, distance: 170, w: 175, h: 58, color: C.women },
-  { id: 'wix', label: 'אתר החברה', desc: 'אתר Wix ראשי · porsimkanaf.com', url: 'https://www.porsimkanaf.com', angle: 135, distance: 168, w: 155, h: 56, color: C.brand },
+  { id: 'lp1', label: 'דף נחיתה ראשי', desc: 'דף מכירה כהה · טופס תשלום · וידאו', url: 'https://digital.porsimkanaf.com', angle: 200, distance: 170, w: 200, h: 65, color: C.sales },
+  { id: 'lp2', label: 'דף /join', desc: 'דף מכירה חלופי · Navy · A/B test', url: 'https://digital.porsimkanaf.com/join', angle: 245, distance: 175, w: 175, h: 62, color: C.sales },
+  { id: 'course', label: 'פלטפורמת הקורס', desc: '58 שיעורים · וידאו · תעודות · התחברות', url: 'https://course.porsimkanaf.com', angle: 330, distance: 175, w: 210, h: 68, color: C.course },
+  { id: 'porsot', label: 'פורשות כנף', desc: 'סדנאות פרונטליות לנשים · 12 משתתפות', url: 'https://www.porsimkanaf.com/start', angle: 90, distance: 170, w: 190, h: 65, color: C.women },
+  { id: 'wix', label: 'אתר החברה', desc: 'אתר Wix ראשי · porsimkanaf.com', url: 'https://www.porsimkanaf.com', angle: 135, distance: 168, w: 165, h: 60, color: C.brand },
 
   // Ring 2 — Management & Tools
-  { id: 'dash', label: 'דשבורד ניהול', desc: 'הזמנות · לידים · אפיליאטים · סטטיסטיקות', url: 'https://digital.porsimkanaf.com/dashboard', angle: 175, distance: 310, w: 170, h: 56, color: C.manage },
-  { id: 'drip', label: 'מערכת דיוור', desc: '13 אימיילים אוטומטיים · קופון אישי · opt-in', angle: 220, distance: 320, w: 165, h: 54, color: C.manage },
-  { id: 'admin', label: 'ניהול קורס', desc: 'תלמידים · תכנים · הרשאות · סטטוסים', url: 'https://course.porsimkanaf.com/admin', angle: 350, distance: 305, w: 155, h: 54, color: C.course },
-  { id: 'app', label: 'אפליקציית תזרים', desc: 'כלי ניהול תזרים אישי לתלמידים', url: 'https://app.porsimkanaf.com', angle: 10, distance: 310, w: 165, h: 54, color: C.course },
+  { id: 'dash', label: 'דשבורד ניהול', desc: 'הזמנות · לידים · אפיליאטים · סטטיסטיקות', url: 'https://digital.porsimkanaf.com/dashboard', angle: 175, distance: 310, w: 185, h: 62, color: C.manage },
+  { id: 'drip', label: 'מערכת דיוור', desc: '13 אימיילים אוטומטיים · קופון אישי · opt-in', angle: 220, distance: 320, w: 180, h: 60, color: C.manage },
+  { id: 'admin', label: 'ניהול קורס', desc: 'תלמידים · תכנים · הרשאות · סטטוסים', url: 'https://course.porsimkanaf.com/admin', angle: 350, distance: 305, w: 170, h: 60, color: C.course },
+  { id: 'app', label: 'אפליקציית תזרים', desc: 'כלי ניהול תזרים אישי לתלמידים', url: 'https://app.porsimkanaf.com', angle: 10, distance: 310, w: 180, h: 60, color: C.course },
 
   // Ring 3 — Infrastructure
-  { id: 'cardcom', label: 'CardCom', desc: 'שער תשלומים · כרטיסי אשראי · חשבוניות', url: 'https://secure.cardcom.solutions/Interface/BillGold498Login.aspx', angle: 255, distance: 440, w: 140, h: 52, color: C.infra, size: 'sm' },
-  { id: 'brevo', label: 'Brevo', desc: 'שליחת אימיילים · welcome · דיוור · סיסמאות', url: 'https://app.brevo.com', angle: 200, distance: 450, w: 135, h: 52, color: C.infra, size: 'sm' },
-  { id: 'upstash', label: 'Upstash Redis', desc: 'מסד נתונים · הזמנות · אפיליאטים · דיוור', url: 'https://console.upstash.com', angle: 165, distance: 440, w: 150, h: 52, color: C.infra, size: 'sm' },
-  { id: 'supabase', label: 'Supabase', desc: 'מסד נתונים + Auth · תלמידים · שיעורים', url: 'https://supabase.com/dashboard', angle: 315, distance: 440, w: 140, h: 52, color: C.infra, size: 'sm' },
-  { id: 'vimeo', label: 'Vimeo', desc: 'אחסון סרטוני שיעורים · streaming', url: 'https://vimeo.com/manage/videos', angle: 345, distance: 445, w: 130, h: 50, color: C.infra, size: 'sm' },
-  { id: 'vercel', label: 'Vercel', desc: 'Hosting · Deploy · SSL · דומיינים', url: 'https://vercel.com/deks-projects-11b160e2', angle: 25, distance: 440, w: 130, h: 50, color: C.infra, size: 'sm' },
+  { id: 'cardcom', label: 'CardCom', desc: 'שער תשלומים · כרטיסי אשראי · חשבוניות', url: 'https://secure.cardcom.solutions/Interface/BillGold498Login.aspx', angle: 255, distance: 440, w: 155, h: 56, color: C.infra, size: 'sm' },
+  { id: 'brevo', label: 'Brevo', desc: 'שליחת אימיילים · welcome · דיוור · סיסמאות', url: 'https://app.brevo.com', angle: 200, distance: 450, w: 150, h: 56, color: C.infra, size: 'sm' },
+  { id: 'upstash', label: 'Upstash Redis', desc: 'מסד נתונים · הזמנות · אפיליאטים · דיוור', url: 'https://console.upstash.com', angle: 165, distance: 440, w: 165, h: 56, color: C.infra, size: 'sm' },
+  { id: 'supabase', label: 'Supabase', desc: 'מסד נתונים + Auth · תלמידים · שיעורים', url: 'https://supabase.com/dashboard', angle: 315, distance: 440, w: 155, h: 56, color: C.infra, size: 'sm' },
+  { id: 'vimeo', label: 'Vimeo', desc: 'אחסון סרטוני שיעורים · streaming', url: 'https://vimeo.com/manage/videos', angle: 345, distance: 445, w: 145, h: 54, color: C.infra, size: 'sm' },
+  { id: 'vercel', label: 'Vercel', desc: 'Hosting · Deploy · SSL · דומיינים', url: 'https://vercel.com/deks-projects-11b160e2', angle: 25, distance: 440, w: 145, h: 54, color: C.infra, size: 'sm' },
 
   // Traffic — separate axis
-  { id: 'meta', label: 'Meta Ads Manager', desc: 'קמפיינים · קהלים · תקציב · FB + IG', url: 'https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=2847776732229765', angle: 55, distance: 315, w: 175, h: 58, color: C.traffic },
+  { id: 'meta', label: 'Meta Ads Manager', desc: 'קמפיינים · קהלים · תקציב · FB + IG', url: 'https://adsmanager.facebook.com/adsmanager/manage/campaigns?act=2847776732229765', angle: 55, distance: 315, w: 190, h: 65, color: C.traffic },
 
   // Analytics
-  { id: 'ga', label: 'Google Analytics', desc: 'תנועה · המרות · התנהגות משתמשים', url: 'https://analytics.google.com', angle: 80, distance: 440, w: 155, h: 50, color: C.analytics, size: 'sm' },
-  { id: 'clarity', label: 'Microsoft Clarity', desc: 'הקלטות סשנים · מפות חום · UX', url: 'https://clarity.microsoft.com', angle: 105, distance: 440, w: 160, h: 50, color: C.analytics, size: 'sm' },
-  { id: 'pixel', label: 'Facebook Pixel', desc: 'מעקב המרות · רימרקטינג · קהלים דומים', url: 'https://business.facebook.com/events_manager2', angle: 140, distance: 445, w: 150, h: 50, color: C.analytics, size: 'sm' },
+  { id: 'ga', label: 'Google Analytics', desc: 'תנועה · המרות · התנהגות משתמשים', url: 'https://analytics.google.com', angle: 80, distance: 440, w: 170, h: 54, color: C.analytics, size: 'sm' },
+  { id: 'clarity', label: 'Microsoft Clarity', desc: 'הקלטות סשנים · מפות חום · UX', url: 'https://clarity.microsoft.com', angle: 105, distance: 440, w: 175, h: 54, color: C.analytics, size: 'sm' },
+  { id: 'pixel', label: 'Facebook Pixel', desc: 'מעקב המרות · רימרקטינג · קהלים דומים', url: 'https://business.facebook.com/events_manager2', angle: 140, distance: 445, w: 165, h: 54, color: C.analytics, size: 'sm' },
 ]
 
 const EDGES: Edge[] = [
