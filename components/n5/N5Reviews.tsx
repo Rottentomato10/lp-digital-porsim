@@ -48,19 +48,23 @@ function WaCarousel() {
   const [active, setActive] = useState(0)
   const [screenshots, setScreenshots] = useState<{ src: string; alt: string }[]>([])
 
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     fetch('/review-list.json')
       .then(r => r.json())
       .then((images: string[]) => {
-        setScreenshots(images.map(src => ({ src, alt: 'ביקורת תלמיד' })))
+        setScreenshots(images.map(src => ({ src: encodeURI(src), alt: 'ביקורת תלמיד' })))
       })
       .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const total = screenshots.length
   const prev = () => total > 0 && setActive(a => (a - 1 + total) % total)
   const next = () => total > 0 && setActive(a => (a + 1) % total)
 
+  if (loading) return <div style={{ height: '260px' }} />
   if (total === 0) return null
 
   const getOffset = (i: number) => {
@@ -94,8 +98,8 @@ function WaCarousel() {
             >
               <div className={`rounded-2xl overflow-hidden border-2 ${isCenter ? 'border-[#25D366]/40' : 'border-white/10'}`}
                 style={isCenter ? { boxShadow: '0 0 40px rgba(37,211,102,0.15)' } : {}}>
-                <Image src={img.src} alt={img.alt} width={600} height={300}
-                  className="w-full h-auto" priority />
+                <img src={img.src} alt={img.alt}
+                  className="w-full h-auto" loading="eager" />
               </div>
             </div>
           )

@@ -14,7 +14,7 @@ export default function DFooter() {
 
   return (
     <>
-      <footer className="bg-[#060606] border-t border-white/8 text-center">
+      <footer className="bg-[#060606] border-t border-white/8 text-center lp-footer">
         {/* Legal links row */}
         <div className="py-5 flex items-center justify-center gap-4 flex-wrap px-5">
           {LINKS.map(({ key, label }, i) => (

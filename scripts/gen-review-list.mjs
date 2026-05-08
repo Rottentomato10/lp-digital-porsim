@@ -7,7 +7,7 @@ try {
   const files = readdirSync(dir)
     .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
     .sort()
-    .map(f => `/pic%20review/${encodeURIComponent(f)}`)
+    .map(f => `/pic review/${f}`)
   writeFileSync(join(process.cwd(), 'public', 'review-list.json'), JSON.stringify(files))
   console.log(`✅ Generated review-list.json with ${files.length} images`)
 } catch (e) {

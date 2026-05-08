@@ -219,21 +219,23 @@ html.light-mode .rounded-xl, html.light-mode .rounded-2xl, html.light-mode .roun
 }
 
 /* Footer */
-html.light-mode footer {
+html.light-mode footer,
+html.light-mode .lp-footer {
   background-color: #eaeae3 !important;
+  background: #eaeae3 !important;
   border-color: rgba(0,0,0,0.08) !important;
 }
-html.light-mode footer .t-caption {
-  color: rgba(26,26,26,0.5) !important;
+html.light-mode footer *,
+html.light-mode .lp-footer * {
+  border-color: rgba(0,0,0,0.06) !important;
 }
-html.light-mode footer .text-white\/50 {
-  color: rgba(26,26,26,0.6) !important;
+html.light-mode footer .t-caption,
+html.light-mode footer .text-white\/50,
+html.light-mode footer button {
+  color: rgba(26,26,26,0.5) !important;
 }
 html.light-mode footer .text-white\/15 {
   color: rgba(26,26,26,0.15) !important;
-}
-html.light-mode footer [class*="border-white"] {
-  border-color: rgba(0,0,0,0.06) !important;
 }
 
 /* Sticky bar / black backgrounds */
