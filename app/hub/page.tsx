@@ -33,8 +33,7 @@ const NN:N[]=[
 
 const EE:E[]=[
   {from:'pk',to:'lp1'},{from:'pk',to:'lp2'},{from:'pk',to:'course'},{from:'pk',to:'porsot'},{from:'pk',to:'wix'},{from:'pk',to:'os'},
-  {from:'lp1',to:'course'},{from:'lp2',to:'course'},
-  {from:'lp1',to:'dash'},
+  {from:'lp1',to:'course'},{from:'lp2',to:'course'},{from:'lp1',to:'dash'},
   {from:'course',to:'admin'},{from:'course',to:'app'},
   {from:'lp1',to:'cardcom'},{from:'course',to:'cardcom'},
   {from:'lp1',to:'brevo'},{from:'course',to:'brevo'},
@@ -46,7 +45,7 @@ const EE:E[]=[
 ]
 
 function ctr(n:N){return{x:n.x+n.w/2,y:n.y+n.h/2}}
-function conn(id:string){const s=new Set([id]);EE.forEach(e=>{if(e.from===id)s.add(e.to);if(e.to===id)s.add(e.from)});return s}
+function getConn(id:string){const s=new Set([id]);EE.forEach(e=>{if(e.from===id)s.add(e.to);if(e.to===id)s.add(e.from)});return s}
 
 export default function Hub(){
   const cvRef=useRef<HTMLCanvasElement>(null)
@@ -55,7 +54,7 @@ export default function Hub(){
   useEffect(()=>{
     const cv=cvRef.current;if(!cv)return;const ctx=cv.getContext('2d');if(!ctx)return
     const d=window.devicePixelRatio||1;cv.width=1100*d;cv.height=740*d;ctx.scale(d,d);ctx.clearRect(0,0,1100,740)
-    const c=h?conn(h):null
+    const c=h?getConn(h):null
     EE.forEach(e=>{
       const f=NN.find(n=>n.id===e.from),t=NN.find(n=>n.id===e.to);if(!f||!t)return
       const a=ctr(f),b=ctr(t),act=c&&c.has(e.from)&&c.has(e.to),dim=c&&!act
@@ -67,7 +66,7 @@ export default function Hub(){
     })
   },[h])
 
-  const c=h?conn(h):null
+  const c=h?getConn(h):null
 
   return(
     <div className="min-h-screen bg-[#0A0C12] text-white overflow-auto" dir="rtl" style={{fontFamily:"'Heebo',sans-serif"}}>
