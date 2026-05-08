@@ -31,27 +31,31 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
   }))
 
   // Send email notification to admin
-  const adminEmail = process.env.ADMIN_EMAIL || process.env.NOTIFICATION_EMAIL
+  const adminEmail = process.env.ADMIN_EMAIL
   const brevoKey = process.env.BREVO_API_KEY
   if (adminEmail && brevoKey) {
     try {
+      // Count total paid orders for customer number
+      const allOrders = await getAllOrders()
+      const paidCount = allOrders.filter(o => o.status !== 'pending').length
+
       await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: { 'accept': 'application/json', 'content-type': 'application/json', 'api-key': brevoKey },
         body: JSON.stringify({
           sender: { name: 'פורשים כנף', email: 'noreply@porsimkanaf.com' },
           to: [{ email: adminEmail }],
-          subject: `רכישה חדשה! ${order.name} — ₪${order.amount}`,
-          htmlContent: `<div dir="rtl" style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;padding:20px">
-            <h2 style="color:#F5A624;margin:0 0 16px">רכישה חדשה</h2>
-            <table style="width:100%;border-collapse:collapse;font-size:15px">
-              <tr><td style="padding:8px 0;color:#888">שם</td><td style="padding:8px 0;font-weight:bold">${order.name}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">אימייל</td><td style="padding:8px 0" dir="ltr">${order.email}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">טלפון</td><td style="padding:8px 0" dir="ltr">${order.phone}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">סכום</td><td style="padding:8px 0;color:#10B981;font-weight:bold">₪${order.amount}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">קופון</td><td style="padding:8px 0">${order.coupon || 'ללא'}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">מס׳ הזמנה</td><td style="padding:8px 0;font-family:monospace">${order.id}</td></tr>
-              <tr><td style="padding:8px 0;color:#888">זמן</td><td style="padding:8px 0">${new Date().toLocaleString('he-IL')}</td></tr>
+          subject: `לקוח מס׳ ${paidCount} הצטרף לנבחרת!`,
+          htmlContent: `<div dir="rtl" style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;padding:24px">
+            <div style="text-align:center;margin-bottom:20px">
+              <p style="font-size:40px;margin:0">🎉</p>
+              <h2 style="color:#F5A624;margin:8px 0 4px;font-size:22px">לקוח מס׳ ${paidCount} הצטרף לנבחרת!</h2>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:15px;background:#f9f9f4;border-radius:12px;overflow:hidden">
+              <tr><td style="padding:12px 16px;color:#888;border-bottom:1px solid #eee">שם</td><td style="padding:12px 16px;font-weight:bold;border-bottom:1px solid #eee">${order.name}</td></tr>
+              <tr><td style="padding:12px 16px;color:#888;border-bottom:1px solid #eee">אימייל</td><td style="padding:12px 16px;border-bottom:1px solid #eee" dir="ltr">${order.email}</td></tr>
+              <tr><td style="padding:12px 16px;color:#888;border-bottom:1px solid #eee">טלפון</td><td style="padding:12px 16px;border-bottom:1px solid #eee" dir="ltr">${order.phone}</td></tr>
+              <tr><td style="padding:12px 16px;color:#888">סכום</td><td style="padding:12px 16px;color:#10B981;font-weight:bold;font-size:18px">₪${order.amount}</td></tr>
             </table>
           </div>`,
         }),
