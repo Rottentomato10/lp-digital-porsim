@@ -149,15 +149,7 @@ export default function N5Reviews() {
             <p className="text-white text-lg md:text-xl font-medium leading-relaxed mb-5 max-w-lg mx-auto">
               ״{FEATURED.quote}״
             </p>
-            <div className="flex flex-col items-center gap-1">
-              <div className="flex items-center gap-2">
-                <Avatar name={FEATURED.name} color={AVATAR_COLORS[0]} />
-                <div className="text-right">
-                  <p className="text-white/50 text-sm">{FEATURED.name} · {FEATURED.city}</p>
-                  <span className="text-white/30 text-xs">{FEATURED.year}</span>
-                </div>
-              </div>
-            </div>
+            <p className="text-white/50 text-sm">{FEATURED.name} · {FEATURED.city}</p>
           </div>
         </motion.div>
 
@@ -166,16 +158,10 @@ export default function N5Reviews() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="grid md:grid-cols-2 gap-4">
           {REVIEWS.map((review, i) => (
-            <div key={i} className="p-6 rounded-2xl bg-[#111111] border border-white/7">
+            <div key={i} className="p-5 rounded-xl bg-[#111111] border border-white/7">
               <Stars />
-              <p className="text-white/65 text-lg leading-relaxed mb-4">״{review.quote}״</p>
-              <div className="flex items-center gap-2">
-                <Avatar name={review.name} color={AVATAR_COLORS[i % AVATAR_COLORS.length]} />
-                <div>
-                  <p className="text-white/50 text-sm">{review.name} · {review.city}</p>
-                  <span className="text-white/30 text-xs">{review.year}</span>
-                </div>
-              </div>
+              <p className="text-white/65 text-base leading-relaxed mb-3">״{review.quote}״</p>
+              <p className="text-white/50 text-sm">{review.name} · {review.city}</p>
             </div>
           ))}
         </motion.div>
