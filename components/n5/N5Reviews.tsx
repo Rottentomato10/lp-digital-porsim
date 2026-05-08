@@ -1,18 +1,9 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
-
-const WA_SCREENSHOTS = [
-  { src: '/review1.jpg', alt: 'סגרתם לי דברים שלא חשבתי שאני יכולה ללמוד' },
-  { src: '/review2.jpg', alt: 'הקורס פשוט מעולה, סגר לי כל כך הרבה פינות' },
-  { src: '/review3.jpg', alt: 'וואו איזה קורס מטורף, מדברים בגובה העיניים' },
-  { src: '/review4.jpg', alt: 'הקורס פשוט מעולה, התחלתי כבר להשקיע' },
-  { src: '/review5.jpg', alt: 'באתי סקפטי אבל יצרתם כאן משהו מטורף' },
-  { src: '/review6.jpg', alt: 'נהנתי מהקורס, התחלתי לחסוך ופתחתי קרן השקעות' },
-]
 
 const AVATAR_COLORS = ['#F5A624', '#5EEAD4', '#A78BFA', '#F472B6', '#60A5FA', '#34D399', '#FB923C', '#E879F9']
 
@@ -55,9 +46,22 @@ function Avatar({ name, color }: { name: string; color: string }) {
 
 function WaCarousel() {
   const [active, setActive] = useState(0)
-  const total = WA_SCREENSHOTS.length
-  const prev = () => setActive(a => (a - 1 + total) % total)
-  const next = () => setActive(a => (a + 1) % total)
+  const [screenshots, setScreenshots] = useState<{ src: string; alt: string }[]>([])
+
+  useEffect(() => {
+    fetch('/api/review-images')
+      .then(r => r.json())
+      .then(data => {
+        setScreenshots((data.images || []).map((src: string) => ({ src, alt: 'ביקורת תלמיד' })))
+      })
+      .catch(() => {})
+  }, [])
+
+  const total = screenshots.length
+  const prev = () => total > 0 && setActive(a => (a - 1 + total) % total)
+  const next = () => total > 0 && setActive(a => (a + 1) % total)
+
+  if (total === 0) return null
 
   const getOffset = (i: number) => {
     const diff = ((i - active) % total + total) % total
@@ -70,7 +74,7 @@ function WaCarousel() {
   return (
     <div dir="ltr" className="relative" style={{ maxWidth: '700px', margin: '0 auto' }}>
       <div className="relative flex items-center justify-center" style={{ height: '260px' }}>
-        {WA_SCREENSHOTS.map((img, i) => {
+        {screenshots.map((img, i) => {
           const pos = getOffset(i)
           const isCenter = pos === 0
           const isHidden = Math.abs(pos) > 1
