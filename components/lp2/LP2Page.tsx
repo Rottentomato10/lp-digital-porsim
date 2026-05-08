@@ -241,7 +241,7 @@ export default function LP2Page() {
                 transition={{ delay: 0.2 + i * 0.15 }}
                 className="flex gap-4 p-5 rounded-2xl border border-[#D4A843]/15 bg-[#071020] shadow-sm">
                 <div className="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-[#D4A843]/20">
-                  <Image src={p.image} alt={p.name} width={200} height={200} className={`w-full h-full object-cover ${p.image === '/evyatar.jpg' ? 'object-[65%_center]' : ''}`} />
+                  <Image src={p.image} alt={p.name} width={200} height={200} className="w-full h-full object-cover object-top" />
                 </div>
                 <div>
                   <p className="font-bold text-white text-base">{p.name}</p>

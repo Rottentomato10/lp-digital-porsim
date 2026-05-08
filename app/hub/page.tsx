@@ -137,8 +137,8 @@ export default function Hub() {
       ctx.beginPath()
       ctx.moveTo(a.x, a.y)
       ctx.lineTo(b.x, b.y)
-      ctx.strokeStyle = to.color + '20' // colored lines, subtle
-      ctx.lineWidth = 1.5
+      ctx.strokeStyle = to.color + '45'
+      ctx.lineWidth = 2
       ctx.stroke()
     })
   }, [])
@@ -167,25 +167,25 @@ export default function Hub() {
                   style={{ left: pos.x, top: pos.y, width: node.w, height: node.h }}>
                   <div className="w-full h-full rounded-xl border-2 flex flex-col items-center justify-center text-center px-2 transition-all duration-300"
                     style={{
-                      background: isCenter ? `${node.color}20` : `${node.color}12`,
-                      borderColor: isCenter ? `${node.color}60` : `${node.color}40`,
+                      background: isCenter ? `${node.color}45` : `${node.color}35`,
+                      borderColor: isCenter ? `${node.color}95` : `${node.color}80`,
                       boxShadow: isCenter ? `0 0 50px ${node.color}15` : 'none',
                     }}
                     onMouseEnter={e => {
                       e.currentTarget.style.boxShadow = `0 0 30px ${node.color}30`
                       e.currentTarget.style.borderColor = `${node.color}90`
-                      e.currentTarget.style.background = `${node.color}25`
+                      e.currentTarget.style.background = `${node.color}50`
                     }}
                     onMouseLeave={e => {
                       e.currentTarget.style.boxShadow = isCenter ? `0 0 50px ${node.color}15` : 'none'
-                      e.currentTarget.style.borderColor = isCenter ? `${node.color}60` : `${node.color}40`
-                      e.currentTarget.style.background = isCenter ? `${node.color}20` : `${node.color}12`
+                      e.currentTarget.style.borderColor = isCenter ? `${node.color}95` : `${node.color}80`
+                      e.currentTarget.style.background = isCenter ? `${node.color}45` : `${node.color}35`
                     }}>
                     <p className={`font-bold leading-tight ${
-                      node.size === 'lg' ? 'text-sm' : node.size === 'sm' ? 'text-[10px]' : 'text-[11px]'
+                      node.size === 'lg' ? 'text-lg' : node.size === 'sm' ? 'text-sm' : 'text-base'
                     }`} style={{ color: node.color }}>{node.label}</p>
-                    <p className={`leading-tight mt-0.5 text-white/50 ${
-                      node.size === 'sm' ? 'text-[8px]' : 'text-[9px]'
+                    <p className={`leading-tight mt-1 text-white/70 ${
+                      node.size === 'sm' ? 'text-[10px]' : 'text-xs'
                     }`}>{node.desc}</p>
                   </div>
                 </a>
