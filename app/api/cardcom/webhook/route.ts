@@ -29,6 +29,35 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
     coupon: order.coupon || 'ללא',
     timestamp: new Date().toISOString(),
   }))
+
+  // Send email notification to admin
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.NOTIFICATION_EMAIL
+  const brevoKey = process.env.BREVO_API_KEY
+  if (adminEmail && brevoKey) {
+    try {
+      await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: { 'accept': 'application/json', 'content-type': 'application/json', 'api-key': brevoKey },
+        body: JSON.stringify({
+          sender: { name: 'פורשים כנף', email: 'noreply@porsimkanaf.com' },
+          to: [{ email: adminEmail }],
+          subject: `רכישה חדשה! ${order.name} — ₪${order.amount}`,
+          htmlContent: `<div dir="rtl" style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;padding:20px">
+            <h2 style="color:#F5A624;margin:0 0 16px">רכישה חדשה</h2>
+            <table style="width:100%;border-collapse:collapse;font-size:15px">
+              <tr><td style="padding:8px 0;color:#888">שם</td><td style="padding:8px 0;font-weight:bold">${order.name}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">אימייל</td><td style="padding:8px 0" dir="ltr">${order.email}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">טלפון</td><td style="padding:8px 0" dir="ltr">${order.phone}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">סכום</td><td style="padding:8px 0;color:#10B981;font-weight:bold">₪${order.amount}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">קופון</td><td style="padding:8px 0">${order.coupon || 'ללא'}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">מס׳ הזמנה</td><td style="padding:8px 0;font-family:monospace">${order.id}</td></tr>
+              <tr><td style="padding:8px 0;color:#888">זמן</td><td style="padding:8px 0">${new Date().toLocaleString('he-IL')}</td></tr>
+            </table>
+          </div>`,
+        }),
+      })
+    } catch { /* non-blocking */ }
+  }
 }
 
 /**
