@@ -257,9 +257,10 @@ const CONTENT: Record<NonNullable<ModalType>, { title: string; body: ReactNode }
 interface Props {
   type: ModalType
   onClose: () => void
+  light?: boolean
 }
 
-export function LegalModal({ type, onClose }: Props) {
+export function LegalModal({ type, onClose, light }: Props) {
   useEffect(() => {
     if (!type) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
@@ -292,19 +293,19 @@ export function LegalModal({ type, onClose }: Props) {
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             onClick={e => e.stopPropagation()}
-            className="w-full max-w-lg max-h-[80vh] rounded-2xl border border-white/10 overflow-hidden flex flex-col"
-            style={{ background: '#111111' }}
+            className={`w-full max-w-lg max-h-[80vh] rounded-2xl border overflow-hidden flex flex-col ${light ? 'border-gray-200 bg-white' : 'border-white/10'}`}
+            style={light ? {} : { background: '#111111' }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/7 flex-shrink-0">
-              <h2 className="text-white font-black text-lg">{content.title}</h2>
+            <div className={`flex items-center justify-between px-6 py-5 border-b flex-shrink-0 ${light ? 'border-gray-100' : 'border-white/7'}`}>
+              <h2 className={`font-black text-lg ${light ? 'text-[#1a1a1a]' : 'text-white'}`}>{content.title}</h2>
               <button onClick={onClose}
-                className="w-11 h-11 rounded-full flex items-center justify-center text-white/30 hover:text-white hover:bg-white/8 transition-all">
+                className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${light ? 'text-gray-400 hover:text-gray-600 hover:bg-gray-100' : 'text-white/30 hover:text-white hover:bg-white/8'}`}>
                 <X size={16} />
               </button>
             </div>
             {/* Content */}
-            <div className="overflow-y-auto px-6 py-5 flex-1">
+            <div className={`overflow-y-auto px-6 py-5 flex-1 ${light ? '[&_*]:!text-[#4B5563] [&_h3]:!text-[#1a1a1a] [&_span]:!text-[#1a1a1a]' : ''}`}>
               {content.body}
             </div>
           </motion.div>

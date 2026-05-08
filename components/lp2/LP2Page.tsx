@@ -93,7 +93,7 @@ export default function LP2Page() {
         </div>
       )}
 
-      <LegalModal type={legalModal} onClose={() => setLegalModal(null)} />
+      <LegalModal type={legalModal} onClose={() => setLegalModal(null)} light />
 
       {/* ========== HERO ========== */}
       <section className="bg-[#faf9f6] border-b border-gray-100">
