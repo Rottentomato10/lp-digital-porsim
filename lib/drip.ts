@@ -265,7 +265,7 @@ export async function sendBrevoEmail(to: { email: string; name: string }, subjec
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        sender: { name: 'פורשים כנף', email: 'team@porsimkanaf.com' },
+        sender: { name: 'פורשים כנף', email: 'noreply@porsimkanaf.com' },
         to: [{ email: to.email, name: to.name }],
         subject,
         htmlContent,

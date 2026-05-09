@@ -68,7 +68,7 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
  * Provision course access after successful payment.
  * Calls the course platform API to create user + grant access.
  */
-async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }): Promise<boolean> {
+async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }): Promise<{ success: boolean; password?: string }> {
   const courseApiUrl = process.env.COURSE_API_URL
   const provisionSecret = process.env.PROVISION_API_SECRET
 
@@ -78,7 +78,7 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       reason: 'Missing COURSE_API_URL or PROVISION_API_SECRET',
       orderId: order.id,
     }))
-    return false
+    return { success: false }
   }
 
   try {
@@ -108,7 +108,7 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       response: data,
       timestamp: new Date().toISOString(),
     }))
-    return res.ok
+    return { success: res.ok, password: data.generated_password }
   } catch (err) {
     console.error(JSON.stringify({
       event: 'PROVISION_ERROR',
@@ -117,7 +117,7 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       error: String(err),
       timestamp: new Date().toISOString(),
     }))
-    return false
+    return { success: false }
   }
 }
 
@@ -160,10 +160,12 @@ async function handleWebhook(orderId: string, dealResponse: string) {
         }
       } catch { /* non-blocking */ }
     }
-    // Provision course access + track email status
-    const emailSent = await provisionCourseAccess(order)
-    if (emailSent) {
-      await updateOrder(orderId, { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent' })
+    // Provision course access + track email status + save password
+    const provision = await provisionCourseAccess(order)
+    if (provision.success) {
+      const updates: Record<string, unknown> = { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent' }
+      if (provision.password) updates.generatedPassword = provision.password
+      await updateOrder(orderId, updates)
     }
   }
 }

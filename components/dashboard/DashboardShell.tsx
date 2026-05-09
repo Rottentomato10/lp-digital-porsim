@@ -580,6 +580,7 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">סכום</th>
                         <th className="px-3 py-3 text-right">קופון</th>
                         <th className="px-3 py-3 text-right">תשלום</th>
+                        <th className="px-3 py-3 text-right">סיסמה</th>
                         <th className="px-3 py-3 text-right">מייל נשלח</th>
                         <th className="px-3 py-3 text-right">פתח מייל</th>
                         <th className="px-3 py-3 text-right">מקור</th>
@@ -616,6 +617,13 @@ export default function DashboardShell() {
                               <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[o.status] || 'bg-white/5 text-white/30'}`}>
                                 {statusLabels[o.status] || o.status}
                               </span>
+                            </td>
+                            <td className="px-3 py-3 text-center">
+                              {o.generatedPassword ? (
+                                <span className="text-white/60 font-mono text-xs" dir="ltr">{o.generatedPassword}</span>
+                              ) : (
+                                <span className="text-white/15">—</span>
+                              )}
                             </td>
                             <td className="px-3 py-3 text-center">
                               {o.emailSent ? (
