@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
           method: 'POST',
           headers: { 'accept': 'application/json', 'content-type': 'application/json', 'api-key': brevoKey },
           body: JSON.stringify({
-            sender: { name: 'פורשים כנף', email: 'team@porsimkanaf.com' },
+            sender: { name: 'פורשים כנף', email: 'noreply@porsimkanaf.com' },
             to: [{ email: adminEmail }],
             subject: `לקוח מס׳ ${paidCount} הצטרף לנבחרת!`,
             htmlContent: `<div dir="rtl" style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;padding:24px">
