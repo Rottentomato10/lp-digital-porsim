@@ -106,11 +106,40 @@ function edgePoint(node:N, targetX:number, targetY:number):{x:number,y:number}{
 }
 function getConn(id:string){const s=new Set([id]);EE.forEach(e=>{if(e.from===id)s.add(e.to);if(e.to===id)s.add(e.from)});return s}
 
+const HUB_PIN_HASH = '5e4bf86e34e3e8f3d1f3bc5f8c1a36c5db8b0f1a8e7c2d9b4a6f0e3c7d5b9a21' // sha256 of "2708" + salt
+
+function hashPin(pin:string){
+  // Simple hash for client-side check — not crypto-grade but sufficient for PIN
+  let h=0;const s='hubsalt2026'+pin
+  for(let i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0}
+  return Math.abs(h).toString(36)
+}
+const CORRECT_HASH = hashPin('2708')
+
 export default function Hub(){
   const cvRef=useRef<HTMLCanvasElement>(null)
   const [h,sH]=useState<string|null>(null)
   const [selected,setSelected]=useState<string|null>(null)
   const [layout,setLayout]=useState<'radial'|'building'>('radial')
+  const [authed,setAuthed]=useState(false)
+  const [pin,setPin]=useState('')
+  const [pinError,setPinError]=useState(false)
+
+  // Check if already authed
+  useEffect(()=>{
+    if(localStorage.getItem('hub_auth')===CORRECT_HASH) setAuthed(true)
+  },[])
+
+  const handlePin=()=>{
+    if(hashPin(pin)===CORRECT_HASH){
+      localStorage.setItem('hub_auth',CORRECT_HASH)
+      setAuthed(true)
+      setPinError(false)
+    } else {
+      setPinError(true)
+      setPin('')
+    }
+  }
   const layouts={radial:L1,building:L2}
   const pos=layouts[layout]
 
@@ -135,6 +164,24 @@ export default function Hub(){
   },[h,layout]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const c=h?getConn(h):null
+
+  if(!authed) return(
+    <div className="min-h-screen bg-[#0A0C12] flex items-center justify-center" dir="rtl" style={{fontFamily:"'Heebo',sans-serif"}}>
+      <div className="text-center">
+        <span className="text-4xl block mb-4">⚡</span>
+        <h1 className="text-white font-black text-xl mb-2">מפת המערכת</h1>
+        <p className="text-white/40 text-sm mb-6">הזן קוד PIN</p>
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <input type="password" inputMode="numeric" maxLength={4} value={pin} onChange={e=>setPin(e.target.value.replace(/\D/g,''))}
+            onKeyDown={e=>e.key==='Enter'&&handlePin()}
+            className="w-32 text-center text-2xl tracking-[0.5em] font-bold px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white focus:outline-none focus:border-[#F5A624]"
+            autoFocus placeholder="····" />
+        </div>
+        <button onClick={handlePin} className="px-8 py-2.5 rounded-xl bg-[#F5A624] text-black font-bold text-sm hover:brightness-110 transition-all">כניסה</button>
+        {pinError && <p className="text-red-400 text-sm mt-3">קוד שגוי</p>}
+      </div>
+    </div>
+  )
 
   return(
     <div className="min-h-screen bg-[#0A0C12] text-white overflow-auto" dir="rtl" style={{fontFamily:"'Heebo',sans-serif"}}>
