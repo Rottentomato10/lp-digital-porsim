@@ -51,10 +51,8 @@ export async function POST(req: NextRequest) {
       }).catch(err => console.error('Drip enroll failed:', err))
     }
 
-    // Save browsing lead to Redis (so it appears in dashboard)
-    if (email && email.includes('@')) {
-      saveBrowsingLead({ name: name || '', email, phone: phone || '', source: source || '/' }).catch(() => {})
-    }
+    // Save browsing lead to Redis (so it appears in dashboard) — save ANY input
+    saveBrowsingLead({ name: name || '', email: email || '', phone: phone || '', source: source || '/' }).catch(() => {})
 
     // Save to CSV (may fail on serverless — non-critical)
     try {

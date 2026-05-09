@@ -58,8 +58,10 @@ export async function getOrderById(id: string): Promise<Order | undefined> {
 
 export async function saveBrowsingLead(data: { name: string; email: string; phone: string; source?: string }): Promise<void> {
   const all = await loadOrders()
-  // Check if this email already has an order (any status) — don't duplicate
-  const existing = all.find(o => o.email.toLowerCase() === data.email.toLowerCase())
+  // Check if this person already has an order — deduplicate by email (if valid) or name+phone
+  const existing = data.email && data.email.includes('@')
+    ? all.find(o => o.email.toLowerCase() === data.email.toLowerCase())
+    : all.find(o => o.status === 'browsing' && o.name === data.name && o.phone === data.phone && o.name)
   if (existing) {
     // Update name/phone if they changed
     if (data.name && data.name !== '(ללא שם)') existing.name = data.name
