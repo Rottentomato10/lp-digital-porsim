@@ -428,7 +428,7 @@ export default function LP2Page() {
                   <input type="text" value={coupon} onChange={e => setCoupon(e.target.value.toUpperCase())} onKeyDown={e => e.key === 'Enter' && handleCouponCheck()} placeholder="קוד קופון" dir="ltr"
                     className="flex-1 px-4 py-3 rounded-xl border border-white/10 bg-[#071020] text-sm placeholder:text-white/40 focus:outline-none focus:border-[#D4A843] transition-all text-left" />
                   <button onClick={() => handleCouponCheck()} disabled={couponLoading}
-                    className="px-5 py-3 rounded-xl bg-[#D4A843]/10 border border-[#D4A843]/30 text-[#D4A843] font-bold text-sm hover:bg-[#D4A843]/20 transition-all">
+                    className="px-3 sm:px-5 py-3 rounded-xl bg-[#D4A843]/10 border border-[#D4A843]/30 text-[#D4A843] font-bold text-sm hover:bg-[#D4A843]/20 transition-all shrink-0">
                     {couponLoading ? <Loader2 size={16} className="animate-spin" /> : 'החל'}
                   </button>
                 </div>
