@@ -159,6 +159,7 @@ export default function LP2Page() {
                 אני רוצה להתחיל
               </a>
             </motion.div>
+            <p className="text-white/20 text-xs mt-4">* הטקסט כתוב בלשון זכר לנוחות אך מיועד לכל המינים</p>
           </div>
         </div>
       </section>

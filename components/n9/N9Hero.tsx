@@ -170,6 +170,8 @@ export default function N9Hero() {
           <br />וזה עולה לך המון. כל חודש.
         </p>
 
+        <p className="text-center text-white/20 text-xs mb-6">* הטקסט כתוב בלשון זכר לנוחות אך מיועד לכל המינים</p>
+
         {/* Video with glassmorphism container */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}

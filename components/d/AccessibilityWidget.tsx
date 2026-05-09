@@ -61,9 +61,12 @@ export function AccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [settings, setSettings] = useState<AccessibilitySettings>(defaultSettings)
   const [readingGuideY, setReadingGuideY] = useState(0)
-  const [isLight, setIsLight] = useState(false)
+  const [isLight, setIsLight] = useState(true)
 
-  // No default light mode — pages control their own theme
+  // Default to light mode
+  useEffect(() => {
+    document.documentElement.classList.add('light-mode')
+  }, [])
 
   useEffect(() => {
     const saved = localStorage.getItem('accessibility-settings')
