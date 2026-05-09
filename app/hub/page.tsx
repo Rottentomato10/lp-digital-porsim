@@ -171,13 +171,24 @@ export default function Hub(){
         <span className="text-4xl block mb-4">⚡</span>
         <h1 className="text-white font-black text-xl mb-2">מפת המערכת</h1>
         <p className="text-white/40 text-sm mb-6">הזן קוד PIN</p>
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <input type="password" inputMode="numeric" maxLength={4} value={pin} onChange={e=>setPin(e.target.value.replace(/\D/g,''))}
-            onKeyDown={e=>e.key==='Enter'&&handlePin()}
-            className="w-32 text-center text-2xl tracking-[0.5em] font-bold px-4 py-3 rounded-xl bg-white/5 border border-white/20 text-white focus:outline-none focus:border-[#F5A624]"
-            autoFocus placeholder="····" />
+        <div className="flex items-center justify-center gap-3 mb-5" dir="ltr">
+          {[0,1,2,3].map(i=>(
+            <input key={i} id={`pin-${i}`} type="password" inputMode="numeric" maxLength={1}
+              value={pin[i]||''}
+              onChange={e=>{
+                const v=e.target.value.replace(/\D/g,'')
+                if(!v)return
+                const next=[...pin];next[i]=v;const newPin=next.join('')
+                setPin(newPin);setPinError(false)
+                if(i<3){const el=document.getElementById(`pin-${i+1}`);el?.focus()}
+                else if(newPin.length===4){setTimeout(()=>{if(hashPin(newPin)===CORRECT_HASH){localStorage.setItem('hub_auth',CORRECT_HASH);setAuthed(true)}else{setPinError(true);setPin('')}},150)}
+              }}
+              onKeyDown={e=>{if(e.key==='Backspace'&&!pin[i]&&i>0){const el=document.getElementById(`pin-${i-1}`);el?.focus();const next=[...pin];next[i-1]='';setPin(next.join(''))}}}
+              className="w-14 h-16 text-center text-2xl font-black rounded-xl bg-white/5 border-2 border-white/20 text-white focus:outline-none focus:border-[#F5A624] transition-all"
+              autoFocus={i===0}
+            />
+          ))}
         </div>
-        <button onClick={handlePin} className="px-8 py-2.5 rounded-xl bg-[#F5A624] text-black font-bold text-sm hover:brightness-110 transition-all">כניסה</button>
         {pinError && <p className="text-red-400 text-sm mt-3">קוד שגוי</p>}
       </div>
     </div>
