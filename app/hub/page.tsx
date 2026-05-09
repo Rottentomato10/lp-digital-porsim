@@ -146,11 +146,11 @@ export default function Hub(){
               <h1 className="text-white font-black text-xl">מפת המערכת — פורשים כנף</h1>
             </div>
             <button onClick={()=>setLayout(l=>l==='radial'?'building':'radial')}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/15 text-white/60 text-sm font-bold hover:bg-white/10 hover:text-white transition-all">
+              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/15 text-white/60 text-sm font-bold hover:bg-white/10 hover:text-white transition-all">
               {layout==='radial'?'🏢 תצוגת בניין':'🌐 תצוגה רדיאלית'}
             </button>
           </div>
-          <div className="flex items-center gap-4 flex-wrap p-3 rounded-xl bg-white/[0.04] border border-white/10">
+          <div className="hidden md:flex items-center gap-4 flex-wrap p-3 rounded-xl bg-white/[0.04] border border-white/10">
             <span className="text-white/50 text-sm font-bold ml-2">מקרא:</span>
             {[{c:C.brand,l:'פורשים כנף'},{c:C.sales,l:'דפי מכירה'},{c:C.course,l:'קורס ומוצרים'},{c:C.women,l:'פורשות כנף'},{c:C.manage,l:'ניהול'},{c:C.traffic,l:'טראפיק'},{c:C.analytics,l:'אנליטיקס'},{c:C.infra,l:'תשתית'}].map(l=>(
               <div key={l.l} className="flex items-center gap-1.5">
@@ -160,7 +160,39 @@ export default function Hub(){
             ))}
           </div>
         </div>
-        <div className="flex justify-center">
+        {/* ===== MOBILE: Card list ===== */}
+        <div className="md:hidden space-y-3 mb-10">
+          {[
+            {title:'פורשים כנף',ids:['pk','wix']},
+            {title:'דפי מכירה',ids:['lp1','lp2']},
+            {title:'קורס ומוצרים',ids:['course','admin','app']},
+            {title:'פורשות כנף',ids:['porsot']},
+            {title:'ניהול',ids:['dash','os']},
+            {title:'טראפיק',ids:['meta','con']},
+            {title:'אנליטיקס',ids:['pixel','ga','clarity']},
+            {title:'תשתית',ids:['cardcom','brevo','upstash','supabase','vimeo','vercel','wixp']},
+          ].map(group=>(
+            <div key={group.title}>
+              <p className="text-white/40 text-xs font-bold mb-2">{group.title}</p>
+              <div className="grid grid-cols-2 gap-2">
+                {group.ids.map(id=>{
+                  const n=NN.find(x=>x.id===id);if(!n)return null
+                  return(
+                    <div key={id} onClick={()=>setSelected(id)}
+                      className="p-3 rounded-xl border cursor-pointer active:scale-95 transition-all"
+                      style={{background:`${n.color}20`,borderColor:`${n.color}50`}}>
+                      <p className="font-bold text-sm" style={{color:n.color}}>{n.label}</p>
+                      <p className="text-white/50 text-[10px] mt-0.5">{n.desc}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ===== DESKTOP: Map ===== */}
+        <div className="hidden md:flex justify-center">
           <div className="relative" style={{width:'1100px',height:'740px'}}>
             <canvas ref={cvRef} className="absolute inset-0" style={{width:'1100px',height:'740px'}}/>
             {nodes.map(n=>{
