@@ -55,6 +55,12 @@ export default function LP2Page() {
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
 
+  // Force dark mode on /join
+  useEffect(() => {
+    document.documentElement.classList.remove('light-mode')
+    return () => { document.documentElement.classList.remove('light-mode') }
+  }, [])
+
   const finalPrice = couponApplied ? couponApplied.finalPrice : BASE_PRICE
 
   const handleCouponCheck = async (code?: string) => {
@@ -159,7 +165,7 @@ export default function LP2Page() {
                 אני רוצה להתחיל
               </a>
             </motion.div>
-            <p className="text-white/20 text-xs mt-4">* הטקסט כתוב בלשון זכר לנוחות אך מיועד לכל המינים</p>
+            <p className="text-white/35 text-sm mt-4">* הטקסט כתוב בלשון זכר לנוחות אך מיועד לכל המינים</p>
           </div>
         </div>
       </section>
