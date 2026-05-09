@@ -25,7 +25,7 @@ export default function N5Team() {
             {[
               { val: '5+', label: 'שנות פעילות' },
               { val: '15,000+', label: 'תלמידים' },
-              { val: '300+', label: 'כיתות' },
+              { val: '50+', label: 'מוסדות חינוך' },
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <p className="font-black text-[#F5A624] text-2xl">{s.val}</p>
@@ -45,7 +45,7 @@ export default function N5Team() {
               מעבירים סדנאות חינוך פיננסי בבתי ספר, יחידות צבאיות ומסגרות חינוכיות בכל רחבי הארץ — <span className="text-white font-semibold">כחלק מתוכניות גפ״ן, תוכניות ההעשרה של משרד החינוך</span>.
             </p>
             <p className="text-white/60 text-lg md:text-xl leading-relaxed">
-              למעלה מ-<span className="text-[#F5A624] font-bold">15,000</span> תלמידים ותלמידות עברו תחת הידיים שלנו ב-<span className="text-[#F5A624] font-bold">300+</span> כיתות. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
+              למעלה מ-<span className="text-[#F5A624] font-bold">15,000</span> תלמידים ותלמידות עברו תחת הידיים שלנו ב-<span className="text-[#F5A624] font-bold">50+</span> מוסדות חינוך. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
             </p>
           </div>
           <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">

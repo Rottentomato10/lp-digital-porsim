@@ -227,7 +227,7 @@ export default function LP2Page() {
           <div className="flex items-center justify-center gap-8 md:gap-16 mb-12">
             {[
               { num: 15000, suffix: '+', label: 'תלמידים' },
-              { num: 300, suffix: '+', label: 'כיתות' },
+              { num: 50, suffix: '+', label: 'מוסדות חינוך' },
               { num: 5, suffix: '+', label: 'שנים בשטח' },
             ].map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
@@ -248,7 +248,7 @@ export default function LP2Page() {
           <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
               { name: 'דקל קאפח', role: 'מייסד שותף', image: '/dekel.jpg', bio: 'מתכנן פיננסי (CFP) שחי את עולם ההשקעות והניהול הכלכלי. מתרגם מושגים פיננסיים מורכבים לכלים פשוטים ליישום. מתמקד בשורה התחתונה ובתוצאות בשטח.' },
-              { name: 'אביתר דנגור', role: 'מייסד שותף', image: '/evyatar.jpeg', bio: 'תואר בכלכלה וניסיון פדגוגי עשיר. הופך ידע כלכלי מורכב לתוכנית עבודה פשוטה. הוביל את הכנסת החינוך הפיננסי למאות כיתות ברחבי הארץ.' },
+              { name: 'אביתר דנגור', role: 'מייסד שותף', image: '/evyatar.jpeg', bio: 'תואר בכלכלה וניסיון פדגוגי עשיר. הופך ידע כלכלי מורכב לתוכנית עבודה פשוטה. הוביל את הכנסת החינוך הפיננסי ב-50+ מוסדות חינוך ברחבי הארץ.' },
             ].map((p, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 transition={{ delay: 0.2 + i * 0.15 }}
