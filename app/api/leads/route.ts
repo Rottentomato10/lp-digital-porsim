@@ -30,23 +30,25 @@ async function ensureFile() {
 // POST — save a new lead
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, dripConsent, source } = await req.json()
-    if (!name || !email) {
+    const { name, email, phone, dripConsent, source, partial } = await req.json()
+    if (!name && !email) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
 
     const timestamp = new Date().toISOString()
 
-    // Auto-enroll in drip campaign (non-blocking, runs first)
-    addSubscriber({
-      email,
-      name,
-      phone: phone || '',
-      enrolledAt: timestamp,
-      source: source || '/',
-      coupon: '',
-      dripConfirmed: dripConsent || false,
-    }).catch(err => console.error('Drip enroll failed:', err))
+    // Auto-enroll in drip campaign only for full leads (not partial typing)
+    if (!partial && email && email.includes('@')) {
+      addSubscriber({
+        email,
+        name: name || '',
+        phone: phone || '',
+        enrolledAt: timestamp,
+        source: source || '/',
+        coupon: '',
+        dripConfirmed: dripConsent || false,
+      }).catch(err => console.error('Drip enroll failed:', err))
+    }
 
     // Save to CSV (may fail on serverless — non-critical)
     try {

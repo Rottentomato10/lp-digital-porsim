@@ -35,6 +35,23 @@ export default function N9Pricing() {
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
   const [dripConsent, setDripConsent] = useState(false)
+  const leadSavedRef = useRef<string>('')
+
+  // Auto-save lead after 2 seconds of typing (debounced)
+  useEffect(() => {
+    const key = `${name.trim()}|${email.trim()}|${phone.trim()}`
+    if ((!name.trim() && !email.trim()) || key === leadSavedRef.current) return
+    const timer = setTimeout(() => {
+      if (key === leadSavedRef.current) return
+      leadSavedRef.current = key
+      fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name.trim() || '(ללא שם)', email: email.trim() || '(ללא אימייל)', phone: phone.trim(), coupon: '', source: window.location.pathname, partial: true }),
+      }).catch(() => {})
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [name, email, phone])
 
   // Auto-apply coupon from URL (?coupon=CODE)
   useEffect(() => {
