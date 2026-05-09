@@ -52,7 +52,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Save browsing lead to Redis (so it appears in dashboard) — save ANY input
-    saveBrowsingLead({ name: name || '', email: email || '', phone: phone || '', source: source || '/' }).catch(() => {})
+    try {
+      await saveBrowsingLead({ name: name || '', email: email || '', phone: phone || '', source: source || '/' })
+    } catch (err) {
+      console.error('saveBrowsingLead failed:', err)
+    }
 
     // Save to CSV (may fail on serverless — non-critical)
     try {
