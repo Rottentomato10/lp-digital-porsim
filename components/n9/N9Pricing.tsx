@@ -319,17 +319,17 @@ export default function N9Pricing() {
                 </div>
 
                 {/* Marketing consent */}
-                <label className="flex items-start gap-2.5 cursor-pointer px-1 mt-1 mb-4">
+                <label className="flex items-center gap-3 cursor-pointer px-2 py-3 mt-2 mb-4 rounded-xl border border-[#F5A624]/15 bg-[#F5A624]/[0.04] hover:bg-[#F5A624]/[0.08] transition-all">
                   <input
                     type="checkbox"
                     checked={dripConsent}
                     onChange={e => setDripConsent(e.target.checked)}
-                    className="mt-0.5 w-4 h-4 rounded accent-[#F5A624] shrink-0"
+                    className="w-5 h-5 rounded accent-[#F5A624] shrink-0"
                   />
-                  <span className="text-white/40 text-xs leading-relaxed">
-                    אשמח לקבל טיפים ותכנים בנושא כסף והשקעות
-                    <span className="text-white/20 mr-1">· לא נעביר לצד שלישי, ואפשר לבטל בכל עת</span>
-                  </span>
+                  <div>
+                    <span className="text-white/70 text-sm font-medium">שלחו לי טיפים וכלים בנושא כסף והשקעות</span>
+                    <span className="text-white/30 text-xs block mt-0.5">נשאר ביננו, ואפשר לבטל בקליק</span>
+                  </div>
                 </label>
               </div>
 
