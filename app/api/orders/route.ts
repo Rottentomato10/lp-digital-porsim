@@ -11,9 +11,9 @@ export async function GET(req: NextRequest) {
   let all = search ? await searchOrders(search) : await getAllOrders()
 
   if (type === 'leads') {
-    all = all.filter(o => o.status === 'pending')
+    all = all.filter(o => o.status === 'pending' || o.status === 'browsing')
   } else if (type === 'orders') {
-    all = all.filter(o => o.status !== 'pending')
+    all = all.filter(o => o.status !== 'pending' && o.status !== 'browsing')
   }
 
   return NextResponse.json({ orders: all })

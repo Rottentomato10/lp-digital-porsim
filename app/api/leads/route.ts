@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { readFile, writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { addSubscriber } from '@/lib/drip'
+import { saveBrowsingLead } from '@/lib/orders'
 
 const CSV_PATH = join(process.cwd(), 'data', 'leads.csv')
 const CSV_HEADER = 'timestamp,name,email,phone,source\n'
@@ -37,8 +38,8 @@ export async function POST(req: NextRequest) {
 
     const timestamp = new Date().toISOString()
 
-    // Auto-enroll in drip campaign only for full leads (not partial typing)
-    if (!partial && email && email.includes('@')) {
+    // Auto-enroll in drip campaign for any lead with valid email
+    if (email && email.includes('@')) {
       addSubscriber({
         email,
         name: name || '',
@@ -48,6 +49,11 @@ export async function POST(req: NextRequest) {
         coupon: '',
         dripConfirmed: dripConsent || false,
       }).catch(err => console.error('Drip enroll failed:', err))
+    }
+
+    // Save browsing lead to Redis (so it appears in dashboard)
+    if (email && email.includes('@')) {
+      saveBrowsingLead({ name: name || '', email, phone: phone || '', source: source || '/' }).catch(() => {})
     }
 
     // Save to CSV (may fail on serverless — non-critical)

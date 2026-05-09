@@ -20,7 +20,7 @@ export interface Order {
   coupon: string         // coupon used (if any)
   affiliateId: string    // affiliate linked (if any)
   amount: number         // amount paid
-  status: 'pending' | 'paid' | 'email_sent' | 'accessed' | 'refunded'
+  status: 'browsing' | 'pending' | 'paid' | 'email_sent' | 'accessed' | 'refunded'
   createdAt: string
   paidAt: string
   notes: string
@@ -54,6 +54,30 @@ export async function getAllOrders(): Promise<Order[]> {
 export async function getOrderById(id: string): Promise<Order | undefined> {
   const all = await loadOrders()
   return all.find(o => o.id === id)
+}
+
+export async function saveBrowsingLead(data: { name: string; email: string; phone: string; source?: string }): Promise<void> {
+  const all = await loadOrders()
+  // Check if this email already has an order (any status) — don't duplicate
+  const existing = all.find(o => o.email.toLowerCase() === data.email.toLowerCase())
+  if (existing) {
+    // Update name/phone if they changed
+    if (data.name && data.name !== '(ללא שם)') existing.name = data.name
+    if (data.phone) existing.phone = data.phone
+    await saveOrders(all)
+    return
+  }
+  // Create browsing lead
+  const existingIds = new Set(all.map(o => o.id))
+  let id: string
+  do { id = generateOrderId() } while (existingIds.has(id))
+  all.push({
+    id, name: data.name || '', email: data.email, phone: data.phone || '',
+    coupon: '', affiliateId: '', amount: 0,
+    status: 'browsing', createdAt: new Date().toISOString(), paidAt: '', notes: '',
+    source: data.source || '/',
+  })
+  await saveOrders(all)
 }
 
 export async function createOrder(data: {

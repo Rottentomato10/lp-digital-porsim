@@ -696,6 +696,7 @@ export default function DashboardShell() {
                         <th className="px-3 py-3 text-right">שם</th>
                         <th className="px-3 py-3 text-right">אימייל</th>
                         <th className="px-3 py-3 text-right">טלפון</th>
+                        <th className="px-3 py-3 text-right">שלב</th>
                         <th className="px-3 py-3 text-right">קופון</th>
                         <th className="px-3 py-3 text-right">מקור</th>
                         <th className="px-3 py-3 text-right">תאריך</th>
@@ -709,6 +710,11 @@ export default function DashboardShell() {
                           <td className="px-3 py-3 text-white font-medium">{o.name}</td>
                           <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.email}</td>
                           <td className="px-3 py-3 text-white/50 text-xs" dir="ltr">{o.phone}</td>
+                          <td className="px-3 py-3">
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${o.status === 'pending' ? 'bg-[#F5A624]/15 text-[#F5A624]' : 'bg-white/5 text-white/30'}`}>
+                              {o.status === 'pending' ? 'לחץ תשלום' : 'גולש'}
+                            </span>
+                          </td>
                           <td className="px-3 py-3 text-white/30 text-xs">{o.coupon || '—'}</td>
                           <td className="px-3 py-3 text-white/30 text-xs">
                             {{ '/': 'ראשי', '/o': 'מואר', '/join': 'join' }[o.source as string] || o.source || '/'}
