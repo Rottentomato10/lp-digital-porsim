@@ -586,7 +586,9 @@ function LP2Video() {
   return (
     <div className="mx-auto mb-8" style={{ maxWidth: '280px' }}>
       <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: '2px solid rgba(212,168,67,0.25)' }}>
-        <video ref={videoRef} playsInline loop muted autoPlay preload="metadata" className="absolute inset-0 w-full h-full object-cover" src="/video.mp4" poster="/video-poster.jpg" />
+        <video ref={videoRef} playsInline loop muted autoPlay preload="metadata" width={270} height={480} className="absolute inset-0 w-full h-full object-cover" poster="/video-poster.jpg">
+          <source src="/video.mp4" type="video/mp4" />
+        </video>
 
         {/* Cover until video starts — tap to play on in-app browsers */}
         {!isPlaying && (
