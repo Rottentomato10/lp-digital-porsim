@@ -88,7 +88,7 @@ function WaCarousel() {
               <div className={`rounded-2xl overflow-hidden border-2 ${isCenter ? 'border-[#25D366]/40' : 'border-white/10'}`}
                 style={isCenter ? { boxShadow: '0 0 40px rgba(37,211,102,0.15)' } : {}}>
                 <img src={src} alt="ביקורת תלמיד"
-                  className="w-full h-auto" loading="eager" />
+                  className="w-full h-auto" loading="lazy" width={385} height={683} />
               </div>
             </div>
           )

@@ -196,6 +196,8 @@ export default function N9Hero() {
             autoPlay
             preload="metadata"
             poster="/video-poster.jpg"
+            width={270}
+            height={480}
           >
             <source src="/video.mp4" type="video/mp4" />
           </video>
