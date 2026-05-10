@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { Check, ShieldCheck, Loader2, X, Tag, User, Mail, Phone, Lock } from 'lucide-react'
 import Image from 'next/image'
@@ -35,22 +35,26 @@ export default function N9Pricing() {
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
   const [dripConsent, setDripConsent] = useState(false)
-  const leadSavedRef = useRef<string>('')
+  const leadIdRef = useRef<string>('')
 
-  // Auto-save lead after 2 seconds of typing (debounced)
-  useEffect(() => {
-    const key = `${name.trim()}|${email.trim()}|${phone.trim()}`
-    if ((!name.trim() && !email.trim()) || key === leadSavedRef.current) return
-    const timer = setTimeout(() => {
-      if (key === leadSavedRef.current) return
-      leadSavedRef.current = key
-      fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim() || '(ללא שם)', email: email.trim() || '(ללא אימייל)', phone: phone.trim(), coupon: '', source: window.location.pathname, partial: true }),
-      }).catch(() => {})
-    }, 2000)
-    return () => clearTimeout(timer)
+  // Save lead on field blur (tab/click to next field) — updates same lead
+  const saveLead = useCallback(() => {
+    if (!name.trim() && !email.trim()) return
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name.trim() || '(ללא שם)',
+        email: email.trim() || '(ללא אימייל)',
+        phone: phone.trim(),
+        coupon: '',
+        source: window.location.pathname,
+        partial: true,
+        leadId: leadIdRef.current || undefined,
+      }),
+    }).then(r => r.json()).then(data => {
+      if (data.leadId) leadIdRef.current = data.leadId
+    }).catch(() => {})
   }, [name, email, phone])
 
   // Auto-apply coupon from URL (?coupon=CODE)
@@ -278,7 +282,7 @@ export default function N9Pricing() {
                   <div>
                     <div className="relative">
                       <User size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                      <input type="text" value={name} onChange={(e) => { setName(e.target.value); trackCheckout() }} placeholder="ישראל ישראלי"
+                      <input type="text" value={name} onChange={(e) => { setName(e.target.value); trackCheckout() }} onBlur={saveLead} placeholder="ישראל ישראלי"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all" />
                     </div>
                     <p className="text-white/30 text-xs mt-1 mr-1">שנדע איך לפנות אליך</p>
@@ -286,7 +290,7 @@ export default function N9Pricing() {
                   <div>
                     <div className="relative">
                       <Mail size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
+                      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={saveLead} placeholder="you@example.com" dir="ltr"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
                     <p className="text-white/30 text-xs mt-1 mr-1">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
@@ -294,7 +298,7 @@ export default function N9Pricing() {
                   <div>
                     <div className="relative">
                       <Phone size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20" />
-                      <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} placeholder="050-0000000" dir="ltr"
+                      <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} onBlur={saveLead} placeholder="050-0000000" dir="ltr"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
                   </div>

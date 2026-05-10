@@ -31,15 +31,15 @@ async function ensureFile() {
 // POST — save a new lead
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, phone, dripConsent, source, partial } = await req.json()
+    const { name, email, phone, dripConsent, source, partial, leadId } = await req.json()
     if (!name && !email) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
     }
 
     const timestamp = new Date().toISOString()
 
-    // Auto-enroll in drip campaign for any lead with valid email
-    if (email && email.includes('@')) {
+    // Auto-enroll in drip campaign for any lead with valid email (only on pay click, not partial)
+    if (!partial && email && email.includes('@')) {
       addSubscriber({
         email,
         name: name || '',
@@ -51,9 +51,10 @@ export async function POST(req: NextRequest) {
       }).catch(err => console.error('Drip enroll failed:', err))
     }
 
-    // Save browsing lead to Redis (so it appears in dashboard) — save ANY input
+    // Save/update browsing lead in Redis
+    let savedLeadId = leadId
     try {
-      await saveBrowsingLead({ name: name || '', email: email || '', phone: phone || '', source: source || '/' })
+      savedLeadId = await saveBrowsingLead({ name: name || '', email: email || '', phone: phone || '', source: source || '/', leadId })
     } catch (err) {
       console.error('saveBrowsingLead failed:', err)
     }
@@ -70,7 +71,7 @@ export async function POST(req: NextRequest) {
       await writeFile(CSV_PATH, existing + row, 'utf-8')
     } catch { /* CSV storage is best-effort on serverless */ }
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, leadId: savedLeadId })
   } catch {
     return NextResponse.json({ error: 'Failed to save lead' }, { status: 500 })
   }

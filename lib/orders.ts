@@ -56,20 +56,33 @@ export async function getOrderById(id: string): Promise<Order | undefined> {
   return all.find(o => o.id === id)
 }
 
-export async function saveBrowsingLead(data: { name: string; email: string; phone: string; source?: string }): Promise<void> {
+export async function saveBrowsingLead(data: { name: string; email: string; phone: string; source?: string; leadId?: string }): Promise<string> {
   const all = await loadOrders()
-  // Check if this person already has an order — deduplicate by email (if valid) or name+phone
-  const existing = data.email && data.email.includes('@')
-    ? all.find(o => o.email.toLowerCase() === data.email.toLowerCase())
-    : all.find(o => o.status === 'browsing' && o.name === data.name && o.phone === data.phone && o.name)
-  if (existing) {
-    // Update name/phone if they changed
-    if (data.name && data.name !== '(ללא שם)') existing.name = data.name
-    if (data.phone) existing.phone = data.phone
-    await saveOrders(all)
-    return
+
+  // If we have a leadId, update that specific lead
+  if (data.leadId) {
+    const existing = all.find(o => o.id === data.leadId)
+    if (existing) {
+      if (data.name && data.name !== '(ללא שם)') existing.name = data.name
+      if (data.email && data.email !== '(ללא אימייל)') existing.email = data.email
+      if (data.phone) existing.phone = data.phone
+      await saveOrders(all)
+      return existing.id
+    }
   }
-  // Create browsing lead
+
+  // Check if this person already has an order — deduplicate by email
+  if (data.email && data.email.includes('@')) {
+    const existing = all.find(o => o.email.toLowerCase() === data.email.toLowerCase())
+    if (existing) {
+      if (data.name && data.name !== '(ללא שם)') existing.name = data.name
+      if (data.phone) existing.phone = data.phone
+      await saveOrders(all)
+      return existing.id
+    }
+  }
+
+  // Create new browsing lead
   const existingIds = new Set(all.map(o => o.id))
   let id: string
   do { id = generateOrderId() } while (existingIds.has(id))
@@ -80,6 +93,7 @@ export async function saveBrowsingLead(data: { name: string; email: string; phon
     source: data.source || '/',
   })
   await saveOrders(all)
+  return id
 }
 
 export async function createOrder(data: {

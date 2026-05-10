@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { Check, ChevronDown, ChevronLeft, ChevronRight, ShieldCheck, Lock, Loader2, X, VolumeX, Volume2, Sparkles, GraduationCap, Users, TrendingUp, Brain, Building, PiggyBank } from 'lucide-react'
@@ -54,22 +54,26 @@ export default function LP2Page() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
-  const leadSavedRef = useRef<string>('')
+  const leadIdRef = useRef<string>('')
 
-  // Auto-save lead after 2 seconds of typing (debounced)
-  useEffect(() => {
-    const key = `${name.trim()}|${email.trim()}|${phone.trim()}`
-    if ((!name.trim() && !email.trim()) || key === leadSavedRef.current) return
-    const timer = setTimeout(() => {
-      if (key === leadSavedRef.current) return
-      leadSavedRef.current = key
-      fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim() || '(ללא שם)', email: email.trim() || '(ללא אימייל)', phone: phone.trim(), coupon: '', source: window.location.pathname, partial: true }),
-      }).catch(() => {})
-    }, 2000)
-    return () => clearTimeout(timer)
+  // Save lead on field blur (tab/click to next field) — updates same lead
+  const saveLead = useCallback(() => {
+    if (!name.trim() && !email.trim()) return
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name.trim() || '(ללא שם)',
+        email: email.trim() || '(ללא אימייל)',
+        phone: phone.trim(),
+        coupon: '',
+        source: window.location.pathname,
+        partial: true,
+        leadId: leadIdRef.current || undefined,
+      }),
+    }).then(r => r.json()).then(data => {
+      if (data.leadId) leadIdRef.current = data.leadId
+    }).catch(() => {})
   }, [name, email, phone])
 
   // Force dark mode on /join
@@ -434,11 +438,11 @@ export default function LP2Page() {
             </div>
 
             <div className="space-y-3 mb-4">
-              <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="ישראל ישראלי"
+              <input type="text" value={name} onChange={e => setName(e.target.value)} onBlur={saveLead} placeholder="ישראל ישראלי"
                 className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#071020] text-white text-base placeholder:text-white/40 focus:outline-none focus:border-[#D4A843] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all" />
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" dir="ltr"
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} onBlur={saveLead} placeholder="you@example.com" dir="ltr"
                 className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#071020] text-white text-base placeholder:text-white/40 focus:outline-none focus:border-[#D4A843] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all text-left" />
-              <input type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} placeholder="050-0000000" dir="ltr"
+              <input type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/[^\d\-\s+()]/g, ''))} onBlur={saveLead} placeholder="050-0000000" dir="ltr"
                 className="w-full px-4 py-3.5 rounded-xl border border-white/10 bg-[#071020] text-white text-base placeholder:text-white/40 focus:outline-none focus:border-[#D4A843] focus:ring-2 focus:ring-[#00D4FF]/20 transition-all text-left" />
               {!couponApplied && (
                 <div className="flex gap-2">
