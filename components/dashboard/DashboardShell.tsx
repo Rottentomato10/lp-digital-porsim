@@ -79,7 +79,7 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
   return (
     <div className="rounded-xl bg-white/[0.03] border border-[#F5A624]/20 p-5 mb-6">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-white font-bold text-lg">{initial?.id ? 'עריכת אפיליאייט' : 'יצירת אפיליאייט חדש'}</h3>
+        <h3 className="text-white font-bold text-lg">{initial?.id ? 'עריכת שותף' : 'יצירת שותף חדש'}</h3>
         <span className={`text-sm font-mono font-bold px-4 py-1.5 rounded-lg border ${
           initial?.affNumber
             ? 'text-[#F5A624] bg-[#F5A624]/10 border-[#F5A624]/25'
@@ -135,7 +135,7 @@ function AffForm({ initial, onSubmit, onCancel, submitLabel }: {
           <DualField label="" pct={discount} onPctChange={setDiscount} color="#10B981" />
         </div>
         <div className="rounded-xl border-2 border-[#F5A624]/25 bg-[#F5A624]/[0.04] p-4">
-          <p className="text-[#F5A624] text-sm font-bold mb-3">🤝 עמלה לאפיליאייט</p>
+          <p className="text-[#F5A624] text-sm font-bold mb-3">🤝 עמלה לשותף</p>
           <DualField label="" pct={commission} onPctChange={setCommission} color="#F5A624" />
         </div>
       </div>
@@ -395,6 +395,7 @@ export default function DashboardShell() {
   const [copied, setCopied] = useState('')
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
   const [tab, setTab] = useState<'affiliates' | 'stats' | 'orders' | 'leads' | 'drip'>('affiliates')
+  const [affFilter, setAffFilter] = useState<'all' | 'partners' | 'ambassadors'>('all')
   const [orders, setOrders] = useState<any[]>([])
   const [leads, setLeads] = useState<any[]>([])
   const [orderSearch, setOrderSearch] = useState('')
@@ -519,7 +520,7 @@ export default function DashboardShell() {
       <div className="border-b border-white/5">
         <div className="max-w-6xl mx-auto px-4 flex gap-0 overflow-x-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
           {[
-            { key: 'affiliates' as const, label: 'אפיליאייטים', icon: Users },
+            { key: 'affiliates' as const, label: 'שותפים ושגרירים', icon: Users },
             { key: 'orders' as const, label: 'הזמנות', icon: ShoppingCart },
             { key: 'leads' as const, label: 'לידים', icon: Eye },
             { key: 'stats' as const, label: 'סטטיסטיקות', icon: ArrowUpDown },
@@ -760,7 +761,7 @@ export default function DashboardShell() {
             {affiliates.length === 0 ? (
               <div className="text-center py-16">
                 <p className="text-white/20 text-lg">אין נתונים עדיין</p>
-                <p className="text-white/10 text-sm mt-2">צור אפיליאייטים בטאב ״אפיליאייטים״</p>
+                <p className="text-white/10 text-sm mt-2">צור שותפים בטאב ״שותפים ושגרירים״</p>
               </div>
             ) : (
               <>
@@ -781,7 +782,7 @@ export default function DashboardShell() {
             {overall && (
               <div className="grid grid-cols-2 md:grid-cols-6 gap-3 mb-8">
                 {[
-                  { icon: Users, label: 'אפיליאייטים', value: overall.affiliateCount, color: '#F5A624' },
+                  { icon: Users, label: 'שותפים', value: overall.affiliateCount, color: '#F5A624' },
                   { icon: Eye, label: 'כניסות', value: overall.visits, color: '#3B82F6' },
                   { icon: ShoppingCart, label: 'צ׳קאווטים', value: overall.checkouts, color: '#8B5CF6' },
                   { icon: DollarSign, label: 'רכישות', value: overall.purchases, color: '#10B981' },
@@ -800,26 +801,38 @@ export default function DashboardShell() {
             )}
 
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-white font-bold text-lg">רשימת אפיליאייטים</h2>
+              <h2 className="text-white font-bold text-lg">רשימה</h2>
               <div className="flex gap-2">
                 <button onClick={() => { setShowCreate(true); setEditingId(null) }}
                   className="flex items-center gap-2 bg-[#F5A624] text-black font-bold text-sm px-4 py-2 rounded-lg hover:brightness-110">
-                  <Plus size={16} /> אפיליאייט חדש
+                  <Plus size={16} /> שותף חדש
                 </button>
               </div>
             </div>
 
-            {showCreate && <AffForm onSubmit={handleCreate} onCancel={() => setShowCreate(false)} submitLabel="צור אפיליאייט" />}
+            <div className="flex items-center gap-2 mb-4">
+              <button onClick={() => setAffFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${affFilter === 'all' ? 'bg-[#F5A624]/15 text-[#F5A624] border border-[#F5A624]/30' : 'bg-white/5 text-white/30 border border-white/10'}`}>הכל</button>
+              <button onClick={() => setAffFilter('partners')} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${affFilter === 'partners' ? 'bg-[#F5A624]/15 text-[#F5A624] border border-[#F5A624]/30' : 'bg-white/5 text-white/30 border border-white/10'}`}>שותפים</button>
+              <button onClick={() => setAffFilter('ambassadors')} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${affFilter === 'ambassadors' ? 'bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30' : 'bg-white/5 text-white/30 border border-white/10'}`}>שגרירים</button>
+            </div>
 
-            {affiliates.length === 0 && !showCreate ? (
+            {showCreate && <AffForm onSubmit={handleCreate} onCancel={() => setShowCreate(false)} submitLabel="צור שותף" />}
+
+            {(() => {
+              const filteredAffiliates = affiliates.filter(aff => {
+                if (affFilter === 'partners') return aff.commissionPercent > 0
+                if (affFilter === 'ambassadors') return aff.commissionPercent === 0
+                return true
+              })
+              return affiliates.length === 0 && !showCreate ? (
               <div className="text-center py-16 text-white/20">
                 <Users size={48} className="mx-auto mb-4 opacity-30" />
-                <p className="text-lg">אין אפיליאייטים עדיין</p>
-                <p className="text-sm mt-1">לחץ ״אפיליאייט חדש״ כדי להתחיל</p>
+                <p className="text-lg">אין שותפים או שגרירים עדיין</p>
+                <p className="text-sm mt-1">לחץ ״שותף חדש״ כדי להתחיל</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {affiliates.map(aff => (
+                {filteredAffiliates.map(aff => (
                   <div key={aff.id}>
                     {editingId === aff.id ? (
                       <AffForm initial={aff} onSubmit={handleEdit} onCancel={() => setEditingId(null)} submitLabel="שמור שינויים" />
@@ -830,6 +843,9 @@ export default function DashboardShell() {
                             <div className="flex items-center gap-3 mb-1">
                               <span className="text-white/20 text-xs font-mono bg-white/5 px-2 py-0.5 rounded">#{aff.affNumber || '—'}</span>
                               <h3 className="text-white font-bold text-base">{aff.name}</h3>
+                              <span className={`text-[10px] px-2 py-0.5 rounded-full ${aff.commissionPercent > 0 ? 'bg-[#F5A624]/10 text-[#F5A624]' : 'bg-[#10B981]/10 text-[#10B981]'}`}>
+                                {aff.commissionPercent > 0 ? 'שותף' : 'שגריר'}
+                              </span>
                               <button onClick={() => handleToggle(aff)}
                                 className={`text-xs px-2 py-0.5 rounded-full cursor-pointer transition-colors ${aff.active ? 'bg-[#10B981]/15 text-[#10B981] hover:bg-[#10B981]/25' : 'bg-red-500/15 text-red-400 hover:bg-red-500/25'}`}>
                                 {aff.active ? 'פעיל' : 'מושבת'}
@@ -888,7 +904,8 @@ export default function DashboardShell() {
                   </div>
                 ))}
               </div>
-            )}
+            )
+            })()}
           </>
         )}
 
