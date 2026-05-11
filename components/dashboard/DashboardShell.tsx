@@ -474,9 +474,11 @@ export default function DashboardShell() {
 
   const downloadCSV = (data: any[], filename: string) => {
     if (data.length === 0) return
-    const headers = ['מס הזמנה', 'שם', 'אימייל', 'טלפון', 'סכום', 'קופון', 'סטטוס', 'מקור', 'תאריך יצירה', 'תאריך תשלום']
+    const headers = ['מס הזמנה', 'שם', 'אימייל', 'טלפון', 'סכום', 'קופון', 'סטטוס', 'סיסמה', 'מייל נשלח', 'פתח מייל', 'מקור', 'תאריך יצירה', 'תאריך תשלום']
     const rows = data.map((o: any) => [
-      o.id, o.name, o.email, o.phone, o.amount, o.coupon || '', o.status, o.source || '/',
+      o.id, o.name, o.email, o.phone, o.amount, o.coupon || '', o.status,
+      o.generatedPassword || '', o.emailSent ? 'כן' : 'לא', o.emailOpenedAt ? 'כן' : 'לא',
+      o.source || '/',
       new Date(o.createdAt).toLocaleString('he-IL'),
       o.paidAt ? new Date(o.paidAt).toLocaleString('he-IL') : ''
     ])
