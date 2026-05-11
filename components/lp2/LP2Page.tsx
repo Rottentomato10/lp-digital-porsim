@@ -54,6 +54,7 @@ export default function LP2Page() {
   const [iframeUrl, setIframeUrl] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [legalModal, setLegalModal] = useState<ModalType>(null)
+  const [dripConsent, setDripConsent] = useState(false)
   const leadIdRef = useRef<string>('')
 
   // Save lead on field blur (tab/click to next field) — updates same lead
@@ -109,9 +110,9 @@ export default function LP2Page() {
     } catch {}
     if (typeof window !== 'undefined' && (window as any).fbq) (window as any).fbq('track', 'InitiateCheckout', { value: finalPrice, currency: 'ILS' })
     if (typeof window !== 'undefined' && (window as any).gtag) (window as any).gtag('event', 'begin_checkout', { value: finalPrice, currency: 'ILS' })
-    fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '', source: '/join' }) }).catch(() => {})
+    fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), coupon: couponApplied?.code || '', source: '/join', dripConsent }) }).catch(() => {})
     try {
-      const res = await fetch('/api/cardcom', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim() || '0500000000', coupon: couponApplied?.code || '', marketingConsent: true, source: '/join' }) })
+      const res = await fetch('/api/cardcom', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim() || '0500000000', coupon: couponApplied?.code || '', marketingConsent: dripConsent, source: '/join' }) })
       const data = await res.json()
       if (!res.ok || !data.url) { setError(data.error || 'אירעה שגיאה'); setLoading(false); return }
       setIframeUrl(data.url); setLoading(false)
@@ -458,7 +459,7 @@ export default function LP2Page() {
             </div>
 
             <label className="flex items-center gap-2.5 cursor-pointer mb-4">
-              <input type="checkbox" defaultChecked className="w-3.5 h-3.5 accent-[#10B981]" />
+              <input type="checkbox" checked={dripConsent} onChange={e => setDripConsent(e.target.checked)} className="w-3.5 h-3.5 accent-[#10B981]" />
               <span className="text-white/40 text-xs">אני מאשר/ת קבלת עדכונים ותכנים שיווקיים באימייל. ניתן לבטל בכל עת.</span>
             </label>
 
@@ -500,7 +501,7 @@ export default function LP2Page() {
           <h2 className="font-black text-white text-2xl md:text-3xl text-center mb-10">שאלות ותשובות</h2>
           <div className="space-y-3">
             {[
-              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו יזמים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידים ב-300 כיתות, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
+              { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו יזמים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידים ב-50+ מוסדות חינוך, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם למי שלא עבר את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
               { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הקורס עולה פחות מארוחה זוגית ונשאר איתך לכל החיים.' },
               { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה - מא׳ עד ת׳ - שבנויה לתת לך תוצאות.' },
               { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך - החזר מלא. בלי שאלות. אין לך מה להפסיד.' },

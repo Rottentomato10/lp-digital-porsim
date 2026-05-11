@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
         }
 
         if (res.ok) {
-          await updateOrder(orderId, { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent' })
+          await updateOrder(orderId, { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent', generatedPassword: data.generated_password || undefined })
         }
         return NextResponse.json({ ok: true, status: res.ok ? 'provisioned' : 'paid_no_provision', email: order.email })
       } catch (err) {
