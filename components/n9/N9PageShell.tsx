@@ -24,6 +24,13 @@ import { AccessibilityWidget } from '@/components/d/AccessibilityWidget'
 import DCookieConsent from '@/components/d/DCookieConsent'
 
 export default function N9PageShell({ content, checkoutUrl }: { content: ContentType; checkoutUrl?: string }) {
+  // Facebook Pixel: ViewContent
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', { content_name: 'דף נחיתה ראשי', content_category: 'landing_page' })
+    }
+  }, [])
+
   // Track affiliate visit from ?via= parameter
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)

@@ -83,6 +83,13 @@ export default function LP2Page() {
     return () => { document.documentElement.classList.remove('light-mode') }
   }, [])
 
+  // Facebook Pixel: ViewContent
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', { content_name: 'דף נחיתה join', content_category: 'landing_page' })
+    }
+  }, [])
+
   const finalPrice = couponApplied ? couponApplied.finalPrice : BASE_PRICE
 
   const handleCouponCheck = async (code?: string) => {
