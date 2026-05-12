@@ -43,7 +43,7 @@ export default function N5Hero() {
         {/* Social proof badge — under logo, above eyebrow */}
         <div className="flex items-center justify-center mb-5 px-4">
           <div className="flex items-center gap-3 xs:gap-5 px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03]">
-            <span className="text-white/50 text-sm font-semibold">15,000+ תלמידים</span>
+            <span className="text-white/50 text-sm font-semibold">15,000+ תלמידי תיכון</span>
             <span className="text-white/15">·</span>
             <span className="text-white/50 text-sm font-semibold">50+ מוסדות חינוך</span>
             <span className="text-white/15">·</span>

@@ -24,7 +24,7 @@ export default function N5Team() {
           <div className="flex items-center justify-center gap-8 flex-wrap mb-8">
             {[
               { val: '5+', label: 'שנות פעילות' },
-              { val: '15,000+', label: 'תלמידים' },
+              { val: '15,000+', label: 'תלמידי תיכון' },
               { val: '50+', label: 'מוסדות חינוך' },
             ].map((s, i) => (
               <div key={i} className="text-center">
@@ -42,10 +42,10 @@ export default function N5Team() {
               ב-5 השנים האחרונות אנחנו פועלים יום-יום בשטח.
             </p>
             <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-3">
-              מעבירים סדנאות חינוך פיננסי בבתי ספר, יחידות צבאיות ומסגרות חינוכיות בכל רחבי הארץ — <span className="text-white font-semibold">כחלק מתוכניות גפ״ן, תוכניות ההעשרה של משרד החינוך</span>.
+              מעבירים סדנאות חינוך פיננסי בבתי ספר תיכוניים, יחידות צבאיות ומסגרות חינוכיות בכל רחבי הארץ — <span className="text-white font-semibold">כחלק מתוכניות גפ״ן, תוכניות ההעשרה של משרד החינוך</span>.
             </p>
             <p className="text-white/60 text-lg md:text-xl leading-relaxed">
-              למעלה מ-<span className="text-[#F5A624] font-bold">15,000</span> תלמידים ותלמידות עברו תחת הידיים שלנו ב-<span className="text-[#F5A624] font-bold">50+</span> מוסדות חינוך. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
+              למעלה מ-<span className="text-[#F5A624] font-bold">15,000</span> תלמידי תיכון עברו תחת הידיים שלנו ב-<span className="text-[#F5A624] font-bold">50+</span> מוסדות חינוך. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
             </p>
           </div>
           <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">

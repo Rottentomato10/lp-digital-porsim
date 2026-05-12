@@ -141,7 +141,7 @@ export default function N9Hero() {
         {/* Stats with success green for numbers */}
         <div className="flex items-center justify-center mb-5 px-4">
           <div className="flex items-center justify-center gap-2 xs:gap-4 px-4 xs:px-5 py-2.5 rounded-full border border-white/10 bg-white/[0.03] whitespace-nowrap">
-            <span className="text-[11px] xs:text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידים</span></span>
+            <span className="text-[11px] xs:text-sm font-semibold"><span className="text-[#34D399]">15,000+</span> <span className="text-white/50">תלמידי תיכון</span></span>
             <span className="text-white/15">·</span>
             <span className="text-[11px] xs:text-sm font-semibold"><span className="text-[#34D399]">50+</span> <span className="text-white/50">מוסדות חינוך</span></span>
             <span className="text-white/15">·</span>
