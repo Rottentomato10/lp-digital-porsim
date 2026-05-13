@@ -29,6 +29,7 @@ export interface Order {
   emailSent?: boolean
   emailSentAt?: string
   emailOpenedAt?: string
+  generatedPassword?: string
 }
 
 function generateOrderId(): string {
