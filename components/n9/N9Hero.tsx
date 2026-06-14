@@ -199,6 +199,7 @@ export default function N9Hero() {
             width={270}
             height={480}
           >
+            <source src="/video.webm" type="video/webm" />
             <source src="/video.mp4" type="video/mp4" />
           </video>
           {/* "מוכנים?" cover — tap to play on in-app browsers */}
@@ -207,7 +208,7 @@ export default function N9Hero() {
               style={{ background: 'radial-gradient(ellipse at center, #1a1400 0%, #080808 70%)' }}
               onClick={() => {
                 const v = videoRef.current
-                if (v) { v.muted = true; v.play().then(() => setIsPlaying(true)).catch(() => {}) }
+                if (v) { v.muted = true; v.play().catch(() => {}); setIsPlaying(true) }
               }}>
               <motion.span
                 animate={{ scale: [1, 1.05, 1] }}
@@ -266,6 +267,7 @@ export default function N9Hero() {
             className="cta-shine inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             אני מתחיל עכשיו
           </a>
+          <p className="mt-4 text-white/35 text-sm">בוגרי הסדנה מגלים בממוצע <span className="text-[#34D399] font-semibold">₪3,200</span> שהיו מגיעים להם בשנה הראשונה</p>
         </div>
       </div>
 

@@ -161,9 +161,16 @@ export default function LP2Page() {
 
           <div className="text-center max-w-3xl mx-auto">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-              <p className="text-[#D4A843] text-base md:text-lg font-bold mb-8">
+              <p className="text-[#D4A843] text-base md:text-lg font-bold mb-3">
                 הכנסנו חינוך פיננסי למערכת החינוך - ועכשיו אנחנו גם כאן בשבילך
               </p>
+              <div className="flex items-center justify-center gap-2 mb-8 flex-wrap">
+                <span className="text-[11px] font-semibold px-3 py-1 rounded-full border border-white/10 bg-white/[0.04]"><span className="text-[#10B981]">15,000+</span><span className="text-white/50"> תלמידים</span></span>
+                <span className="text-white/20">·</span>
+                <span className="text-[11px] font-semibold px-3 py-1 rounded-full border border-white/10 bg-white/[0.04]"><span className="text-[#10B981]">50+</span><span className="text-white/50"> מוסדות חינוך</span></span>
+                <span className="text-white/20">·</span>
+                <span className="text-[11px] font-semibold px-3 py-1 rounded-full border border-white/10 bg-white/[0.04]"><span className="text-[#10B981]">97%</span><span className="text-white/50"> שביעות רצון</span></span>
+              </div>
             </motion.div>
 
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.7 }}
@@ -194,7 +201,8 @@ export default function LP2Page() {
                 אני רוצה להתחיל
               </a>
             </motion.div>
-            <p className="text-white/35 text-sm mt-4">* הטקסט כתוב בלשון זכר לנוחות אך מיועד לכל המינים</p>
+            <p className="text-white/35 text-sm mt-3">בוגרי הסדנה מגלים בממוצע <span className="text-[#10B981] font-semibold">₪3,200</span> שהיו מגיעים להם בשנה הראשונה</p>
+            <p className="text-white/25 text-xs mt-2">* הטקסט כתוב בלשון זכר לנוחות אך מיועד לכל המינים</p>
           </div>
         </div>
       </section>
@@ -223,7 +231,7 @@ export default function LP2Page() {
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
               className="text-[#D4A843] font-bold text-lg md:text-xl text-center">
-              זו לא עוד סדנה באינטרנט. זה תיקון של מה שהמערכת הזניחה.
+              הסדנה שנולדה מ-5 שנות הוראה ב-50+ מוסדות חינוך — ועכשיו מגיעה אליך.
             </motion.p>
           </div>
         </div>
@@ -509,10 +517,10 @@ export default function LP2Page() {
           <div className="space-y-3">
             {[
               { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו יזמים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידי תיכון ב-50+ מוסדות חינוך, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם לצעירים שלא עברו את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
-              { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הסדנה עולה פחות מארוחה זוגית ונשארת איתך לכל החיים.' },
-              { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה - מא׳ עד ת׳ - שבנויה לתת לך תוצאות.' },
+              { q: 'זה מרגיש לי יקר', a: 'בוגרי הסדנה מגלים בממוצע ₪3,200 שהיו מגיעים להם — חזרי מס, הטבות שלא ידעו שקיימות, עמלות שיכלו לבטל.\nהסדנה עולה פחות מארוחה זוגית ונשארת איתך לכל החיים.' },
+              { q: 'למה לא ללמוד מיוטיוב?', a: 'אחרי 20 סרטונים ביוטיוב אתה עדיין באותו מקום — כי אין מבנה, אין מעקב, ואין תוכן על דיני עבודה ומיסוי ישראלי.\nכאן יש מסלול שלם מא׳ עד ת׳, שנבנה על מה שלימד 15,000 תלמידים בכיתות, עם תעודת סיום ומעקב התקדמות אישי. זה לא סרטון — זו מערכת.' },
               { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך - החזר מלא. בלי שאלות. אין לך מה להפסיד.' },
-              { q: 'אתם לא עוד סדנה שמבטיחה להתעשר?', a: 'ממש לא. ואם מישהו מבטיח לך את זה — אולי כדאי לברוח.\nאנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי — אבל זה מה שבאמת גורם לך לחשוב אחרת.' },
+              { q: 'מה מבדיל אתכם מסדנאות פיננסיות אחרות?', a: 'לימדנו 15,000 תלמידים בכיתות — לא מאחורי מסך. כחלק מתוכניות משרד החינוך.\nאנחנו לא מבטיחים להתעשר מהר. אנחנו מלמדים אותך להבין איך כסף עובד — ומי שמבטיח לך את זה, כדאי לברוח ממנו.' },
               { q: 'אין לי הרבה כסף - זה רלוונטי?', a: 'דווקא בגלל זה. הרבה פעמים כשההכנסה גדלה, ההוצאות גדלות איתה — ואתה נשאר באותו מקום. הסדנה מלמדת אותך לנהל כסף נכון מלכתחילה, ככה שגם כשתרוויח יותר — תרגיש את ההבדל.' },
               { q: 'כמה זמן הסדנה?', a: '3 שעות. 58 שיעורים קצרים. אפשר לסיים ביום אחד או בקצב שלך.' },
               { q: 'צריך רקע כלשהו?', a: 'אפס. הסדנה מתחילה מ"מה זה כסף" ובונה משם. אם היה לך את הידע - לא היית צריך אותנו.' },
@@ -595,6 +603,7 @@ function LP2Video() {
     <div className="mx-auto mb-8" style={{ maxWidth: '280px' }}>
       <div className="relative rounded-2xl overflow-hidden shadow-xl" style={{ aspectRatio: '240/426', border: '2px solid rgba(212,168,67,0.25)' }}>
         <video ref={videoRef} playsInline loop muted autoPlay preload="metadata" width={270} height={480} className="absolute inset-0 w-full h-full object-cover" poster="/video-poster.jpg">
+          <source src="/video.webm" type="video/webm" />
           <source src="/video.mp4" type="video/mp4" />
         </video>
 
