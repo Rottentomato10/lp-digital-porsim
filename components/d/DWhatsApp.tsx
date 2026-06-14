@@ -8,7 +8,7 @@ export default function DWhatsApp() {
   const [hovered, setHovered] = useState(false)
 
   const href = WHATSAPP_NUMBER
-    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('היי, יש לי כמה שאלות בנוגע לקורס הדיגיטלי')}`
+    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('היי, יש לי כמה שאלות בנוגע לסדנה הדיגיטלית')}`
     : '#'
 
   return (
