@@ -605,7 +605,7 @@ function LP2Video() {
             style={{ background: 'radial-gradient(ellipse at center, #0A1628 0%, #071020 70%)' }}
             onClick={() => {
               const v = videoRef.current
-              if (v) { v.muted = true; v.play().then(() => setIsPlaying(true)).catch(() => {}) }
+              if (v) { v.muted = true; v.play().catch(() => {}); setIsPlaying(true) }
             }}
           >
             <motion.span animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2, repeat: Infinity }} className="text-[#D4A843] text-2xl font-black">▶ צפה עכשיו</motion.span>
