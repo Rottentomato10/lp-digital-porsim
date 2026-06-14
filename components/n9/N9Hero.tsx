@@ -151,7 +151,7 @@ export default function N9Hero() {
 
         <div className="text-center mb-8">
           <p className="text-white/45 text-sm md:text-base font-medium tracking-wide mb-4">
-            הקורס המעשי לניהול פיננסי מבית ׳פורשים כנף׳
+            הסדנה המעשית לניהול פיננסי מבית ׳פורשים כנף׳
           </p>
           <h1 className="font-black text-white leading-[1.1] tracking-tight"
             style={{ fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)' }}>

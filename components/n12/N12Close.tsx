@@ -28,7 +28,7 @@ export default function N12Close() {
           </a>
 
           <p className="text-white/10 text-xs mt-6">
-            שאלות? <a href="https://wa.me/9720537282727?text=היי, יש לי כמה שאלות בנוגע לקורס הדיגיטלי"
+            שאלות? <a href="https://wa.me/9720537282727?text=היי, יש לי כמה שאלות בנוגע לסדנה הדיגיטלית"
               target="_blank" rel="noopener noreferrer"
               className="text-[#25D366]/50 hover:text-[#25D366]">ווטסאפ</a>
           </p>

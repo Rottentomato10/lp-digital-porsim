@@ -188,7 +188,7 @@ export default function N9Solution() {
           <div>
             <p className="text-[#F5A624] text-sm font-bold mb-2">בונוס: אפליקציית ניהול תזרים</p>
             <p className="text-white/60 text-lg leading-relaxed">
-              כלי מעשי שמלווה אותך אחרי הקורס — לדעת בדיוק לאן כל שקל הולך, בלי אקסלים מסובכים.
+              כלי מעשי שמלווה אותך אחרי הסדנה — לדעת בדיוק לאן כל שקל הולך, בלי אקסלים מסובכים.
             </p>
             <p className="text-white/30 text-sm mt-2">שווי ₪200 · כלול בחינם</p>
           </div>

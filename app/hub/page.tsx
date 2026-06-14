@@ -32,8 +32,8 @@ const NN:N[]=[
   {id:'pk',label:'פורשים כנף',desc:'חינוך פיננסי · הארגון המרכזי',url:'https://www.porsimkanaf.com',x:440,y:295,w:210,h:80,color:C.brand},
   {id:'lp1',label:'דף נחיתה ראשי',desc:'דף מכירה כהה · טופס · וידאו',url:'https://digital.porsimkanaf.com',x:210,y:210,w:195,h:60,color:C.sales},
   {id:'lp2',label:'דף /join',desc:'דף מכירה חלופי · A/B test',url:'https://digital.porsimkanaf.com/join',x:430,y:195,w:165,h:55,color:C.sales},
-  {id:'course',label:'פלטפורמת הקורס',desc:'58 שיעורים · וידאו · תעודות',url:'https://course.porsimkanaf.com',x:690,y:210,w:200,h:60,color:C.course},
-  {id:'admin',label:'ניהול קורס',desc:'תלמידים · תכנים · הרשאות',url:'https://course.porsimkanaf.com/admin',x:910,y:275,w:155,h:52,color:C.course},
+  {id:'course',label:'פלטפורמת הסדנה',desc:'58 שיעורים · וידאו · תעודות',url:'https://course.porsimkanaf.com',x:690,y:210,w:200,h:60,color:C.course},
+  {id:'admin',label:'ניהול סדנה',desc:'תלמידים · תכנים · הרשאות',url:'https://course.porsimkanaf.com/admin',x:910,y:275,w:155,h:52,color:C.course},
   {id:'app',label:'אפליקציית תזרים',desc:'כלי ניהול תזרים לתלמידים',url:'https://app.porsimkanaf.com',x:910,y:360,w:170,h:52,color:C.course},
   {id:'dash',label:'דשבורד ניהול',desc:'הזמנות · לידים · אפיליאטים',url:'https://digital.porsimkanaf.com/dashboard',x:170,y:395,w:180,h:55,color:C.manage},
   {id:'os',label:'ניהול העסק (OS)',desc:'סדנאות · מדריכים · לידים',url:'https://mad.porsimkanaf.com',x:20,y:305,w:175,h:55,color:C.manage},
@@ -42,7 +42,7 @@ const NN:N[]=[
   {id:'brevo',label:'Brevo',desc:'אימיילים · welcome · דיוור',url:'https://app.brevo.com',x:20,y:170,w:145,h:48,color:C.infra,sm:true},
   {id:'upstash',label:'Upstash Redis',desc:'DB · הזמנות · אפיליאטים',url:'https://console.upstash.com',x:15,y:430,w:145,h:48,color:C.infra,sm:true},
   {id:'cardcom',label:'CardCom',desc:'תשלומים · חשבוניות',url:'https://secure.cardcom.solutions',x:20,y:510,w:140,h:46,color:C.infra,sm:true},
-  {id:'supabase',label:'Supabase',desc:'DB + Auth · קורס',url:'https://supabase.com/dashboard',x:910,y:170,w:140,h:46,color:C.infra,sm:true},
+  {id:'supabase',label:'Supabase',desc:'DB + Auth · סדנה',url:'https://supabase.com/dashboard',x:910,y:170,w:140,h:46,color:C.infra,sm:true},
   {id:'vimeo',label:'Vimeo',desc:'סרטוני שיעורים',url:'https://vimeo.com/manage/videos',x:910,y:115,w:125,h:42,color:C.infra,sm:true},
   {id:'vercel',label:'Vercel',desc:'Hosting · Deploy',url:'https://vercel.com/deks-projects-11b160e2',x:910,y:445,w:125,h:42,color:C.infra,sm:true},
   {id:'wixp',label:'Wix',desc:'אחסון אתר',url:'https://www.wix.com/dashboard',x:395,y:495,w:105,h:40,color:C.infra,sm:true},
@@ -67,12 +67,12 @@ const EE:E[]=[
 ]
 
 const DETAILS:Record<string,string[]>={
-  pk:['ארגון חינוך פיננסי','5+ שנים בשטח','15,000+ תלמידים','300+ כיתות','חלק מתוכניות גפ״ן — משרד החינוך','קורס דיגיטלי + סדנאות פרונטליות'],
+  pk:['ארגון חינוך פיננסי','5+ שנים בשטח','15,000+ תלמידים','300+ כיתות','חלק מתוכניות גפ״ן — משרד החינוך','סדנה דיגיטלית + סדנאות פרונטליות'],
   lp1:['דף מכירה כהה (Dark theme)','טופס תשלום inline — בלי עמוד checkout נפרד','סרטון שיווקי portrait','קרוסל ביקורות וואטסאפ','תוכנית לימודים מפורטת','שאלות ותשובות','מעקב: GA4, Pixel, Clarity','אפיליאטים + קופונים'],
   lp2:['דף מכירה Navy + Gold','A/B testing מול הדף הראשי','אותו backend בדיוק — תשלום, קופונים, דיוור','עיצוב שונה, אותו פאנל'],
   course:['58 שיעורי וידאו (Vimeo)','מערכת התחברות + סיסמאות','תעודת סיום','מחברת הערות אישית','מעקב התקדמות','קהילת וואטסאפ','NPS tracking','ניהול admin'],
   admin:['ניהול תלמידים ומשתמשים','ניהול תכנים ושיעורים','הרשאות וגישה','מעקב provision','סטטיסטיקות כניסות'],
-  app:['ניהול תזרים אישי','הכנסות והוצאות','תקציב חודשי','גישה חינמית לתלמידי הקורס'],
+  app:['ניהול תזרים אישי','הכנסות והוצאות','תקציב חודשי','גישה חינמית לתלמידי הסדנה'],
   dash:['טאב הזמנות — כל מי ששילם + סטטוס אימייל','טאב לידים — מי שהשאיר פרטים ולא שילם','טאב אפיליאטים — שותפים, קופונים, עמלות, סטטיסטיקות','טאב סטטיסטיקות — ביצועי אפיליאטים','טאב דיוור — 13 אימיילים, מנויים, opt-in, שליחה ידנית','ייצוא CSV','שלח שוב אימייל welcome'],
   os:['ניהול סדנאות פרונטליות','מעקב מדריכים','ניהול לידים ועסקאות','מעקב פיננסי ורווחיות','ניהול תשלומים','ניהול בתי ספר ומוסדות','משימות ולוח שנה'],
   wix:['אתר החברה הראשי','מידע על פורשים כנף','טפסי יצירת קשר','דפי נחיתה לפורשות כנף'],
@@ -81,7 +81,7 @@ const DETAILS:Record<string,string[]>={
   upstash:['Redis בענן','אחסון הזמנות','אחסון אפיליאטים ואירועים','אחסון מנויי דיוור','אחסון קמפיין דיוור'],
   cardcom:['שער תשלומים ישראלי','חשבוניות אוטומטיות','webhook לאישור תשלום','תמיכה בקופונים','iframe תשלום מאובטח'],
   supabase:['PostgreSQL בענן','מערכת Auth לתלמידים','טבלאות: profiles, enrollments, progress','RPC functions','Row Level Security'],
-  vimeo:['אחסון כל סרטוני הקורס','Streaming איכותי','Player מותאם','API לניהול סרטונים'],
+  vimeo:['אחסון כל סרטוני הסדנה','Streaming איכותי','Player מותאם','API לניהול סרטונים'],
   vercel:['Hosting של LP + Course','Auto-deploy מ-GitHub','SSL אוטומטי','Cron jobs (דיוור יומי)','Edge network — מהיר'],
   wixp:['אחסון אתר החברה','דומיין porsimkanaf.com','עורך ויזואלי','טפסים ודפי נחיתה'],
   pixel:['מעקב המרות מפרסום','בניית קהלים דומים (Lookalike)','רימרקטינג למבקרים','מותקן ב-LP + אתר החברה'],
@@ -210,7 +210,7 @@ export default function Hub(){
           </div>
           <div className="hidden md:flex items-center gap-4 flex-wrap p-3 rounded-xl bg-white/[0.04] border border-white/10">
             <span className="text-white/50 text-sm font-bold ml-2">מקרא:</span>
-            {[{c:C.brand,l:'פורשים כנף'},{c:C.sales,l:'דפי מכירה'},{c:C.course,l:'קורס ומוצרים'},{c:C.women,l:'פורשות כנף'},{c:C.manage,l:'ניהול'},{c:C.traffic,l:'טראפיק'},{c:C.analytics,l:'אנליטיקס'},{c:C.infra,l:'תשתית'}].map(l=>(
+            {[{c:C.brand,l:'פורשים כנף'},{c:C.sales,l:'דפי מכירה'},{c:C.course,l:'סדנה ומוצרים'},{c:C.women,l:'פורשות כנף'},{c:C.manage,l:'ניהול'},{c:C.traffic,l:'טראפיק'},{c:C.analytics,l:'אנליטיקס'},{c:C.infra,l:'תשתית'}].map(l=>(
               <div key={l.l} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded" style={{background:l.c}}/>
                 <span className="text-white/60 text-sm">{l.l}</span>
@@ -223,7 +223,7 @@ export default function Hub(){
           {[
             {title:'פורשים כנף',ids:['pk','wix']},
             {title:'דפי מכירה',ids:['lp1','lp2']},
-            {title:'קורס ומוצרים',ids:['course','admin','app']},
+            {title:'סדנה ומוצרים',ids:['course','admin','app']},
             {title:'פורשות כנף',ids:['porsot']},
             {title:'ניהול',ids:['dash','os']},
             {title:'טראפיק',ids:['meta','con']},

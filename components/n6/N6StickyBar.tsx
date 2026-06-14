@@ -18,7 +18,7 @@ export default function N6StickyBar() {
   }, [])
 
   const waHref = WHATSAPP_NUMBER
-    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('היי, יש לי כמה שאלות בנוגע לקורס הדיגיטלי')}`
+    ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('היי, יש לי כמה שאלות בנוגע לסדנה הדיגיטלית')}`
     : '#'
 
   return (

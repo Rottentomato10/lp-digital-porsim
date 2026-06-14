@@ -168,7 +168,7 @@ export default function LP2Page() {
 
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.7 }}
               className="font-black text-white leading-[1.08] mb-6" style={{ fontSize: 'clamp(2.2rem, 6vw, 3.8rem)' }}>
-              הקורס שמשנה את הדרך
+              הסדנה שמשנה את הדרך
               <br /><span className="relative">
                 <span className="text-[#D4A843]">שבה צעירים מבינים כסף</span>
                 <motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 1, duration: 0.5 }}
@@ -180,7 +180,7 @@ export default function LP2Page() {
               className="text-white/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
               שינינו את זה שאין חינוך פיננסי במערכת החינוך.
               <br />עכשיו - יש חינוך פיננסי גם אונליין.
-              <br />בסוף הקורס תבין כסף יותר טוב מרוב האנשים סביבך.
+              <br />בסוף הסדנה תבין כסף יותר טוב מרוב האנשים סביבך.
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>
@@ -223,7 +223,7 @@ export default function LP2Page() {
             </motion.div>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.6 }}
               className="text-[#D4A843] font-bold text-lg md:text-xl text-center">
-              זה לא עוד קורס באינטרנט. זה תיקון של מה שהמערכת הזניחה.
+              זו לא עוד סדנה באינטרנט. זה תיקון של מה שהמערכת הזניחה.
             </motion.p>
           </div>
         </div>
@@ -303,7 +303,7 @@ export default function LP2Page() {
             <h2 className="font-black text-white text-2xl md:text-4xl mb-3">
               איך הפכנו חומר יבש ל<span className="text-white/70">מערכת הפעלה פשוטה</span>
             </h2>
-            <p className="text-white/70 text-base max-w-xl mx-auto">לא עוד קורס תיאורטי. מערכת שלמה שנותנת לך שליטה אמיתית על הכסף שלך.</p>
+            <p className="text-white/70 text-base max-w-xl mx-auto">לא עוד סדנה תיאורטית. מערכת שלמה שנותנת לך שליטה אמיתית על הכסף שלך.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
@@ -389,7 +389,7 @@ export default function LP2Page() {
       <FadeSection className="py-16 md:py-24" style={{ background: "#0B0114" }}>
         <div className="max-w-3xl mx-auto px-5">
           <h2 className="font-black text-white text-2xl md:text-3xl leading-snug mb-8 text-center">
-            הקורס הזה <span className="text-[#EF4444]">לא</span> בשביל כולם
+            הסדנה הזאת <span className="text-[#EF4444]">לא</span> בשביל כולם
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
@@ -428,7 +428,7 @@ export default function LP2Page() {
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
               className="text-[#D4A843] font-bold text-sm mb-2">הצעד הבא שלך</motion.p>
             <h2 className="font-black text-white text-2xl md:text-3xl mb-2">מוכן להתחיל?</h2>
-            <p className="text-white text-base">מלא את הפרטים ותקבל גישה מיידית לקורס.</p>
+            <p className="text-white text-base">מלא את הפרטים ותקבל גישה מיידית לסדנה.</p>
           </div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
@@ -487,7 +487,7 @@ export default function LP2Page() {
 
             {error && (
               <div className="text-red-500 text-sm text-center mt-3">
-                {error === 'EMAIL_EXISTS' ? <p>האימייל כבר רשום. <a href="https://course.porsimkanaf.com" target="_blank" className="underline font-bold">היכנס לקורס</a></p> : <p>{error}</p>}
+                {error === 'EMAIL_EXISTS' ? <p>האימייל כבר רשום. <a href="https://course.porsimkanaf.com" target="_blank" className="underline font-bold">היכנס לסדנה</a></p> : <p>{error}</p>}
               </div>
             )}
 
@@ -509,13 +509,13 @@ export default function LP2Page() {
           <div className="space-y-3">
             {[
               { q: 'זה אמיתי?', a: 'אנחנו לא עוד פרסומת באינטרנט. אנחנו יזמים שבאו לתקן את מה שמערכת החינוך השאירה מאחור. עשינו את זה בשטח - 15,000 תלמידי תיכון ב-50+ מוסדות חינוך, כחלק מתוכניות משרד החינוך. עכשיו אנחנו מביאים את אותו הידע בדיוק גם לצעירים שלא עברו את זה בבית הספר. אין פה קסמים - יש פה כלים אמיתיים לחיים האמיתיים.', open: true },
-              { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הקורס עולה פחות מארוחה זוגית ונשאר איתך לכל החיים.' },
+              { q: 'זה מרגיש לי יקר', a: 'טעות אחת בהלוואה, ריבית שלא בדקת, כסף שיושב בעו"ש ומאבד ערך - עולה אלפי שקלים בשנה. הסדנה עולה פחות מארוחה זוגית ונשארת איתך לכל החיים.' },
               { q: 'למה לא ללמוד מיוטיוב?', a: 'ביוטיוב אתה מקבל חתיכות מפוזרות בלי סדר. כאן אתה מקבל מערכת שלמה - מא׳ עד ת׳ - שבנויה לתת לך תוצאות.' },
               { q: 'מה אם זה לא מתאים לי?', a: 'יש אחריות מלאה של 7 ימים. לא הרגשת ערך - החזר מלא. בלי שאלות. אין לך מה להפסיד.' },
-              { q: 'אתם לא עוד קורס שמבטיח להתעשר?', a: 'ממש לא. ואם מישהו מבטיח לך את זה — אולי כדאי לברוח.\nאנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי — אבל זה מה שבאמת גורם לך לחשוב אחרת.' },
-              { q: 'אין לי הרבה כסף - זה רלוונטי?', a: 'דווקא בגלל זה. הרבה פעמים כשההכנסה גדלה, ההוצאות גדלות איתה — ואתה נשאר באותו מקום. הקורס מלמד אותך לנהל כסף נכון מלכתחילה, ככה שגם כשתרוויח יותר — תרגיש את ההבדל.' },
-              { q: 'כמה זמן הקורס?', a: '3 שעות. 58 שיעורים קצרים. אפשר לסיים ביום אחד או בקצב שלך.' },
-              { q: 'צריך רקע כלשהו?', a: 'אפס. מתחילים מ"מה זה כסף" ובונים משם. אם היה לך את הידע - לא היית צריך אותנו.' },
+              { q: 'אתם לא עוד סדנה שמבטיחה להתעשר?', a: 'ממש לא. ואם מישהו מבטיח לך את זה — אולי כדאי לברוח.\nאנחנו מלמדים אותך להבין איך כסף עובד. זה לא סקסי — אבל זה מה שבאמת גורם לך לחשוב אחרת.' },
+              { q: 'אין לי הרבה כסף - זה רלוונטי?', a: 'דווקא בגלל זה. הרבה פעמים כשההכנסה גדלה, ההוצאות גדלות איתה — ואתה נשאר באותו מקום. הסדנה מלמדת אותך לנהל כסף נכון מלכתחילה, ככה שגם כשתרוויח יותר — תרגיש את ההבדל.' },
+              { q: 'כמה זמן הסדנה?', a: '3 שעות. 58 שיעורים קצרים. אפשר לסיים ביום אחד או בקצב שלך.' },
+              { q: 'צריך רקע כלשהו?', a: 'אפס. הסדנה מתחילה מ"מה זה כסף" ובונה משם. אם היה לך את הידע - לא היית צריך אותנו.' },
               { q: 'מה ההבדל בינכם ליועץ פיננסי?', a: 'יועץ אומר לך מה לעשות. אנחנו מלמדים אותך להבין למה. כשאתה מבין - אתה לא צריך לשלם למישהו שיגיד לך מה לעשות עם הכסף שלך.' },
             ].map((item, i) => (
               <FaqItem key={i} q={item.q} a={item.a} defaultOpen={(item as any).open} />

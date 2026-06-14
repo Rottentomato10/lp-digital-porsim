@@ -8,7 +8,7 @@ import { useContent } from '@/lib/content-context'
 import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 
 const VALUE_ITEMS = [
-  { label: 'קורס פיננסים לצעירים — א׳ עד ת׳', value: 490, desc: null },
+  { label: 'סדנת פיננסים לצעירים — א׳ עד ת׳', value: 490, desc: null },
   { label: 'אפליקציית ניהול תזרים אישי', value: 200, desc: 'כדי שלא תצטרך לבנות אקסלים מסובכים בעצמך' },
   { label: 'תעודת סיום פורשים כנף', value: 150, desc: null },
   { label: 'גישה לקהילה הפרטית שלנו', value: 300, desc: 'כי הרבה יותר קל כשיש איפה לשאול שאלות בזמן אמת' },
@@ -293,7 +293,7 @@ export default function N9Pricing() {
                       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={saveLead} placeholder="you@example.com" dir="ltr"
                         className="w-full pr-10 pl-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white text-base placeholder:text-white/20 focus:outline-none focus:border-[#F5A624]/50 focus:ring-1 focus:ring-[#F5A624]/20 transition-all text-left" />
                     </div>
-                    <p className="text-white/30 text-xs mt-1 mr-1">לכתובת הזו יישלח הלינק לקורס + חשבונית</p>
+                    <p className="text-white/30 text-xs mt-1 mr-1">לכתובת הזו יישלח הלינק לסדנה + חשבונית</p>
                   </div>
                   <div>
                     <div className="relative">
@@ -373,7 +373,7 @@ export default function N9Pricing() {
 
               <p className="text-center text-white/45 text-sm mb-10">
                 ברגע שתשלם — תקבל גישה מיידית.
-                <br />אימייל עם סיסמה אישית יישלח אליך ותוכל להיכנס לקורס מיד.
+                <br />אימייל עם סיסמה אישית יישלח אליך ותוכל להיכנס לסדנה מיד.
                 <br />תתחיל מהשיעור הראשון, 4 דקות שישנו איך אתה מסתכל על הכסף שלך.
               </p>
 

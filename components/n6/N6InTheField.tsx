@@ -30,7 +30,7 @@ export default function N6InTheField() {
           </h2>
           <p className="text-white/45 text-lg md:text-xl mt-4 max-w-2xl mx-auto">
             ב-5 השנים האחרונות אנחנו מעבירים סדנאות חינוך פיננסי בבתי ספר ובמסגרות חינוכיות בכל רחבי הארץ.
-            הקורס הדיגיטלי נולד מתוך העשייה הזו.
+            הסדנה הדיגיטלית נולדה מתוך העשייה הזו.
           </p>
         </motion.div>
 
