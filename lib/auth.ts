@@ -65,7 +65,24 @@ export function createAuthResponse(): NextResponse {
     path: '/',
     maxAge: 60 * 60 * 24 * 30,
     sameSite: 'lax',
-    httpOnly: false,
+    httpOnly: true,
+    secure: true,
+  })
+  return res
+}
+
+/**
+ * Clear the dash_auth cookie (logout). Required because the cookie is now
+ * httpOnly and can no longer be removed from client-side JS.
+ */
+export function createLogoutResponse(): NextResponse {
+  const res = NextResponse.json({ ok: true })
+  res.cookies.set('dash_auth', '', {
+    path: '/',
+    maxAge: 0,
+    sameSite: 'lax',
+    httpOnly: true,
+    secure: true,
   })
   return res
 }

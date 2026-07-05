@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createAuthResponse } from '@/lib/auth'
+import { createAuthResponse, createLogoutResponse } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,4 +18,9 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ ok: false, error: 'שגיאה' }, { status: 500 })
   }
+}
+
+// Logout — clears the httpOnly dash_auth cookie server-side.
+export async function DELETE() {
+  return createLogoutResponse()
 }

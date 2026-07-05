@@ -10,9 +10,10 @@ import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
 function verifyWebhookSecret(req: NextRequest): boolean {
   const secret = process.env.WEBHOOK_SECRET
   if (!secret) {
-    // If no secret configured, allow (backward compat during migration)
-    console.log(JSON.stringify({ event: 'WEBHOOK_NO_SECRET_CONFIGURED', warning: 'WEBHOOK_SECRET env var not set' }))
-    return true
+    // Fail closed: without a configured secret we cannot authenticate the
+    // caller, so reject rather than trusting an unsigned webhook.
+    console.log(JSON.stringify({ event: 'WEBHOOK_NO_SECRET_CONFIGURED', warning: 'WEBHOOK_SECRET env var not set — rejecting' }))
+    return false
   }
   const provided = req.nextUrl.searchParams.get('secret')
   return provided === secret

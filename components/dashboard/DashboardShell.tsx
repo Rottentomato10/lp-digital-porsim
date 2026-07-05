@@ -514,7 +514,7 @@ export default function DashboardShell() {
       <div className="border-b border-white/5 bg-[#080B16]">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1 className="text-white font-bold text-lg">פורשים כנף — דשבורד</h1>
-          <button onClick={() => { document.cookie = 'dash_auth=; path=/; max-age=0'; setAuthed(false) }} className="text-white/30 text-sm hover:text-white/60">יציאה</button>
+          <button onClick={async () => { try { await fetch('/api/auth', { method: 'DELETE' }) } catch {} setAuthed(false) }} className="text-white/30 text-sm hover:text-white/60">יציאה</button>
         </div>
       </div>
 
