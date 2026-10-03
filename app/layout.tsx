@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Heebo } from 'next/font/google'
 import './globals.css'
+import AccessibilityWidget from '@/components/AccessibilityWidget'
 
 const heebo = Heebo({
   subsets: ['hebrew'],
@@ -72,7 +73,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${heebo.variable} font-heebo`}>
         <div className="grain-overlay" aria-hidden="true" />
-        {children}
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:start-4 focus:z-[100] focus:bg-[var(--orange)] focus:text-black focus:px-6 focus:py-3 focus:rounded-full">
+          דלגו לתוכן המרכזי
+        </a>
+        <div id="main-content">{children}</div>
+        <AccessibilityWidget />
       </body>
     </html>
   )
