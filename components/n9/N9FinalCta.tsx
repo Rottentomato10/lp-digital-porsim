@@ -19,14 +19,14 @@ export default function N9FinalCta() {
             <br />אלא לפי מה שאתה עושה עם מה שיש לך.
           </p>
           <p className="text-white font-black text-2xl xs:text-3xl md:text-4xl mb-3">
-            תתחיל לנהל. <span className="text-[#F5A624]">תגיד לי שמוכן.</span>
+            תתחיל להבין. <span className="text-[#F5A624]">לנהל. להצמיח.</span>
           </p>
           <p className="text-white/40 text-lg mb-8">
-            ₪390 · גישה לכל החיים
+            ₪390 · תשלום חד־פעמי · גישה מתמשכת לסדנה
           </p>
           <a href={CHECKOUT_URL}
             className="cta-shine inline-flex items-center bg-[#F5A624] text-black font-black text-lg xs:text-xl px-8 xs:px-12 py-4 xs:py-5 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
-            אני מוכן. אני מתחיל עכשיו
+            אני מתחיל עכשיו
           </a>
         </motion.div>
       </div>

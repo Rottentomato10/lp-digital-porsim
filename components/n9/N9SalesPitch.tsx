@@ -20,18 +20,18 @@ export default function N9SalesPitch() {
             הבעיה היא לא אצלך.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            הבעיה היא במערכת שמעולם לא ציידה אותך בספר החוקים הנכון.
+            רובנו פשוט לא קיבלנו את הכלים להבין איך כסף עובד.
           </p>
           <p className="text-white/70 text-2xl md:text-3xl leading-relaxed">
-            12 שנים של לימודים — ואפס שעות על כסף.
-            <br />ואז יום אחד אתה מתחיל לעבוד, מקבל משכורת,
-            <br />ומצפים ממך לדעת מה לעשות עם הכסף.
+            12 שנים של לימודים — וכמעט אפס זמן על משכורת, מסים, בנקים, השקעות או תכנון פיננסי.
+            <br />ואז יום אחד מתחילים לעבוד, מקבלים משכורת,
+            <br />ומצפים מאיתנו פשוט לדעת מה לעשות.
           </p>
 
           <div className="h-px bg-gradient-to-r from-transparent via-[#F5A624]/30 to-transparent my-4" />
 
           <p className="text-white text-2xl md:text-3xl leading-relaxed font-bold">
-            מהרגע הזה — זו כבר <span className="text-[#F5A624]">הבחירה שלך</span>.
+            מהרגע הזה — <span className="text-[#F5A624]">אפשר להתחיל ללמוד</span>.
           </p>
         </motion.div>
       </div>

@@ -8,10 +8,11 @@ import { useContent } from '@/lib/content-context'
 import { LegalModal, type ModalType } from '@/components/d/DLegalModal'
 
 const VALUE_ITEMS = [
-  { label: 'סדנת פיננסים לצעירים — א׳ עד ת׳', value: 490, desc: null },
-  { label: 'אפליקציית ניהול תזרים אישי', value: 200, desc: 'כדי שלא תצטרך לבנות אקסלים מסובכים בעצמך' },
-  { label: 'תעודת סיום פורשים כנף', value: 150, desc: null },
-  { label: 'גישה לקהילה הפרטית שלנו', value: 300, desc: 'כי הרבה יותר קל כשיש איפה לשאול שאלות בזמן אמת' },
+  { label: 'הסדנה הדיגיטלית המלאה', desc: null },
+  { label: 'אפליקציית ניהול תזרים אישי', desc: 'כדי שלא תצטרך לבנות אקסלים מסובכים בעצמך' },
+  { label: 'תעודת סיום פורשים כנף', desc: null },
+  { label: 'גישה לקהילה הפרטית שלנו', desc: 'כי הרבה יותר קל כשיש איפה לשאול שאלות בזמן אמת' },
+  { label: 'גישה מתמשכת לתוכן הסדנה', desc: null },
 ]
 
 const BASE_PRICE = 390
@@ -20,7 +21,6 @@ export default function N9Pricing() {
   const contentD = useContent()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
-  const totalValue = VALUE_ITEMS.reduce((s, i) => s + i.value, 0)
 
   // --- Form state (moved from CheckoutPage) ---
   const [name, setName] = useState('')
@@ -351,7 +351,6 @@ export default function N9Pricing() {
                 בלחיצה על הכפתור אני מאשר/ת את{' '}
                 <button type="button" onClick={() => setLegalModal('terms')} className="underline hover:text-white/40">תנאי השימוש</button>
                 {' '}ו<button type="button" onClick={() => setLegalModal('privacy')} className="underline hover:text-white/40">מדיניות הפרטיות</button>
-                {' '}וקבלת עדכונים באימייל
               </p>
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="flex items-center gap-1 text-white/40 text-[11px]"><Lock size={11} /><span>SSL מאובטח</span></div>
@@ -378,16 +377,13 @@ export default function N9Pricing() {
               </p>
 
               <div className="mb-10">
-                <p className="text-white/45 text-xs font-semibold tracking-widest uppercase mb-4">מה מקבלים</p>
+                <p className="text-white/45 text-xs font-semibold tracking-widest uppercase mb-4">מה כלול</p>
                 <div className="space-y-4">
                   {VALUE_ITEMS.map((item, i) => (
                     <div key={i}>
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex items-start gap-2 min-w-0">
-                          <Check size={14} className="text-[#F5A624] flex-shrink-0 mt-1" />
-                          <span className="text-white/70 text-sm xs:text-base">{item.label}</span>
-                        </div>
-                        <span className="text-white/30 text-sm flex-shrink-0">₪{item.value}</span>
+                      <div className="flex items-start gap-2 min-w-0">
+                        <Check size={14} className="text-[#F5A624] flex-shrink-0 mt-1" />
+                        <span className="text-white/70 text-sm xs:text-base">{item.label}</span>
                       </div>
                       {item.desc && (
                         <p className="text-white/45 text-sm mr-6 mt-1">{item.desc}</p>
@@ -395,29 +391,16 @@ export default function N9Pricing() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 pt-4 border-t border-white/8 flex items-center justify-between">
-                  <span className="text-white/40 text-sm">שווי כולל</span>
-                  <span className="text-white/40 text-base font-semibold line-through">₪{totalValue}</span>
-                </div>
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="text-[#F5A624]/80 text-sm font-bold">אתה משלם עכשיו</span>
-                  <span className="text-[#F5A624] text-base font-black">₪{finalPrice}</span>
-                </div>
               </div>
 
               {/* Guarantee */}
               <div className="p-5 xs:p-6 md:p-8 rounded-2xl border border-[#F5A624]/25 bg-[#F5A624]/5">
                 <div className="flex items-center gap-3 mb-4">
                   <ShieldCheck size={24} className="text-[#F5A624] flex-shrink-0" />
-                  <p className="text-[#F5A624] text-lg font-black">אחריות מלאה — 7 ימים</p>
+                  <p className="text-[#F5A624] text-lg font-black">אחריות של 7 ימים</p>
                 </div>
                 <div className="space-y-4 text-white/60 text-base md:text-lg leading-relaxed">
-                  <p>אם בתוך 3 שעות לא תרגיש שקיבלת את השליטה לידיים — האחריות עלינו.
-                    <br />תקבל החזר מלא. בלי שאלות.</p>
-                  <p className="text-white/70">
-                    אנחנו לא כאן בשביל הכסף שלך.
-                    <br />אנחנו כאן בשביל התוצאות שלך.
-                  </p>
+                  <p>אם תוך 7 ימים תרגיש שהסדנה לא מתאימה לך — נחזיר לך את הכסף, בלי שאלות.</p>
                 </div>
               </div>
 

@@ -13,36 +13,15 @@ export default function N9Mindshift() {
         style={{ background: 'radial-gradient(ellipse 70% 80% at 50% 50%, rgba(245,166,36,0.08) 0%, transparent 65%)' }} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-5 text-center">
-        {/* Crossed-out "before" state */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5 }}
-          className="mb-6"
-        >
-          <span className="text-white/35 text-2xl md:text-3xl font-medium line-through decoration-white/20 decoration-2">
-            הון הוא תוצאה של מזל.
-          </span>
-        </motion.div>
-
-        {/* Arrow transition */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="mb-6"
-        >
-          <span className="text-[#F5A624]/40 text-2xl">↓</span>
-        </motion.div>
-
-        {/* "After" state — bold truth */}
+        {/* Core statement */}
         <motion.h2
           initial={{ opacity: 0, y: 20, scale: 0.97 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="font-black text-white leading-tight mb-10"
           style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
-          הון הוא תוצאה של <span className="text-[#F5A624]">ניהול</span>.
+          אי אפשר לשלוט בכל מה שקורה לכסף שלנו —
+          <br />אבל אפשר לשלוט הרבה יותר ב<span className="text-[#F5A624]">דרך שבה אנחנו מנהלים אותו</span>.
         </motion.h2>
 
         <motion.div

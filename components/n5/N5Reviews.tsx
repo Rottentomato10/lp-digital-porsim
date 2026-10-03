@@ -17,12 +17,7 @@ const FEATURED = {
 const REVIEWS = [
   { name: 'עמית ר.', city: 'הרצליה', year: '2025', quote: 'הבנתי שאני מפסיד מאות שקלים בחודש בלי לשים לב. הסדנה פקחה לי את העיניים.' },
   { name: 'דניאל כ.', city: 'ירושלים', year: '2024', quote: 'פתחתי תיק השקעות שבוע אחרי הסדנה. לא האמנתי שזה כל כך פשוט כשמבינים.' },
-  { name: 'נועה ש.', city: 'חיפה', year: '2025', quote: 'הלוואי שהייתי לומדת את זה לפני שנים. הייתי חוסכת לעצמי כל כך הרבה טעויות.' },
-  { name: 'מייק ג.', city: 'כרמיאל', year: '2024', quote: 'למדתי שאני צריך לדעת לנהל כסף בעצמי ולא לסמוך על אף אחד. זה שינה לי את הגישה.' },
-  { name: 'שירה ל.', city: 'רמת גן', year: '2025', quote: 'יצאתי מהסדנה עם רצון אחד: להתחיל להשקיע. דחוףףףף.' },
-  { name: 'עאמר ח.', city: 'טירה', year: '2024', quote: 'גיליתי שיש מלא דברים וחוקים שלא ידעתי עליהם. כסף זה באמת לא צחוק.' },
   { name: 'ליאור ק.', city: 'באר שבע', year: '2025', quote: 'הסדנה גרמה לי להתנהל אחרת עם כסף ולהתחיל לחסוך כבר מעכשיו.' },
-  { name: 'מאיה ד.', city: 'יקנעם', year: '2024', quote: 'לפני הסדנה כסף היה נושא מלחיץ. עכשיו אני פחות פוחדת ויותר מבינה.' },
 ]
 
 function Stars() {
@@ -149,7 +144,7 @@ export default function N5Reviews() {
         {/* Grid */}
         <motion.div initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="grid md:grid-cols-2 gap-4">
+          className="grid md:grid-cols-3 gap-4">
           {REVIEWS.map((review, i) => (
             <div key={i} className="p-5 rounded-xl bg-[#111111] border border-white/7">
               <Stars />

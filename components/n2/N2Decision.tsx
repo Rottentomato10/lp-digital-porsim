@@ -21,9 +21,9 @@ export default function N2Decision() {
             <h3 className="text-[#F5A624] font-bold text-xl md:text-2xl mb-5">זה בשבילך אם:</h3>
             <div className="space-y-3">
               {[
-                'אתה מרוויח אבל לא שולט בכסף',
-                'אין לך מושג בהשקעות',
-                'אתה מרגיש שאתה מפספס',
+                'אתה מרוויח אבל לא ממש יודע לאן הכסף הולך',
+                'אתה רוצה להתחיל להשקיע אבל לא יודע מאיפה',
+                'אתה מרגיש שאתה מפספס ידע בסיסי שצריך היה לקבל כבר מזמן',
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-[#F5A624] text-lg">✔</span>
@@ -35,12 +35,11 @@ export default function N2Decision() {
 
           {/* Not for you */}
           <div className="p-5 xs:p-6 md:p-8 rounded-2xl bg-[#101010] border border-white/7">
-            <h3 className="text-white/40 font-bold text-xl md:text-2xl mb-5">זה לא בשבילך אם:</h3>
+            <h3 className="text-white/40 font-bold text-xl md:text-2xl mb-5">זה פחות מתאים אם:</h3>
             <div className="space-y-3">
               {[
                 'אתה כבר מנהל כסף בצורה מסודרת',
                 'יש לך ניסיון בהשקעות',
-                'אתה לא מתכוון לפעול',
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <span className="text-white/30 text-lg">✘</span>

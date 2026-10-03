@@ -8,7 +8,7 @@ import { useCheckoutUrl } from '@/lib/content-context'
 const FAQ_ITEMS = [
   {
     q: 'זה מרגיש לי יקר',
-    a: 'בוגרי הסדנה מגלים בממוצע ₪3,200 שהיו מגיעים להם — חזרי מס, הטבות שלא ידעו שקיימות, עמלות שיכלו לבטל.\nהסדנה עולה פחות מארוחה זוגית במסעדה — ונשארת איתך לכל החיים.',
+    a: 'הסדנה עולה פחות מארוחה זוגית במסעדה, והידע שנשאר ממנה ממשיך לשרת אותך הרבה אחרי זה — בקבלת החלטות פיננסיות, בהבנת תלוש השכר, ובניהול הכסף היומיומי.',
   },
   {
     q: 'אני יכול ללמוד את זה לבד מיוטיוב',
@@ -32,7 +32,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'כמה זמן זה לוקח?',
-    a: '3 שעות. 58 שיעורים קצרים וממוקדים — בלי חפירות.\nאפשר לסיים ביום אחד או לפרוס לשבוע בקצב שלך.',
+    a: 'כ־3 שעות. 58 שיעורים קצרים וממוקדים — בלי חפירות.\nאפשר לסיים ביום אחד או לפרוס לשבוע בקצב שלך.',
   },
   {
     q: 'צריך רקע כלשהו?',
@@ -44,7 +44,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'לכמה זמן יש לי גישה?',
-    a: 'לתמיד. תשלום אחד — גישה מלאה לכל החיים, כולל כל העדכונים העתידיים. בלי מנוי, בלי חידוש.',
+    a: 'תשלום חד-פעמי — גישה מתמשכת לכל תוכן הסדנה, כולל עדכונים עתידיים. בלי מנוי, בלי חידוש.',
   },
   {
     q: 'מה ההבדל בינכם לבין יועץ פיננסי?',
@@ -102,30 +102,19 @@ export default function N2FAQ() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="rounded-2xl bg-[#101010] border border-white/7 p-6 md:p-8"
         >
-          {FAQ_ITEMS.slice(0, 6).map((item, i) => (
+          {FAQ_ITEMS.map((item, i) => (
             <FaqItem key={i} q={item.q} a={item.a} />
           ))}
         </motion.div>
 
-        {/* Mid CTA */}
-        <div className="text-center my-10">
+        {/* CTA */}
+        <div className="text-center mt-10">
           <p className="text-white/40 text-lg mb-4">אם זה ענה לך — פשוט תתחיל</p>
           <a href={CHECKOUT_URL}
             className="cta-glow inline-flex items-center bg-[#F5A624] text-black font-black text-base xs:text-lg px-7 xs:px-10 py-3.5 xs:py-4 rounded-full hover:scale-105 hover:brightness-110 active:scale-95 transition-all duration-200">
             אני מתחיל עכשיו
           </a>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="rounded-2xl bg-[#101010] border border-white/7 p-6 md:p-8"
-        >
-          {FAQ_ITEMS.slice(6).map((item, i) => (
-            <FaqItem key={i} q={item.q} a={item.a} />
-          ))}
-        </motion.div>
 
       </div>
     </section>

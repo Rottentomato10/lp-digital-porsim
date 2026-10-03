@@ -28,7 +28,7 @@ export default function N5Vision() {
 
           <p className="text-white/50 text-xl md:text-2xl leading-relaxed mt-8 text-center">
             וזה ההבדל האמיתי:
-            <br />לא כמה כסף יש לך — אלא <span className="text-white font-bold">כמה אתה מבין אותו</span>.
+            <br />לא רק כמה כסף יש לך — אלא <span className="text-white font-bold">כמה טוב אתה יודע לנהל אותו</span>.
           </p>
         </motion.div>
       </div>

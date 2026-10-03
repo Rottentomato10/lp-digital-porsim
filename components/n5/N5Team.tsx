@@ -34,60 +34,20 @@ export default function N5Team() {
             ))}
           </div>
 
-          <p className="text-white/60 text-xl md:text-2xl leading-relaxed max-w-2xl mx-auto">
-            ״פורשים כנף״ נולדה מתוך תשוקה אמיתית לשינוי ומתוך הבנה שכל צעיר וצעירה בישראל הם בעצם ״מנכ״לים״ של העסק החשוב ביותר בחייהם: משק הבית שלהם.
+          <h3 className="text-white font-bold text-2xl md:text-3xl mb-2">מאחורי הסדנה</h3>
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+            ב-5 השנים האחרונות אנחנו מעבירים סדנאות חינוך פיננסי בבתי ספר, יחידות צבאיות ומסגרות חינוכיות ברחבי הארץ — כחלק מתוכניות ההעשרה של משרד החינוך, לכ-15,000 תלמידי תיכון ב-50+ מוסדות חינוך.
           </p>
-          <div className="max-w-2xl mx-auto rounded-2xl border border-[#F5A624]/20 bg-[#F5A624]/[0.03] p-6 md:p-8">
-            <p className="text-white font-bold text-lg md:text-xl leading-relaxed mb-3">
-              ב-5 השנים האחרונות אנחנו פועלים יום-יום בשטח.
-            </p>
-            <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-3">
-              מעבירים סדנאות חינוך פיננסי בבתי ספר תיכוניים, יחידות צבאיות ומסגרות חינוכיות בכל רחבי הארץ — <span className="text-white font-semibold">כחלק מתוכניות גפ״ן, תוכניות ההעשרה של משרד החינוך</span>.
-            </p>
-            <p className="text-white/60 text-lg md:text-xl leading-relaxed">
-              למעלה מ-<span className="text-[#F5A624] font-bold">15,000</span> תלמידי תיכון עברו תחת הידיים שלנו ב-<span className="text-[#F5A624] font-bold">50+</span> מוסדות חינוך. ראינו בעיניים את הפער העצום בין הכלים שהמערכת נותנת לבין מה שצריך כדי לשרוד ולשגשג במציאות הישראלית.
-            </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-white/50 text-base md:text-lg">
+            <span>דקל קאפח — מייסד שותף, מתכנן פיננסי (CFP)</span>
+            <span className="hidden sm:inline text-white/20">·</span>
+            <span>אביתר דנגור — מייסד שותף, רקע בחינוך וכלכלה</span>
           </div>
-          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            אנחנו עושים את זה כי אנחנו מאמינים שחינוך פיננסי הוא הבסיס להכל: הבסיס לחוסן האישי שלכם, הבסיס לעוצמה הכלכלית שלנו כעם, והמפתח לעתיד טוב וציוני יותר כאן בישראל.
-          </p>
-          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            החזון שלנו הוא פשוט: שכל צעיר וצעירה בישראל יחזיקו בידע ובכלים שיאפשרו להם לפרוש כנף בביטחון, לקבל החלטות חכמות ולבנות לעצמם חיים של חופש ובחירה.
-          </p>
-          <p className="text-white/60 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-medium">
-            הסדנה הזאת היא לא רק ידע – היא השליחות שלנו, מונגשת אליכם לכל מקום ובכל זמן.
-          </p>
+          <a href="https://porsimkanaf.com/about" target="_blank" rel="noopener noreferrer"
+            className="inline-block text-[#F5A624] text-base md:text-lg font-medium hover:underline mt-2">
+            עוד עלינו ←
+          </a>
         </motion.div>
-
-        {/* Founders */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-20 justify-items-center mt-14">
-          {[
-            { name: 'דקל קאפח', role: 'מייסד שותף · פורשים כנף', bio: 'הדרך שלי לעולם הפיננסים התחילה מתוך הבנה פשוטה: כסף הוא שפה, ומי שלא שולט בה — נשאר מאחור. כמתכנן פיננסי (CFP) שחי את עולם ההשקעות והניהול הכלכלי, ראיתי מקרוב איך גם האנשים המבריקים ביותר נופלים בגלל חוסר בכלים בסיסיים. לצד העבודה המקצועית, אני חי את עולם היזמות והעשייה, מה שמאפשר לי לתרגם מושגים פיננסיים מורכבים לכלים פשוטים ליישום. אני לא מסתפק בתיאוריות — אני מביא ל׳פורשים כנף׳ גישה שמתמקדת בשורה התחתונה ובתוצאות בשטח, כדי לוודא שכל תלמיד שלנו יקבל את חומת המגן הכלכלית שהוא צריך.', image: '/dekel.jpg' },
-            { name: 'אביתר דנגור', role: 'מייסד שותף · פורשים כנף', bio: 'המסלול שלי היה אמור להיות ברור: תואר בכלכלה, הוראה במערכת החינוך וקריירה בחינוך פורמלי. אבל בתוך הכיתות פגשתי שוב ושוב צעירים מבריקים שעומדים לצאת לעולם בלי המיומנות הכי בסיסית להישרדות: הבנה פיננסית. ראיתי איך המערכת מלמדת הכל חוץ מאת מה שבאמת קובע את איכות החיים שלנו. זה מה שהוביל אותי להקים את ׳פורשים כנף׳ — כדי לגשר על הפער הזה ולתת לכל צעיר את הביטחון הכלכלי שמגיע לו. לפורשים כנף אני מביא את הניסיון הפדגוגי ואת היכולת לקחת ידע כלכלי מורכב ולהפוך אותו לתוכנית עבודה פשוטה שכל אחד יכול להבין.', image: '/evyatar.jpeg' },
-          ].map((person, i) => (
-            <motion.div key={i}
-              initial={{ opacity: 0, y: 28 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.65, delay: 0.2 + i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center text-center gap-5">
-              <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-[#F5A624]/30 bg-[#8a8a8a]"
-                style={{ boxShadow: '0 0 40px rgba(245,166,36,0.15)' }}>
-                {person.image ? (
-                  <Image src={person.image} alt={person.name} fill className="object-cover" />
-                ) : (
-                  <div className="w-full h-full bg-[#1A1A1A] flex items-center justify-center">
-                    <span className="text-5xl text-white/10 font-black select-none">{person.name[0]}</span>
-                  </div>
-                )}
-              </div>
-              <div>
-                <p className="text-white font-bold text-xl md:text-2xl">{person.name}</p>
-                <p className="text-[#F5A624]/70 text-base font-medium mt-1">{person.role}</p>
-                <p className="text-white/40 text-base leading-relaxed mt-3 max-w-sm mx-auto whitespace-pre-line">{person.bio}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
 
       </div>
       <div className="divider-glow mt-14" />

@@ -116,7 +116,7 @@ export default function SocialToast() {
           >
             <div className="leading-tight">
               <p className="text-white text-sm font-semibold">
-                {current} הרגע הצטרף/ה לקורס
+                {current} הרגע הצטרף/ה לסדנה
               </p>
             </div>
           </div>
