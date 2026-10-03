@@ -28,6 +28,7 @@ export interface Order {
   marketingConsent?: boolean
   emailSent?: boolean
   emailSentAt?: string
+  emailError?: string   // populated when provisioning succeeded but the actual access email failed/was never attempted
   emailOpenedAt?: string
   generatedPassword?: string
   lowProfileId?: string  // CardCom LowProfile session id — used to verify the paid amount server-to-server

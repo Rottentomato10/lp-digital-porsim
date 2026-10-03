@@ -122,7 +122,13 @@ export async function POST(req: NextRequest) {
         }
 
         if (res.ok) {
-          await updateOrder(orderId, { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent', generatedPassword: data.generated_password || undefined })
+          await updateOrder(orderId, {
+            emailSent: data.email_sent ?? false,
+            emailSentAt: data.email_sent ? new Date().toISOString() : undefined,
+            emailError: data.email_sent ? undefined : (data.email_error || 'Unknown'),
+            status: data.email_sent ? 'email_sent' : 'paid',
+            generatedPassword: data.generated_password || undefined,
+          })
         }
         return NextResponse.json({ ok: true, status: res.ok ? 'provisioned' : 'paid_no_provision', email: order.email })
       } catch (err) {

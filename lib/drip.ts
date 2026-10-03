@@ -45,6 +45,7 @@ export interface DripSubscriber {
   dripConfirmed?: boolean          // opted in to receive emails 2+
   dripConfirmedAt?: string         // timestamp of opt-in (legal proof)
   dripConfirmedIp?: string         // IP at time of opt-in (legal proof)
+  unsubscribedAt?: string          // timestamp of unsubscribe (for admin audit trail)
 }
 
 export interface DripSendLog {
@@ -213,7 +214,7 @@ export async function unsubscribeEmail(email: string): Promise<void> {
     unsubs.push(normalized)
     await redis.set(UNSUBSCRIBED_KEY, unsubs)
   }
-  await updateSubscriber(email, { status: 'unsubscribed' })
+  await updateSubscriber(email, { status: 'unsubscribed', unsubscribedAt: new Date().toISOString() })
 }
 
 // --- Send Log ---

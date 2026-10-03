@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, saveCampaign, createDefaultCampaign, getAllSubscribers, getDripStats, getSendLogs, removeSubscriber } from '@/lib/drip'
-import { isAuthed } from '@/lib/auth'
+import { isAuthed, isAuthedOrBearer } from '@/lib/auth'
 
-// GET — get campaign, subscribers, stats
+// GET — get campaign, subscribers, stats (also used server-to-server by the unified admin dashboard)
 export async function GET(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const what = req.nextUrl.searchParams.get('what') || 'all'
 

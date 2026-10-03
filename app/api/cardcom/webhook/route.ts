@@ -143,7 +143,7 @@ async function notifyPurchase(order: { id: string; name: string; email: string; 
  * Provision course access after successful payment.
  * Calls the course platform API to create user + grant access.
  */
-async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }): Promise<{ success: boolean; password?: string }> {
+async function provisionCourseAccess(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }): Promise<{ success: boolean; password?: string; emailSent?: boolean; emailError?: string }> {
   const courseApiUrl = process.env.COURSE_API_URL
   const provisionSecret = process.env.PROVISION_API_SECRET
 
@@ -183,7 +183,7 @@ async function provisionCourseAccess(order: { id: string; name: string; email: s
       response: data,
       timestamp: new Date().toISOString(),
     }))
-    return { success: res.ok, password: data.generated_password }
+    return { success: res.ok, password: data.generated_password, emailSent: data.email_sent, emailError: data.email_error }
   } catch (err) {
     console.error(JSON.stringify({
       event: 'PROVISION_ERROR',
@@ -242,10 +242,15 @@ async function handleWebhook(orderId: string, dealResponse: string) {
         }
       } catch { /* non-blocking */ }
     }
-    // Provision course access + track email status + save password
+    // Provision course access + track real email status + save password
     const provision = await provisionCourseAccess(order)
     if (provision.success) {
-      const updates: Record<string, unknown> = { emailSent: true, emailSentAt: new Date().toISOString(), status: 'email_sent' }
+      const updates: Record<string, unknown> = {
+        emailSent: provision.emailSent ?? false,
+        emailSentAt: provision.emailSent ? new Date().toISOString() : undefined,
+        emailError: provision.emailSent ? undefined : (provision.emailError || 'Unknown'),
+        status: provision.emailSent ? 'email_sent' : 'paid',
+      }
       if (provision.password) updates.generatedPassword = provision.password
       await updateOrder(orderId, updates)
     }
