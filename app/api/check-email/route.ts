@@ -31,9 +31,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ exists: false })
     }
 
-    // Always make the DB call to prevent timing attacks
+    // Always make the DB call to prevent timing attacks.
+    // Note: a `profiles` row is auto-created for EVERY Supabase Auth signup across
+    // the whole shared project (including portal-only users who never paid for the
+    // course), so we must filter on has_access=true — not mere row existence — to
+    // only flag people who actually paid for and were granted course access.
     const res = await fetch(
-      `${checkUrl}/rest/v1/profiles?email=eq.${encodeURIComponent(email.trim().toLowerCase())}&select=id`,
+      `${checkUrl}/rest/v1/profiles?email=eq.${encodeURIComponent(email.trim().toLowerCase())}&has_access=eq.true&select=id`,
       {
         headers: {
           'apikey': serviceKey,
