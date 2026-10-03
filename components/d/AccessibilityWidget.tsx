@@ -35,6 +35,7 @@ interface AccessibilitySettings {
   brightCursor: boolean
   readingGuide: boolean
   screenReaderMode: boolean
+  speakOnClick: boolean
 }
 
 const defaultSettings: AccessibilitySettings = {
@@ -55,6 +56,7 @@ const defaultSettings: AccessibilitySettings = {
   brightCursor: false,
   readingGuide: false,
   screenReaderMode: false,
+  speakOnClick: false,
 }
 
 export function AccessibilityWidget() {
@@ -83,6 +85,16 @@ export function AccessibilityWidget() {
     window.addEventListener('open-accessibility', handler)
     return () => window.removeEventListener('open-accessibility', handler)
   }, [])
+
+  // סגירה עם Escape — נדרש לנגישות מקלדת
+  useEffect(() => {
+    if (!isOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isOpen])
 
   useEffect(() => {
     const root = document.documentElement
@@ -116,6 +128,25 @@ export function AccessibilityWidget() {
     return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [settings.readingGuide])
 
+  // הקראת טקסט בלחיצה — Web Speech API
+  useEffect(() => {
+    if (!settings.speakOnClick) return
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      const text = target?.innerText?.trim()
+      if (!text || !window.speechSynthesis) return
+      window.speechSynthesis.cancel()
+      const utterance = new SpeechSynthesisUtterance(text.slice(0, 1000))
+      utterance.lang = 'he-IL'
+      window.speechSynthesis.speak(utterance)
+    }
+    document.addEventListener('click', handleClick)
+    return () => {
+      document.removeEventListener('click', handleClick)
+      try { window.speechSynthesis?.cancel() } catch {}
+    }
+  }, [settings.speakOnClick])
+
   const updateSetting = useCallback(<K extends keyof AccessibilitySettings>(
     key: K,
     value: AccessibilitySettings[K]
@@ -126,6 +157,7 @@ export function AccessibilityWidget() {
   const resetAll = useCallback(() => {
     setSettings(defaultSettings)
     localStorage.removeItem('accessibility-settings')
+    try { window.speechSynthesis?.cancel() } catch {}
   }, [])
 
   const toggleContrast = (mode: 'high' | 'inverted' | 'grayscale' | 'blackWhite') => {
@@ -294,7 +326,10 @@ export function AccessibilityWidget() {
 
             {/* Screen Reader Section */}
             <SectionTitle icon={<Volume2 size={18} />} title="קוראי מסך" />
-            <ToggleButton active={settings.screenReaderMode} onClick={() => updateSetting('screenReaderMode', !settings.screenReaderMode)} icon={<Volume2 size={18} />} label="התאמה לקוראי מסך" fullWidth />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '20px' }}>
+              <ToggleButton active={settings.screenReaderMode} onClick={() => updateSetting('screenReaderMode', !settings.screenReaderMode)} icon={<Volume2 size={18} />} label="התאמה לקוראי מסך" />
+              <ToggleButton active={settings.speakOnClick} onClick={() => updateSetting('speakOnClick', !settings.speakOnClick)} icon={<Volume2 size={18} />} label="הקראת טקסט בלחיצה" />
+            </div>
 
             {/* Footer */}
             <div style={{
