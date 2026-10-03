@@ -30,6 +30,7 @@ export interface Order {
   emailSentAt?: string
   emailOpenedAt?: string
   generatedPassword?: string
+  lowProfileId?: string  // CardCom LowProfile session id — used to verify the paid amount server-to-server
 }
 
 function generateOrderId(): string {

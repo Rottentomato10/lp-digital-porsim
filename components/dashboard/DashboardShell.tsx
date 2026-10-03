@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { sanitizePreviewHtml } from '@/lib/sanitize-preview-html'
 import { Plus, Users, Eye, ShoppingCart, DollarSign, Copy, Check, Trash2, Pencil, X, ArrowUpDown, ChevronUp, ChevronDown, Mail, Play, Pause, Save, Send } from 'lucide-react'
 
 const BASE_PRICE = 390
@@ -924,12 +925,15 @@ export default function DashboardShell() {
 interface DripEmailType { id: string; subject: string; body: string; delayDays: number; active: boolean }
 interface DripCampaignType { id: string; name: string; emails: DripEmailType[]; active: boolean; createdAt: string; updatedAt: string }
 interface DripStatsType { totalSubscribers: number; activeSubscribers: number; completedSubscribers: number; purchasedSubscribers: number; unsubscribedSubscribers: number; totalEmailsSent: number; purchaseConversions: number }
-interface DripSubType { email: string; name: string; phone: string; enrolledAt: string; currentStep: number; lastSentAt: string; status: string; source: string; sentEmails: string[] }
+interface DripSubType { email: string; name: string; phone: string; enrolledAt: string; currentStep: number; lastSentAt: string; status: string; source: string; sentEmails: string[]; segment?: 'portal' | 'lead' | 'portal_confirmed'; dripConfirmed?: boolean; dripConfirmedAt?: string; dripConfirmedIp?: string }
+interface SegmentConfigType { active: boolean; offsetDays: number }
+interface SegmentsType { portal: SegmentConfigType; lead: SegmentConfigType; portal_confirmed: SegmentConfigType }
 
 function DripTab() {
   const [campaign, setCampaign] = useState<DripCampaignType | null>(null)
   const [stats, setStats] = useState<DripStatsType | null>(null)
   const [subscribers, setSubscribers] = useState<DripSubType[]>([])
+  const [segments, setSegments] = useState<SegmentsType | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [sending, setSending] = useState(false)
@@ -952,14 +956,16 @@ function DripTab() {
 
   const fetchData = useCallback(async () => {
     try {
-      const [campRes, statsRes, subsRes] = await Promise.all([
+      const [campRes, statsRes, subsRes, segRes] = await Promise.all([
         fetch('/api/drip?what=campaign'),
         fetch('/api/drip?what=stats'),
         fetch('/api/drip?what=subscribers'),
+        fetch('/api/drip?what=segments'),
       ])
       setCampaign(await campRes.json())
       setStats(await statsRes.json())
       setSubscribers(await subsRes.json())
+      setSegments(await segRes.json())
     } catch { /* ignore */ }
     setLoading(false)
   }, [])
@@ -978,6 +984,13 @@ function DripTab() {
     const updated = { ...campaign, active: !campaign.active }
     setCampaign(updated)
     await fetch('/api/drip', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updated) })
+  }
+
+  const toggleSegment = async (seg: 'portal' | 'lead' | 'portal_confirmed') => {
+    if (!segments) return
+    const updated = { ...segments, [seg]: { ...segments[seg], active: !segments[seg].active } }
+    setSegments(updated)
+    await fetch('/api/drip', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ segments: { [seg]: updated[seg] } }) })
   }
 
   const addEmail = () => {
@@ -1040,6 +1053,35 @@ function DripTab() {
         </div>
       )}
 
+      {segments && (
+        <div className="rounded-xl border border-white/8 bg-white/[0.02] p-4 mb-6">
+          <p className="text-white/40 text-xs mb-3">הפעלת קהלי יעד לאוטומציה — מי נכנס לרצף ומתי מתחיל לקבל אימייל ראשון</p>
+          <div className="flex flex-wrap gap-3">
+            <button onClick={() => toggleSegment('portal')}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold border transition-all ${
+                segments.portal.active ? 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30' : 'bg-white/5 text-white/30 border-white/10'
+              }`}>
+              {segments.portal.active ? <Play size={12} /> : <Pause size={12} />}
+              פורטל — מתחיל לקבל אחרי 5 ימים
+            </button>
+            <button onClick={() => toggleSegment('lead')}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold border transition-all ${
+                segments.lead.active ? 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30' : 'bg-white/5 text-white/30 border-white/10'
+              }`}>
+              {segments.lead.active ? <Play size={12} /> : <Pause size={12} />}
+              ליד (עמוד נחיתה) — מתחיל לקבל אחרי 48 שעות
+            </button>
+            <button onClick={() => toggleSegment('portal_confirmed')}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold border transition-all ${
+                segments.portal_confirmed.active ? 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30' : 'bg-white/5 text-white/30 border-white/10'
+              }`}>
+              {segments.portal_confirmed.active ? <Play size={12} /> : <Pause size={12} />}
+              פורטל (אישר בלחיצה) — מתחיל 14 יום מהלחיצה
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div className="flex items-center gap-3">
           <h2 className="text-white font-bold text-lg">סדרת אימיילים</h2>
@@ -1072,8 +1114,8 @@ function DripTab() {
           { key: 'active' as const, label: 'אישרו דיוור', count: subscribers.filter((s: any) => s.status === 'active' && s.dripConfirmed).length, color: '#F5A624' },
           { key: 'unsubscribed' as const, label: 'ירדו מדיוור', count: subscribers.filter(s => s.status === 'unsubscribed').length, color: '#EF4444' },
           { key: 'due' as const, label: 'ממתינים לשליחה היום', count: campaign?.active ? subscribers.filter(s => {
-            if (s.status !== 'active' || !campaign) return false
-            const email = campaign.emails[s.currentStep]
+            if (s.status !== 'active' || !campaign || !s.dripConfirmed) return false
+            const email = [...campaign.emails].sort((a, b) => a.delayDays - b.delayDays)[s.currentStep]
             if (!email?.active) return false
             const days = (Date.now() - new Date(s.enrolledAt).getTime()) / (1000*60*60*24)
             return days >= email.delayDays
@@ -1105,8 +1147,8 @@ function DripTab() {
                 if (showList === 'active') return s.status === 'active'
                 if (showList === 'unsubscribed') return s.status === 'unsubscribed'
                 if (showList === 'due' && campaign?.active) {
-                  if (s.status !== 'active') return false
-                  const email = campaign.emails[s.currentStep]
+                  if (s.status !== 'active' || !s.dripConfirmed) return false
+                  const email = [...campaign.emails].sort((a, b) => a.delayDays - b.delayDays)[s.currentStep]
                   if (!email?.active) return false
                   const days = (Date.now() - new Date(s.enrolledAt).getTime()) / (1000*60*60*24)
                   return days >= email.delayDays
@@ -1120,7 +1162,14 @@ function DripTab() {
                     <span className="text-white/30 text-xs mr-2">{s.email}</span>
                   </div>
                   <div className="flex items-center gap-3 text-xs">
-                    <span className={`text-xs px-1.5 py-0.5 rounded ${(s as any).dripConfirmed ? 'text-[#10B981]' : 'text-white/20'}`}>{(s as any).dripConfirmed ? '✓ אישר' : 'לא אישר'}</span>
+                    <span
+                      className={`text-xs px-1.5 py-0.5 rounded ${(s as any).dripConfirmed ? 'text-[#10B981]' : 'text-white/20'}`}
+                      title={(s as any).dripConfirmed ? `אושר בלחיצה · ${(s as any).dripConfirmedAt ? new Date((s as any).dripConfirmedAt).toLocaleString('he-IL') : 'לא ידוע'} · IP: ${(s as any).dripConfirmedIp || 'לא ידוע'}` : ''}
+                    >
+                      {(s as any).dripConfirmed
+                        ? `✓ אישר ${(s as any).dripConfirmedAt ? new Date((s as any).dripConfirmedAt).toLocaleDateString('he-IL') : ''}`
+                        : 'לא אישר'}
+                    </span>
                     <span className="text-white/30">אימייל {s.currentStep + 1}/{campaign?.emails.length || '?'}</span>
                     {s.lastSentAt && <span className="text-white/20">{new Date(s.lastSentAt).toLocaleDateString('he-IL')}</span>}
                     <button
@@ -1202,7 +1251,7 @@ function DripTab() {
                 <div>
                   <p className="text-white/40 text-xs mb-1">תצוגה מקדימה</p>
                   <div className="rounded-lg border border-white/8 bg-[#080808] p-4 max-h-52 overflow-auto"
-                    dangerouslySetInnerHTML={{ __html: email.body.replace(/\{\{name\}\}/g, 'ישראל').replace(/\{\{email\}\}/g, 'test@example.com') }} />
+                    dangerouslySetInnerHTML={{ __html: sanitizePreviewHtml(email.body.replace(/\{\{name\}\}/g, 'ישראל').replace(/\{\{email\}\}/g, 'test@example.com')) }} />
                 </div>
               </div>
             )}

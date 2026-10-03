@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getOrderById, updateOrder, getAllOrders } from '@/lib/orders'
 import { markAsPurchased } from '@/lib/drip'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 
 /**
  * POST /api/verify-payment
@@ -11,6 +12,11 @@ import { markAsPurchased } from '@/lib/drip'
  */
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req)
+    if (!checkRateLimit(`verify-payment:${ip}`, 10, 60000)) {
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+    }
+
     const { orderId, email } = await req.json()
     if (!orderId) return NextResponse.json({ error: 'Missing orderId' }, { status: 400 })
     if (!email) return NextResponse.json({ error: 'Missing email' }, { status: 400 })

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { BASE_PRICE } from '@/lib/pricing'
 import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
 import { validatePersonalCoupon } from '@/lib/drip'
-import { createOrder } from '@/lib/orders'
+import { createOrder, updateOrder } from '@/lib/orders'
 
 export async function POST(req: NextRequest) {
   const terminal = process.env.CARDCOM_TERMINAL
@@ -128,6 +128,12 @@ export async function POST(req: NextRequest) {
         { error: data.Description || 'CardCom error', code: data.ResponseCode },
         { status: 400 }
       )
+    }
+
+    // Store the LowProfileId so the webhook can later verify the paid amount
+    // server-to-server against CardCom, instead of trusting the webhook body alone.
+    if (data.LowProfileId) {
+      updateOrder(order.id, { lowProfileId: data.LowProfileId }).catch(() => {})
     }
 
     return NextResponse.json({ url: data.Url, price: finalPrice, orderId: order.id })

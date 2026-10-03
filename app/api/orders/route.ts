@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllOrders, updateOrder, searchOrders, deleteOrder } from '@/lib/orders'
-import { isAuthed } from '@/lib/auth'
+import { isAuthed, isAuthedOrBearer } from '@/lib/auth'
 
 export async function GET(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const search = req.nextUrl.searchParams.get('q')
   const type = req.nextUrl.searchParams.get('type') // 'leads' or 'orders'

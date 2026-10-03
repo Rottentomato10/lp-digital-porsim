@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAffiliateByCode, trackEvent } from '@/lib/affiliates'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = getClientIp(req)
+    if (!checkRateLimit(`affiliate-track:${ip}`, 30, 60000)) {
+      return NextResponse.json({ ok: false }, { status: 429 })
+    }
+
     const { code, type } = await req.json()
 
     if (!code || !type) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createAuthResponse, createLogoutResponse } from '@/lib/auth'
+import { createAuthResponse, createLogoutResponse, safeEqual } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: 'Server misconfigured' }, { status: 500 })
     }
 
-    if (password === correctPassword) {
+    if (typeof password === 'string' && safeEqual(password, correctPassword)) {
       return createAuthResponse()
     }
 

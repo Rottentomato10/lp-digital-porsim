@@ -1,7 +1,17 @@
-import { createHmac } from 'crypto'
+import { createHmac, timingSafeEqual } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 const AUTH_SALT = 'porsim_dash_2024_salt'
+
+/**
+ * Constant-time string comparison to avoid timing attacks on secrets/passwords.
+ */
+export function safeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a)
+  const bufB = Buffer.from(b)
+  if (bufA.length !== bufB.length) return false
+  return timingSafeEqual(bufA, bufB)
+}
 
 /**
  * Create an HMAC token from the dashboard password.
@@ -28,7 +38,9 @@ export function getExpectedToken(): string | null {
 export function isAuthed(req: NextRequest): boolean {
   const token = getExpectedToken()
   if (!token) return false
-  return req.cookies.get('dash_auth')?.value === token
+  const cookie = req.cookies.get('dash_auth')?.value
+  if (!cookie) return false
+  return safeEqual(cookie, token)
 }
 
 /**
@@ -38,7 +50,7 @@ export function isAuthedOrBearer(req: NextRequest): boolean {
   if (isAuthed(req)) return true
   const auth = req.headers.get('authorization')
   const secret = process.env.PROVISION_API_SECRET
-  if (secret && auth === `Bearer ${secret}`) return true
+  if (secret && auth && safeEqual(auth, `Bearer ${secret}`)) return true
   return false
 }
 
@@ -49,7 +61,7 @@ export function isAuthedOrCron(req: NextRequest): boolean {
   if (isAuthed(req)) return true
   const authHeader = req.headers.get('authorization')
   const cronSecret = process.env.CRON_SECRET
-  if (cronSecret && authHeader === `Bearer ${cronSecret}`) return true
+  if (cronSecret && authHeader && safeEqual(authHeader, `Bearer ${cronSecret}`)) return true
   return false
 }
 

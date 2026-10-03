@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { updateOrder, getOrderById, getAllOrders } from '@/lib/orders'
 import { markAsPurchased } from '@/lib/drip'
 import { getAffiliateByCoupon, trackEvent } from '@/lib/affiliates'
+import { safeEqual } from '@/lib/auth'
 
 /**
  * Verify the webhook secret token in the URL query parameter.
@@ -16,7 +17,80 @@ function verifyWebhookSecret(req: NextRequest): boolean {
     return false
   }
   const provided = req.nextUrl.searchParams.get('secret')
-  return provided === secret
+  if (!provided) return false
+  return safeEqual(provided, secret)
+}
+
+/**
+ * Server-to-server verification of the amount actually charged by CardCom,
+ * instead of trusting the webhook body alone (which could be replayed/forged
+ * by anyone who learns the webhook secret).
+ *
+ * Fails OPEN by design: if the LowProfileId is missing, the CardCom API call
+ * fails, or the response shape doesn't contain a parseable amount, we log a
+ * warning and let the existing DealResponse-based flow proceed — so an
+ * unexpected CardCom response shape never blocks a real customer's payment.
+ * It only actively BLOCKS when it can positively confirm a mismatch.
+ */
+async function verifyAmountWithCardcom(order: { id: string; amount: number; lowProfileId?: string }): Promise<{ mismatch: boolean; checkedAmount: number | null }> {
+  const terminal = process.env.CARDCOM_TERMINAL
+  const apiName = process.env.CARDCOM_API_NAME
+
+  if (!order.lowProfileId || !terminal || !apiName) {
+    console.log(JSON.stringify({ event: 'WEBHOOK_AMOUNT_CHECK_SKIPPED', orderId: order.id, reason: 'missing lowProfileId or credentials' }))
+    return { mismatch: false, checkedAmount: null }
+  }
+
+  try {
+    const res = await fetch('https://secure.cardcom.solutions/api/v11/LowProfile/GetLpResult', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        TerminalNumber: Number(terminal),
+        ApiName: apiName,
+        LowProfileId: order.lowProfileId,
+      }),
+    })
+    const data = await res.json()
+    const checkedAmount: number | null =
+      typeof data?.TranzactionInfo?.Amount === 'number' ? data.TranzactionInfo.Amount :
+      typeof data?.Amount === 'number' ? data.Amount :
+      null
+
+    if (checkedAmount === null) {
+      console.log(JSON.stringify({ event: 'WEBHOOK_AMOUNT_CHECK_UNPARSEABLE', orderId: order.id, response: data }))
+      return { mismatch: false, checkedAmount: null }
+    }
+
+    const mismatch = Math.abs(checkedAmount - order.amount) > 0.5
+    console.log(JSON.stringify({ event: 'WEBHOOK_AMOUNT_CHECK', orderId: order.id, expected: order.amount, checkedAmount, mismatch }))
+    return { mismatch, checkedAmount }
+  } catch (err) {
+    console.log(JSON.stringify({ event: 'WEBHOOK_AMOUNT_CHECK_ERROR', orderId: order.id, error: String(err) }))
+    return { mismatch: false, checkedAmount: null }
+  }
+}
+
+async function alertAdminAmountMismatch(order: { id: string; name: string; email: string; amount: number }, checkedAmount: number) {
+  const adminEmail = process.env.ADMIN_EMAIL
+  const brevoKey = process.env.BREVO_API_KEY
+  if (!adminEmail || !brevoKey) return
+  try {
+    await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: { 'accept': 'application/json', 'content-type': 'application/json', 'api-key': brevoKey },
+      body: JSON.stringify({
+        sender: { name: 'פורשים כנף', email: 'noreply@porsimkanaf.com' },
+        to: [{ email: adminEmail }],
+        subject: `⚠️ אזהרת אבטחה: אי-התאמת סכום בהזמנה ${order.id}`,
+        htmlContent: `<div dir="rtl" style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;padding:24px">
+          <h2 style="color:#DC2626">אי-התאמת סכום בתשלום</h2>
+          <p>הזמנה <b>${order.id}</b> (${order.name}, ${order.email}) אמורה הייתה לעלות ₪${order.amount}, אבל CardCom מדווחת על סכום שחויב בפועל של ₪${checkedAmount}.</p>
+          <p>ההזמנה <b>לא</b> סומנה כשולמה ולא ניתנה גישה. יש לבדוק ידנית.</p>
+        </div>`,
+      }),
+    })
+  } catch { /* non-blocking */ }
 }
 
 async function notifyPurchase(order: { id: string; name: string; email: string; phone: string; amount: number; coupon: string }) {
@@ -140,6 +214,13 @@ async function handleWebhook(orderId: string, dealResponse: string) {
     }
     if (order.status !== 'pending') {
       console.log(JSON.stringify({ event: 'WEBHOOK_ORDER_ALREADY_PROCESSED', orderId, status: order.status }))
+      return
+    }
+
+    const { mismatch, checkedAmount } = await verifyAmountWithCardcom(order)
+    if (mismatch && checkedAmount !== null) {
+      console.log(JSON.stringify({ event: 'WEBHOOK_AMOUNT_MISMATCH_BLOCKED', orderId, expected: order.amount, checkedAmount }))
+      await alertAdminAmountMismatch(order, checkedAmount)
       return
     }
 
