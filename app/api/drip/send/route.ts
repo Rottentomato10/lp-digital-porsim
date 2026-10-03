@@ -48,8 +48,11 @@ export async function GET(req: NextRequest) {
       continue
     }
 
-    // Emails 2+ require confirmed opt-in (double opt-in)
-    if (email.id !== 'email_1' && !subscriber.dripConfirmed) {
+    // Emails 2+ require confirmed opt-in (double opt-in). For the portal signup flow
+    // the confirmation ask is already embedded in the welcome email itself (not sent as
+    // email_1), so email_1 must also wait for confirmation there.
+    const emailIsConfirmationAsk = email.id === 'email_1' && subscriber.source !== 'portal_confirmed'
+    if (!emailIsConfirmationAsk && !subscriber.dripConfirmed) {
       skipped++
       continue
     }
@@ -68,7 +71,7 @@ export async function GET(req: NextRequest) {
 
     // Generate confirm URL for email 1
     const confirmToken = generateConfirmToken(subscriber.email)
-    const confirmUrl = `${baseUrl}/drip/confirm?email=${encodeURIComponent(subscriber.email)}&token=${confirmToken}`
+    const confirmUrl = `${baseUrl}/api/drip/confirm?email=${encodeURIComponent(subscriber.email)}&token=${confirmToken}`
 
     // Replace placeholders in email body
     let htmlBody = email.body

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyConfirmToken, confirmDripSubscription } from '@/lib/drip'
+import { verifyConfirmToken, confirmDripSubscription, updateSubscriber, getSubscriberByEmail } from '@/lib/drip'
 
 export async function GET(req: NextRequest) {
   const email = req.nextUrl.searchParams.get('email')
@@ -13,10 +13,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid token' }, { status: 403 })
   }
 
+  const existing = await getSubscriberByEmail(email)
+  const wasAlreadyConfirmed = existing?.dripConfirmed === true
+
   const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
   const confirmed = await confirmDripSubscription(email, ip)
 
-  if (confirmed) {
+  if (confirmed && !wasAlreadyConfirmed) {
+    // Restart the day-count from the moment of actual opt-in, so "email N after X days"
+    // is measured from confirmation (not from signup/enroll time, which may have been earlier).
+    await updateSubscriber(email, { enrolledAt: new Date().toISOString() })
     console.log(JSON.stringify({
       event: 'DRIP_CONFIRMED',
       email,

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Heebo } from 'next/font/google'
 import './globals.css'
-import AccessibilityWidget from '@/components/AccessibilityWidget'
 
 const heebo = Heebo({
   subsets: ['hebrew'],
@@ -77,7 +76,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           דלגו לתוכן המרכזי
         </a>
         <div id="main-content">{children}</div>
-        <AccessibilityWidget />
       </body>
     </html>
   )
