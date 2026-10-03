@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, getSubscribersDueForEmail, updateSubscriber, addSendLog, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon, generateConfirmToken } from '@/lib/drip'
 import { getAllOrders } from '@/lib/orders'
-import { isAuthedOrCron } from '@/lib/auth'
+import { isAuthedOrCron, isAuthedOrBearer } from '@/lib/auth'
 
-// This endpoint is called by Vercel Cron (daily) or manually from dashboard
-// It sends all pending drip emails
-
+// This endpoint is called by Vercel Cron (daily), manually from the dashboard,
+// or server-to-server from the unified admin (porsimkanaf) via PROVISION_API_SECRET.
 export async function GET(req: NextRequest) {
-  if (!isAuthedOrCron(req)) {
+  if (!isAuthedOrCron(req) && !isAuthedOrBearer(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

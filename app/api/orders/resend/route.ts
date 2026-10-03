@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getOrderById, updateOrder } from '@/lib/orders'
-import { isAuthed } from '@/lib/auth'
+import { isAuthedOrBearer } from '@/lib/auth'
 
 // POST — resend welcome email by re-triggering provision
 export async function POST(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
     const { orderId } = await req.json()

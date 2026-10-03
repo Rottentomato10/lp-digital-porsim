@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, sendBrevoEmail, wrapInTemplate, generatePersonalCoupon, generateConfirmToken, updateSubscriber, getSubscriberByEmail, addSubscriber } from '@/lib/drip'
-import { isAuthed } from '@/lib/auth'
+import { isAuthedOrBearer } from '@/lib/auth'
 
 // Send a test email to verify design and delivery
 export async function POST(req: NextRequest) {
-  if (!isAuthed(req)) {
+  if (!isAuthedOrBearer(req)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCampaign, saveCampaign, createDefaultCampaign, getAllSubscribers, getDripStats, getSendLogs, removeSubscriber } from '@/lib/drip'
-import { isAuthed, isAuthedOrBearer } from '@/lib/auth'
+import { isAuthedOrBearer } from '@/lib/auth'
 
 // GET — get campaign, subscribers, stats (also used server-to-server by the unified admin dashboard)
 export async function GET(req: NextRequest) {
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
 
 // PUT — update campaign (emails, settings)
 export async function PUT(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
     const body = await req.json()
@@ -62,7 +62,7 @@ export async function PUT(req: NextRequest) {
 
 // DELETE — remove subscriber
 export async function DELETE(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isAuthedOrBearer(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
     const { email } = await req.json()
